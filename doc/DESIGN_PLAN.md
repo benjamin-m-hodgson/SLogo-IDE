@@ -11,8 +11,10 @@
 ### Backend Internal
 **Methods**
 * protected Turtle(String name, ImageView image, Group trails) 
+    * void setTurtleImage(ImageView image)
     * void hideTurtle()
     * void showTurtle()
+    * void setPenColor(Color color) 
     * void penUp()
     * void penDown()
 * protected Trails(Color color, boolean penUp)
@@ -43,15 +45,12 @@
 **Methods**
 * from Controller
 	* void parseInput(String userTextInput) 
-* from Turtle
-    * void setTurtleImage(ImageView image)
-    * void setPenColor(Color color)
 * public MakeNewTurtleCommand(String name, ImageView turtleImage, Color penColor, Group trails)
 
 **Justification**
-* The ViewUpdater will manifest changes to the model in the UserView by invoking get() methods of Turtle objects related to the Turtle and its corresponding Pen. 
-* Details about the TextFieldParser, the CommandMaker, and all Command subclasses are hidden to the ViewUpdater. Turtle objects are the only backend objects which will be accessible to the ViewUpdater. 
-* Errors will be made known to users in the case that a user mistypes a command or misformats its arguments. If this is the case, an ErrorComand (subclass of Command) will be created as part of the Queue<Command> output of CommandMaker. Executer will ensure that a String variable is set with the error notification that to be displayed to the user, and ViewUpdater's update method will populate UserView's designated error-notification textfield with the contents of this String variable. 
+* The UserScreen will call the Controller's parseInput method when userInput has been received (i.e. upon user "return"ing text input or clicking a button), thus triggering the Controller's command execution process. 
+* The only Command that will be accessible to the UserScreen is the MakeNewTurtleCommand. This is because the UserScreen will add each new Turtle's ImageView and Group of pen lines to its root. This is important because it eliminates the need for the UserScreen to have to "ask" the Controller what updates have been made to the Model. Changes to the back-end Turtle objects will be changes to the same objects that are attached to the UserScreen's root upon Turtle creation. 
+* The TextFieldParser will throw Exceptions in the case of ill-formatted user commands or arguments. The UserScreen will catch these Exceptions, and display an error-specific notification message to the user on a designated part of the user screen.
 
 ### Frontend Internal
 **Methods**
