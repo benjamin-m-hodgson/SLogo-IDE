@@ -11,42 +11,33 @@ The purpose of this project is to create an integrated development environment t
 
 ### Backend Internal
 **Methods**
-* protected Turtle(String name, ImageView image, Group pen) 
-    * void setTurtleImage(ImageView image)
+* Turtle (public constructor)
     * void hideTurtle()
     * void showTurtle()
-    * void setPenColor(Color color) 
-    * void showPen()
-    * void hidePen()
-    * void clearPen()
-* protected Pen(Color color, boolean penUp)
-    * void addLine(double xStart, double yStart, double xEnd, double yEnd)
-    * void setColor(Color color) 
-    * void showPen()
-    * void hidePen()
-* protected TextFieldParser()
-    * protected Queue<Command> getCommandQueue()
-* protected CommandMaker()
-    * protected Queue<Command> parseStringCommands(Queue<String> stringQueue)
+* protected Pen(Color color, int strokeWidth, boolean up, Group penLines)
+    * void penUp()
+    * void penDown()
+    * void drawLine(double oldX, double oldY, double x, double y)
 * abstract Command(String name)
+    * MakeTurtleCommand(String name, List<Turtle> onScreenTurtles, double x, double y, double angle, Pen pen, ImageView image, boolean visible)
     * MoveTurtleCommand(String name, List<Turtle> onScreenTurtles, double x, double y)
-        * note: this handles fd, bk, setxy, home
-    * RotateTurtleCommand(String name, List<Turtle> onScreenTurtles, double rotation, boolean absolute) 
-        * lt, rt, seth, toward
-    * TurtleVisibilityCommand(String name, List<Turtle> onScreenTurtles, boolean visible)
-    * TurtleImageCommand(String name, List<Turtle> onScreenTurtles, ImageView newTurtleImage)
-    * PenVisibilityCommand(String name, List<Turtle> onScreenTurtles, boolean visible)
-    * PenColorCommand(String name, List<Turtle> onScreenTurtles, Color color)
-    * ClearCommand(List<Turtle> onScreenTurtles) 
+        * note: this handles fd, bk
+    * RotateTurtleCommand(String name, List<Turtle> onScreenTurtles, boolean absolute, double rotation) 
+        * lt, rt, seth, towards
+    * PenCommand(String name, List<Turtle> onScreenTurtles, Color color, int strokeWidth, boolean up)
     * VariableCommand(String varName, double varValue)
+    * ErrorCommand(String ErrorMessage)
     * protected double executeCommand()
-* protected Executor(CommandQueue queue)
-    
-    
+* protected Executor(Queue<Command> queue)
+* protected TextFieldParser(String userInput)
+    * protected Queue<Command> parseInput()
+* protected CommandMaker(Queue<String> stringCommandQueue)
+    * protected Queue<Command> parseStringCommands()
+
 **Justification**
-* Using an interface for linking different kinds of Commands will allow the program to be flexible to adding new commands if desired. This will be based on the Command design pattern. A potential CommandMaker interface will allow different types of commands (i.e. text input vs. slider/button input) to be parsed correctly and go through the flow of the program correctly. Potential inheritance structures could be put in place for Variables or Pens to add new features (e.g. for Pens to make a dashed line rather than a solid line).
-* The Turtle/Pen basic classes should be closed for modification, as well as the Executor class and TextFieldparser. Additional functionality will be achieved by creating new implementations of the Command and CommandMaker interfaces, or extending Pen/Turtle classes to new subclasses.
-* Errors may be thrown by the parsers if a command is not recognized (but currently the plan is not to throw an error, but to create a Command that creates a popup to notify the user of the mistake). We may also use the Null Object design pattern to allow even commands with no known implementation to avoid breaking the program.
+* Using an interface for linking different kinds of Commands will allow the program to be flexible to adding new commands if desired. This will be based on the Command design pattern. A potential CommandMaker interface will allow different types of commands (i.e. text input vs. slider/button input) to be parsed correctly and go through the flow of the program correctly. Potential inheritance structures could be put in place for Variables or Pens to add new features (e.x. for Pens to make a dashed line rather than a solid line).
+* The Turtle/Pen basic classes should be closed for modification, as well as the Executor class and TextFieldParser. Additional functionality will be achieved by creating new implementations of the Command and CommandMaker interfaces, or extending Pen/Turtle classes to new subclasses.
+* Errors may be thrown by the TextFieldParser if a command is not recognized. In this case, the Controller will catch this error and throw it back to the UserScreen to display to the user without making a Command.
 
 ### Backend External
 **Methods**
