@@ -1,6 +1,7 @@
 # Design Document
 
 ## Introduction
+The purpose of this project is to create an integrated development environment to allow users to program in a simplified version of the Logo language. The project will emulate a Model-View-Controller design. A mediator/"Controller" will communicate information from the front- to the back-end to ensure that the details of the front- and back-end are relatively hidden from one another. The "Model" will consist of Turtles and their corresponding Pen/Trail objects, whose attributes are updated based on the user's text input that the Controller turns into actionable commands. The UserScreen will hold references to the objects that the Model holds, thus ensuring that changes to the Model manifest visually on the UserScreen.
 
 ## Design Overview
 
@@ -22,6 +23,10 @@
     * void setColor(Color color) 
     * void penUp()
     * void penDown()
+* protected TextFieldParser()
+    * protected Queue<Command> getCommandQueue()
+* protected CommandMaker()
+    * protected Queue<Command> parseStringCommands(Queue<String> stringQueue)
 * abstract Command(String name)
     * MoveTurtleCommand(String name, List<Turtle> onScreenTurtles, double x, double y)
         * note: this handles fd, bk
@@ -30,11 +35,8 @@
     * PenCommand(String name, List<Turtle> onScreenTurtles, Color color, boolean up)
     * VariableCommand(String varName, double varValue)
     * protected double executeCommand()
-* protected Executor(ViewUpdater viewUpdater, CommandQueue queue)
-* protected TextFieldParser()
-    * protected Queue<Command> getCommandQueue()
-* protected CommandMaker()
-    * protected Queue<Command> parseStringCommands(Queue<String> stringQueue)
+* protected Executor(CommandQueue queue)
+    
     
 **Justification**
 * Using an interface for linking different kinds of Commands will allow the program to be flexible to adding new commands if desired. This will be based on the Command design pattern. A potential CommandMaker interface will allow different types of commands (i.e. text input vs. slider/button input) to be parsed correctly and go through the flow of the program correctly. Potential inheritance structures could be put in place for Variables or Pens to add new features (e.x. for Pens to make a dashed line rather than a solid line).
@@ -63,8 +65,38 @@
 **Justification**
 
 ## API Example Code
+* "The user types 'fd 50' in the command window, and sees the turtle move in the display window leaving a trail, and the command is added to the environment's history."
+	* The ImageView and Lines (trails) associated the Turtle is attached to the root of the UserScreen. When the user hits their Return key or presses the "Run" button on the UserScreen, the UserScreen will call Controller's `parseText(String userInput)` method, thereby notifying the Controller that commands (in this case, a single command) needs to be generated from the user text input. Controller's `parseText` method will wrap a call to TextFieldParser's `parseText` method, which calls CommandMaker's `parseStringCommands` method to generate a Queue of actionable Command objects. Controller can then get the Queue of Commands with TextFieldParser's `getCommandQueue()` method. In this case, the Queue of Commands will only have one command, a MoveTurtleCommand. The Queue with the MoveTurtleCommand will be passed into an Executer object that will loop through the entirety of the Queue (in this case, just one loop), and call the Command's `execute` method, which will add 50x(some pixel scale) to the position of the ImageView associated with the Turtle object in the direction the Turtle is facing, and also add a new Line to the Turtle object's trails instance variable that stretches from the Turtle's old coordinate to its new coordinate. Because the Turtle and its Lines are already a part of the UserScreen's root, the update to the Turtle's position and the addition of a new trail will manifest without any need for the UserScreen class to call methods from the Controller. 
 
-## Design Considerations
+Additional Use Cases:
+
+1. 
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+8.
+
+## Design Considerations/Notable Design Decisions
+
+* Listeners vs. UserScreen-initiated transitions 
+
+* Delegating user error communication to back-end vs. front-end 
+
+* Passing instance of Controller to UserScreen, and vice versa
+
+* Initializing Turtles in the front-end vs. back-end 
+
+* ViewUpdater vs. ensuring Turtles/Lines are already a part of UserScreen's root
 
 ## Team Responsibilities
 
