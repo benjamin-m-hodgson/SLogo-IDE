@@ -87,11 +87,8 @@ Additional Use Cases:
 * Delegating user error communication to back-end vs. front-end 
 	* We considered handling user-input errors on the back-end (by creating ErrorCommand extensions of the Command superclass), whose `execute()` methods would populate a text field on the UserScreen designated for error notifications. We ultimately decided to have the back-end parser throw an Exception to indicate the command input error, which the UserScreen would then handle (see use case #2). This has the design downside of preventing all user actions from influencing the Model (i.e. the fact that the user mis-entered a command would not be incorporated into the back-end Model) per a strict interpretation of the MVC design pattern. However, the team agreed that the decision to display a certain message in response to a user error was more of a front-end decision in nature. 
 
-* Passing instance of Controller to UserScreen, and vice versa
-
-* Initializing Turtles in the front-end vs. back-end 
-
-* ViewUpdater vs. ensuring Turtles/Lines are already a part of UserScreen's root
+* Passing instance of Controller to UserScreen, and vice versa; initializing Turtles on the front- vs. back-end
+	* We discussed whether to pass the Controller into the UserScreen constructor and/or to pass the UserScreen into the Controller constructor. We decided to pass the Controller into the UserScreen constructor so that the UserScreen could trigger the text-to-command parsing process with the `parseText(String userInput)` command. We considered passing the UserScreen into the Controller constructor, which would be made accessible to the Model in conveying model updates; however, we decided against this because we thought it would too severely compromise the compartmentalization of the front- and back-ends. We eliminated the need to pass the UserScreen into the Controller by ensuring that the objects influenced by the Model (Turtle and its Line trails) would be attached to the UserScreen's root before being added to the Model. This ensures that updates to the Model automatically manifest visually on the UserScreen, without the need for a mediator between the back- and front-ends. 
 
 ## Team Responsibilities
 
