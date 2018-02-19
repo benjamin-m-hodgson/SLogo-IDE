@@ -10,27 +10,29 @@
 
 ### Backend Internal
 **Methods**
-* Turtle (public constructor)
+* protected Turtle(String name, ImageView image, Group trails) 
     * void hideTurtle()
     * void showTurtle()
-* protected Pen(Color color, int strokeWidth, boolean up)
+    * void penUp()
+    * void penDown()
+* protected Trails(Color color, boolean penUp)
+    * void addTrail(double xStart, double yStart, double xEnd, double yEnd)
+    * void setColor(Color color) 
     * void penUp()
     * void penDown()
 * abstract Command(String name)
-    * MakeTurtleCommand(String name, List<Turtle> onScreenTurtles, double x, double y, double angle, Pen pen, ImageView image, boolean visible)
     * MoveTurtleCommand(String name, List<Turtle> onScreenTurtles, double x, double y)
         * note: this handles fd, bk
-    * RotateTurtleCommand(String name, List<Turtle> onScreenTurtles, boolean absolute, double rotation) 
+    * RotateTurtleCommand(String name, List<Turtle> onScreenTurtles, double rotation, boolean absolute) 
         * lt, rt, seth, towards
-    * PenCommand(String name, , List<Turtle> onScreenTurtles, Color color, int strokeWidth, boolean up)
+    * PenCommand(String name, List<Turtle> onScreenTurtles, Color color, boolean up)
     * VariableCommand(String varName, double varValue)
-    * ErrorCommand(String ErrorMessage)
     * protected double executeCommand()
 * protected Executor(ViewUpdater viewUpdater, CommandQueue queue)
-* protected TextFieldParser(String userInput)
-    * protected Queue<Command> parseInput()
-* protected CommandMaker(Queue<String> stringCommandQueue)
-    * protected Queue<Command> parseStringCommands()
+* protected TextFieldParser()
+    * protected Queue<Command> getCommandQueue()
+* protected CommandMaker()
+    * protected Queue<Command> parseStringCommands(Queue<String> stringQueue)
     
 **Justification**
 * Using an interface for linking different kinds of Commands will allow the program to be flexible to adding new commands if desired. This will be based on the Command design pattern. A potential CommandMaker interface will allow different types of commands (i.e. text input vs. slider/button input) to be parsed correctly and go through the flow of the program correctly. Potential inheritance structures could be put in place for Variables or Pens to add new features (e.x. for Pens to make a dashed line rather than a solid line).
@@ -39,18 +41,12 @@
 
 ### Backend External
 **Methods**
-* Turtle
-    * public Turtle(String name, double x, double y, double angle, Pen pen, ImageView image, boolean visible)
-    * getNewX()
-    * getNewY()
-    * getOldX()
-    * getOldY()
-    * getAngle()
-    * getTurtleVisibility()
-    * getPenColor()
-    * getPenWidth()
-    * getPenVisibility()
-* protected Variable(String name, double value)
+* from Controller
+	* void parseInput(String userTextInput) 
+* from Turtle
+    * void setTurtleImage(ImageView image)
+    * void setPenColor(Color color)
+* public MakeNewTurtleCommand(String name, ImageView turtleImage, Color penColor, Group trails)
 
 **Justification**
 * The ViewUpdater will manifest changes to the model in the UserView by invoking get() methods of Turtle objects related to the Turtle and its corresponding Pen. 
