@@ -75,8 +75,8 @@ The purpose of this project is to create an integrated development environment t
 **Methods**
 * double parseInput(String userTextInput) 
 * MakeNewTurtleCommand(String name, ImageView turtleImage, Color penColor, Group pen)
-* List<String> getUserCommands()
-* Map<String, Double> getVariables() 
+* List < String > getUserCommands()
+* Map < String, Double > getVariables() 
 
 
 **Justification**
