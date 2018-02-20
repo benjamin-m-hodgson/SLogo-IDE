@@ -10,36 +10,98 @@ On the front-end, the flow of information (from buttons and menus in various Pan
 	
 On the back-end, once the controller receives the user input through the `parseInput()` method, it sends it to the TextFieldParser class through `parseText()` to be split up into individual commands (based on newline markers in the user text). Those individual commands are then sent in the form of a Queue to the CommandMaker, which we are treating as a parsing black box for now and which will create based on the String command Queue a Queue of appropriate objects which all implement the Command interface, meaning they have an `execute()` method. That Queue of Command objects will be sent via the Controller to the Executor class, which will call `.execute()` on each of the commands in the proper order and return to Controller the appropriate value. Within each `.execute()`, the Command object will retrieve and set the proper information within Turtle and Pen objects through methods like `setX()` and `penUp()`, then return the appropriate value. The Controller will then return the final such value to the UserScreen to be displayed to the user, and the entire process begins again with new user input.
 ## User Interface
+The user will interact with the program through three separate screen layouts. 
 
+The first is the setup screen in which the user will select from a drop down the language in which the program should display the front end in. If this file has bad data, is missing or causes an exception to be thrown for any reason, the user will be taken to the second screen.
+
+The second screen is the error screen, which alerts the user something went wrong and allows them to close the program.
+
+If the setup loads correctly, the user will be taken to the third screen. This screen divided into 3 sections.
+
+The right side of the screen will contain an info panel. The info panel will change depending on what the user wants. Initially it will show a panel with five buttons, Variable, History, User Commands, Help and Settings. Upon selection of one of these buttons, the whole info panel will change to the specific panel selected by the button. The only common feature among all five specific panels will be a back button, which will take you back to the initial button selection panel. 
+
+The layout of the five panels can be seen in the image, Info Panel States, below. 
+The variable panel will display all of the variables created by the user in a scrollable pane.
+
+The history panel will be a history of all of the past commands entered into the program in a scrollable pane. 
+
+The User Commands panel will have a list of the the names of the user-defined commands that have been created in a scrollable pane.
+
+The settings panel will allow the user to change the state of the program. In this panel you will be able to change the pen color, the color of the turtles background, the language the user interface is displaying in and the image to use for the turtle through dropdown menus. The options for these dropdown menus will be read in from a file. If a change is selected and throws an error, an alert will be created and shown to the user with the error. 
+
+The help panel will contain a list of the possible commands which a user can input. 
+
+While the right side of the screen will contain an info panel, the bottom, as seen in the image “Screen 3”, will contain a input panel with a textfield and button. The user will input commands to be run here. The user will be able to signal that they are ready to execute their typed command either by hitting the enter key or by selecting the run button. 
+
+The rest of the screen will be taken up by a turtle panel. This panel will display the state of the program. In this sprint it will contain a single turtle and lines drawn by its pen. The pen and background will be able to be different colors, and the turtle image changed through the settings state of the info panel. If the user’s typed command contains an error, an error warning will appear in the bottom left of the turtle panel alerting the user. 
 ## API Details 
 
 ### Backend Internal
 **Methods**
-* Turtle (public constructor)
-    * void hideTurtle()
-    * void showTurtle()
-* protected Pen(Color color, int strokeWidth, boolean up, Group penLines)
-    * void penUp()
-    * void penDown()
-    * void drawLine(double oldX, double oldY, double x, double y)
-* abstract Command(String name)
-    * MakeTurtleCommand(String name, List<Turtle> onScreenTurtles, double x, double y, double angle, Pen pen, ImageView image, boolean visible)
-    * MoveTurtleCommand(String name, List<Turtle> onScreenTurtles, double x, double y)
-        * note: this handles fd, bk
-    * RotateTurtleCommand(String name, List<Turtle> onScreenTurtles, boolean absolute, double rotation) 
-        * lt, rt, seth, towards
-    * PenCommand(String name, List<Turtle> onScreenTurtles, Color color, int strokeWidth, boolean up)
+* protected Turtle(String name, ImageView image, Group pen) 
+    * void setImage(Image image)
+    * void hide()
+    * void show()
+    * void setPenColor(Color color) 
+    * void showPen()
+    * void hidePen()
+    * void clearPen()
+    * double getX()
+    * double getY() 
+    * double getAngle()
+    * boolean getVisibility()
+    * boolean getPenUp() 
+* protected Pen(Color color, boolean penUp)
+    * void addLine(double xStart, double yStart, double xEnd, double yEnd)
+    * void setColor(Color color) 
+    * void show()
+    * void hide()
+    * boolean getPenUp()
+* protected TextFieldParser()
+    * protected Queue<Command> getCommandQueue()
+* protected CommandMaker()
+    * protected Queue<Command> parseStringCommands(Queue<String> stringQueue)
+* protected Executor(CommandQueue queue)
+
+* abstract Command(String name), all subclasses with protected double executeCommand()
+    * MoveTurtleCommand(double x, double y) - this handles fd, bk, setxy, home
+    * RotateTurtleCommand(double rotation, boolean absolute) - lt, rt, seth, toward
+    * TurtleVisibilityCommand(boolean visible)
+    * TurtleImageCommand(ImageView newTurtleImage)
+    * PenVisibilityCommand(boolean visible)
+    * PenColorCommand(Color color)
+    * ClearCommand() 
     * VariableCommand(String varName, double varValue)
     * ErrorCommand(String ErrorMessage)
     * protected double executeCommand()
+    * XQueryCommand()
+	* YQueryCommand()
+	* AngleQueryCommand()
+	* TurtleVisibilityQueryCommand()
+	* PenUpQueryCommand() 
+	* SumMathCommand(double expr1, double expr2) 
+	* DiffMathCommand(double expr1, double expr2) 
+	* ProductMathCommand(double expr1, double expr2)
+	* QuotientMathCommand(double expr1, double expr2)
+	* RemainderMathCommand(double expr1, double expr2) 
+	* MinusMathCommand(double expr)
+	* RandomMathCommand(double expr)
+	* SinMathCommand(double expr)
+	* CosMathCommand(double expr)
+	* TanMathCommand(double expr)
+	* ATanMathCommand(double expr)
+	* LogMathCommand((double expr)
+	* PowMathCommand(double expr)
+	* PiMathCommand()
 * protected Executor(Queue<Command> queue)
 * protected TextFieldParser(String userInput)
-    * protected Queue<Command> parseInput()
-    * protected ImmutableList<String> getUserCommands()
-    * protected UnmodifiableMap<String,Double> getCurrentVars()
+* protected Queue<Command> parseInput()
+* protected ImmutableList<String> getUserCommands()
+* protected UnmodifiableMap<String,Double> getCurrentVars()
 * protected CommandMaker(Queue<String> stringCommandQueue)
-    * protected Queue<Command> parseStringCommands()
+* protected Queue<Command> parseStringCommands()
 
+   
 **Justification**
 * Using an interface for linking different kinds of Commands will allow the program to be flexible to adding new commands if desired. This will be based on the Command design pattern. Potential inheritance structures could be put in place for Variables or Pens to add new features (e.x. for Pens to make a dashed line rather than a solid line).
 * The Turtle/Pen basic classes should be closed for modification, as well as the Executor class and TextFieldParser. Additional functionality will be achieved by creating new implementations of the Command and CommandMaker interfaces, or extending Pen/Turtle classes to new subclasses.
@@ -47,14 +109,17 @@ On the back-end, once the controller receives the user input through the `parseI
 
 ### Backend External
 **Methods**
-* from Controller
-	* void parseInput(String userTextInput) 
-* public MakeNewTurtleCommand(String name, ImageView turtleImage, Color penColor, Group pen)
+* double parseInput(String userTextInput) 
+* MakeNewTurtleCommand(String name, ImageView turtleImage, Color penColor, Group pen)
+* List < String > getUserCommands()
+* Map < String, Double > getVariables() 
+
 
 **Justification**
 * The UserScreen will call the Controller's parseInput method when userInput has been received (i.e. upon user clicking the run button), thus triggering the Controller's command execution process. 
 * The only Command that will be accessible to the UserScreen is the MakeNewTurtleCommand. This is because the UserScreen will add each new Turtle's ImageView and Group of pen lines to its root. This is important because it eliminates the need for the UserScreen to have to "ask" the Controller what updates have been made to the Model. Changes to the back-end Turtle objects will be changes to the same objects that are attached to the UserScreen's root upon Turtle creation. 
 * The TextFieldParser will throw Exceptions in the case of ill-formatted user commands or arguments. The UserScreen will catch these Exceptions, and display an error-specific notification message to the user on a designated part of the user screen.
+* The getUserCommands and getVariables methods will be invoked to update the command history and living variables in a designated section of the UserScreen.
 
 ### Frontend Internal
 **Methods**
@@ -96,7 +161,9 @@ Additional Use Cases:
 * Passing instance of Controller to UserScreen, and vice versa; initializing Turtles on the front- vs. back-end
 	* We discussed whether to pass the Controller into the UserScreen constructor and/or to pass the UserScreen into the Controller constructor. We decided to pass the Controller into the UserScreen constructor so that the UserScreen could trigger the text-to-command parsing process with the `parseText(String userInput)` command. We considered passing the UserScreen into the Controller constructor, which would be made accessible to the Model in conveying model updates; however, we decided against this because we thought it would too severely compromise the compartmentalization of the front- and back-ends. We eliminated the need to pass the UserScreen into the Controller by ensuring that the objects influenced by the Model (Turtle and its Line trails) would be attached to the UserScreen's root before being added to the Model. This ensures that updates to the Model automatically manifest visually on the UserScreen, without the need for a mediator between the back- and front-ends. 
 
+
 ## Team Responsibilities
 ### Backend
 **Susie** will be responsible for the Executor, TextFieldParser, Turtle, and Pen classes, as well as half of the Command classes.
 **Sarah** will be responsible for the Controller and CommandMaker (actual parsing of SLogo) classes as well as half of the Command classes.
+
