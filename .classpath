@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="resources/css/" kind="src" path="src"/>
+	<classpathentry kind="src" path="Languages"/>
+	<classpathentry kind="src" path="Errors"/>
+	<classpathentry kind="src" path="CSS"/>
+	<classpathentry kind="src" path="Settings"/>
+	<classpathentry kind="src" path="Prompts"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
