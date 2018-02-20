@@ -120,6 +120,8 @@ The rest of the screen will be taken up by a turtle panel. This panel will displ
 **Methods**
 * `public Parent getPanel()`
 * `public void makePanel()`
+* `public void changeBackgroundColor()`
+* `public void changeRightPanel(Parent panelRoot)`
 
 **Justification**
 
@@ -128,6 +130,7 @@ The rest of the screen will be taken up by a turtle panel. This panel will displ
 * `public Parent getRoot()`
 * `public void makeRoot()`
 * `public void loadUserScreen()`
+* `public void changeLanguage(String language)`
 
 **Justification**
 

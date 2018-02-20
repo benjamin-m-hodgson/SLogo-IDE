@@ -83,6 +83,16 @@ public class Controller {
 	return null;
     }
     
+    /**
+     * Change the Language. Changes the prompts displayed in the user interface as well as
+     * acceptable commands.
+     * 
+     * @param language: the new language to be used in the program
+     */
+    public void changeLanguage(String language) {
+	
+    }
+    
     private void findResources(String language) {
 	//DEFAULT_LANGUAGE = ResourceBundle.getBundle(language);
     }
