@@ -6,7 +6,30 @@ The purpose of this project is to create an integrated development environment t
 ## Design Overview
 
 ## User Interface
+The user will interact with the program through three separate screen layouts. 
 
+The first is the setup screen in which the user will select from a drop down the language in which the program should display the front end in. If this file has bad data, is missing or causes an exception to be thrown for any reason, the user will be taken to the second screen.
+
+The second screen is the error screen, which alerts the user something went wrong and allows them to close the program.
+
+If the setup loads correctly, the user will be taken to the third screen. This screen divided into 3 sections.
+
+The right side of the screen will contain an info panel. The info panel will change depending on what the user wants. Initially it will show a panel with five buttons, Variable, History, User Commands, Help and Settings. Upon selection of one of these buttons, the whole info panel will change to the specific panel selected by the button. The only common feature among all five specific panels will be a back button, which will take you back to the initial button selection panel. 
+
+The layout of the five panels can be seen in the image, Info Panel States, below. 
+The variable panel will display all of the variables created by the user in a scrollable pane.
+
+The history panel will be a history of all of the past commands entered into the program in a scrollable pane. 
+
+The User Commands panel will have a list of the the names of the user-defined commands that have been created in a scrollable pane.
+
+The settings panel will allow the user to change the state of the program. In this panel you will be able to change the pen color, the color of the turtles background, the language the user interface is displaying in and the image to use for the turtle through dropdown menus. The options for these dropdown menus will be read in from a file. If a change is selected and throws an error, an alert will be created and shown to the user with the error. 
+
+The help panel will contain a list of the possible commands which a user can input. 
+
+While the right side of the screen will contain an info panel, the bottom, as seen in the image “Screen 3”, will contain a input panel with a textfield and button. The user will input commands to be run here. The user will be able to signal that they are ready to execute their typed command either by hitting the enter key or by selecting the run button. 
+
+The rest of the screen will be taken up by a turtle panel. This panel will display the state of the program. In this sprint it will contain a single turtle and lines drawn by its pen. The pen and background will be able to be different colors, and the turtle image changed through the settings state of the info panel. If the user’s typed command contains an error, an error warning will appear in the bottom left of the turtle panel alerting the user. 
 ## API Details 
 
 ### Backend Internal
