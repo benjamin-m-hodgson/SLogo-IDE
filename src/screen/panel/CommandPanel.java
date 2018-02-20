@@ -1,15 +1,13 @@
 package screen.panel;
 
 import javafx.scene.Parent;
-import mediator.Controller;
 
-public class InfoPanel implements Panel {
-
-    private Parent PANEL;
-    private Controller PROGRAM_CONTROLLER;
+public class CommandPanel implements Panel {
     
-    public InfoPanel(Controller programController) {
-	PROGRAM_CONTROLLER = programController;
+    private Parent PANEL;
+    
+    public CommandPanel() {
+	
     }
 
     @Override
@@ -25,5 +23,5 @@ public class InfoPanel implements Panel {
 	}
 	return PANEL;
     }
-    
+
 }

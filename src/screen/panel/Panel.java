@@ -2,25 +2,18 @@ package screen.panel;
 
 import javafx.scene.Parent;
 
-public abstract class Panel {
-    
-    protected Parent PANEL;
+public interface Panel {
     
     /**
      * If property PANEL is null, calls makePanel() to generate the root. 
      * 
      * @return PANEL: The Parent node to be used in the Scene object. 
      */
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
-	}
-	return PANEL;
-    }
+    public Parent getPanel();
     
     /**
      * Creates the root panel to be displayed on the Screen
      */
-    protected abstract void makePanel();
+    public abstract void makePanel();
 
 }

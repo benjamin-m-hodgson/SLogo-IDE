@@ -10,10 +10,11 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import screen.ErrorScreen;
 import screen.UserScreen;
 import turtle.Turtle;
 
-public class Controller throws IllegalArgumentException{
+public class Controller {
     //private final String DEFAULT_RESOURCE_PACKAGE = "resources/";
     private String DEFAULT_CSS = Controller.class.getClassLoader().
 	    getResource("default.css").toExternalForm(); 
@@ -60,13 +61,22 @@ public class Controller throws IllegalArgumentException{
     
     // TODO: get language and call findResources(String language)
     public void loadUserScreen() {
-	UserScreen programScreen = new UserScreen(this);
-	Parent programRoot = programScreen.getRoot();
-	Scene programScene = new Scene(programRoot);	
-	programScene.getStylesheets().add(DEFAULT_CSS);
-	PROGRAM_STAGE.setScene(programScene);
-	// TODO: fix below
-	findResources("English");
+	try {
+	    UserScreen programScreen = new UserScreen(this);
+	    Parent programRoot = programScreen.getRoot();
+	    Scene programScene = new Scene(programRoot);	
+	    programScene.getStylesheets().add(DEFAULT_CSS);
+	    PROGRAM_STAGE.setScene(programScene);
+	    // TODO: fix below
+	    findResources("English");
+	}
+	catch (Exception e) {
+	    String errorMessage = "Error loading User Screen!";
+	    ErrorScreen errorScreen = new ErrorScreen(this, errorMessage);
+	    Parent errorScreenRoot = errorScreen.getRoot();
+	    Scene errorScene = new Scene(errorScreenRoot);
+	    PROGRAM_STAGE.setScene(errorScene);
+	}
     }
     
     public List<Turtle> onScreenTurtles() {

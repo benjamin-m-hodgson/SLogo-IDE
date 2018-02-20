@@ -19,9 +19,9 @@ public class UserScreen implements Screen {
     @Override
     public void makeRoot() {
 	BorderPane rootPane = new BorderPane();
-	rootPane.setRight(new InfoPanel().getPanel());
-	rootPane.setBottom(new InputPanel().getPanel());
-	rootPane.setCenter(new TurtlePanel().getPanel());
+	rootPane.setRight(new InfoPanel(PROGRAM_CONTROLLER).getPanel());
+	rootPane.setBottom(new InputPanel(PROGRAM_CONTROLLER).getPanel());
+	rootPane.setCenter(new TurtlePanel(PROGRAM_CONTROLLER).getPanel());
 	ROOT = rootPane;
     }
 
@@ -31,6 +31,12 @@ public class UserScreen implements Screen {
 	    makeRoot();
 	}
 	return ROOT;
+    }
+
+    @Override
+    public void changeBackgroundColor(String color) {
+	// TODO Auto-generated method stub
+	
     }
     
 

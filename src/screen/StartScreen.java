@@ -59,4 +59,10 @@ public class StartScreen implements Screen {
 	});
 	return startButton;
     }
+
+    @Override
+    public void changeBackgroundColor(String color) {
+	// TODO Auto-generated method stub
+	
+    }
 }

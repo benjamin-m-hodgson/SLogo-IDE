@@ -30,4 +30,10 @@ public class ErrorScreen implements Screen {
 	return ROOT;
     }
 
+    @Override
+    public void changeBackgroundColor(String color) {
+	// TODO Auto-generated method stub
+	
+    }
+
 }

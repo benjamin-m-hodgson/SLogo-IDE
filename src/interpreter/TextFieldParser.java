@@ -6,7 +6,7 @@ import java.util.Queue;
 
 import command.Command;
 
-public interface TextFieldParser throws ParseException {
+public interface TextFieldParser {
 	/**
 	 * Returns and UnmodifiableMap of string variable keys to their double values
 	 */

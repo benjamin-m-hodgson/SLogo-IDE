@@ -3,7 +3,7 @@
   realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="Driver" project="slogo_team11" file="/slogo_team11/src/Driver.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="122" width="136" x="1146" y="37"/>    
+    <position height="122" width="136" x="612" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <interface id="2" language="java" name="command.Command" project="slogo_team11" 
     file="/slogo_team11/src/command/Command.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="86" width="167" x="648" y="37"/>    
+    <position height="86" width="167" x="405" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
@@ -30,7 +30,7 @@
   </interface>  
   <interface id="4" language="java" name="interpreter.TextFieldParser" project="slogo_team11" 
     file="/slogo_team11/src/interpreter/TextFieldParser.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="122" width="251" x="855" y="37"/>    
+    <position height="122" width="251" x="1238" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
@@ -39,7 +39,7 @@
   </interface>  
   <class id="5" language="java" name="mediator.Controller" project="slogo_team11" 
     file="/slogo_team11/src/mediator/Controller.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="194" width="418" x="2141" y="289"/>    
+    <position height="194" width="418" x="3184" y="289"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
@@ -48,25 +48,25 @@
   </class>  
   <interface id="6" language="java" name="mediator.Executor" project="slogo_team11" 
     file="/slogo_team11/src/mediator/Executor.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="86" width="167" x="1322" y="37"/>    
+    <position height="86" width="167" x="788" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </interface>  
-  <class id="7" language="java" name="screen.Screen" project="slogo_team11" file="/slogo_team11/src/screen/Screen.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="139" width="137" x="1895" y="37"/>    
+  <interface id="7" language="java" name="screen.Screen" project="slogo_team11" 
+    file="/slogo_team11/src/screen/Screen.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="122" width="249" x="3642" y="289"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
-  </class>  
+  </interface>  
   <class id="8" language="java" name="screen.ErrorScreen" project="slogo_team11" 
     file="/slogo_team11/src/screen/ErrorScreen.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="104" width="206" x="1895" y="289"/>    
+    <position height="140" width="249" x="3353" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
@@ -75,121 +75,217 @@
   </class>  
   <class id="9" language="java" name="screen.StartScreen" project="slogo_team11" 
     file="/slogo_team11/src/screen/StartScreen.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="104" width="166" x="1483" y="289"/>    
+    <position height="140" width="249" x="3642" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="screen.panel.InfoPanel" project="slogo_team11" 
-    file="/slogo_team11/src/screen/panel/InfoPanel.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="104" width="131" x="1529" y="37"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
-      <operations public="true" package="true" protected="true" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="11" language="java" name="screen.panel.InputPanel" project="slogo_team11" 
-    file="/slogo_team11/src/screen/panel/InputPanel.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="104" width="131" x="2770" y="289"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
-      <operations public="true" package="true" protected="true" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="12" language="java" name="screen.panel.ScreenPanel" project="slogo_team11" 
-    file="/slogo_team11/src/screen/panel/ScreenPanel.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="104" width="131" x="2599" y="289"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
-      <operations public="true" package="true" protected="true" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="13" language="java" name="screen.panel.TurtlePanel" project="slogo_team11" 
-    file="/slogo_team11/src/screen/panel/TurtlePanel.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="104" width="131" x="2941" y="289"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
-      <operations public="true" package="true" protected="true" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <interface id="14" language="java" name="turtle.Turtle" project="slogo_team11" 
-    file="/slogo_team11/src/turtle/Turtle.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="212" width="155" x="1700" y="37"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
-      <operations public="true" package="true" protected="true" private="false" static="true"/>    
-    </display>  
-  </interface>  
-  <interface id="15" language="java" name="turtle.pen.Pen" project="slogo_team11" 
-    file="/slogo_team11/src/turtle/pen/Pen.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="176" width="203" x="405" y="37"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
-      <operations public="true" package="true" protected="true" private="false" static="true"/>    
-    </display>  
-  </interface>  
-  <class id="16" language="java" name="screen.UserScreen" project="slogo_team11" 
+  <class id="10" language="java" name="screen.UserScreen" project="slogo_team11" 
     file="/slogo_team11/src/screen/UserScreen.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="104" width="166" x="1689" y="289"/>    
+    <position height="140" width="249" x="3931" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="17" language="java" name="screen.panel.Panel" project="slogo_team11" 
+  <class id="11" language="java" name="screen.panel.CommandPanel" project="slogo_team11" 
+    file="/slogo_team11/src/screen/panel/CommandPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="122" width="137" x="2389" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="screen.panel.HelpPanel" project="slogo_team11" 
+    file="/slogo_team11/src/screen/panel/HelpPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="122" width="132" x="2217" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="screen.panel.HistoryPanel" project="slogo_team11" 
+    file="/slogo_team11/src/screen/panel/HistoryPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="122" width="132" x="2045" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="screen.panel.InfoPanel" project="slogo_team11" 
+    file="/slogo_team11/src/screen/panel/InfoPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="122" width="151" x="2761" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="screen.panel.InputPanel" project="slogo_team11" 
+    file="/slogo_team11/src/screen/panel/InputPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="122" width="159" x="2952" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="16" language="java" name="screen.panel.Panel" project="slogo_team11" 
     file="/slogo_team11/src/screen/panel/Panel.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="139" width="132" x="2770" y="37"/>    
+    <position height="104" width="132" x="2217" y="289"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="17" language="java" name="screen.panel.SettingsPanel" project="slogo_team11" 
+    file="/slogo_team11/src/screen/panel/SettingsPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="122" width="132" x="1701" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <generalization id="18">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="17"/>  
-  </generalization>  
-  <generalization id="19">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="7"/>  
-  </generalization>  
-  <generalization id="20">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="7"/>  
-  </generalization>  
-  <generalization id="21">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="7"/>  
-  </generalization>  
-  <generalization id="22">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="17"/>  
-  </generalization>  
-  <association id="23">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="24" name="PROGRAM_CONTROLLER">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="25" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
+  <class id="18" language="java" name="screen.panel.TurtlePanel" project="slogo_team11" 
+    file="/slogo_team11/src/screen/panel/TurtlePanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="122" width="162" x="3151" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="screen.panel.VariablesPanel" project="slogo_team11" 
+    file="/slogo_team11/src/screen/panel/VariablesPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="122" width="132" x="1873" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="20" language="java" name="turtle.Turtle" project="slogo_team11" 
+    file="/slogo_team11/src/turtle/Turtle.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="212" width="155" x="2566" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="21" language="java" name="turtle.pen.Pen" project="slogo_team11" 
+    file="/slogo_team11/src/turtle/pen/Pen.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="176" width="203" x="995" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <realization id="22">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="16"/>  
+  </realization>  
+  <realization id="23">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="16"/>  
+  </realization>  
+  <realization id="25">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="16"/>  
+  </realization>  
+  <association id="26">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="27" name="PROGRAM_CONTROLLER"/>      
+      <multiplicity id="28" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="26">    
+  <realization id="29">    
     <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="17"/>  
-  </generalization>  
+    <end type="TARGET" refId="16"/>  
+  </realization>  
+  <association id="30">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="31" name="PROGRAM_CONTROLLER"/>      
+      <multiplicity id="32" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="33">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="7"/>  
+  </realization>  
+  <realization id="34">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="16"/>  
+  </realization>  
+  <realization id="35">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="16"/>  
+  </realization>  
+  <association id="36">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="37" name="PROGRAM_CONTROLLER"/>      
+      <multiplicity id="38" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="39">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="40" name="PROGRAM_CONTROLLER"/>      
+      <multiplicity id="41" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="42">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="16"/>  
+  </realization>  
+  <realization id="43">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="16"/>  
+  </realization>  
+  <association id="44">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="45" name="PROGRAM_CONTROLLER"/>      
+      <multiplicity id="46" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="47">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="7"/>  
+  </realization>  
+  <realization id="48">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="7"/>  
+  </realization>  
+  <realization id="49">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="16"/>  
+  </realization>  
+  <association id="50">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="51" name="PROGRAM_CONTROLLER"/>      
+      <multiplicity id="52" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="false" static="true"/>    

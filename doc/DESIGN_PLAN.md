@@ -118,12 +118,16 @@ The rest of the screen will be taken up by a turtle panel. This panel will displ
 
 ### Frontend Internal
 **Methods**
+* `public Parent getPanel()`
+* `public void makePanel()`
 
 **Justification**
 
 ### Frontend External
 **Methods**
-* 
+* `public Parent getRoot()`
+* `public void makeRoot()`
+* `public void loadUserScreen()`
 
 **Justification**
 

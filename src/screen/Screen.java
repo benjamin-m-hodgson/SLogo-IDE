@@ -15,4 +15,12 @@ public interface Screen {
      * Creates the root node to be displayed on the Screen
      */
     public abstract void makeRoot();
+    
+    /**
+     * Changes the background color of the screen
+     * 
+     * @param color: The desired color to change the Background color to
+     */
+    public abstract void changeBackgroundColor(String color);
+    
 }
