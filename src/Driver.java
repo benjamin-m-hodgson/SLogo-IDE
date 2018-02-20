@@ -15,6 +15,9 @@ import screen.StartScreen;
  */
 public class Driver extends Application {  
     
+    private final double DEFAULT_HEIGHT = 650;
+    private final double DEFAULT_WIDTH = 900;
+    
     /**
      * Initialize the program and begin the animation loop 
      * 
@@ -25,7 +28,7 @@ public class Driver extends Application {
 	Controller programController = new Controller(primaryStage);
 	StartScreen startScreen = new StartScreen(programController);
 	Parent programRoot = startScreen.getRoot();
-	Scene programScene = new Scene(programRoot);	
+	Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	primaryStage.setScene(programScene);
 	primaryStage.show();		
     }

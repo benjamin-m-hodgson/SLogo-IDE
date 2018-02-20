@@ -1,6 +1,7 @@
 package screen.panel;
 
 import javafx.scene.Parent;
+import javafx.scene.layout.VBox;
 import mediator.Controller;
 
 public class InfoPanel implements Panel {
@@ -14,7 +15,9 @@ public class InfoPanel implements Panel {
 
     @Override
     public void makePanel() {
-	// TODO Auto-generated method stub
+	VBox panelRoot = new VBox();
+	panelRoot.setId("infoPanel");
+	PANEL = panelRoot;
 	
     }
 

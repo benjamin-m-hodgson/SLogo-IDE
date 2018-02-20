@@ -4,4 +4,46 @@
 #startScreenRoot {
 	-fx-alignment: center;
 	-fx-background-color: #d3d3d3;
+	-fx-background-radius: 2;
+}
+/******************************************************************************************/
+/* The root containing the elements displayed in the user screen*/
+/******************************************************************************************/
+#userScreenRoot {
+	-fx-alignment: center;
+	-fx-background-color: #ffffff;
+}
+/******************************************************************************************/
+/* The root containing the informational panel displayed on the screen */
+/******************************************************************************************/
+#infoPanel {
+	-fx-alignment: center;
+	-fx-max-width: 200;
+	-fx-min-width: 200;
+	-fx-pref-width: 200;
+	-fx-background-color: #ffffff;
+	-fx-effect: innershadow(three-pass-box, rgba(100, 149, 237, 0.7), 10, 0.5, 0, 2);
+	-fx-padding: 5 15 5 15;
+	-fx-border-style: solid inside;
+	-fx-border-width: 1;
+	-fx-border-insets: 0;
+	-fx-border-radius: 2;
+	-fx-border-color: #6495ed;
+}
+/******************************************************************************************/
+/* The root containing the informational panel displayed on the screen */
+/******************************************************************************************/
+#inputPanel {
+	-fx-alignment: center;
+	-fx-max-height: 150;
+	-fx-min-height: 150;
+	-fx-pref-height: 150;
+	-fx-background-color: #ffffff;
+	-fx-effect: innershadow(three-pass-box, rgba(100, 149, 237, 0.7), 10, 0.5, 0, 2);
+	-fx-padding: 15 5 15 5;
+	-fx-border-style: solid inside;
+	-fx-border-width: 1;
+	-fx-border-insets: 0;
+	-fx-border-radius: 2;
+	-fx-border-color: #6495ed;
 }
