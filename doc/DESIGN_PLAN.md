@@ -12,7 +12,7 @@ The purpose of this project is to create an integrated development environment t
 ### Backend Internal
 **Methods**
 * protected Turtle(String name, ImageView image, Group pen) 
-    * void setTurtleImage(ImageView image)
+    * void setImage(Image image)
     * void hide()
     * void show()
     * void setPenColor(Color color) 
@@ -38,13 +38,13 @@ The purpose of this project is to create an integrated development environment t
 
 * abstract Command(String name), all subclasses with protected double executeCommand()
 
-    * MoveTurtleCommand(String name, List<Turtle> onScreenTurtles, double x, double y) - this handles fd, bk, setxy, home
-    * RotateTurtleCommand(String name, List<Turtle> onScreenTurtles, double rotation, boolean absolute) - lt, rt, seth, toward
-    * TurtleVisibilityCommand(String name, List<Turtle> onScreenTurtles, boolean visible)
-    * TurtleImageCommand(String name, List<Turtle> onScreenTurtles, ImageView newTurtleImage)
-    * PenVisibilityCommand(String name, List<Turtle> onScreenTurtles, boolean visible)
-    * PenColorCommand(String name, List<Turtle> onScreenTurtles, Color color)
-    * ClearCommand(List<Turtle> onScreenTurtles) 
+    * MoveTurtleCommand(double x, double y) - this handles fd, bk, setxy, home
+    * RotateTurtleCommand(double rotation, boolean absolute) - lt, rt, seth, toward
+    * TurtleVisibilityCommand(boolean visible)
+    * TurtleImageCommand(ImageView newTurtleImage)
+    * PenVisibilityCommand(boolean visible)
+    * PenColorCommand(Color color)
+    * ClearCommand() 
     * VariableCommand(String varName, double varValue)
     * XQueryCommand()
     	* YQueryCommand()
@@ -73,10 +73,10 @@ The purpose of this project is to create an integrated development environment t
 
 ### Backend External
 **Methods**
-* void parseInput(String userTextInput) 
-* public MakeNewTurtleCommand(String name, ImageView turtleImage, Color penColor, Group pen)
-* public List<String> getUserCommands()
-* public Map<String, Double> getVariables() 
+* double parseInput(String userTextInput) 
+* MakeNewTurtleCommand(String name, ImageView turtleImage, Color penColor, Group pen)
+* List<String> getUserCommands()
+* Map<String, Double> getVariables() 
 
 
 **Justification**
