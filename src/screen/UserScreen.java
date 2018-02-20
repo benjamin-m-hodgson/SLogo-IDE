@@ -1,8 +1,10 @@
 package screen;
 
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import mediator.Controller;
+import screen.panel.InfoPanel;
+import screen.panel.InputPanel;
+import screen.panel.TurtlePanel;
 
 public class UserScreen extends Screen {
 
@@ -13,9 +15,9 @@ public class UserScreen extends Screen {
     @Override
     protected void makeRoot() {
 	BorderPane rootPane = new BorderPane();
-	rootPane.setRight(new Label("infoPanel"));
-	rootPane.setBottom(new Label("inputPanel"));
-	rootPane.setCenter(new Label("turtlePanel"));
+	rootPane.setRight(new InfoPanel().getPanel());
+	rootPane.setBottom(new InputPanel().getPanel());
+	rootPane.setCenter(new TurtlePanel().getPanel());
 	ROOT = rootPane;
     }
     

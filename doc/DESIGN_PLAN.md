@@ -26,9 +26,9 @@ The right side of the screen will contain an info panel. The info panel will cha
 The layout of the five panels can be seen in the image, Info Panel States, below. The variable panel will display all of the variables created by the user in a scrollable pane. The history panel will be a history of all of the past commands entered into the program in a scrollable pane. The User Commands panel will have a list of the the names of the user-defined commands that have been created in a scrollable pane. The settings panel will allow the user to change the state of the program. In this panel you will be able to change the pen color, the color of the turtles background, the language the user interface is displaying in and the image to use for the turtle through dropdown menus. The options for these dropdown menus will be read in from a file. If a change is selected and throws an error, an alert will be created and shown to the user with the error. Finally, the help panel will contain a list of the possible commands which a user can input. 
 ![](https://i.imgur.com/qVzdaWG.png)
 
-While the right side of the screen will contain an info panel, the bottom, as seen in the image “Screen 3”, will contain a input panel with a textfield and button. The user will input commands to be run here. The user will be able to signal that they are ready to execute their typed command either by hitting the enter key or by selecting the run button. 
+While the right side of the screen will contain an info panel, the bottom, as seen in the image â€œScreen 3â€�, will contain a input panel with a textfield and button. The user will input commands to be run here. The user will be able to signal that they are ready to execute their typed command either by hitting the enter key or by selecting the run button. 
 
-The rest of the screen will be taken up by a turtle panel. This panel will display the state of the program. In this sprint it will contain a single turtle and lines drawn by its pen. The pen and background will be able to be different colors, and the turtle image changed through the settings state of the info panel. If the user’s typed command contains an error, an error warning will appear in the bottom left of the turtle panel alerting the user. 
+The rest of the screen will be taken up by a turtle panel. This panel will display the state of the program. In this sprint it will contain a single turtle and lines drawn by its pen. The pen and background will be able to be different colors, and the turtle image changed through the settings state of the info panel. If the userâ€™s typed command contains an error, an error warning will appear in the bottom left of the turtle panel alerting the user. 
 ## API Details 
 
 ### Backend Internal
@@ -123,6 +123,7 @@ The rest of the screen will be taken up by a turtle panel. This panel will displ
 
 ### Frontend External
 **Methods**
+* 
 
 **Justification**
 
