@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import screen.UserScreen;
 
 public class Controller {
-    
     //private final String DEFAULT_RESOURCE_PACKAGE = "resources/";
     private String DEFAULT_CSS = Controller.class.getClassLoader().
 	    getResource("default.css").toExternalForm(); 
@@ -22,7 +21,23 @@ public class Controller {
     public Controller(Stage primaryStage) {
 	PROGRAM_STAGE = primaryStage;
     }
-    
+    /**
+     * Makes a new Turtle given a name, an ImageView (previously attached to the Stage), a penColor, and an empty Group
+     * that has already been attached to the Stage to hold lines for the pen
+     */
+    public double makeNewTurtleCommand(String name, ImageView turtleImage, Color penColor, Group penLines);
+    /**
+     * Returns an UnmodifiableMap of variables to their values
+     */
+    public Map<String, Double> getVariables();
+    /**
+     * Returns an ImmutableList of available User Commands
+     */
+    public List<String> getUserCommands();
+    /**
+     * Parses input from a text field or button press by the user
+     */
+    public double parseInput(String userTextInput);
     // TODO: get language and call findResources(String language)
     public void loadUserScreen() {
 	UserScreen programScreen = new UserScreen(this);
