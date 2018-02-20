@@ -1,6 +1,5 @@
 package mediator;
 
-import java.io.File;
 import java.util.ResourceBundle;
 
 import javafx.scene.Parent;
