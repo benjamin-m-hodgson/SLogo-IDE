@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+<<<<<<< HEAD
 	<classpathentry excluding="resources/css/" kind="src" path="src"/>
 	<classpathentry kind="src" path="Languages"/>
 	<classpathentry kind="src" path="Errors"/>
@@ -7,5 +8,9 @@
 	<classpathentry kind="src" path="Settings"/>
 	<classpathentry kind="src" path="Prompts"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+=======
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+>>>>>>> 570db8c8c8451f4eb7e6934dba7a58762eb546e6
 	<classpathentry kind="output" path="bin"/>
 </classpath>
