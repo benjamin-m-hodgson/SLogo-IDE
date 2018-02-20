@@ -1,5 +1,6 @@
 package turtle;
 
+import javafx.scene.image.ImageView;
 
 public class Turtle {
     
@@ -8,5 +9,12 @@ public class Turtle {
     private double oldX;
     private double oldY;
     
+    public ImageView getImage() {
+	return null;
+    }
+    
+    public void setImage(ImageView image) {
+	
+    }  
     
 }

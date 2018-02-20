@@ -1,11 +1,13 @@
 package mediator;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import screen.UserScreen;
+import turtle.Turtle;
 
 public class Controller {
     
@@ -32,6 +34,10 @@ public class Controller {
 	PROGRAM_STAGE.setScene(programScene);
 	// TODO: fix below
 	findResources("English");
+    }
+    
+    public List<Turtle> onScreenTurtles() {
+	return null;
     }
     
     private void findResources(String language) {
