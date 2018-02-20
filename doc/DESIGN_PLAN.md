@@ -11,29 +11,61 @@ The purpose of this project is to create an integrated development environment t
 
 ### Backend Internal
 **Methods**
-* Turtle (public constructor)
-    * void hideTurtle()
-    * void showTurtle()
-* protected Pen(Color color, int strokeWidth, boolean up, Group penLines)
-    * void penUp()
-    * void penDown()
-    * void drawLine(double oldX, double oldY, double x, double y)
-* abstract Command(String name)
-    * MakeTurtleCommand(String name, List<Turtle> onScreenTurtles, double x, double y, double angle, Pen pen, ImageView image, boolean visible)
-    * MoveTurtleCommand(String name, List<Turtle> onScreenTurtles, double x, double y)
-        * note: this handles fd, bk
-    * RotateTurtleCommand(String name, List<Turtle> onScreenTurtles, boolean absolute, double rotation) 
-        * lt, rt, seth, towards
-    * PenCommand(String name, List<Turtle> onScreenTurtles, Color color, int strokeWidth, boolean up)
-    * VariableCommand(String varName, double varValue)
-    * ErrorCommand(String ErrorMessage)
-    * protected double executeCommand()
-* protected Executor(Queue<Command> queue)
-* protected TextFieldParser(String userInput)
-    * protected Queue<Command> parseInput()
-* protected CommandMaker(Queue<String> stringCommandQueue)
-    * protected Queue<Command> parseStringCommands()
+* protected Turtle(String name, ImageView image, Group pen) 
+    * void setTurtleImage(ImageView image)
+    * void hide()
+    * void show()
+    * void setPenColor(Color color) 
+    * void showPen()
+    * void hidePen()
+    * void clearPen()
+    * double getX()
+    * double getY() 
+    * double getAngle()
+    * boolean getVisibility()
+    * boolean getPenUp() 
+* protected Pen(Color color, boolean penUp)
+    * void addLine(double xStart, double yStart, double xEnd, double yEnd)
+    * void setColor(Color color) 
+    * void show()
+    * void hide()
+    * boolean getPenUp()
+* protected TextFieldParser()
+    * protected Queue<Command> getCommandQueue()
+* protected CommandMaker()
+    * protected Queue<Command> parseStringCommands(Queue<String> stringQueue)
+* protected Executor(CommandQueue queue)
 
+* abstract Command(String name), all subclasses with protected double executeCommand()
+
+    * MoveTurtleCommand(String name, List<Turtle> onScreenTurtles, double x, double y) - this handles fd, bk, setxy, home
+    * RotateTurtleCommand(String name, List<Turtle> onScreenTurtles, double rotation, boolean absolute) - lt, rt, seth, toward
+    * TurtleVisibilityCommand(String name, List<Turtle> onScreenTurtles, boolean visible)
+    * TurtleImageCommand(String name, List<Turtle> onScreenTurtles, ImageView newTurtleImage)
+    * PenVisibilityCommand(String name, List<Turtle> onScreenTurtles, boolean visible)
+    * PenColorCommand(String name, List<Turtle> onScreenTurtles, Color color)
+    * ClearCommand(List<Turtle> onScreenTurtles) 
+    * VariableCommand(String varName, double varValue)
+    * XQueryCommand()
+    	* YQueryCommand()
+    	* AngleQueryCommand()
+    	* TurtleVisibilityQueryCommand()
+    	* PenUpQueryCommand() 
+    	* SumMathCommand(double expr1, double expr2) 
+    	* DiffMathCommand(double expr1, double expr2) 
+    	* ProductMathCommand(double expr1, double expr2)
+    	* QuotientMathCommand(double expr1, double expr2)
+    	* RemainderMathCommand(double expr1, double expr2) 
+    	* MinusMathCommand(double expr)
+    	* RandomMathCommand(double expr)
+    	* SinMathCommand(double expr)
+    	* CosMathCommand(double expr)
+    	* TanMathCommand(double expr)
+    	* ATanMathCommand(double expr)
+    	* LogMathCommand((double expr)
+    	* PowMathCommand(double expr)
+    	* PiMathCommand()
+    
 **Justification**
 * Using an interface for linking different kinds of Commands will allow the program to be flexible to adding new commands if desired. This will be based on the Command design pattern. A potential CommandMaker interface will allow different types of commands (i.e. text input vs. slider/button input) to be parsed correctly and go through the flow of the program correctly. Potential inheritance structures could be put in place for Variables or Pens to add new features (e.x. for Pens to make a dashed line rather than a solid line).
 * The Turtle/Pen basic classes should be closed for modification, as well as the Executor class and TextFieldParser. Additional functionality will be achieved by creating new implementations of the Command and CommandMaker interfaces, or extending Pen/Turtle classes to new subclasses.
@@ -41,14 +73,17 @@ The purpose of this project is to create an integrated development environment t
 
 ### Backend External
 **Methods**
-* from Controller
-	* void parseInput(String userTextInput) 
+* void parseInput(String userTextInput) 
 * public MakeNewTurtleCommand(String name, ImageView turtleImage, Color penColor, Group pen)
+* public Map<String, String> getUserCommands()
+* public Map<String, String> getVariables() 
+
 
 **Justification**
 * The UserScreen will call the Controller's parseInput method when userInput has been received (i.e. upon user clicking the run button), thus triggering the Controller's command execution process. 
 * The only Command that will be accessible to the UserScreen is the MakeNewTurtleCommand. This is because the UserScreen will add each new Turtle's ImageView and Group of pen lines to its root. This is important because it eliminates the need for the UserScreen to have to "ask" the Controller what updates have been made to the Model. Changes to the back-end Turtle objects will be changes to the same objects that are attached to the UserScreen's root upon Turtle creation. 
 * The TextFieldParser will throw Exceptions in the case of ill-formatted user commands or arguments. The UserScreen will catch these Exceptions, and display an error-specific notification message to the user on a designated part of the user screen.
+* The getUserCommands and getVariables methods will be invoked to update the command history and living variables in a designated section of the UserScreen.
 
 ### Frontend Internal
 **Methods**
