@@ -75,8 +75,8 @@ The purpose of this project is to create an integrated development environment t
 **Methods**
 * double parseInput(String userTextInput) 
 * MakeNewTurtleCommand(String name, ImageView turtleImage, Color penColor, Group pen)
-* List<String> getUserCommands()
-* Map<String, Double> getVariables() 
+* List < String > getUserCommands()
+* Map < String, Double > getVariables() 
 
 
 **Justification**
@@ -126,4 +126,3 @@ Additional Use Cases:
 	* We discussed whether to pass the Controller into the UserScreen constructor and/or to pass the UserScreen into the Controller constructor. We decided to pass the Controller into the UserScreen constructor so that the UserScreen could trigger the text-to-command parsing process with the `parseText(String userInput)` command. We considered passing the UserScreen into the Controller constructor, which would be made accessible to the Model in conveying model updates; however, we decided against this because we thought it would too severely compromise the compartmentalization of the front- and back-ends. We eliminated the need to pass the UserScreen into the Controller by ensuring that the objects influenced by the Model (Turtle and its Line trails) would be attached to the UserScreen's root before being added to the Model. This ensures that updates to the Model automatically manifest visually on the UserScreen, without the need for a mediator between the back- and front-ends. 
 
 ## Team Responsibilities
-
