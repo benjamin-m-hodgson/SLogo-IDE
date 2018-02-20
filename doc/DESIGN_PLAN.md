@@ -31,6 +31,8 @@ While the right side of the screen will contain an info panel, the bottom, as se
 The rest of the screen will be taken up by a turtle panel. This panel will display the state of the program. In this sprint it will contain a single turtle and lines drawn by its pen. The pen and background will be able to be different colors, and the turtle image changed through the settings state of the info panel. If the userâ€™s typed command contains an error, an error warning will appear in the bottom left of the turtle panel alerting the user. 
 ## API Details 
 
+[Current UML Class Diagram](slogo-class-diagram.png)
+
 ### Backend Internal
 **Methods**
 * protected Turtle(String name, ImageView image, Group pen) 
@@ -156,9 +158,9 @@ Additional Use Cases:
 
 6. **The user changes the pen color**: The user selects a new pen color from a dropdown menu in the GUI. The `handleOnButtonPressed` command will call myController.parseInput(String code). The code will consist of a predetermined prefix indicating to the parser that this input is meant to change the pen color, along with the color to be changed to. The controller will pass this String to the TextFieldParser which will use `parseText(String string)` and see that there is one line of commands. It will then create a queue containing the input String. This String will then go to CommandMaker, which will create a `ChangePenColorCommand` with an instance variable corresponding to the Turtle whose pen needs to be changed and an instance variable with the new color. The queue containing the one command will then be passed back to the Controller which will create an Executor which will call `.execute()` on the `ChangePenColorCommand`. The command will then call the method `.setPenFill()` on the turtle in question. The correct return will then be passed back to the Executor, then Controller and finally the settings panel indicating the result of the call.
 
-7.
+7. **Changing the right panel**: The user will click a button on the right side of the screen. Depending upon the button pressed, a new Panel will be created. The Panel will be a class that implements the `Panel.java` interface and contains a method `public Parent getPanel()` that returns the new Panel to be placed on the right side of the Screen. The Screen class will contain an instance variable housing the BorderPane that acts as the root of the Screen. The new Panel root will be set to the right of the Screen using the BorderPane `setRight(Parent root)` method. 
 
-8.
+8. **Selecting/Changing a language**: The user will select an option for a new Language from a ComboBox in the SettingsPanel. Upon pressing an apply Button also in the SettingsPanel, the Controller method `changeLanguage(String language)` will be called. This method will update the ResourceBundles in the Controller class to reflect the new .properties files to be used to interpret user inputted commands and determine which Strings are displayed to the user as prompts in the user interface. 
 
 ## Design Considerations/Notable Design Decisions
 
