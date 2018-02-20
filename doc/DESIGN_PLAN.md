@@ -161,4 +161,6 @@ Additional Use Cases:
 ### Backend
 **Susie** will be responsible for the Executor, TextFieldParser, Turtle, and Pen classes, as well as half of the Command classes.
 **Sarah** will be responsible for the Controller and CommandMaker (actual parsing of SLogo) classes as well as half of the Command classes.
+**Ben** will be responsible for the Userscreen, Startscreen and Errorscreen, along with the input panel and CSS reading. 
+**Andrew** will be responsible for the info, variable, user-command, history, settings and help panels, along with the turtle panel and error notification in turtle panel.
 
