@@ -124,6 +124,8 @@ The rest of the screen will be taken up by a turtle panel. This panel will displ
 * `public void changeRightPanel(Parent panelRoot)`
 
 **Justification**
+* Using an interface to create new panels makes the program more flexible if we have to support adding different display panels later on. 
+* Keep the implementation mostly private. Few standardized public methods in the interface makes generating the Panel independent. This increases flexibility because different Panels may need different design layouts/formatting.
 
 ### Frontend External
 **Methods**
@@ -133,6 +135,8 @@ The rest of the screen will be taken up by a turtle panel. This panel will displ
 * `public void changeLanguage(String language)`
 
 **Justification**
+* Keep communication between the front end and back end to a minimum. Isolate method implementation in the Controller class to exploit Inversion of Control and Dependency Injection. 
+* Keep smaller, helper methods private to conceal implementation and allow classes higher in the class hierarchy, such as the Controller class, to determine program functionality. 
 
 ## API Example Code
 * "The user types 'fd 50' in the command window, and sees the turtle move in the display window leaving a trail, and the command is added to the environment's history."
