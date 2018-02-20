@@ -17,8 +17,10 @@ The first is the setup screen in which the user will select from a drop down the
 
 The second screen is the error screen, which alerts the user something went wrong and allows them to close the program.
 ![Screen2](https://i.imgur.com/4wmQzqo.png)
+
 If the setup loads correctly, the user will be taken to the third screen. This screen divided into 3 sections.
 ![Screen3](https://i.imgur.com/OUZpnEx.png)
+
 The right side of the screen will contain an info panel. The info panel will change depending on what the user wants. Initially it will show a panel with five buttons, Variable, History, User Commands, Help and Settings. Upon selection of one of these buttons, the whole info panel will change to the specific panel selected by the button. The only common feature among all five specific panels will be a back button, which will take you back to the initial button selection panel. 
 
 The layout of the five panels can be seen in the image, Info Panel States, below. The variable panel will display all of the variables created by the user in a scrollable pane. The history panel will be a history of all of the past commands entered into the program in a scrollable pane. The User Commands panel will have a list of the the names of the user-defined commands that have been created in a scrollable pane. The settings panel will allow the user to change the state of the program. In this panel you will be able to change the pen color, the color of the turtles background, the language the user interface is displaying in and the image to use for the turtle through dropdown menus. The options for these dropdown menus will be read in from a file. If a change is selected and throws an error, an alert will be created and shown to the user with the error. Finally, the help panel will contain a list of the possible commands which a user can input. 
