@@ -1,0 +1,7 @@
+/******************************************************************************************/
+/* The root containing the elements displayed in the start up screen*/
+/******************************************************************************************/
+#startScreenRoot {
+	-fx-alignment: center;
+	-fx-background-color: #d3d3d3;
+}
