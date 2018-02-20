@@ -140,9 +140,9 @@ Additional Use Cases:
 
 4. **The user runs the command XCOR**: The user inputs XCOR to the TextField and hits run, triggering the UserScreen to call `parseInput("XCOR")` on the Controller. The controller calls `parseText("XCOR")`, which sends "XCOR", as it is only one line, to the CommandMaker. The CommandMaker makes a GetXCoordinateCommand and adds it to the command Queue, which is then passed via the controller to the Executor. The Executor calls `.execute` on the single Command in the Queue, which uses the `.getX()` method from the Turtle Class to retrieve and return the necessary information. The Executor returns this value to the Controller, which returns it to the UserScreen to be displayed to the user.
 
-5.
+5. **The user changes the background color**: The user selects the color option from a drop down menu in the settings panel of the GUI. The `handleOnButtonPressed` command will call an internal api method along the lines of `turtlePanel.changeBackgroundColor(Paint color)`. The turtle panel will then check the input and attempt to set its background color to that color. If unsuccessful, an error will be thrown and caught by the settings panel. The exception will be handled by removing the triggering option from the dropdown and creating a popup alert to inform the user of what occurred. 
 
-6.
+6. **The user changes the pen color**: The user selects a new pen color from a dropdown menu in the GUI. The `handleOnButtonPressed` command will call myController.parseInput(String code). The code will consist of a predetermined prefix indicating to the parser that this input is meant to change the pen color, along with the color to be changed to. The controller will pass this String to the TextFieldParser which will use `parseText(String string)` and see that there is one line of commands. It will then create a queue containing the input String. This String will then go to CommandMaker, which will create a `ChangePenColorCommand` with an instance variable corresponding to the Turtle whose pen needs to be changed and an instance variable with the new color. The queue containing the one command will then be passed back to the Controller which will create an Executor which will call `.execute()` on the `ChangePenColorCommand`. The command will then call the method `.setPenFill()` on the turtle in question. The correct return will then be passed back to the Executor, then Controller and finally the settings panel indicating the result of the call.
 
 7.
 
@@ -161,4 +161,6 @@ Additional Use Cases:
 ### Backend
 **Susie** will be responsible for the Executor, TextFieldParser, Turtle, and Pen classes, as well as half of the Command classes.
 **Sarah** will be responsible for the Controller and CommandMaker (actual parsing of SLogo) classes as well as half of the Command classes.
+**Ben** will be responsible for the Userscreen, Startscreen and Errorscreen, along with the input panel and CSS reading. 
+**Andrew** will be responsible for the info, variable, user-command, history, settings and help panels, along with the turtle panel and error notification in turtle panel.
 

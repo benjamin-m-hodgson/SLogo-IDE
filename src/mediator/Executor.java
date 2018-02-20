@@ -1,13 +1,10 @@
 package mediator;
 
-import java.util.Queue;
 
-import command.Command;
-
-public class Executor {
-
-    public Queue<Command> commandQueue() {
-	return null;
-    }
-    
+public interface Executor {
+	/**
+	 * Executes, in the proper order, each of the Commands in the Command Queue, and returns the appropriate double
+	 * value of the final command executed
+	 */
+	public double executeQueue();
 }
