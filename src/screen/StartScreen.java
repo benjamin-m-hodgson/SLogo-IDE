@@ -2,24 +2,27 @@ package screen;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import mediator.Controller;
 
-public class StartScreen extends Screen {
+public class StartScreen implements Screen {
     
     private final double DEFAULT_WIDTH = 600;
     private final double DEFAULT_HEIGHT = 600;
     
+    private Parent ROOT;
+    private Controller PROGRAM_CONTROLLER;
     private Button START;
 
     public StartScreen(Controller programController) {
-	super(programController);
+	PROGRAM_CONTROLLER = programController;
     }
 
     @Override
-    protected void makeRoot() {
+    public void makeRoot() {
 	START = makeStartButton();
 	VBox rootBox = new VBox(10, START);
 	rootBox.setMaxHeight(DEFAULT_HEIGHT);
@@ -29,6 +32,14 @@ public class StartScreen extends Screen {
 	// TODO: format with CSS
 	rootBox.setAlignment(Pos.CENTER);
 	ROOT = rootBox;
+    }
+    
+    @Override
+    public Parent getRoot() {
+	if (ROOT == null) {
+	    makeRoot();
+	}
+	return ROOT;
     }
     
     /**
@@ -48,5 +59,4 @@ public class StartScreen extends Screen {
 	});
 	return startButton;
     }
-
 }

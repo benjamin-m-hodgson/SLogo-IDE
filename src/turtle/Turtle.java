@@ -1,7 +1,5 @@
 package turtle;
 
-import javafx.scene.image.ImageView;
-
 public interface Turtle {
     
     /**
