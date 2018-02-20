@@ -23,4 +23,11 @@ public interface Screen {
      */
     public abstract void changeBackgroundColor(String color);
     
+    /**
+     * Changes the Right Panel of the screen to represent @param panelRoot.
+     * 
+     * @param panelRoot: The desired root to attach to the right Panel
+     */
+    public abstract void changeRightPanel(Parent panelRoot);
+    
 }

@@ -38,6 +38,12 @@ public class UserScreen implements Screen {
 	// TODO Auto-generated method stub
 	
     }
+
+    @Override
+    public void changeRightPanel(Parent panelRoot) {
+	// TODO Auto-generated method stub
+	
+    }
     
 
 }

@@ -36,4 +36,10 @@ public class ErrorScreen implements Screen {
 	
     }
 
+    @Override
+    public void changeRightPanel(Parent panelRoot) {
+	// TODO Auto-generated method stub
+	
+    }
+
 }
