@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import screen.UserScreen;
 import turtle.Turtle;
 
-public class Controller {
+public class Controller throws IllegalArgumentException{
     //private final String DEFAULT_RESOURCE_PACKAGE = "resources/";
     private String DEFAULT_CSS = Controller.class.getClassLoader().
 	    getResource("default.css").toExternalForm(); 
