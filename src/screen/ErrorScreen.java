@@ -1,13 +1,12 @@
 package screen;
 
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import mediator.Controller;
 
 public class ErrorScreen implements Screen {
-    
-    private double DEFAULT_WIDTH = 600;
-    private double DEFAULT_HEIGHT = 600;
+    private final String LANGUAGE_CHOOSER_TEXT = "Select a Language";
     private Parent ROOT;
     private Controller PROGRAM_CONTROLLER;
     private String ERROR_MESSAGE;
@@ -19,7 +18,9 @@ public class ErrorScreen implements Screen {
 
     @Override
     public void makeRoot() {
-	VBox root = new VBox();
+	Label errorLabel = errorLabel(ERROR_MESSAGE);
+	VBox root = new VBox(5, errorLabel);
+	ROOT = root;
     }
 
     @Override
@@ -40,6 +41,19 @@ public class ErrorScreen implements Screen {
     public void changeRightPanel(Parent panelRoot) {
 	// TODO Auto-generated method stub
 	
+    }
+    
+    /**
+     * Creates a Label to display to the user on the Error Screen that contains the Error
+     * Message indicating the cause of the error.
+     * 
+     * @param errorMessage: The String defining the Error Message to display to the user
+     * @return Label: A JavaFX Label object displaying the Error Message
+     */
+    private Label errorLabel(String errorMessage) {
+	Label errorLabel = new Label(errorMessage);
+	errorLabel.setId("errorLabel");
+	return errorLabel;
     }
 
 }
