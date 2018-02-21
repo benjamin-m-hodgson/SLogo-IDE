@@ -10,9 +10,6 @@ import mediator.Controller;
 
 public class StartScreen implements Screen {
     
-    private final double DEFAULT_WIDTH = 600;
-    private final double DEFAULT_HEIGHT = 600;
-    
     private Parent ROOT;
     private Controller PROGRAM_CONTROLLER;
     private Button START;
@@ -25,10 +22,7 @@ public class StartScreen implements Screen {
     public void makeRoot() {
 	START = makeStartButton();
 	VBox rootBox = new VBox(10, START);
-	rootBox.setMaxHeight(DEFAULT_HEIGHT);
-	rootBox.setMinHeight(DEFAULT_HEIGHT);
-	rootBox.setMaxWidth(DEFAULT_WIDTH);
-	rootBox.setMinWidth(DEFAULT_WIDTH);
+	rootBox.setId("startScreenRoot");
 	// TODO: format with CSS
 	rootBox.setAlignment(Pos.CENTER);
 	ROOT = rootBox;

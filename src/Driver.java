@@ -17,6 +17,8 @@ public class Driver extends Application {
     
     private final double DEFAULT_HEIGHT = 650;
     private final double DEFAULT_WIDTH = 900;
+    private String DEFAULT_CSS = Controller.class.getClassLoader().
+	    getResource("default.css").toExternalForm(); 
     
     /**
      * Initialize the program and begin the animation loop 
@@ -29,6 +31,7 @@ public class Driver extends Application {
 	StartScreen startScreen = new StartScreen(programController);
 	Parent programRoot = startScreen.getRoot();
 	Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	programScene.getStylesheets().add(DEFAULT_CSS);
 	primaryStage.setScene(programScene);
 	primaryStage.show();		
     }

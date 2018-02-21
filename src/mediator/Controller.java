@@ -1,6 +1,11 @@
 package mediator;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -15,17 +20,16 @@ import screen.UserScreen;
 import turtle.Turtle;
 
 public class Controller {
-    //private final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+    private final String FILE_ERROR_PROMPT = "Failed to obtain resource files!";
     private String DEFAULT_CSS = Controller.class.getClassLoader().
 	    getResource("default.css").toExternalForm(); 
-    private ResourceBundle DEFAULT_TEXT_DISPLAY;
-    private ResourceBundle DEFAULT_ERROR_DISPLAY;
-    private ResourceBundle DEFAULT_LANGUAGE;
+    private ResourceBundle CURRENT_TEXT_DISPLAY;
+    private ResourceBundle CURRENT_ERROR_DISPLAY;
+    private ResourceBundle CURRENT_LANGUAGE;
+    private ResourceBundle CURRENT_SETTINGS;
     // TODO: Read this in from files rather than storing as instance variables
     private final double DEFAULT_HEIGHT = 650;
     private final double DEFAULT_WIDTH = 900;
-    /*private final String DEFAULT_STYLESHEET = 
-	    Driver.class.getClassLoader().getResource("default.css").toExternalForm();*/
     private Stage PROGRAM_STAGE;
 
     public Controller(Stage primaryStage) {
@@ -75,10 +79,7 @@ public class Controller {
 	}
 	catch (Exception e) {
 	    String errorMessage = "Error loading User Screen!";
-	    ErrorScreen errorScreen = new ErrorScreen(this, errorMessage);
-	    Parent errorScreenRoot = errorScreen.getRoot();
-	    Scene errorScene = new Scene(errorScreenRoot);
-	    PROGRAM_STAGE.setScene(errorScene);
+	    loadErrorScreen(errorMessage);
 	}
     }
     
@@ -88,15 +89,52 @@ public class Controller {
     
     /**
      * Change the Language. Changes the prompts displayed in the user interface as well as
-     * acceptable commands.
+     * acceptable commands by changing the ResourceBundles used by the program.
      * 
      * @param language: the new language to be used in the program
      */
     public void changeLanguage(String language) {
-	
+	findResources(language);
     }
     
+    /**
+     * Searches through the class path to find the appropriate resource files to use for 
+     * the program. If it can't locate the files, it displays an error screen to the user
+     * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
+     * 
+     * @param language: The language to define which .properties files to use in the Program
+     */
     private void findResources(String language) {
-	//DEFAULT_LANGUAGE = ResourceBundle.getBundle(language);
+	String currentDir = System.getProperty("user.dir");
+	String settingsFile = "settings";
+        //System.out.println("Working Directory = " + currentDir);
+	try {
+	    File file = new File(currentDir);
+	    URL[] urls = {file.toURI().toURL()};
+	    ClassLoader loader = new URLClassLoader(urls);
+	    CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(language + "Prompts", 
+		    Locale.getDefault(), loader);
+	    CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(language + "Errors", 
+		    Locale.getDefault(), loader);
+	    CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
+	    CURRENT_SETTINGS = ResourceBundle.getBundle(settingsFile, Locale.getDefault(), loader);
+	}
+	catch (MalformedURLException e) {
+	    loadErrorScreen(FILE_ERROR_PROMPT);
+	}
+    }
+    
+    /**
+     * Creates an Error Screen to display to the user indicating an error type by the String
+     * @param errorMessage. 
+     * 
+     * @param errorMessage: The message to be displayed to the user on the Error Screen
+     */
+    private void loadErrorScreen(String errorMessage) {
+	ErrorScreen errorScreen = new ErrorScreen(this, errorMessage);
+	Parent errorScreenRoot = errorScreen.getRoot();
+	Scene errorScene = new Scene(errorScreenRoot);
+	errorScene.getStylesheets().add(DEFAULT_CSS);
+	PROGRAM_STAGE.setScene(errorScene);
     }
 }
