@@ -21,6 +21,9 @@ public class Controller {
     private ResourceBundle DEFAULT_TEXT_DISPLAY;
     private ResourceBundle DEFAULT_ERROR_DISPLAY;
     private ResourceBundle DEFAULT_LANGUAGE;
+    // TODO: Read this in from files rather than storing as instance variables
+    private final double DEFAULT_HEIGHT = 650;
+    private final double DEFAULT_WIDTH = 900;
     /*private final String DEFAULT_STYLESHEET = 
 	    Driver.class.getClassLoader().getResource("default.css").toExternalForm();*/
     private Stage PROGRAM_STAGE;
@@ -44,17 +47,17 @@ public class Controller {
     public Map<String, Double> getVariables() {
 	return null;
     }
+    
     /**
      * Returns an ImmutableList of available User Commands
      */
-    
     public List<String> getUserCommands() {
 	return null;
     }
+    
     /**
      * Parses input from a text field or button press by the user
      */
-    
     public double parseInput(String userTextInput) {
 	return 0.0;
     }
@@ -64,7 +67,7 @@ public class Controller {
 	try {
 	    UserScreen programScreen = new UserScreen(this);
 	    Parent programRoot = programScreen.getRoot();
-	    Scene programScene = new Scene(programRoot);	
+	    Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);	
 	    programScene.getStylesheets().add(DEFAULT_CSS);
 	    PROGRAM_STAGE.setScene(programScene);
 	    // TODO: fix below

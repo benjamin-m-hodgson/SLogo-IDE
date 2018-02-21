@@ -1,6 +1,7 @@
 package screen.panel;
 
 import javafx.scene.Parent;
+import javafx.scene.layout.HBox;
 import mediator.Controller;
 
 public class InputPanel implements Panel {
@@ -14,7 +15,9 @@ public class InputPanel implements Panel {
 
     @Override
     public void makePanel() {
-	
+	HBox panelRoot = new HBox();
+	panelRoot.setId("inputPanel");
+	PANEL = panelRoot;
     }
 
     @Override
