@@ -3,7 +3,7 @@
 /******************************************************************************************/
 #startScreenRoot {
 	-fx-alignment: center;
-	-fx-background-color: #d3d3d3;
+	-fx-background-color: #f3f3f3;
 	-fx-background-radius: 2;
 }
 /******************************************************************************************/
@@ -11,7 +11,14 @@
 /******************************************************************************************/
 #userScreenRoot {
 	-fx-alignment: center;
-	-fx-background-color: #ffffff;
+	-fx-background-color: #f3f3f3;
+}
+/******************************************************************************************/
+/* The root containing the elements displayed in the error screen*/
+/******************************************************************************************/
+#errorScreenRoot {
+	-fx-alignment: center;
+	-fx-background-color: #f3f3f3;
 }
 /******************************************************************************************/
 /* The root containing the informational panel displayed on the screen */
@@ -46,4 +53,22 @@
 	-fx-border-insets: 0;
 	-fx-border-radius: 2;
 	-fx-border-color: #6495ed;
+}
+/******************************************************************************************/
+/* The label displaying the error message */ 
+/******************************************************************************************/
+#errorLabel {
+	-fx-alignment: center;
+	-fx-text-alignment: center;
+	-fx-text-fill: #000033;
+	-fx-font: 32px Dekko;
+}
+/******************************************************************************************/
+/* The text field where the user can input commands */ 
+/******************************************************************************************/
+#inputField {
+	-fx-alignment: center;
+	-fx-text-alignment: center;
+	-fx-text-fill: #000033;
+	-fx-font: 12px 'Nova Flat';
 }

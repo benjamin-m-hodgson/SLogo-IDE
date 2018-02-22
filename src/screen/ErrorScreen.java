@@ -19,8 +19,9 @@ public class ErrorScreen implements Screen {
     @Override
     public void makeRoot() {
 	Label errorLabel = errorLabel(ERROR_MESSAGE);
-	VBox root = new VBox(5, errorLabel);
-	ROOT = root;
+	VBox rootBox = new VBox(5, errorLabel);
+	rootBox.setId("startScreenRoot");
+	ROOT = rootBox;
     }
 
     @Override

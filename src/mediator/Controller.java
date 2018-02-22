@@ -22,19 +22,23 @@ import turtle.Turtle;
 
 public class Controller {
     private final String FILE_ERROR_PROMPT = "Failed to obtain resource files!";
+    private final String START_ERROR_PROMPT = "Error loading Start Screen!";
+    private final String DEFAULT_LANGUAGE = "English";
+    private final String DEFAULT_SETTINGS = "settings";
+    // TODO: Read this in from files rather than storing as instance variables
+    private final double DEFAULT_HEIGHT = 650;
+    private final double DEFAULT_WIDTH = 900;
     private String DEFAULT_CSS = Controller.class.getClassLoader().
 	    getResource("default.css").toExternalForm(); 
     private ResourceBundle CURRENT_TEXT_DISPLAY;
     private ResourceBundle CURRENT_ERROR_DISPLAY;
     private ResourceBundle CURRENT_LANGUAGE;
     private ResourceBundle CURRENT_SETTINGS;
-    // TODO: Read this in from files rather than storing as instance variables
-    private final double DEFAULT_HEIGHT = 650;
-    private final double DEFAULT_WIDTH = 900;
     private Stage PROGRAM_STAGE;
 
     public Controller(Stage primaryStage) {
 	PROGRAM_STAGE = primaryStage;
+	findSettings();
     }
 
     /**
@@ -80,7 +84,7 @@ public class Controller {
 	try {
 	    StartScreen startScreen = new StartScreen(this);
 	    // test the ErrorScreen
-	    //ErrorScreen startScreen = new ErrorScreen(this, "TESTING");
+	    //ErrorScreen startScreen = new ErrorScreen(this, START_ERROR_PROMPT);
 	    Parent programRoot = startScreen.getRoot();
 	    Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	    programScene.getStylesheets().add(DEFAULT_CSS);
@@ -88,8 +92,7 @@ public class Controller {
 	    PROGRAM_STAGE.show();	
 	}
 	catch (Exception e) {
-	    String errorMessage = "Error loading Start Screen!";
-	    loadErrorScreen(errorMessage);
+	    loadErrorScreen(START_ERROR_PROMPT);
 	}
     }
 
@@ -101,12 +104,9 @@ public class Controller {
 	    Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);	
 	    programScene.getStylesheets().add(DEFAULT_CSS);
 	    PROGRAM_STAGE.setScene(programScene);
-	    // TODO: fix below
-	    findResources("English");
 	}
 	catch (Exception e) {
-	    String errorMessage = "Error loading User Screen!";
-	    loadErrorScreen(errorMessage);
+	    loadErrorScreen(START_ERROR_PROMPT);
 	}
     }
 
@@ -133,7 +133,6 @@ public class Controller {
      */
     private void findResources(String language) {
 	String currentDir = System.getProperty("user.dir");
-	String settingsFile = "settings";
 	try {
 	    File file = new File(currentDir);
 	    URL[] urls = {file.toURI().toURL()};
@@ -146,14 +145,31 @@ public class Controller {
 	    }
 	    // if .properties file doesn't exist for specified language, default to English
 	    catch (Exception e) {
-		String defaultLanguage = "English";
-		CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(defaultLanguage + "Prompts", 
+		CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Prompts", 
 			Locale.getDefault(), loader);
-		CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(defaultLanguage + "Errors", 
+		CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Errors", 
 			Locale.getDefault(), loader);
 	    }
 	    CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
-	    CURRENT_SETTINGS = ResourceBundle.getBundle(settingsFile, Locale.getDefault(), loader);
+	}
+	catch (MalformedURLException e) {
+	    loadErrorScreen(FILE_ERROR_PROMPT);
+	}
+    }
+    
+    /**
+     * Searches through the class path to find the appropriate settings resource file to use for 
+     * the program. If it can't locate the file, it displays an error screen to the user
+     * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
+     */
+    private void findSettings() {
+	String currentDir = System.getProperty("user.dir");
+	try {
+	    File file = new File(currentDir);
+	    URL[] urls = {file.toURI().toURL()};
+	    ClassLoader loader = new URLClassLoader(urls);
+	    CURRENT_SETTINGS = ResourceBundle.getBundle(DEFAULT_SETTINGS, 
+		    Locale.getDefault(), loader);
 	}
 	catch (MalformedURLException e) {
 	    loadErrorScreen(FILE_ERROR_PROMPT);
