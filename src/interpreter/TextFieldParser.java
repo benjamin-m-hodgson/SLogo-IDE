@@ -77,17 +77,14 @@ public class TextFieldParser {
 	
 	
 	
-	// PARSING TEXT, VALIDATING AGAINST COMMAND
 	/**
 	 * Returns a Queue of commands given a String of concatenated commands (chops up the commands 
 	 * and sends them individually to CommandMaker)
-	 * @throws BadFormatException
-	 * @throws UnidentifiedCommandException 
-	 * @throws MissingInformationException 
 	 */
-	public void parseText(String userInputString) {
+	public double parseText(String userInputString) {
 		String[] userInputArray = userInputString.split("\\s+");
 		parseTextArray(userInputArray);
+		return 0.0; // TODO FIX: this return is just to stop eclipse from complaining
 	}
 	
 	private void parseTextArray(String[] userInputArray) {

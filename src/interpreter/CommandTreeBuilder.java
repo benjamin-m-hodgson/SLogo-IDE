@@ -6,6 +6,9 @@ import java.util.Queue;
 
 public class CommandTreeBuilder {
 	
+	public static final String DEFAULT_CONSTANT_IDENTIFIER = "Constant";
+	
+//	private CommandTreeReader myCommandTreeReader; 
 	private String myNumArgsFileName; 
 	private ArrayList<CommandNode> myCommandTrees; 
 	
@@ -15,13 +18,13 @@ public class CommandTreeBuilder {
 	
 	public Queue<Command> generateCommandQueue(String[] userInput, String[] commandTypes, String[] allInputTypes) {
 		generateCommandTree(userInput, commandTypes, allInputTypes, 0);
-		return new LinkedList<Command>(); 
+		// generate queue from reading in tree
+		return new LinkedList<Command>(); // TODO FIX: this return is just so eclipse won't complain...
 	}
 	
 	private void generateCommandTree(String[] userInput, String[] commandTypes, String[] allInputTypes, int currIdx) {
 		String currCommand = commandTypes[currIdx]; 
 		int numArgs = getNumArgs(currCommand);
-		System.out.println(numArgs);
 	}
 	
 	private int getNumArgs(String commandType) {
