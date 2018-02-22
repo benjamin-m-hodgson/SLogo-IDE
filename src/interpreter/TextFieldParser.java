@@ -39,51 +39,45 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
-import command.Command;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class TextFieldParser {	
 	
-	public static final String FILEPATH_COMMAND_SYNTAX = "interpreter/Syntax";
-	public static final String FILEPATH_LANGUAGE_SETTINGS = "interpreter/English";
-	public static final String FILEPATH_NUM_ARGS_FOR_COMMANDS = "interpreter/NumArgsForCommands";
-	private ResourceBundle myCommandSyntax;
-    private List<Entry<String, Pattern>> mySyntaxSymbols;
-	private ResourceBundle myLanguage; 
-    private List<Entry<String, Pattern>> myLanguageSymbols;
-	private ResourceBundle myNumArgsProperties; 
-	private HashMap<String, Double> myVariables; 
+	public static final String DEFAULT_FILEPATH = "interpreter/";
+	public static final String DEFAULT_SYNTAX_FILENAME = "Syntax";
+	public static final String DEFAULT_LANGUAGE = "English";
+	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
+
+	private String mySyntaxFileName; 
+	private CommandMaker myCommandMaker; 
+    private HashMap<String, Double> myVariables; 
 	private HashMap<String, Double> myCommandAndReturnHistory;
 	private Queue<Command> myCommandQueue;
 	
 	protected TextFieldParser() {
-		this(FILEPATH_COMMAND_SYNTAX, FILEPATH_LANGUAGE_SETTINGS, FILEPATH_NUM_ARGS_FOR_COMMANDS);
+		this(DEFAULT_FILEPATH+DEFAULT_SYNTAX_FILENAME, DEFAULT_LANGUAGE, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
 	}
 	
-	protected TextFieldParser(String syntaxFilePath, String languageFilePath, String numArgsForCommandsFilePath) {
-		myCommandSyntax = ResourceBundle.getBundle(syntaxFilePath);
-		mySyntaxSymbols = new ArrayList<Entry<String, Pattern>>();
-		populateWithSymbols(mySyntaxSymbols, myCommandSyntax);
-		myLanguage = ResourceBundle.getBundle(languageFilePath);
-		myLanguageSymbols = new ArrayList<Entry<String, Pattern>>();
-		populateWithSymbols(myLanguageSymbols, myLanguage);
-		myNumArgsProperties = ResourceBundle.getBundle(numArgsForCommandsFilePath);
+	protected TextFieldParser(String syntaxFileName, String languageFileName, String numArgsFileName) {
+		mySyntaxFileName = syntaxFileName;
+		myCommandMaker = new CommandMaker(languageFileName, numArgsFileName); 
 		myVariables = new HashMap<String, Double>(); 
 		myCommandAndReturnHistory = new HashMap<String, Double>(); 
 		myCommandQueue = new LinkedList<Command>(); 
 	}
 	
-	private void populateWithSymbols(List<Entry<String, Pattern>> listToAddTo, ResourceBundle resourcesToAdd) {
-        Enumeration<String> iter = resourcesToAdd.getKeys();
-        while (iter.hasMoreElements()) {
-            String key = iter.nextElement();
-            String regex = resourcesToAdd.getString(key);
-            listToAddTo.add(new SimpleEntry<>(key, Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
-        }
-    }
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	// PARSING TEXT, VALIDATING AGAINST COMMAND
 	/**
 	 * Returns a Queue of commands given a String of concatenated commands (chops up the commands 
 	 * and sends them individually to CommandMaker)
@@ -91,55 +85,26 @@ public class TextFieldParser {
 	 * @throws UnidentifiedCommandException 
 	 * @throws MissingInformationException 
 	 */
-	public void parseText(String userInputString) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	public void parseText(String userInputString) {
 		String[] userInputArray = userInputString.split("\\s+");
-		parseTextArray(userInputArray, 0);
+		parseTextArray(userInputArray);
 	}
 	
-	private void parseTextArray(String[] userInputArray, int idx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		String inputToken = userInputArray[idx];
-		String commandType = "";
-		int numArgsAsString = -1; 
-		if (isValidCommand(inputToken)) {
-			commandType = getCommandType(inputToken);
-			numArgsAsString = getNumArgs(commandType);
-		}		
-		// add command to command queue
-	}
-
-	private int getNumArgs(String commandType) throws MissingInformationException {
-		String propsLookUp = "";
-		try {
-			propsLookUp = myNumArgsProperties.getString(commandType); 
-		} 
-		catch (MissingResourceException e) {
-			throw new MissingInformationException(commandType);
+	private void parseTextArray(String[] userInputArray) {
+		String[] listOfTypes = new String[userInputArray.length];
+		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
+		for (int idx = 0; idx < userInputArray.length; idx++) {
+			String inputToken = userInputArray[idx];
+			listOfTypes[idx] = regexMatcher.findMatch(inputToken);
 		}
-		return Integer.parseInt(propsLookUp);
+//		myCommandQueue = CommandMaker.parseValidText(userInputArray); 
+		// pass array to CommandMaker, ret val is a CommandQueue
 	}
-
-	private boolean isValidCommand(String text) throws BadFormatException {
-        for (Entry<String, Pattern> e : mySyntaxSymbols) {
-            if (match(text, e.getValue())) {
-                return true;
-            }
-        }
-        throw new BadFormatException(text);
-    }
-	
-    private String getCommandType(String text) throws UnidentifiedCommandException {
-        for (Entry<String, Pattern> e : myLanguageSymbols) {
-            if (match(text, e.getValue())) {
-                return e.getKey();
-            }
-        }
-        throw new UnidentifiedCommandException(text);
-    }
     
-    private boolean match (String text, Pattern regex) {
-        return regex.matcher(text).matches();
-    }
-	
+    
+    
+    
+    // GETTERS
 	/**
 	 * Returns and UnmodifiableMap of string variable keys to their double values
 	 */
@@ -163,17 +128,7 @@ public class TextFieldParser {
 	
 	public static void main(String[] args) {
 		TextFieldParser testingParser = new TextFieldParser();
-		try {
-			testingParser.parseText("123");
-		} catch (UnidentifiedCommandException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (BadFormatException e) {
-			e.printStackTrace();
-		} catch (MissingInformationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		testingParser.parseText("fd");
 	}
 	
 }
