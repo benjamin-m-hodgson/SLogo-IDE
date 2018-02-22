@@ -94,11 +94,9 @@ public class TextFieldParser {
 		String[] listOfTypes = new String[userInputArray.length];
 		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
 		for (int idx = 0; idx < userInputArray.length; idx++) {
-			String inputToken = userInputArray[idx];
-			listOfTypes[idx] = regexMatcher.findMatch(inputToken);
+			listOfTypes[idx] = regexMatcher.findMatchingKey(userInputArray[idx]);
 		}
-//		myCommandQueue = CommandMaker.parseValidText(userInputArray); 
-		// pass array to CommandMaker, ret val is a CommandQueue
+		myCommandQueue = myCommandMaker.parseValidTextArray(userInputArray, listOfTypes); 
 	}
     
     

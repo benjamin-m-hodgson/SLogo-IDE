@@ -14,8 +14,10 @@ package interpreter;
 //}
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
+import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
@@ -25,9 +27,10 @@ public class CommandMaker {
 	public static final String DEFAULT_FILEPATH = "interpreter/";
 	public static final String DEFAULT_LANGUAGE = "English";
 	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
+	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command"; //TODO allow this to be client-specified
 	
 	private String myLanguageFileName; 
-	private String myNumArgsFileName; 
+	private CommandTreeBuilder myCommandTreeBuilder; 
 	
 	public CommandMaker() {
 		this(DEFAULT_FILEPATH+DEFAULT_LANGUAGE, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
@@ -35,20 +38,27 @@ public class CommandMaker {
 	
 	public CommandMaker(String languageFileName, String numArgsFileName) {
 		myLanguageFileName = languageFileName;
-		myNumArgsFileName = numArgsFileName; 
+		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName); 
+	}
+	
+	public Queue<Command> parseValidTextArray(String[] userInput, String[] typesOfInput) {
+		return parseValidTextArray(userInput, typesOfInput, DEFAULT_COMMAND_IDENTIFIER);
+	}
+	
+	public Queue<Command> parseValidTextArray(String[] userInput, String[] typesOfInput, String commandIdentifier) {
+		String[] commandTypes = new String[userInput.length];
+		for (int idx = 0; idx < userInput.length; idx++) {
+			if (typesOfInput[idx].equals(commandIdentifier)) {
+				commandTypes[idx] = getCommandType(userInput[idx]);
+			}
+		}
+		return myCommandTreeBuilder.generateCommandQueue(userInput, commandTypes, typesOfInput); 
 	}
 	
 	private String getCommandType(String text) {
         RegexMatcher regexMatcher = new RegexMatcher(myLanguageFileName);
-        String commandType = regexMatcher.findMatch(text);
+        String commandType = regexMatcher.findMatchingKey(text);
         return commandType;
     }
-	
-	private int getNumArgs(String commandType) {
-		RegexMatcher regexMatcher = new RegexMatcher(myNumArgsFileName);
-        String numArgsAsString = regexMatcher.findMatch(commandType);
-        int numArgs = Integer.parseInt(numArgsAsString);
-        return numArgs;
-	}
 	
 }

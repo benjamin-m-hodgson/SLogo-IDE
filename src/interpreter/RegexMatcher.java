@@ -12,14 +12,15 @@ import java.util.regex.Pattern;
 public class RegexMatcher {
 
 	private String myFileName; 
+	private ResourceBundle myResources; 
 	private List<Entry<String, Pattern>> mySymbols;
 	private Exception myException; 
 	
 	public RegexMatcher(String fileName) {
 		myFileName = fileName;
-		ResourceBundle resources = ResourceBundle.getBundle(fileName);
+		myResources = ResourceBundle.getBundle(fileName);
 		mySymbols = new ArrayList<Entry<String, Pattern>>();
-		populateWithSymbols(mySymbols, resources);
+		populateWithSymbols(mySymbols, myResources);
 	}
 	
 	private void populateWithSymbols(List<Entry<String, Pattern>> listToAddTo, ResourceBundle resourcesToAdd) {
@@ -31,7 +32,7 @@ public class RegexMatcher {
         }
     }
 	
-	public String findMatch(String text) {
+	public String findMatchingKey(String text) {
 		for (Entry<String, Pattern> e : mySymbols) {
             if (match(text, e.getValue())) {
                 return e.getKey();
@@ -39,6 +40,18 @@ public class RegexMatcher {
         }
 		// TODO FIX ARGS
 		throw new MissingResourceException("Cannot find match in ResourceBundle "+myFileName+" for "+text, "", "");
+	}
+	
+	public String findMatchingVal(String text) {
+		String val = ""; 
+		try {
+			val = myResources.getString(text);
+		}
+		catch (MissingResourceException e) {
+			// TODO FIX ARGS
+			throw new MissingResourceException("Missing resource about property "+myFileName+" for "+text, "", "");
+		}
+		return val; 
 	}
 	
 	private boolean match(String text, Pattern regex) {
