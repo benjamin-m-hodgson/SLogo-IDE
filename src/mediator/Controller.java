@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import interpreter.TextFieldParser;
+import interpreter.Turtle;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,7 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import screen.ErrorScreen;
 import screen.UserScreen;
-import turtle.Turtle;
 
 public class Controller {
     //private final String DEFAULT_RESOURCE_PACKAGE = "resources/";
@@ -20,16 +21,18 @@ public class Controller {
 	    getResource("default.css").toExternalForm(); 
     private ResourceBundle DEFAULT_TEXT_DISPLAY;
     private ResourceBundle DEFAULT_ERROR_DISPLAY;
-    private ResourceBundle DEFAULT_LANGUAGE;
+    private ResourceBundle DEFAULT_LANGUAGE_RESOURCE;
     // TODO: Read this in from files rather than storing as instance variables
     private final double DEFAULT_HEIGHT = 650;
     private final double DEFAULT_WIDTH = 900;
     /*private final String DEFAULT_STYLESHEET = 
 	    Driver.class.getClassLoader().getResource("default.css").toExternalForm();*/
-    private Stage PROGRAM_STAGE;
+    private Stage myStage;
+   
+    private TextFieldParser myTextFieldParser;
 
     public Controller(Stage primaryStage) {
-	PROGRAM_STAGE = primaryStage;
+    		myStage = primaryStage;
     }
     
     /**
@@ -69,7 +72,7 @@ public class Controller {
 	    Parent programRoot = programScreen.getRoot();
 	    Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);	
 	    programScene.getStylesheets().add(DEFAULT_CSS);
-	    PROGRAM_STAGE.setScene(programScene);
+	    myStage.setScene(programScene);
 	    // TODO: fix below
 	    findResources("English");
 	}
@@ -78,7 +81,7 @@ public class Controller {
 	    ErrorScreen errorScreen = new ErrorScreen(this, errorMessage);
 	    Parent errorScreenRoot = errorScreen.getRoot();
 	    Scene errorScene = new Scene(errorScreenRoot);
-	    PROGRAM_STAGE.setScene(errorScene);
+	    myStage.setScene(errorScene);
 	}
     }
     
