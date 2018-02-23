@@ -22,6 +22,19 @@ public class CommandNode {
 		this(info, numArgs, new ArrayList<CommandNode>());
 	}
 	
+	public CommandNode(String info, int numArgs, CommandNode child) {	
+		myInfo = info; 
+		try {
+			myDouble = Integer.parseInt(info);
+			isDouble = true; 
+		}
+		catch (NumberFormatException e) {
+			isDouble = false; 
+		}
+		myNumArgs = numArgs;
+		myChildren.add(child); 
+	}
+	
 	public CommandNode(String info, int numArgs, List<CommandNode> children) {
 		myInfo = info; 
 		try {
@@ -35,8 +48,16 @@ public class CommandNode {
 		myChildren = (ArrayList<CommandNode>) children; 
 	}
 	
-	public void setChildren(List<CommandNode> children) {
-		myChildren.addAll(children); 
+	public void addChild(CommandNode child) {
+		myChildren.add(child); 
+	}
+	
+	public int getNumArgs() {
+		return myNumArgs; 
+	}
+	
+	public int getNumChildren() {
+		return myChildren.size();
 	}
 
 }
