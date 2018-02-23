@@ -14,6 +14,7 @@ public class CommandTreeBuilder {
 	
 	public CommandTreeBuilder(String numArgsFileName) {
 		myNumArgsFileName = numArgsFileName; 
+		myCommandTrees = new ArrayList<CommandNode>(); 
 	}
 	
 	public Queue<Command> generateCommandQueue(String[] userInput, String[] commandTypes, String[] allInputTypes) {
