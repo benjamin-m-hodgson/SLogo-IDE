@@ -15,7 +15,7 @@ package interpreter;
 
 import java.util.Queue;
 
-public class CommandMaker {
+class CommandMaker {
 	
 	public static final String DEFAULT_FILEPATH = "interpreter/";
 	public static final String DEFAULT_LANGUAGE = "English";
