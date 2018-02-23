@@ -7,7 +7,7 @@ public class CommandFactory {
 	}
 
 	public Command makeDoubleCommand(String doubleString) {
-		double doubleArg = Double.parseDouble(commandName);
+		double doubleArg = Double.parseDouble(doubleString);
 		return new DoubleCommand(doubleArg);
 	}
 	public Command makeCommand(String commandName, List<Command> commandArgs) {
