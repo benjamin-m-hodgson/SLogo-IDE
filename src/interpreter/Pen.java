@@ -20,7 +20,7 @@ public class Pen {
 	 * Single argument constructor for a pen (default values if the user does not specify)
 	 * @param penlines is (already attached to stage) Group of lines drawn by the pen
 	 */
-	public Pen(Group penlines) {
+	protected Pen(Group penlines) {
 		myPenLines = penlines;
 		myColor = Color.BLACK;
 		myWidth = 0.0;
@@ -57,7 +57,7 @@ public class Pen {
 	 * 
 	 * @return  true if pen is down (lines drawn are visible) and false if pen is up (invisible)
 	 */
-	public boolean getPenVisibility() {
+	protected boolean getPenVisibility() {
 		return myIsDown;
 	}
 
@@ -65,14 +65,14 @@ public class Pen {
 	 * Sets visibility of lines drawn by pen
 	 * @param penDown is boolean that is true if pen is visible (down), false if pen is invisible (up)
 	 */
-	public void setPenVisibility(boolean penDown) {
+	protected void setPenVisibility(boolean penDown) {
 		myIsDown = penDown;
 	}
 
 	/**
 	 * @return current width of pen lines
 	 */
-	public double getPenWidth() {
+	protected double getPenWidth() {
 		return myWidth;
 	}
 
@@ -80,14 +80,14 @@ public class Pen {
 	 * Sets width of pen to a new value
 	 * @param width is new width desired
 	 */
-	public void setPenWidth(double width) {
+	protected void setPenWidth(double width) {
 		myWidth = width;
 	}
 
 	/**
 	 * @return pen Color
 	 */
-	public Color getPenColor() {
+	protected Color getPenColor() {
 		return myColor;
 	}
 
@@ -95,7 +95,7 @@ public class Pen {
 	 * Sets new pen color
 	 * @param newColor is new Color of pen
 	 */
-	public void setPenColor(Color newColor) {
+	protected void setPenColor(Color newColor) {
 		myColor = newColor;
 	}
 	/**
@@ -105,7 +105,7 @@ public class Pen {
 	 * @param newX is new x coordinate of turtle
 	 * @param newY is new y coordinate of turtle
 	 */
-	public void drawLine(double oldX, double oldY, double newX, double newY) {
+	protected void drawLine(double oldX, double oldY, double newX, double newY) {
 		if(myIsDown) {
 			Line line = new Line(oldX, oldY, newX, newY);
 			line.setFill(myColor);
@@ -113,6 +113,11 @@ public class Pen {
 			myPenLines.getChildren().add(line);
 		}
 	}
-	
+	/**
+	 * Clears all lines previously drawn by the pen from the screen
+	 */
+	protected void clear() {
+		myPenLines.getChildren().removeAll();
+	}
 	
 }
