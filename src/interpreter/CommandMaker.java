@@ -52,7 +52,7 @@ public class CommandMaker {
 				commandTypes[idx] = getCommandType(userInput[idx]);
 			}
 		}
-		return myCommandTreeBuilder.generateCommandQueue(userInput, commandTypes, typesOfInput); 
+		return myCommandTreeBuilder.createCommandQueue(userInput, commandTypes, typesOfInput); 
 	}
 	
 	private String getCommandType(String text) {
