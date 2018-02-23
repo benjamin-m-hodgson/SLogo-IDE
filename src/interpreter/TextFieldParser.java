@@ -57,11 +57,7 @@ public class TextFieldParser {
 	
 	
 	
-	
-	
-	
-	
-	
+
 	
 	/**
 	 * Returns a Queue of commands given a String of concatenated commands (chops up the commands 
