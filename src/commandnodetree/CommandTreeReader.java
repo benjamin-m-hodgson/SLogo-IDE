@@ -1,5 +1,7 @@
-package interpreter;
+package commandnodetree;
 import java.util.ArrayList;
+
+import interpreter.Command;
 
 /**
  * Class to read the CommandNode tree created to deal with concatenated commands. Has the capacity to check if the tree
@@ -11,7 +13,7 @@ import java.util.ArrayList;
  * @author Sarahbland
  *
  */
-public class CommandTreeReader {
+class CommandTreeReader {
 	CommandFactory myCommandFactory;
 	public CommandTreeReader(){
 		myCommandFactory = new CommandFactory();

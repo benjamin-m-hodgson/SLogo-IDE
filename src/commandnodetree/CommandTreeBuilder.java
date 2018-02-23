@@ -1,8 +1,11 @@
-package interpreter;
+package commandnodetree;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import interpreter.Command;
+import interpreter.RegexMatcher;
 
 class CommandTreeBuilder {
 
