@@ -30,7 +30,7 @@ public class CommandTreeBuilder {
 		}
 		String currCommand = commandTypes[startIdx]; 
 		int numArgs = getNumArgs(currCommand);
-		CommandNode newParentNode = new CommandNode(userInput[startIdx], numArgs);
+		CommandNode newParentNode = new CommandNode(currCommand, numArgs);
 		createAndSetChildren(newParentNode, userInput, commandTypes, allInputTypes, startIdx+1);
 	}
 
@@ -50,14 +50,14 @@ public class CommandTreeBuilder {
 			else {
 				myCommandTrees.add(parent);
 			}
-			return; // take care of later commands if idx < userInput - 1
+			return; 
 		}
 		for (int idx = currIdx+1; idx < userInput.length; idx++) { // where else to return in here? 
 			if (allInputTypes[idx].equals(DEFAULT_CONSTANT_IDENTIFIER)) {
 				CommandNode newChildNode = new CommandNode(userInput[idx]);
 				int numArgs = getNumArgs(commandTypes[idx-1]);
 				CommandNode newCommandNode = new CommandNode(commandTypes[idx-1], numArgs, newChildNode);
-				if (numArgs == 2) { // TODO make 2 less arbitrary
+				if (parent.getNumChildren() < parent.getNumArgs()) { 
 					createAndSetChildren(newCommandNode, userInput, commandTypes, allInputTypes, idx+1);
 				}
 				else if (idx < userInput.length-1) {
