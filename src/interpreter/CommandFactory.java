@@ -1,9 +1,7 @@
-package commandnodetree;
+package interpreter;
 import java.util.List;
 
-import interpreter.Command;
-
-class CommandFactory {
+public class CommandFactory {
 	public CommandFactory() {
 		
 	}
