@@ -6,13 +6,11 @@ public class CommandFactory {
 		
 	}
 
-	public Command makeCommand(boolean isDouble, String commandName, List<Command> commandArgs) {
-		if(isDouble) {
-			double doubleArg = Double.parseDouble(commandName);
-			return new DoubleCommand(doubleArg);
-		}
-		else {
-			
-		}
+	public Command makeDoubleCommand(String doubleString) {
+		double doubleArg = Double.parseDouble(commandName);
+		return new DoubleCommand(doubleArg);
+	}
+	public Command makeCommand(String commandName, List<Command> commandArgs) {
+
 	}
 }
