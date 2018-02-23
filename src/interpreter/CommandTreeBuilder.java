@@ -32,28 +32,27 @@ public class CommandTreeBuilder {
 		String currCommand = commandTypes[startIdx]; 
 		int numArgs = getNumArgs(currCommand);
 		CommandNode newParentNode = new CommandNode(currCommand, numArgs);
-		createAndSetChildren(newParentNode, userInput, commandTypes, allInputTypes, startIdx+1);
+		createAndSetChildren(newParentNode, userInput, commandTypes, allInputTypes, startIdx+1, true);
 	}
 
-	private void createAndSetChildren(CommandNode parent, String[] userInput, String[] commandTypes, String[] allInputTypes, int currIdx) {
+	private void createAndSetChildren(CommandNode parent, String[] userInput, String[] commandTypes, String[] allInputTypes, int currIdx, boolean addToTrees) {
 		if (currIdx >= userInput.length) {
-			myCommandTrees.add(parent);
+			if (addToTrees) {
+				myCommandTrees.add(parent);
+			}
 			return; 
 		}
- 		if (allInputTypes[currIdx].equals(DEFAULT_CONSTANT_IDENTIFIER)) {
+		if (allInputTypes[currIdx].equals(DEFAULT_CONSTANT_IDENTIFIER)) {
 			CommandNode newChildNode = new CommandNode(userInput[currIdx]);
 			parent.addChild(newChildNode);
-			if (currIdx < userInput.length-1) {
-				if (parent.getNumChildren() < parent.getNumArgs()) { 
-					createAndSetChildren(parent, userInput, commandTypes, allInputTypes, currIdx+1);
-				} 
-				else {
-					myCommandTrees.add(parent);
-					createCommandTree(userInput, commandTypes, allInputTypes, currIdx+1);
-				}
-			}
+			if (parent.getNumChildren() < parent.getNumArgs()) { 
+				createAndSetChildren(parent, userInput, commandTypes, allInputTypes, currIdx+1, addToTrees);
+			} 
 			else {
-				myCommandTrees.add(parent);
+				if (addToTrees) {
+					myCommandTrees.add(parent);
+				}
+				createCommandTree(userInput, commandTypes, allInputTypes, currIdx+1);
 			}
 			return; 
 		}
@@ -62,20 +61,21 @@ public class CommandTreeBuilder {
 				CommandNode newChildNode = new CommandNode(userInput[idx]);
 				int numArgs = getNumArgs(commandTypes[idx-1]);
 				CommandNode newCommandNode = new CommandNode(commandTypes[idx-1], numArgs, newChildNode);
-				if (idx < userInput.length-1) {
-					if (parent.getNumChildren() < parent.getNumArgs()) { 
-						createAndSetChildren(parent, userInput, commandTypes, allInputTypes, idx+1);
-					} 
-					else {
-						createCommandTree(userInput, commandTypes, allInputTypes, idx+1);
-					}
+				if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
+					createAndSetChildren(newCommandNode, userInput, commandTypes, allInputTypes, idx+1, false);
+				} 
+				else {
+					createCommandTree(userInput, commandTypes, allInputTypes, idx+1);
 				}
-				for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) {
-					int backTrackNumArgs = getNumArgs(commandTypes[backtrack]);
-					CommandNode backtrackCommandNode = new CommandNode(commandTypes[backtrack], backTrackNumArgs, newCommandNode);
-					newCommandNode = backtrackCommandNode; 
-				}
+//				for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) {
+//					int backTrackNumArgs = getNumArgs(commandTypes[backtrack]);
+//					CommandNode backtrackCommandNode = new CommandNode(commandTypes[backtrack], backTrackNumArgs, newCommandNode);
+//					newCommandNode = backtrackCommandNode; 
+//				}
 				parent.addChild(newCommandNode);
+				if (addToTrees) {
+					myCommandTrees.add(parent);
+				}
 				return; 
 			}
 		}
