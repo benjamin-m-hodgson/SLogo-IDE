@@ -109,7 +109,7 @@ public class TextFieldParser {
 	
 	public static void main(String[] args) {
 		TextFieldParser testingParser = new TextFieldParser();
-		testingParser.parseText("setxy 20 setxy 30 40");
+		testingParser.parseText("fd 50 setxy 20 50");
 	}
 	
 }

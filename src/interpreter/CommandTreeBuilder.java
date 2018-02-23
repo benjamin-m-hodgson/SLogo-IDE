@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class CommandTreeBuilder {
+class CommandTreeBuilder {
 
 	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command";
 	public static final String DEFAULT_CONSTANT_IDENTIFIER = "Constant";

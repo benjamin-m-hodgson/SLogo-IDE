@@ -1,4 +1,4 @@
-package turtle.pen;
+package model;
 
 import javafx.scene.paint.Color;
 
