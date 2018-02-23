@@ -8,7 +8,6 @@ public class CommandTreeBuilder {
 
 	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command";
 	public static final String DEFAULT_CONSTANT_IDENTIFIER = "Constant";
-
 	//	private CommandTreeReader myCommandTreeReader; 
 	private String myNumArgsFileName; 
 	private ArrayList<CommandNode> myCommandTrees; 
@@ -20,7 +19,9 @@ public class CommandTreeBuilder {
 
 	public Queue<Command> createCommandQueue(String[] userInput, String[] commandTypes, String[] allInputTypes) {
 		createCommandTree(userInput, commandTypes, allInputTypes, 0);
-		// generate queue from reading in tree
+		for (CommandNode n : myCommandTrees) {
+			System.out.println(n.toString());
+		}
 		return new LinkedList<Command>(); // TODO FIX: this return is just so eclipse won't complain...
 	}
 
@@ -31,24 +32,27 @@ public class CommandTreeBuilder {
 		String currCommand = commandTypes[startIdx]; 
 		int numArgs = getNumArgs(currCommand);
 		CommandNode newParentNode = new CommandNode(currCommand, numArgs);
-		createAndSetChildren(newParentNode, userInput, commandTypes, allInputTypes, startIdx+1);
+		createAndSetChildren(newParentNode, userInput, commandTypes, allInputTypes, startIdx+1, true);
 	}
 
-	private void createAndSetChildren(CommandNode parent, String[] userInput, String[] commandTypes, String[] allInputTypes, int currIdx) {
+	private void createAndSetChildren(CommandNode parent, String[] userInput, String[] commandTypes, String[] allInputTypes, int currIdx, boolean addToTrees) {
+		if (currIdx >= userInput.length) {
+			if (addToTrees) {
+				myCommandTrees.add(parent);
+			}
+			return; 
+		}
 		if (allInputTypes[currIdx].equals(DEFAULT_CONSTANT_IDENTIFIER)) {
 			CommandNode newChildNode = new CommandNode(userInput[currIdx]);
 			parent.addChild(newChildNode);
-			if (currIdx < userInput.length-1) {
-				if (parent.getNumChildren() < parent.getNumArgs()) { 
-					createAndSetChildren(parent, userInput, commandTypes, allInputTypes, currIdx+1);
-				} 
-				else {
-					myCommandTrees.add(parent);
-					createCommandTree(userInput, commandTypes, allInputTypes, currIdx+1);
-				}
-			}
+			if (parent.getNumChildren() < parent.getNumArgs()) { 
+				createAndSetChildren(parent, userInput, commandTypes, allInputTypes, currIdx+1, addToTrees);
+			} 
 			else {
-				myCommandTrees.add(parent);
+				if (addToTrees) {
+					myCommandTrees.add(parent);
+				}
+				createCommandTree(userInput, commandTypes, allInputTypes, currIdx+1);
 			}
 			return; 
 		}
@@ -57,16 +61,11 @@ public class CommandTreeBuilder {
 				CommandNode newChildNode = new CommandNode(userInput[idx]);
 				int numArgs = getNumArgs(commandTypes[idx-1]);
 				CommandNode newCommandNode = new CommandNode(commandTypes[idx-1], numArgs, newChildNode);
-				if (parent.getNumChildren() < parent.getNumArgs()) { 
-					createAndSetChildren(newCommandNode, userInput, commandTypes, allInputTypes, idx+1);
-				}
-				else if (idx < userInput.length-1) {
-					if (parent.getNumChildren() < parent.getNumArgs()) { 
-						createAndSetChildren(parent, userInput, commandTypes, allInputTypes, idx+1);
-					} 
-					else {
-						createCommandTree(userInput, commandTypes, allInputTypes, idx+1);
-					}
+				if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
+					createAndSetChildren(newCommandNode, userInput, commandTypes, allInputTypes, idx+1, false);
+				} 
+				else {
+					createCommandTree(userInput, commandTypes, allInputTypes, idx+1);
 				}
 				for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) {
 					int backTrackNumArgs = getNumArgs(commandTypes[backtrack]);
@@ -74,6 +73,9 @@ public class CommandTreeBuilder {
 					newCommandNode = backtrackCommandNode; 
 				}
 				parent.addChild(newCommandNode);
+				if (addToTrees) {
+					myCommandTrees.add(parent);
+				}
 				return; 
 			}
 		}

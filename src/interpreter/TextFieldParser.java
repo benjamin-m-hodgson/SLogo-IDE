@@ -24,24 +24,10 @@
 
 package interpreter;
 
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-import java.util.MissingResourceException;
 import java.util.Queue;
-import java.util.ResourceBundle;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
-import java.util.Map.Entry;
-import java.util.regex.Pattern;
-
-import javax.imageio.ImageIO;
-
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class TextFieldParser {	
 	
@@ -123,7 +109,7 @@ public class TextFieldParser {
 	
 	public static void main(String[] args) {
 		TextFieldParser testingParser = new TextFieldParser();
-		testingParser.parseText("fd");
+		testingParser.parseText("setxy 20 setxy 30 40");
 	}
 	
 }
