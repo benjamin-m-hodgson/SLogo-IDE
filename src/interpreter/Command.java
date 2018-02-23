@@ -1,4 +1,4 @@
-package command;
+package interpreter;
 
 public interface Command {
 	/**
