@@ -158,6 +158,7 @@ class Turtle {
 		setOld();
 		myX = x; 
 		myY = y; 
+		myPen.drawLine(myOldX, myOldY, myX, myY);
 	}
 
 	/**
@@ -178,6 +179,10 @@ class Turtle {
 
 	protected void setPenColor(Color color) {
 		myPen.setColor(color);
+	}
+	
+	protected void setPenWidth(double width) {
+		myPen.setWidth(width);
 	}
 
 	protected void showPen() {
@@ -213,7 +218,7 @@ class Turtle {
 		 * Single argument constructor for a pen (default values if the user does not specify)
 		 * @param penlines is (already attached to stage) Group of lines drawn by the pen
 		 */
-		protected Pen(Group penLines) {
+		private Pen(Group penLines) {
 			myPenLines = penLines;
 			myColor = Color.BLACK;
 			myWidth = 0.0;
@@ -225,7 +230,7 @@ class Turtle {
 		 * @param color is initial color of Pen
 		 * @param width is initial width of Pen
 		 */
-		protected Pen(Group penLines, Color color, double width) {
+		private Pen(Group penLines, Color color, double width) {
 			myPenLines = penLines;
 			myColor = color;
 			myIsDown = true;
@@ -239,7 +244,7 @@ class Turtle {
 		 * @param color is initial color of Pen
 		 * @param width is initial width of Pen
 		 */
-		protected Pen(Group penlines, boolean down, Color color, double width) {
+		private Pen(Group penlines, boolean down, Color color, double width) {
 			myPenLines = penlines;
 			myColor = color;
 			myIsDown = down;
@@ -250,21 +255,21 @@ class Turtle {
 		 * 
 		 * @return  true if pen is down (lines drawn are visible) and false if pen is up (invisible)
 		 */
-		protected boolean getVisibility() {
+		private boolean getVisibility() {
 			return myIsDown;
 		}
 
 		/**
 		 * Makes lines drawn by pen visible
 		 */
-		protected void putPenDown() {
+		private void putPenDown() {
 			myIsDown = true;
 		}
 
 		/**
 		 * Makes lines drawn by pen invisible
 		 */
-		protected void putPenUp() {
+		private void putPenUp() {
 			myIsDown = false;
 		}
 
@@ -272,7 +277,7 @@ class Turtle {
 		/**
 		 * @return current width of pen lines
 		 */
-		protected double getWidth() {
+		private double getWidth() {
 			return myWidth;
 		}
 
@@ -280,14 +285,14 @@ class Turtle {
 		 * Sets width of pen to a new value
 		 * @param width is new width desired
 		 */
-		protected void setWidth(double width) {
+		private void setWidth(double width) {
 			myWidth = width;
 		}
 
 		/**
 		 * @return pen Color
 		 */
-		protected Color getColor() {
+		private Color getColor() {
 			return myColor;
 		}
 
@@ -295,7 +300,7 @@ class Turtle {
 		 * Sets new pen color
 		 * @param newColor is new Color of pen
 		 */
-		protected void setColor(Color newColor) {
+		private void setColor(Color newColor) {
 			myColor = newColor;
 		}
 
@@ -306,7 +311,7 @@ class Turtle {
 		 * @param newX is new x coordinate of turtle
 		 * @param newY is new y coordinate of turtle
 		 */
-		protected void drawLine(double oldX, double oldY, double newX, double newY) {
+		private void drawLine(double oldX, double oldY, double newX, double newY) {
 			if(myIsDown) {
 				Line line = new Line(oldX, oldY, newX, newY);
 				line.setFill(myColor);
