@@ -6,6 +6,6 @@ public class CommandFactory {
 	}
 
 	public Command makeCommand() {
-		
+	    return null;
 	}
 }

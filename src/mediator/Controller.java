@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import screen.ErrorScreen;
 import screen.StartScreen;
 import screen.UserScreen;
-import turtle.Turtle;
+import model.Turtle;
 
 public class Controller {
     private final String FILE_ERROR_PROMPT = "Failed to obtain resource files!";

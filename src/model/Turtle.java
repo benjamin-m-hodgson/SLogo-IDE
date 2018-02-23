@@ -1,4 +1,4 @@
-package turtle;
+package model;
 
 public interface Turtle {
     
