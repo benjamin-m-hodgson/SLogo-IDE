@@ -37,6 +37,7 @@ public class CommandTreeBuilder {
 
 	private void createAndSetChildren(CommandNode parent, String[] userInput, String[] commandTypes, String[] allInputTypes, int currIdx) {
 		if (currIdx >= userInput.length) {
+			myCommandTrees.add(parent);
 			return; 
 		}
  		if (allInputTypes[currIdx].equals(DEFAULT_CONSTANT_IDENTIFIER)) {
@@ -61,10 +62,7 @@ public class CommandTreeBuilder {
 				CommandNode newChildNode = new CommandNode(userInput[idx]);
 				int numArgs = getNumArgs(commandTypes[idx-1]);
 				CommandNode newCommandNode = new CommandNode(commandTypes[idx-1], numArgs, newChildNode);
-				if (parent.getNumChildren() < parent.getNumArgs()) { 
-					createAndSetChildren(newCommandNode, userInput, commandTypes, allInputTypes, idx+1);
-				}
-				else if (idx < userInput.length-1) {
+				if (idx < userInput.length-1) {
 					if (parent.getNumChildren() < parent.getNumArgs()) { 
 						createAndSetChildren(parent, userInput, commandTypes, allInputTypes, idx+1);
 					} 

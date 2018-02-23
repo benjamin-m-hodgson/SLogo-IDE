@@ -32,6 +32,7 @@ public class CommandNode {
 			isDouble = false; 
 		}
 		myNumArgs = numArgs;
+		myChildren = new ArrayList<CommandNode>(); 
 		myChildren.add(child); 
 	}
 
@@ -49,11 +50,11 @@ public class CommandNode {
 	}
 
 	public String toString() {
-		String s = "CommandNode with info: "+myInfo;
+		String s = "CommandNode holding info "+myInfo;
 		if (myChildren.size() > 0) {
-			s+= " has children: ";
+			s+= " has "+myChildren.size()+" children:\n";
 			for (int i = 0; i < myChildren.size(); i ++) {
-				s += myChildren.get(i).toString()+" ";
+				s += "#"+(i+1)+". "+myChildren.get(i).toString()+"\n";
 			}
 		}
 		else {
