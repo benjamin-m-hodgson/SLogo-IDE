@@ -1,4 +1,4 @@
-package model;
+package interpreter;
 
 //public interface Turtle {
 //
@@ -50,6 +50,10 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+<<<<<<< HEAD:src/model/Turtle.java
+=======
+// TODO repackage so turtle is with controller? 
+>>>>>>> master:src/interpreter/Turtle.java
 class Turtle {
 
 	public static final String DEFAULT_NAME = "";

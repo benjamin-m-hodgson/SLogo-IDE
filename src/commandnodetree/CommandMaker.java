@@ -1,4 +1,4 @@
-package interpreter;
+package commandnodetree;
 //
 //public interface CommandMaker {
 //	/**
@@ -15,7 +15,10 @@ package interpreter;
 
 import java.util.Queue;
 
-class CommandMaker {
+import interpreter.Command;
+import interpreter.RegexMatcher;
+
+public class CommandMaker {
 	
 	public static final String DEFAULT_FILEPATH = "interpreter/";
 	public static final String DEFAULT_LANGUAGE = "English";

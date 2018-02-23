@@ -5,13 +5,13 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import interpreter.TextFieldParser;
+import interpreter.Turtle;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import model.Turtle;
 import screen.ErrorScreen;
 import screen.UserScreen;
 
