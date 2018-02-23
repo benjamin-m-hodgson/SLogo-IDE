@@ -14,7 +14,7 @@ public class RegexMatcher {
 	private String myFileName; 
 	private ResourceBundle myResources; 
 	private List<Entry<String, Pattern>> mySymbols;
-	private Exception myException; 
+//	private Exception myException; 
 	
 	public RegexMatcher(String fileName) {
 		myFileName = fileName;

@@ -8,7 +8,6 @@ public class CommandTreeBuilder {
 
 	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command";
 	public static final String DEFAULT_CONSTANT_IDENTIFIER = "Constant";
-
 	//	private CommandTreeReader myCommandTreeReader; 
 	private String myNumArgsFileName; 
 	private ArrayList<CommandNode> myCommandTrees; 
@@ -20,7 +19,9 @@ public class CommandTreeBuilder {
 
 	public Queue<Command> createCommandQueue(String[] userInput, String[] commandTypes, String[] allInputTypes) {
 		createCommandTree(userInput, commandTypes, allInputTypes, 0);
-		// generate queue from reading in tree
+		for (CommandNode n : myCommandTrees) {
+			System.out.println(n.toString());
+		}
 		return new LinkedList<Command>(); // TODO FIX: this return is just so eclipse won't complain...
 	}
 
@@ -35,7 +36,10 @@ public class CommandTreeBuilder {
 	}
 
 	private void createAndSetChildren(CommandNode parent, String[] userInput, String[] commandTypes, String[] allInputTypes, int currIdx) {
-		if (allInputTypes[currIdx].equals(DEFAULT_CONSTANT_IDENTIFIER)) {
+		if (currIdx >= userInput.length) {
+			return; 
+		}
+ 		if (allInputTypes[currIdx].equals(DEFAULT_CONSTANT_IDENTIFIER)) {
 			CommandNode newChildNode = new CommandNode(userInput[currIdx]);
 			parent.addChild(newChildNode);
 			if (currIdx < userInput.length-1) {

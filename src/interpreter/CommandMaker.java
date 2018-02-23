@@ -13,14 +13,7 @@ package interpreter;
 //
 //}
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.MissingResourceException;
 import java.util.Queue;
-import java.util.ResourceBundle;
-import java.util.Map.Entry;
-import java.util.regex.Pattern;
 
 public class CommandMaker {
 	
