@@ -26,6 +26,19 @@ public class Pen {
 		myIsDown = true;
 	}
 	/**
+	 * Constructor for a pen with default state as pen visible
+	 * @param penlines is (already-attached-to-stage) Group which will house lines drawn by Pen
+	 * @param color is initial color of Pen
+	 * @param width is initial width of Pen
+	 */
+	public Pen(Group penlines, Color color, double width) {
+		myPenLines = penlines;
+		myColor = color;
+		myIsDown = true;
+		myWidth = width;
+	}
+
+	/**
 	 * Fully populated constructor for a pen
 	 * @param penlines is (already-attached-to-stage) Group which will house lines drawn by Pen
 	 * @param down is initial state of Pen (true if pen is down, false if up)
