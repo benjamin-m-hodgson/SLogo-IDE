@@ -11,7 +11,7 @@ class CommandNode {
 	private boolean isDouble; 
 	private int myNumArgs; 
 	private Command myCommand; 
-	private ArrayList<CommandNode> myChildren; 
+	private List<CommandNode> myChildren; 
 
 	public CommandNode(String info) {
 		this(info, DEFAULT_NUM_ARGS);
@@ -72,6 +72,15 @@ class CommandNode {
 
 	public int getNumChildren() {
 		return myChildren.size();
+	}
+	public boolean getIsDouble() {
+		return isDouble;
+	}
+	public List<CommandNode> getChildren() {
+		return myChildren;
+	}
+	public String getInfo() {
+		return myInfo;
 	}
 
 }
