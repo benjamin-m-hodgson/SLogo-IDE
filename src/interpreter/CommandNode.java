@@ -55,5 +55,9 @@ public class CommandNode {
 	public int getNumArgs() {
 		return myNumArgs; 
 	}
+	
+	public int getNumChildren() {
+		return myChildren.size();
+	}
 
 }
