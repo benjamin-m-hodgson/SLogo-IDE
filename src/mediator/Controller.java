@@ -22,7 +22,8 @@ import turtle.Turtle;
 
 public class Controller {
     private final String FILE_ERROR_PROMPT = "Failed to obtain resource files!";
-    private final String START_ERROR_PROMPT = "Error loading Start Screen!";
+    private final String SCREEN_ERROR_PROMPT = "Error loading Screen!";
+    private final String SYNTAX_FILE_NAME = "Syntax.properties";
     private final String DEFAULT_LANGUAGE = "English";
     private final String DEFAULT_SETTINGS = "settings";
     // TODO: Read this in from files rather than storing as instance variables
@@ -39,6 +40,7 @@ public class Controller {
     public Controller(Stage primaryStage) {
 	PROGRAM_STAGE = primaryStage;
 	findSettings();
+	getLanguages();
     }
 
     /**
@@ -61,6 +63,31 @@ public class Controller {
      * Returns an ImmutableList of available User Commands
      */
     public List<String> getUserCommands() {
+	return null;
+    }
+    
+    /**
+     * 
+     * @return an ImmutableList of all of the language options
+     */
+    public List<String> getLanguages() {
+	String currentDir = System.getProperty("user.dir");
+	try {
+	    File file = new File(currentDir + File.separator + "languages");
+	    File syntaxFile = new File(currentDir + File.separator + "languages" + File.separator
+		    + SYNTAX_FILE_NAME);
+	    File[] languageFiles = file.listFiles();
+	    for (File languageFile : languageFiles) {
+		// ignore the syntax file used for input parsing
+		if (!languageFile.equals(syntaxFile)) { 
+		    System.out.println(languageFile);
+		}
+	    }
+	}
+	catch (Exception e) {
+	    String specification = "%nFailed to find language files";
+	    loadErrorScreen(FILE_ERROR_PROMPT + specification);
+	}
 	return null;
     }
     
@@ -92,11 +119,10 @@ public class Controller {
 	    PROGRAM_STAGE.show();	
 	}
 	catch (Exception e) {
-	    loadErrorScreen(START_ERROR_PROMPT);
+	    loadErrorScreen(SCREEN_ERROR_PROMPT);
 	}
     }
 
-    // TODO: get language and call findResources(String language)
     public void loadUserScreen() {
 	try {
 	    UserScreen programScreen = new UserScreen(this);
@@ -106,7 +132,8 @@ public class Controller {
 	    PROGRAM_STAGE.setScene(programScene);
 	}
 	catch (Exception e) {
-	    loadErrorScreen(START_ERROR_PROMPT);
+	    // TODO: make screen error exception class to handle error specification
+	    loadErrorScreen(SCREEN_ERROR_PROMPT);
 	}
     }
 
@@ -121,7 +148,7 @@ public class Controller {
      * @param language: the new language to be used in the program
      */
     public void changeLanguage(String language) {
-	findResources(language);
+	//findResources(language);
     }
 
     /**
@@ -172,7 +199,9 @@ public class Controller {
 		    Locale.getDefault(), loader);
 	}
 	catch (MalformedURLException e) {
-	    loadErrorScreen(FILE_ERROR_PROMPT);
+	    // TODO: make screen error exception class to handle error specification
+	    String specification = "%nFailed to find settings files";
+	    loadErrorScreen(FILE_ERROR_PROMPT + specification);
 	}
     }
 

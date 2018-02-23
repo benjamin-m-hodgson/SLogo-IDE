@@ -10,18 +10,20 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import mediator.Controller;
 
 public class StartScreen implements Screen {
     private final int VISIBLE_ROW_COUNT = 5;
-    private final String DEFAULT_SELECTION_PROMPT = "Select a language";
-    private final String DEFAULT_APPLY_PROMPT = "Apply";
-    private final String DEFAULT_START_PROMPT = "Start";
+    private String SELECTION_PROMPT = "Select a language";
+    private String APPLY_PROMPT = "Apply";
+    private String START_PROMPT = "Start";
     private Parent ROOT;
     private Controller PROGRAM_CONTROLLER;
     private Button START;
     private Button APPLY;
+    private String LANGUAGE;
 
     public StartScreen(Controller programController) {
 	PROGRAM_CONTROLLER = programController;
@@ -30,7 +32,11 @@ public class StartScreen implements Screen {
     @Override
     public void makeRoot() {
 	START = makeStartButton();
-	VBox rootBox = new VBox(10, START);
+	APPLY = makeApplyButton();
+	ComboBox<Object> languageSelector = languageChooser();
+	HBox centerBox = new HBox(languageSelector, APPLY);
+	centerBox.setId("centerBox");
+	VBox rootBox = new VBox(START, centerBox);
 	rootBox.setId("startScreenRoot");
 	ROOT = rootBox;
     }
@@ -58,9 +64,8 @@ public class StartScreen implements Screen {
      * @return Button: Button to start the program
      */
     private Button makeStartButton() {
-	Button startButton = new Button(DEFAULT_START_PROMPT);
-	// TODO: format with CSS
-	startButton.setAlignment(Pos.CENTER);
+	Button startButton = new Button(START_PROMPT);
+	startButton.setId("startButton");
 	// handle click event
 	startButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 	    @Override
@@ -77,18 +82,18 @@ public class StartScreen implements Screen {
      * @return Button: Button to apply a language change
      */
     private Button makeApplyButton() {
-	Button startButton = new Button(DEFAULT_APPLY_PROMPT);
-	// TODO: format with CSS
-	startButton.setAlignment(Pos.CENTER);
+	Button applyButton = new Button(APPLY_PROMPT);
+	applyButton.setId("applyButton");
 	// handle click event
-	startButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+	applyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 	    @Override
 	    public void handle(MouseEvent arg0) {
-		// TODO: change display prompts on start screen to reflect applying language
+		PROGRAM_CONTROLLER.changeLanguage(LANGUAGE);
+		START.setDisable(false);
 	    }
 	});
-	startButton.setDisable(true);
-	return startButton;
+	applyButton.setDisable(true);
+	return applyButton;
     }
     
     /**
@@ -97,18 +102,16 @@ public class StartScreen implements Screen {
      * language for the simulation
      */
     private ComboBox<Object> languageChooser() {
-	String defaultPrompt;
-	try {
-	    defaultPrompt = PROGRAM_CONTROLLER.resourceDisplayText("LanguageSelection");
-	}
-	catch (Exception e) {
-	    defaultPrompt = DEFAULT_SELECTION_PROMPT;
-	}
-	final String defaultString = defaultPrompt;
+	String defaultPrompt = SELECTION_PROMPT;
 	ComboBox<Object> dropDownMenu = makeComboBox(defaultPrompt);
 	ObservableList<Object> simulationChoices = 
 		FXCollections.observableArrayList(defaultPrompt);
-	//simulationChoices.addAll(getLanguages());
+	//TODO: simulationChoices.addAll(getLanguages());
+	simulationChoices.add("hi");
+	simulationChoices.add("test");
+	simulationChoices.add("four");
+	simulationChoices.add("five");
+	simulationChoices.add("more than five");
 	dropDownMenu.setItems(simulationChoices);
 	dropDownMenu.setId("languageChooser");
 	dropDownMenu.getSelectionModel().selectedIndexProperty()
@@ -117,8 +120,9 @@ public class StartScreen implements Screen {
 	    public void changed(ObservableValue<? extends Number> arg0, 
 		    Number arg1, Number arg2) {
 		String selected = (String) simulationChoices.get((Integer) arg2);
-		if (!selected.equals(defaultString)) {
+		if (!selected.equals(defaultPrompt)) {
 		    APPLY.setDisable(false);
+		    LANGUAGE = selected;
 		} 
 		else {
 		    APPLY.setDisable(true);
@@ -137,5 +141,14 @@ public class StartScreen implements Screen {
 	dropDownMenu.setVisibleRowCount(VISIBLE_ROW_COUNT);
 	dropDownMenu.setValue(defaultChoice);
 	return dropDownMenu;
+    }
+    
+    /**
+     * Updates the text displayed to the user to match the current language
+     */
+    private void updatePrompt() {
+	APPLY_PROMPT = PROGRAM_CONTROLLER.resourceDisplayText("ApplyPrompt");
+	START_PROMPT = PROGRAM_CONTROLLER.resourceDisplayText("StartPrompt");
+	SELECTION_PROMPT = PROGRAM_CONTROLLER.resourceDisplayText("LanguageSelection");
     }
 }
