@@ -34,5 +34,9 @@ public class CommandNode {
 		myNumArgs = numArgs;
 		myChildren = (ArrayList<CommandNode>) children; 
 	}
+	
+	public void setChildren(List<CommandNode> children) {
+		myChildren.addAll(children); 
+	}
 
 }

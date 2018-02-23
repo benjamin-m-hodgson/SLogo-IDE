@@ -17,15 +17,16 @@ public class CommandTreeBuilder {
 		myCommandTrees = new ArrayList<CommandNode>(); 
 	}
 	
-	public Queue<Command> generateCommandQueue(String[] userInput, String[] commandTypes, String[] allInputTypes) {
-		generateCommandTree(userInput, commandTypes, allInputTypes, 0);
+	public Queue<Command> createCommandQueue(String[] userInput, String[] commandTypes, String[] allInputTypes) {
+		createCommandTree(userInput, commandTypes, allInputTypes, 0);
 		// generate queue from reading in tree
 		return new LinkedList<Command>(); // TODO FIX: this return is just so eclipse won't complain...
 	}
 	
-	private void generateCommandTree(String[] userInput, String[] commandTypes, String[] allInputTypes, int currIdx) {
-		String currCommand = commandTypes[currIdx]; 
+	private void createCommandTree(String[] userInput, String[] commandTypes, String[] allInputTypes, int startIdx) {
+		String currCommand = commandTypes[startIdx]; 
 		int numArgs = getNumArgs(currCommand);
+		CommandNode newParentNode = new CommandNode(userInput[startIdx], numArgs);
 	}
 	
 	private int getNumArgs(String commandType) {
