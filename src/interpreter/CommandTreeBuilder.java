@@ -67,11 +67,11 @@ public class CommandTreeBuilder {
 				else {
 					createCommandTree(userInput, commandTypes, allInputTypes, idx+1);
 				}
-//				for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) {
-//					int backTrackNumArgs = getNumArgs(commandTypes[backtrack]);
-//					CommandNode backtrackCommandNode = new CommandNode(commandTypes[backtrack], backTrackNumArgs, newCommandNode);
-//					newCommandNode = backtrackCommandNode; 
-//				}
+				for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) {
+					int backTrackNumArgs = getNumArgs(commandTypes[backtrack]);
+					CommandNode backtrackCommandNode = new CommandNode(commandTypes[backtrack], backTrackNumArgs, newCommandNode);
+					newCommandNode = backtrackCommandNode; 
+				}
 				parent.addChild(newCommandNode);
 				if (addToTrees) {
 					myCommandTrees.add(parent);
