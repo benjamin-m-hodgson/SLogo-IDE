@@ -2,8 +2,9 @@
 /* The root containing the elements displayed in the start up screen*/
 /******************************************************************************************/
 #startScreenRoot {
+	-fx-spacing: 20;
 	-fx-alignment: center;
-	-fx-background-color: #d3d3d3;
+	-fx-background-color: #f3f3f3;
 	-fx-background-radius: 2;
 }
 /******************************************************************************************/
@@ -11,7 +12,14 @@
 /******************************************************************************************/
 #userScreenRoot {
 	-fx-alignment: center;
-	-fx-background-color: #ffffff;
+	-fx-background-color: #f3f3f3;
+}
+/******************************************************************************************/
+/* The root containing the elements displayed in the error screen*/
+/******************************************************************************************/
+#errorScreenRoot {
+	-fx-alignment: center;
+	-fx-background-color: #f3f3f3;
 }
 /******************************************************************************************/
 /* The root containing the informational panel displayed on the screen */
@@ -46,4 +54,252 @@
 	-fx-border-insets: 0;
 	-fx-border-radius: 2;
 	-fx-border-color: #6495ed;
+}
+/******************************************************************************************/
+/* The label displaying the error message */ 
+/******************************************************************************************/
+#errorLabel {
+	-fx-alignment: center;
+	-fx-text-alignment: center;
+	-fx-text-fill: #000033;
+	-fx-font: 32px Dekko;
+}
+/******************************************************************************************/
+/* The text field where the user can input commands */ 
+/******************************************************************************************/
+#inputField {
+	-fx-alignment: center;
+	-fx-text-alignment: center;
+	-fx-text-fill: #000033;
+	-fx-font: 12px 'Nova Flat';
+}
+/******************************************************************************************/
+/* The apply button to apply some visualization property changes */
+/******************************************************************************************/
+#applyButton {
+	-fx-alignment: center;
+	-fx-pref-width: 100px;
+	-fx-max-width: 100px;
+	-fx-min-width: 100px;
+	-fx-pref-height: 50px;
+	-fx-max-height: 50px;
+	-fx-min-height: 50px;
+	-fx-background-radius: 6;
+	-fx-background-color: #1fbed6;
+	-fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-border-color: #0077b5;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+    -fx-font: 18px Dekko;
+    -fx-font-weight: bold;
+    -fx-underline: false;
+}
+#applyButton:disabled, #applyButton:disabled > * {
+	-fx-opacity: 0.7;
+}
+#applyButton:hover {
+	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
+} 
+#applyButton:hover {
+	-fx-font: 22px Dekko;
+	-fx-font-weight: bold;
+}
+/******************************************************************************************/
+/* The start button to advance to the user screen */
+/******************************************************************************************/
+#startButton {
+	-fx-alignment: center;
+	-fx-pref-width: 400px;
+	-fx-max-width: 400px;
+	-fx-min-width: 400px;
+	-fx-pref-height: 50px;
+	-fx-max-height: 50px;
+	-fx-min-height: 50px;
+	-fx-background-radius: 6;
+	-fx-background-color: #69b366;
+	-fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-border-color: #1e8d19;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+    -fx-font: 18px Dekko;
+    -fx-font-weight: bold;
+    -fx-underline: false;
+}
+#startButton:disabled, #startButton:disabled > * {
+	-fx-opacity: 0.7;
+}
+#startButton:hover {
+	-fx-background-color: linear-gradient(#69b366, #1e8d19);
+	-fx-font: 22px Dekko;
+	-fx-font-weight: bold;
+} 
+/******************************************************************************************/
+/* The drop down choice box the user uses to pick a language to use in the program */
+/******************************************************************************************/
+#languageChooser {
+	-fx-alignment: center;
+	-fx-pref-width: 280px;
+	-fx-max-width: 280px;
+	-fx-min-width: 280px;
+	-fx-pref-height: 50px;
+	-fx-max-height: 50px;
+	-fx-min-height: 50px;
+    -fx-background-color: #fe9c6f;
+    -fx-background-radius: 6;
+    -fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-border-color: #fe793c;
+    -fx-padding: 0;
+}
+#languageChooser .list-cell {
+	-fx-pref-width: 280px;
+	-fx-max-width: 280px;
+	-fx-min-width: 280px;
+	-fx-pref-height: 50px;
+	-fx-max-height: 50px;
+	-fx-min-height: 50px;
+    -fx-background: #fe9c6f;
+    -fx-background-color: #fe9c6f;
+	-fx-background-radius: 6;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+    -fx-font: 18px Dekko;
+    -fx-font-weight: bold;
+}
+#languageChooser .list-view {
+    -fx-background-color: transparent;
+}    
+#languageChooser .list-view .list-cell {
+	-fx-background-color: #fe9c6f;
+    -fx-background-radius: 6;
+    -fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-border-color: #fe793c;
+    -fx-text-fill: #ffffff;
+    -fx-font: 18px Dekko;
+    -fx-font-weight: bold;
+}
+#languageChooser .arrow-button {
+	-fx-background-color: transparent
+}
+#languageChooser .arrow {
+	-fx-background-color: #ffffff;
+	-fx-font: 12px Dekko;
+}
+#languageChooser:hover {
+	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-text-fill: #ffffff;
+}
+#languageChooser:hover .list-cell {
+	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-text-fill: #ffffff;
+    -fx-font: 22px Dekko;
+    -fx-font-weight: bold;
+}
+#languageChooser:hover .arrow-button {
+	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+}
+#languageChooser:hover .arrow {
+	-fx-background-color: #ffffff;
+	-fx-font: 18px Dekko;
+}
+#languageChooser:showing {
+    -fx-text-fill: #ffffff;
+    -fx-font: 18px Dekko;
+    -fx-font-weight: bold;
+}
+#languageChooser:showing .list-cell {
+	-fx-pref-width: 250px;
+	-fx-max-width: 250px;
+	-fx-min-width: 250px;
+	-fx-pref-height: 50px;
+	-fx-max-height: 50px;
+	-fx-min-height: 50px;
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+	-fx-background-radius: 6;
+    -fx-text-fill: #ffffff;
+    -fx-font: 18px Dekko;
+    -fx-font-weight: bold;
+}
+#languageChooser:showing .arrow {
+	-fx-background-color: #ffffff;
+	-fx-font: 12px Dekko;
+}
+#languageChooser:showing .arrow-button {
+	-fx-background-color: transparent;
+}
+#languageChooser:showing:hover {
+    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-text-fill: #ffffff;
+    -fx-font: 22px Dekko;
+    -fx-font-weight: bold;
+}
+#languageChooser:showing:hover .list-cell{
+    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-text-fill: #ffffff;
+    -fx-font: 22px Dekko;
+    -fx-font-weight: bold;
+}
+#languageChooser:showing:hover .arrow {
+	-fx-background-color: #ffffff;
+	-fx-font: 18px Dekko;
+}
+#languageChooser .list-view .list-cell:filled:selected, 
+#languageChooser .list-view .list-cell:filled:selected:hover {
+    -fx-background: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-text-fill: #ffffff;
+}
+#languageChooser .list-view .list-cell:filled:hover {
+    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-text-fill: #ffffff;
+    -fx-font: 22px Dekko;
+    -fx-font-weight: bold;
+}
+#languageChooser .scroll-bar:horizontal ,
+#languageChooser  .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+#languageChooser .scroll-bar .increment-arrow ,
+#languageChooser .scroll-bar .decrement-arrow {
+	-fx-shape: " ";	
+	-fx-padding:0;
+}
+#languageChooser .increment-button ,
+#languageChooser .decrement-button {
+    -fx-background-color:transparent;
+	-fx-background-radius: 2em;
+}
+#languageChooser .scroll-bar:horizontal .thumb,
+#languageChooser .scroll-bar:vertical .thumb {
+    -fx-background-color: #c0bcb6;
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+#languageChooser .scroll-bar:horizontal .thumb:hover,
+#languageChooser .scroll-bar:vertical .thumb:hover,
+#languageChooser .scroll-bar:horizontal .thumb:pressed,
+#languageChooser .scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: linear-gradient(to right, #c0bcb6, #aca9a3);
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+#languageChooser:disabled {
+    -fx-opacity: .4;
+}
+/******************************************************************************************/
+/* Centers a VBox or HBox used for aligning control object locations */
+/******************************************************************************************/
+#centerBox {
+	-fx-spacing: 20;
+	-fx-alignment: center;
+	-fx-background-color: #f3f3f3;
 }

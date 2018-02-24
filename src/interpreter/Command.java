@@ -6,9 +6,4 @@ public interface Command {
 	 * @return double corresponding to return value of this command in SLogo
 	 */
 	public double execute();
-	
-	/**
-	 * @return number of arguments necessary to allow this Command to be executed
-	 */
-	public int getNumArgs();
 }
