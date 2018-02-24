@@ -12,11 +12,14 @@ class CommandTreeBuilder {
 	private String myNumArgsFileName; 
 	private ArrayList<CommandNode> myCommandTrees; 
 	private Turtle myTurtle;
+	private CommandTreeReader myCommandTreeReader;
 
 	public CommandTreeBuilder(String numArgsFileName, Turtle turtle) {
 		myNumArgsFileName = numArgsFileName; 
 		myCommandTrees = new ArrayList<CommandNode>(); 
 		myTurtle = turtle;
+		myCommandTreeReader = new CommandTreeReader();
+		
 	}
 
 	public Queue<Command> createCommandQueue(String[] userInput, String[] commandTypes, String[] allInputTypes) {

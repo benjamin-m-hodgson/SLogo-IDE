@@ -34,13 +34,17 @@ class CommandTreeReader {
 		}
 		return completedChildren==root.getNumArgs();
 	}
+	public double readAndExecute(CommandNode root) {
+		Command compressedCommand = compressTree(root);
+		
+	}
 	/**
 	 * Compressed the CommandNodeTree into a single Command with Command arguments (which, in turn, may have Command
 	 * arguments, etc.) that can be executed as part of the Command Queue
 	 * @param root
 	 * @return
 	 */
-	protected Command compressTree(CommandNode root) {
+	private Command compressTree(CommandNode root) {
 		ArrayList<Command> args = new ArrayList<>();
 		if(root.getIsDouble()) {
 			return myCommandFactory.makeDoubleCommand(root.getInfo());
