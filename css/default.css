@@ -134,11 +134,9 @@
 }
 #startButton:hover {
 	-fx-background-color: linear-gradient(#69b366, #1e8d19);
-} 
-#startButton:hover {
 	-fx-font: 22px Dekko;
 	-fx-font-weight: bold;
-}
+} 
 /******************************************************************************************/
 /* The drop down choice box the user uses to pick a language to use in the program */
 /******************************************************************************************/
