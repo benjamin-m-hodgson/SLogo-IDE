@@ -51,6 +51,6 @@ class CommandTreeReader {
 		for(CommandNode k: root.getChildren()) {
 			args.add(compressTree(k));
 		}
-		return myCommandFactory.makeCommand(root.getInfo(), args);
+		return myCommandFactory.makeCommand(root.getInfo(), args, root.getTurtle());
 	}
 }

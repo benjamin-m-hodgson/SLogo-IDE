@@ -50,7 +50,7 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-class Turtle {
+public class Turtle {
 
 	public static final String DEFAULT_NAME = "";
 	public static final Color DEFAULT_PEN_COLOR = Color.BLACK;
@@ -155,7 +155,7 @@ class Turtle {
 		setXY(myX, y);
 	}
 
-	private void setXY(double x, double y) {
+	protected void setXY(double x, double y) {
 		setOld();
 		myX = x; 
 		myY = y; 
@@ -210,10 +210,10 @@ class Turtle {
 	 *
 	 */
 	private class Pen {
-		Group myPenLines;
-		Color myColor;
-		double myWidth;
-		boolean myIsDown;
+		private Group myPenLines;
+		private Color myColor;
+		private double myWidth;
+		private boolean myIsDown;
 
 		/**
 		 * Single argument constructor for a pen (default values if the user does not specify)
