@@ -2,10 +2,11 @@ package interpreter;
 import java.util.List;
 
 public class CommandFactory {
-	public CommandFactory() {
-		
-	}
 
+	public Command makeCommand() {
+	    return null;
+	}
+	    
 	public Command makeDoubleCommand(String doubleString) {
 		double doubleArg = Double.parseDouble(doubleString);
 		return new DoubleCommand(doubleArg);
@@ -23,5 +24,7 @@ public class CommandFactory {
 		else if(commandName.equals("Right")) {
 			return new RotateTurtleClockwiseCommand(commandArgs.get(0), turtle);
 		}
+		// TODO: handle returning null value
+		return null;
 	}
 }

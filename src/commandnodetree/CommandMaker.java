@@ -20,6 +20,7 @@ import java.util.Queue;
 
 import interpreter.Command;
 import interpreter.RegexMatcher;
+import interpreter.Turtle;
 
 public class CommandMaker {
 	
@@ -38,7 +39,7 @@ public class CommandMaker {
 	
 	public CommandMaker(String languageFileName, String numArgsFileName) {
 		myLanguageFileName = languageFileName;
-		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName); 
+		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, new Turtle()); 
 	}
 	
 	public Queue<Command> parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) {
