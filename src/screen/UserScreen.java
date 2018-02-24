@@ -1,8 +1,8 @@
 package screen;
 
+import interpreter.Controller;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
-import mediator.Controller;
 import screen.panel.InfoPanel;
 import screen.panel.InputPanel;
 import screen.panel.TurtlePanel;
@@ -15,13 +15,13 @@ public class UserScreen implements Screen {
     public UserScreen(Controller programController) {
 	PROGRAM_CONTROLLER = programController;
     }
-
+    
     @Override
     public void makeRoot() {
 	BorderPane rootPane = new BorderPane();
 	rootPane.setId("userScreenRoot");
-	rootPane.setRight(new InfoPanel(PROGRAM_CONTROLLER).getPanel());
 	rootPane.setBottom(new InputPanel(PROGRAM_CONTROLLER).getPanel());
+	rootPane.setRight(new InfoPanel(PROGRAM_CONTROLLER).getPanel());
 	rootPane.setCenter(new TurtlePanel(PROGRAM_CONTROLLER).getPanel());
 	ROOT = rootPane;
     }

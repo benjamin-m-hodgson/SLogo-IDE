@@ -1,6 +1,7 @@
+import interpreter.Controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import mediator.Controller;
+
 
 /** 
  * Use the driver JavaFX program to start and animate a simple Logo interpreter.

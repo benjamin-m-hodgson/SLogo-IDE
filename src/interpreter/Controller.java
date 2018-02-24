@@ -1,4 +1,4 @@
-package mediator;
+package interpreter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,8 +12,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import interpreter.TextFieldParser;
-import interpreter.Turtle;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,7 +33,7 @@ public class Controller {
 	// TODO: Read this in from files rather than storing as instance variables
 	public static final double DEFAULT_HEIGHT = 650;
 	public static final double DEFAULT_WIDTH = 900;
-	
+
 	private String DEFAULT_CSS = Controller.class.getClassLoader().
 			getResource("default.css").toExternalForm(); 
 	private ResourceBundle CURRENT_TEXT_DISPLAY;
@@ -72,16 +71,32 @@ public class Controller {
 	 * Returns an UnmodifiableMap of variables to their values
 	 */
 	public Map<String, Double> getVariables() {
-		return myVariables;
+		return null;
+	}
+
+	/**
+	 * 
+	 * @return ReadOnlyDoubleProperty: the height property of the application
+	 */
+	public ReadOnlyDoubleProperty getHeightProperty() {
+		return PROGRAM_STAGE.heightProperty();
+	}
+
+	/**
+	 * 
+	 * @return ReadOnlyDoubleProperty: the height property of the application
+	 */
+	public ReadOnlyDoubleProperty getWidthProperty() {
+		return PROGRAM_STAGE.widthProperty();
 	}
 
 	/**
 	 * Returns an ImmutableList of available User Commands
 	 */
 	public List<String> getUserCommands() {
-		return myCommandHistory;
+		return null;
 	}
-	
+
 	//    public List<Turtle> onScreenTurtles() {
 	//	return null;
 	//    }
@@ -172,7 +187,7 @@ public class Controller {
 		findResources(language);
 		myTextFieldParser.changeLanguageFile(DEFAULT_FILE_PATH+language);
 	}
-	
+
 	/**
 	 * Searches through the class path to find the appropriate resource files to use for 
 	 * the program. If it can't locate the files, it displays an error screen to the user
