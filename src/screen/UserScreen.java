@@ -20,7 +20,7 @@ public class UserScreen implements Screen {
     public void makeRoot() {
 	BorderPane rootPane = new BorderPane();
 	rootPane.setId("userScreenRoot");
-	rootPane.setRight(new InfoPanel(PROGRAM_CONTROLLER).getPanel());
+	rootPane.setRight(new InfoPanel(PROGRAM_CONTROLLER, rootPane).getPanel());
 	rootPane.setBottom(new InputPanel(PROGRAM_CONTROLLER).getPanel());
 	rootPane.setCenter(new TurtlePanel(PROGRAM_CONTROLLER).getPanel());
 	ROOT = rootPane;

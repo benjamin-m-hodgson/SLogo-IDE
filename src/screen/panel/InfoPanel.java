@@ -1,10 +1,14 @@
 package screen.panel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import mediator.Controller;
 
@@ -12,48 +16,83 @@ public class InfoPanel implements Panel {
 
     private Parent PANEL;
     private Controller PROGRAM_CONTROLLER;
-    private final double DEFAULT_WIDTH = 600;
-    private final double DEFAULT_HEIGHT = 600;
-    private final String[] buttonLabels = {"Settings", "Variables", "History"};
+    private BorderPane PANE;
+
+	private final int DEFAULT_BUTTON_SPACEING = 10;
+
+    private final String[] BUTTON_LABELS = {"Settings", "Variables", "History", "User-Commands", "Help"};
+    private final String[] BUTTON_IDS = {"settingsButton", "variablesButton", "historyButton", "commandsButton", "helpButton"};
+    private final Panel[] INSTANTIATIONS = {new SettingsPanel(PROGRAM_CONTROLLER, PANE)};
     
-    public InfoPanel(Controller programController) {
+    public InfoPanel(Controller programController, BorderPane pane) {
 	PROGRAM_CONTROLLER = programController;
+	PANE = pane;
     }
 
     @Override
     public void makePanel() {
-    	Button testButton = makeButton("Settings", "test");
-    	Button testButton2 = makeButton("Information", "test");
-
-	VBox panelRoot = new VBox(10, testButton, testButton2);
+    	List<Button> buttons = makeButtons();
+	VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACEING);
+	panelRoot.getChildren().addAll(buttons);
 	panelRoot.setId("infoPanel");
-	panelRoot.setMaxHeight(DEFAULT_HEIGHT);
-	panelRoot.setMinHeight(DEFAULT_HEIGHT);
-	panelRoot.setMaxWidth(DEFAULT_WIDTH);
-	panelRoot.setMinWidth(DEFAULT_WIDTH);
 	panelRoot.setAlignment(Pos.CENTER);
 	PANEL = panelRoot;
     }
     
-
-    
-    /**
-     * 
-     * @return Button: Button to start the program
-     */
-    private Button makeButton(String buttonLabel, String boxId) {
-	Button startButton = new Button(buttonLabel);
-	// TODO: format with CSS
-	startButton.setAlignment(Pos.CENTER);
-	// handle click event
-	startButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-	    @Override
-	    public void handle(MouseEvent arg0) {
-		PROGRAM_CONTROLLER.loadUserScreen();  
-	    }
-	});
-	return startButton;
+    private List<Button> makeButtons()
+    {
+    		if(BUTTON_LABELS.length != BUTTON_IDS.length)	//CHANGE THIS LATER!!!!!!!
+    				System.out.println("BUTTON_LABELS and BUTTON_IDS do not match!!!!!");
+    		List<Button> buttons = new ArrayList<Button>();
+    		for(int i = 0; i < BUTTON_LABELS.length; i++) {
+    			buttons.add(makeButton(i));
+    		}
+    		setLinks(buttons);
+    		return buttons;
     }
+    
+    //CHANGE THIS METHOD TO A BETTER ALTERNATIVE
+    private void setLinks(List<Button> buttons) {
+    		buttons.get(0).setOnMouseClicked(new EventHandler<MouseEvent>() {
+    		    @Override
+    		    public void handle(MouseEvent arg0) {
+    		    	PANE.setRight(new SettingsPanel(PROGRAM_CONTROLLER, PANE).getPanel());
+    		    }
+    		});
+    		buttons.get(1).setOnMouseClicked(new EventHandler<MouseEvent>() {
+    		    @Override
+    		    public void handle(MouseEvent arg0) {
+    		    	PANE.setRight(new VariablesPanel(PROGRAM_CONTROLLER, PANE).getPanel());
+    		    }
+    		});
+    		buttons.get(2).setOnMouseClicked(new EventHandler<MouseEvent>() {
+    		    @Override
+    		    public void handle(MouseEvent arg0) {
+    		    	PANE.setRight(new HistoryPanel(PROGRAM_CONTROLLER, PANE).getPanel());
+    		    }
+    		});
+    		buttons.get(3).setOnMouseClicked(new EventHandler<MouseEvent>() {
+    		    @Override
+    		    public void handle(MouseEvent arg0) {
+    		    	PANE.setRight(new CommandPanel(PROGRAM_CONTROLLER, PANE).getPanel());
+    		    }
+    		});
+    		buttons.get(4).setOnMouseClicked(new EventHandler<MouseEvent>() {
+    		    @Override
+    		    public void handle(MouseEvent arg0) {
+    		    	PANE.setRight(new HelpPanel(PROGRAM_CONTROLLER, PANE).getPanel());
+    		    }
+    		});
+    }
+    
+    
+    private Button makeButton(int buttonNum)
+    {
+    		Button button = new Button(BUTTON_LABELS[buttonNum]);
+    		button.setId(BUTTON_IDS[buttonNum]);
+    		return button;
+    }
+    
 
     @Override
     public Parent getPanel() {
