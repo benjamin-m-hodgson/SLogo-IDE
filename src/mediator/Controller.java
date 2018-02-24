@@ -38,12 +38,14 @@ public class Controller {
     private ResourceBundle CURRENT_LANGUAGE;
     private ResourceBundle CURRENT_SETTINGS;
     private Stage PROGRAM_STAGE;
+    // TODO: add in program titles
+    private String PROGRAM_TITLE;
 
     public Controller(Stage primaryStage) {
 	PROGRAM_STAGE = primaryStage;
 	findSettings();
     }
-
+    
     /**
      * Makes a new Turtle given a name, an ImageView (previously attached to the Stage), a penColor, and an empty Group
      * that has already been attached to the Stage to hold lines for the pen
@@ -154,7 +156,7 @@ public class Controller {
      * @param language: the new language to be used in the program
      */
     public void changeLanguage(String language) {
-	//findResources(language);
+	findResources(language);
     }
 
     /**

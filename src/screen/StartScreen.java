@@ -120,6 +120,7 @@ public class StartScreen implements Screen {
 		} 
 		else {
 		    APPLY.setDisable(true);
+		    START.setDisable(true);
 		}
 	    }
 	});
