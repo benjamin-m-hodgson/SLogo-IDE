@@ -23,6 +23,7 @@
 //}
 
 package interpreter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -43,6 +44,10 @@ public class TextFieldParser {
 	
 	protected TextFieldParser() {
 		this(DEFAULT_FILEPATH+DEFAULT_SYNTAX_FILENAME, DEFAULT_LANGUAGE, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
+	}
+	
+	protected TextFieldParser(String languageFileName) {
+		this(DEFAULT_FILEPATH+DEFAULT_SYNTAX_FILENAME, languageFileName, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
 	}
 	
 	protected TextFieldParser(String syntaxFileName, String languageFileName, String numArgsFileName) {
@@ -74,7 +79,7 @@ public class TextFieldParser {
 		for (int idx = 0; idx < userInputArray.length; idx++) {
 			listOfTypes[idx] = regexMatcher.findMatchingKey(userInputArray[idx]);
 		}
-		myCommandQueue = myCommandMaker.parseValidTextArray(userInputArray, listOfTypes); 
+		myCommandQueue = myCommandMaker.parseValidTextArray(userInputArray[0], Arrays.copyOfRange(userInputArray, 1, userInputArray.length-1), listOfTypes); 
 	}
     
     

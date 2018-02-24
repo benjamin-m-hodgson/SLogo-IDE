@@ -54,6 +54,7 @@ class CommandNode {
 		myChildren = (ArrayList<CommandNode>) children; 
 	}
 
+	@Override
 	public String toString() {
 		String s = "CommandNode holding info "+myInfo;
 		if (myChildren.size() > 0) {

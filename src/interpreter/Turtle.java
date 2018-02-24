@@ -76,7 +76,7 @@ public class Turtle {
 	private double myY; 
 	private double myAngle; 
 
-	protected Turtle() {
+	public Turtle() {
 		this(DEFAULT_NAME, new ImageView(), new Group());
 	}
 
@@ -195,7 +195,7 @@ public class Turtle {
 	/**
 	 * Sets the visual image of the turtle to the image contained in filepath
 	 */
-	protected void setImage(String filepath) {
+	public void setImage(String filepath) {
 		Image newImg = new Image(filepath);
 		myImage.setImage(newImg);
 	}

@@ -13,6 +13,9 @@ package interpreter;
 //
 //}
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Queue;
 
 public class CommandMaker {
@@ -22,6 +25,7 @@ public class CommandMaker {
 	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
 	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command"; //TODO allow this to be client-specified
 	
+	private ArrayList<Turtle> myTurtles; 
 	private String myLanguageFileName; 
 	private CommandTreeBuilder myCommandTreeBuilder; 
 	
@@ -31,21 +35,32 @@ public class CommandMaker {
 	
 	public CommandMaker(String languageFileName, String numArgsFileName) {
 		myLanguageFileName = languageFileName;
-		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName); 
+		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, new Turtle()); 
 	}
 	
-	public Queue<Command> parseValidTextArray(String[] userInput, String[] typesOfInput) {
-		return parseValidTextArray(userInput, typesOfInput, DEFAULT_COMMAND_IDENTIFIER);
+	public Queue<Command> parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) {
+		return parseValidTextArray(turtleName, userInput, typesOfInput, DEFAULT_COMMAND_IDENTIFIER);
 	}
 	
-	public Queue<Command> parseValidTextArray(String[] userInput, String[] typesOfInput, String commandIdentifier) {
+	public Queue<Command> parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput, String commandIdentifier) {
 		String[] commandTypes = new String[userInput.length];
 		for (int idx = 0; idx < userInput.length; idx++) {
 			if (typesOfInput[idx].equals(commandIdentifier)) {
 				commandTypes[idx] = getCommandType(userInput[idx]);
 			}
 		}
-		return myCommandTreeBuilder.createCommandQueue(userInput, commandTypes, typesOfInput); 
+		boolean foundTurtle = false; 
+		Turtle identifiedTurtle; 
+		for (Turtle turtle : myTurtles) {
+			if (turtle.getName().equals(turtleName)) {
+				identifiedTurtle = turtle; 
+				foundTurtle = true; 
+			}
+		}
+		if (! foundTurtle) {
+			throw new TurtleNotFoundException(turtleName);
+		}
+		return myCommandTreeBuilder.createCommandQueue(identifiedTurtle, userInput, commandTypes, typesOfInput); 
 	}
 	
 	private String getCommandType(String text) {
