@@ -1,16 +1,17 @@
 package interpreter;
 
 class MoveTurtleForwardCommand implements Command {
-	private double myForwardDist;
+	private Command myForwardDistCommand;
 	private Turtle myTurtle;
 	protected MoveTurtleForwardCommand(Command forwarddist, Turtle turtle){
 		myTurtle = turtle;
-		myForwardDist = forwarddist.execute();
+		myForwardDistCommand = forwarddist;
 	}
 	
 	public double execute() {
+		double forwardDist = myForwardDistCommand.execute();
 		double angle = Math.toRadians(myTurtle.getAngle());
-		myTurtle.setXY(myTurtle.getX()+myForwardDist*Math.sin(angle), myTurtle.getY()+myForwardDist*Math.cos(angle));
-		return myForwardDist;
+		myTurtle.setXY(myTurtle.getX()+forwardDist*Math.sin(angle), myTurtle.getY()+forwardDist*Math.cos(angle));
+		return forwardDist;
 	}
 }

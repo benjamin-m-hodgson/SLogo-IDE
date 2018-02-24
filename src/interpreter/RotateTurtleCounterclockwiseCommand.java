@@ -1,14 +1,15 @@
 package interpreter;
 
 public class RotateTurtleCounterclockwiseCommand implements Command{
-	double myDegrees;
+	Command myDegreesCommand;
 	Turtle myTurtle;
 	protected RotateTurtleCounterclockwiseCommand(Command degrees, Turtle turtle) {
-		myDegrees = degrees.execute();
+		myDegreesCommand = degrees;
 		myTurtle = turtle;
 	}
 	public double execute() {
-		myTurtle.setAngle(myTurtle.getAngle()-myDegrees);
-		return myDegrees;
+		double degrees = myDegreesCommand.execute();
+		myTurtle.setAngle(myTurtle.getAngle()-degrees);
+		return degrees;
 	}
 }

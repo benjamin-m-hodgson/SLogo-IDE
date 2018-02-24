@@ -50,6 +50,10 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * @author Sarahbland
+ *
+ */
 public class Turtle {
 
 	public static final String DEFAULT_NAME = "";
@@ -86,7 +90,6 @@ public class Turtle {
 		myY = DEFAULT_Y_POS; 
 		myAngle = DEFAULT_ANGLE; 
 	}	
-
 
 
 	// GETTERS
@@ -155,13 +158,27 @@ public class Turtle {
 		setXY(myX, y);
 	}
 
-	protected void setXY(double x, double y) {
+	protected double setXY(double x, double y) {
 		setOld();
 		myX = x; 
 		myY = y; 
 		myImage.setLayoutX(myX);
 		myImage.setLayoutY(myY);
 		myPen.drawLine(myOldX, myOldY, myX, myY);
+		return calcDistance(myOldX, myOldY, myX, myY);
+	}
+	/**
+	 * Calculates the distance between two points (as in how far the turtle moved)
+	 * @param oldX first x coordinate
+	 * @param oldY first y coordinate
+	 * @param x new x coordinate
+	 * @param y new y coordinate
+	 * @return distance traveled
+	 */
+	private double calcDistance(double oldX, double oldY, double x, double y) {
+		double xSquared = Math.pow(oldX-x, 2);
+		double ySquared = Math.pow(oldY-y, 2);
+		return Math.sqrt(xSquared+ySquared);
 	}
 
 	/**
