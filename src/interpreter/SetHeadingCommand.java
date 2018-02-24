@@ -1,5 +1,11 @@
 package interpreter;
 
+/**
+ * Command class used to turn a turtle to a specific absolute heading. Dependent on the CommandFactory to make it 
+ * appropriately. Also dependent on the Turtle class to relay/set angles correctly.
+ * @author Sarahbland
+ *
+ */
 class SetHeadingCommand implements Command{
 	private Command myDegreesCommand;
 	Turtle myTurtle;
