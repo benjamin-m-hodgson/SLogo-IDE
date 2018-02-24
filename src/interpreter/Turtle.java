@@ -50,10 +50,11 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-class Turtle {
+public class Turtle {
 
 	public static final String DEFAULT_NAME = "";
 	public static final Color DEFAULT_PEN_COLOR = Color.BLACK;
+	public static final double DEFAULT_PEN_WIDTH = 0.0;
 	public static final double DEFAULT_X_POS = 0; 
 	public static final double DEFAULT_Y_POS = 0; 
 	public static final double DEFAULT_ANGLE = 0; 
@@ -154,10 +155,12 @@ class Turtle {
 		setXY(myX, y);
 	}
 
-	private void setXY(double x, double y) {
+	protected void setXY(double x, double y) {
 		setOld();
 		myX = x; 
 		myY = y; 
+		myImage.setLayoutX(myX);
+		myImage.setLayoutY(myY);
 		myPen.drawLine(myOldX, myOldY, myX, myY);
 	}
 
@@ -184,6 +187,11 @@ class Turtle {
 	protected void setPenWidth(double width) {
 		myPen.setWidth(width);
 	}
+	
+	protected void setAngle(double angle) {
+		myAngle = angle;
+		myImage.setRotate(angle);
+	}
 
 	protected void showPen() {
 		myPen.putPenDown();
@@ -193,8 +201,8 @@ class Turtle {
 		myPen.putPenUp();
 	}
 
-	// TODO make clear pen method
 	protected void clearPen() {
+		myPen.clear();
 	}
 
 
@@ -209,20 +217,17 @@ class Turtle {
 	 *
 	 */
 	private class Pen {
-		Group myPenLines;
-		Color myColor;
-		double myWidth;
-		boolean myIsDown;
+		private Group myPenLines;
+		private Color myColor;
+		private double myWidth;
+		private boolean myIsDown;
 
 		/**
 		 * Single argument constructor for a pen (default values if the user does not specify)
 		 * @param penlines is (already attached to stage) Group of lines drawn by the pen
 		 */
 		private Pen(Group penLines) {
-			myPenLines = penLines;
-			myColor = Color.BLACK;
-			myWidth = 0.0;
-			myIsDown = true;
+			this(penLines, true, DEFAULT_PEN_COLOR, DEFAULT_PEN_WIDTH);
 		}
 		/**
 		 * Constructor for a pen with default state as pen visible
@@ -231,10 +236,7 @@ class Turtle {
 		 * @param width is initial width of Pen
 		 */
 		private Pen(Group penLines, Color color, double width) {
-			myPenLines = penLines;
-			myColor = color;
-			myIsDown = true;
-			myWidth = width;
+			this(penLines, true, color, width);
 		}
 
 		/**
@@ -318,6 +320,12 @@ class Turtle {
 				line.setStrokeWidth(myWidth);
 				myPenLines.getChildren().add(line);
 			}
+		}
+		/**
+		 * Clears all lines previously drawn by the pen from the screen
+		 */
+		private void clear() {
+			myPenLines.getChildren().removeAll();
 		}
 	}
 

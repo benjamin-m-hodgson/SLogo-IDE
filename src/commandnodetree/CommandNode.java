@@ -2,7 +2,7 @@ package commandnodetree;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import interpreter.Turtle;
 import interpreter.Command;
 
 class CommandNode {
@@ -14,16 +14,21 @@ class CommandNode {
 	private int myNumArgs; 
 	private Command myCommand; 
 	private List<CommandNode> myChildren; 
+	private Turtle myTurtle;
 
-	public CommandNode(String info) {
-		this(info, DEFAULT_NUM_ARGS);
+	public CommandNode(String info, Turtle turtle) {
+		this(info, DEFAULT_NUM_ARGS, turtle);
 	}
 
-	public CommandNode(String info, int numArgs) { 
-		this(info, numArgs, new ArrayList<CommandNode>());
+	public CommandNode(String info, int numArgs, Turtle turtle) { 
+		this(info, numArgs, new ArrayList<CommandNode>(), turtle);
+	}
+	public CommandNode(String info, int numArgs, CommandNode child, Turtle turtle) {
+		this(info, numArgs, new ArrayList<CommandNode>(), turtle);
+		myChildren.add(child);
 	}
 
-	public CommandNode(String info, int numArgs, CommandNode child) {	
+	public CommandNode(String info, int numArgs, List<CommandNode> children, Turtle turtle) {	
 		myInfo = info; 
 		try {
 			Integer.parseInt(info);
@@ -34,7 +39,7 @@ class CommandNode {
 		}
 		myNumArgs = numArgs;
 		myChildren = new ArrayList<CommandNode>(); 
-		myChildren.add(child); 
+		myChildren.addAll(children); 
 	}
 
 	public CommandNode(String info, int numArgs, List<CommandNode> children) {
@@ -83,6 +88,9 @@ class CommandNode {
 	}
 	public String getInfo() {
 		return myInfo;
+	}
+	public Turtle getTurtle() {
+		return myTurtle;
 	}
 
 }
