@@ -159,6 +159,8 @@ public class Turtle {
 		setOld();
 		myX = x; 
 		myY = y; 
+		myImage.setLayoutX(myX);
+		myImage.setLayoutY(myY);
 		myPen.drawLine(myOldX, myOldY, myX, myY);
 	}
 
@@ -185,6 +187,11 @@ public class Turtle {
 	protected void setPenWidth(double width) {
 		myPen.setWidth(width);
 	}
+	
+	protected void setAngle(double angle) {
+		myAngle = angle;
+		myImage.setRotate(angle);
+	}
 
 	protected void showPen() {
 		myPen.putPenDown();
@@ -194,8 +201,8 @@ public class Turtle {
 		myPen.putPenUp();
 	}
 
-	// TODO make clear pen method
 	protected void clearPen() {
+		myPen.clear();
 	}
 
 

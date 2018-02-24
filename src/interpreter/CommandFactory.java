@@ -17,6 +17,11 @@ public class CommandFactory {
 		else if(commandName.equals("Backward")) {
 			return new MoveTurtleBackwardCommand(commandArgs.get(0), turtle);
 		}
-		else return null;
+		else if(commandName.equals("Left")) {
+			return new RotateTurtleCounterclockwiseCommand(commandArgs.get(0), turtle);
+		}
+		else if(commandName.equals("Right")) {
+			return new RotateTurtleClockwiseCommand(commandArgs.get(0), turtle);
+		}
 	}
 }

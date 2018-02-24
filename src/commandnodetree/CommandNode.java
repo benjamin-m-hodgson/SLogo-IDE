@@ -89,5 +89,8 @@ class CommandNode {
 	public String getInfo() {
 		return myInfo;
 	}
+	public Turtle getTurtle() {
+		return myTurtle;
+	}
 
 }
