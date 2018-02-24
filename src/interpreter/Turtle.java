@@ -50,7 +50,7 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-class Turtle {
+public class Turtle {
 
 	public static final String DEFAULT_NAME = "";
 	public static final Color DEFAULT_PEN_COLOR = Color.BLACK;
