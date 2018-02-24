@@ -1,8 +1,8 @@
 package screen.panel;
 
+import interpreter.Controller;
 import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
-import mediator.Controller;
 
 public class InputPanel implements Panel {
     

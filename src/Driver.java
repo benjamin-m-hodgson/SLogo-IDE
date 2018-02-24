@@ -1,8 +1,8 @@
+import interpreter.Controller;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import mediator.Controller;
 import screen.StartScreen;
 
 /** 

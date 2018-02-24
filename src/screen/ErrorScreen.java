@@ -1,8 +1,8 @@
 package screen;
 
+import interpreter.Controller;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
-import mediator.Controller;
 
 public class ErrorScreen implements Screen {
     

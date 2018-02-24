@@ -23,5 +23,6 @@ public class CommandFactory {
 		else if(commandName.equals("Right")) {
 			return new RotateTurtleClockwiseCommand(commandArgs.get(0), turtle);
 		}
+		else return null;
 	}
 }

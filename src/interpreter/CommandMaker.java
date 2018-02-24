@@ -1,4 +1,4 @@
-package commandnodetree;
+package interpreter;
 //
 //public interface CommandMaker {
 //	/**
@@ -14,9 +14,6 @@ package commandnodetree;
 //}
 
 import java.util.Queue;
-
-import interpreter.Command;
-import interpreter.RegexMatcher;
 
 public class CommandMaker {
 	

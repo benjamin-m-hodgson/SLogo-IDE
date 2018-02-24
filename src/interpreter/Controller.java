@@ -1,11 +1,9 @@
-package mediator;
+package interpreter;
 
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import interpreter.TextFieldParser;
-import interpreter.Turtle;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

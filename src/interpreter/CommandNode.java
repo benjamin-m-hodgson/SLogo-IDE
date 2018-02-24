@@ -1,9 +1,7 @@
-package commandnodetree;
+package interpreter;
 
 import java.util.ArrayList;
 import java.util.List;
-import interpreter.Turtle;
-import interpreter.Command;
 
 class CommandNode {
 

@@ -1,8 +1,5 @@
-package commandnodetree;
+package interpreter;
 import java.util.ArrayList;
-
-import interpreter.Command;
-import interpreter.CommandFactory;
 
 /**
  * Class to read the CommandNode tree created to deal with concatenated commands. Has the capacity to check if the tree
