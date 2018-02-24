@@ -2,6 +2,7 @@ package commandnodetree;
 import java.util.ArrayList;
 
 import interpreter.Command;
+import interpreter.CommandFactory;
 
 /**
  * Class to read the CommandNode tree created to deal with concatenated commands. Has the capacity to check if the tree
@@ -50,6 +51,6 @@ class CommandTreeReader {
 		for(CommandNode k: root.getChildren()) {
 			args.add(compressTree(k));
 		}
-		return myCommandFactory.makeCommand(root.getInfo(), args);
+		return myCommandFactory.makeCommand(root.getInfo(), args, root.getTurtle());
 	}
 }
