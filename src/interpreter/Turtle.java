@@ -90,6 +90,10 @@ public class Turtle {
 
 
 	// GETTERS
+	protected String getName() {
+		return myName; 
+	}
+	
 	/**
 	 * Returns the current x-position of the turtle
 	 */
