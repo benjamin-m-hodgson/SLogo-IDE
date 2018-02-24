@@ -1,8 +1,8 @@
 package screen.panel;
 
+import interpreter.Controller;
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
-import mediator.Controller;
 
 public class TurtlePanel implements Panel {
 

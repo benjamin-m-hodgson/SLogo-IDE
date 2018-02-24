@@ -1,16 +1,17 @@
 package interpreter;
 
 public class MoveTurtleBackwardCommand implements Command{
-	private double myBackwardDist;
+	private Command myBackwardDistCommand;
 	private Turtle myTurtle;
-	protected MoveTurtleBackwardCommand(Command forwarddist, Turtle turtle){
+	protected MoveTurtleBackwardCommand(Command backwarddist, Turtle turtle){
 		myTurtle = turtle;
-		myBackwardDist = forwarddist.execute();
+		myBackwardDistCommand = backwarddist;
 	}
 	
 	public double execute() {
+		double dist = myBackwardDistCommand.execute();
 		double angle = Math.toRadians(myTurtle.getAngle());
-		myTurtle.setXY(myTurtle.getX()-myBackwardDist*Math.sin(angle), myTurtle.getY()-myBackwardDist*Math.cos(angle));
-		return myBackwardDist;
+		myTurtle.setXY(myTurtle.getX()-dist*Math.sin(angle), myTurtle.getY()-dist*Math.cos(angle));
+		return dist;
 	}
 }

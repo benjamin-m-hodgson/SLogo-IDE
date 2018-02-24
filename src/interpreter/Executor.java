@@ -1,5 +1,4 @@
-package mediator;
-import interpreter.Command;
+package interpreter;
 import java.util.Queue;
 
 public class Executor {

@@ -1,4 +1,4 @@
-package mediator;
+package interpreter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,10 +11,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-
-import interpreter.TextFieldParser;
-import interpreter.Turtle;
-import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

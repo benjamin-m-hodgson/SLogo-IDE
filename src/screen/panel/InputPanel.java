@@ -1,11 +1,12 @@
 package screen.panel;
 
+import interpreter.Controller;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import mediator.Controller;
+
 
 public class InputPanel implements Panel {
     

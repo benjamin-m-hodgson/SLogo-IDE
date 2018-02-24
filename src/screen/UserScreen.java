@@ -1,8 +1,8 @@
 package screen;
 
+import interpreter.Controller;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
-import mediator.Controller;
 import screen.panel.InfoPanel;
 import screen.panel.InputPanel;
 import screen.panel.TurtlePanel;

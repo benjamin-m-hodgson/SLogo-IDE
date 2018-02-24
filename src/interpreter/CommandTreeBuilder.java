@@ -1,12 +1,8 @@
-package commandnodetree;
+package interpreter;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
-import interpreter.Turtle;
-
-import interpreter.Command;
-import interpreter.RegexMatcher;
 
 class CommandTreeBuilder {
 
@@ -15,10 +11,14 @@ class CommandTreeBuilder {
 	//	private CommandTreeReader myCommandTreeReader; 
 	private String myNumArgsFileName; 
 	private ArrayList<CommandNode> myCommandTrees; 
+	private Turtle myTurtle;
+	private CommandTreeReader myCommandTreeReader;
 
-	public CommandTreeBuilder(String numArgsFileName) {
+	public CommandTreeBuilder(String numArgsFileName, Turtle turtle) {
 		myNumArgsFileName = numArgsFileName; 
 		myCommandTrees = new ArrayList<CommandNode>(); 
+		myTurtle = turtle;
+		myCommandTreeReader = new CommandTreeReader();
 	}
 
 	public Queue<Command> createCommandQueue(Turtle turtle, String[] userInput, String[] commandTypes, String[] allInputTypes) {
