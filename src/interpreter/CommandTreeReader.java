@@ -22,7 +22,7 @@ class CommandTreeReader {
 	 * @param root is root of CommandNode tree
 	 * @return true if the tree is complete
 	 */
-	protected boolean treeIsComplete(CommandNode root) {
+	private boolean treeIsComplete(CommandNode root) {
 		if(root.getIsDouble()) {
 			return true;
 		}
@@ -34,9 +34,17 @@ class CommandTreeReader {
 		}
 		return completedChildren==root.getNumArgs();
 	}
+	/**
+	 * Reads a CommandTree (passed in the form of its root node)
+	 * @param root
+	 * @return
+	 */
 	public double readAndExecute(CommandNode root) {
+		if(!treeIsComplete(root)) {
+			throw new IllegalArgumentException("One or more of your commands does not have the proper number of arguments");
+		}
 		Command compressedCommand = compressTree(root);
-		
+		return compressedCommand.execute();	
 	}
 	/**
 	 * Compressed the CommandNodeTree into a single Command with Command arguments (which, in turn, may have Command
@@ -53,5 +61,11 @@ class CommandTreeReader {
 			args.add(compressTree(k));
 		}
 		return myCommandFactory.makeCommand(root.getInfo(), args, root.getTurtle());
+	}
+	public static void main(String[] args) {
+		CommandNode test = new CommandNode("Forward", 1, new CommandNode("50", new Turtle()), new Turtle());
+		CommandTreeReader reader = new CommandTreeReader();
+		double testVal = reader.readAndExecute(test);
+		System.out.println(testVal);
 	}
 }

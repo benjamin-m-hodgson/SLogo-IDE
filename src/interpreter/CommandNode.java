@@ -38,6 +38,7 @@ class CommandNode {
 		myNumArgs = numArgs;
 		myChildren = new ArrayList<CommandNode>(); 
 		myChildren.addAll(children); 
+		myTurtle = turtle;
 	}
 
 	public CommandNode(String info, int numArgs, List<CommandNode> children) {
