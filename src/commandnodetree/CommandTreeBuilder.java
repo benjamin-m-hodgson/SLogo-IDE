@@ -21,12 +21,12 @@ class CommandTreeBuilder {
 		myCommandTrees = new ArrayList<CommandNode>(); 
 	}
 
-	public Queue<Command> createCommandQueue(Turtle turtle, String[] userInput, String[] commandTypes, String[] allInputTypes) {
+	public double buildAndExecute(Turtle turtle, String[] userInput, String[] commandTypes, String[] allInputTypes) {
 		createCommandTree(turtle, userInput, commandTypes, allInputTypes, 0);
-		for (CommandNode n : myCommandTrees) {
-			System.out.println(n.toString());
-		}
-		return new LinkedList<Command>(); // TODO FIX: this return is just so eclipse won't complain...
+//		for (CommandNode n : myCommandTrees) {
+//			System.out.println(n.toString());
+//		}
+// 	TODO RETURN READER'S DOUBLE RESULT
 	}
 
 	private void createCommandTree(Turtle turtle, String[] userInput, String[] commandTypes, String[] allInputTypes, int startIdx) {

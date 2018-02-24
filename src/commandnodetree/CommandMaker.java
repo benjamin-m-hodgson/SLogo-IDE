@@ -42,11 +42,11 @@ public class CommandMaker {
 		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName); 
 	}
 	
-	public Queue<Command> parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) {
+	public double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) {
 		return parseValidTextArray(turtleName, userInput, typesOfInput, DEFAULT_COMMAND_IDENTIFIER);
 	}
 	
-	public Queue<Command> parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput, String commandIdentifier) {
+	public double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput, String commandIdentifier) {
 		String[] commandTypes = new String[userInput.length];
 		for (int idx = 0; idx < userInput.length; idx++) {
 			if (typesOfInput[idx].equals(commandIdentifier)) {
@@ -64,7 +64,7 @@ public class CommandMaker {
 		if (! foundTurtle) {
 			throw new TurtleNotFoundException(turtleName);
 		}
-		return myCommandTreeBuilder.createCommandQueue(identifiedTurtle, userInput, commandTypes, typesOfInput); 
+		return myCommandTreeBuilder.buildAndExecute(identifiedTurtle, userInput, commandTypes, typesOfInput); 
 	}
 	
 	private String getCommandType(String text) {

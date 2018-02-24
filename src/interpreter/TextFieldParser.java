@@ -71,17 +71,17 @@ class TextFieldParser {
 	 */
 	protected double parseText(String userInputString) {
 		String[] userInputArray = userInputString.split("\\s+");
-		parseTextArray(userInputArray);
-		return 0.0; // TODO FIX: this return is just to stop eclipse from complaining
+		return parseTextArray(userInputArray);
 	}
 	
-	private void parseTextArray(String[] userInputArray) {
+	private double parseTextArray(String[] userInputArray) {
 		String[] listOfTypes = new String[userInputArray.length];
 		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
 		for (int idx = 0; idx < userInputArray.length; idx++) {
 			listOfTypes[idx] = regexMatcher.findMatchingKey(userInputArray[idx]);
 		}
-		myCommandQueue = myCommandMaker.parseValidTextArray(userInputArray[0], Arrays.copyOfRange(userInputArray, 1, userInputArray.length-1), listOfTypes); 
+		double finalReturnVal = myCommandMaker.parseValidTextArray(userInputArray[0], Arrays.copyOfRange(userInputArray, 1, userInputArray.length-1), listOfTypes); 
+		return finalReturnVal; 
 	}
     
     
