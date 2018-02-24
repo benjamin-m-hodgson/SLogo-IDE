@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import interpreter.TextFieldParser;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -40,6 +41,7 @@ public class Controller {
     private Stage PROGRAM_STAGE;
     // TODO: add in program titles
     private String PROGRAM_TITLE;
+    private TextFieldParser myTextFieldParser;
 
     public Controller(Stage primaryStage) {
 	PROGRAM_STAGE = primaryStage;

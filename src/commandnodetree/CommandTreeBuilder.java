@@ -1,20 +1,26 @@
-package interpreter;
+package commandnodetree;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import interpreter.Turtle;
 
-public class CommandTreeBuilder {
+import interpreter.Command;
+import interpreter.RegexMatcher;
+
+class CommandTreeBuilder {
 
 	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command";
 	public static final String DEFAULT_CONSTANT_IDENTIFIER = "Constant";
 	//	private CommandTreeReader myCommandTreeReader; 
 	private String myNumArgsFileName; 
 	private ArrayList<CommandNode> myCommandTrees; 
+	private Turtle myTurtle;
 
-	public CommandTreeBuilder(String numArgsFileName) {
+	public CommandTreeBuilder(String numArgsFileName, Turtle turtle) {
 		myNumArgsFileName = numArgsFileName; 
 		myCommandTrees = new ArrayList<CommandNode>(); 
+		myTurtle = turtle;
 	}
 
 	public Queue<Command> createCommandQueue(String[] userInput, String[] commandTypes, String[] allInputTypes) {
@@ -31,7 +37,7 @@ public class CommandTreeBuilder {
 		}
 		String currCommand = commandTypes[startIdx]; 
 		int numArgs = getNumArgs(currCommand);
-		CommandNode newParentNode = new CommandNode(currCommand, numArgs);
+		CommandNode newParentNode = new CommandNode(currCommand, numArgs, myTurtle);
 		createAndSetChildren(newParentNode, userInput, commandTypes, allInputTypes, startIdx+1, true);
 	}
 
@@ -43,7 +49,7 @@ public class CommandTreeBuilder {
 			return; 
 		}
 		if (allInputTypes[currIdx].equals(DEFAULT_CONSTANT_IDENTIFIER)) {
-			CommandNode newChildNode = new CommandNode(userInput[currIdx]);
+			CommandNode newChildNode = new CommandNode(userInput[currIdx], myTurtle);
 			parent.addChild(newChildNode);
 			if (parent.getNumChildren() < parent.getNumArgs()) { 
 				createAndSetChildren(parent, userInput, commandTypes, allInputTypes, currIdx+1, addToTrees);
@@ -58,9 +64,9 @@ public class CommandTreeBuilder {
 		}
 		for (int idx = currIdx+1; idx < userInput.length; idx++) { // where else to return in here? 
 			if (allInputTypes[idx].equals(DEFAULT_CONSTANT_IDENTIFIER)) {
-				CommandNode newChildNode = new CommandNode(userInput[idx]);
+				CommandNode newChildNode = new CommandNode(userInput[idx], myTurtle);
 				int numArgs = getNumArgs(commandTypes[idx-1]);
-				CommandNode newCommandNode = new CommandNode(commandTypes[idx-1], numArgs, newChildNode);
+				CommandNode newCommandNode = new CommandNode(commandTypes[idx-1], numArgs, newChildNode, myTurtle);
 				if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
 					createAndSetChildren(newCommandNode, userInput, commandTypes, allInputTypes, idx+1, false);
 				} 
@@ -69,7 +75,7 @@ public class CommandTreeBuilder {
 				}
 				for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) {
 					int backTrackNumArgs = getNumArgs(commandTypes[backtrack]);
-					CommandNode backtrackCommandNode = new CommandNode(commandTypes[backtrack], backTrackNumArgs, newCommandNode);
+					CommandNode backtrackCommandNode = new CommandNode(commandTypes[backtrack], backTrackNumArgs, newCommandNode, myTurtle);
 					newCommandNode = backtrackCommandNode; 
 				}
 				parent.addChild(newCommandNode);
