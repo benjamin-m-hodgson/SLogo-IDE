@@ -4,6 +4,8 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -40,7 +42,6 @@ public class Controller {
     public Controller(Stage primaryStage) {
 	PROGRAM_STAGE = primaryStage;
 	findSettings();
-	getLanguages();
     }
 
     /**
@@ -77,18 +78,23 @@ public class Controller {
 	    File syntaxFile = new File(currentDir + File.separator + "languages" + File.separator
 		    + SYNTAX_FILE_NAME);
 	    File[] languageFiles = file.listFiles();
+	    List<String> languages = new ArrayList<String>();
 	    for (File languageFile : languageFiles) {
 		// ignore the syntax file used for input parsing
 		if (!languageFile.equals(syntaxFile)) { 
-		    System.out.println(languageFile);
+		    String languageName = languageFile.getName();
+		    String[] nameSplit = languageName.split("\\.");
+		    String language = nameSplit[0];
+		    languages.add(language);
 		}
 	    }
+	    return Collections.unmodifiableList(languages);
 	}
 	catch (Exception e) {
 	    String specification = "%nFailed to find language files";
 	    loadErrorScreen(FILE_ERROR_PROMPT + specification);
 	}
-	return null;
+	return Collections.unmodifiableList(new ArrayList<String>());
     }
     
     /**

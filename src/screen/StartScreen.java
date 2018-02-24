@@ -5,7 +5,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -106,12 +105,7 @@ public class StartScreen implements Screen {
 	ComboBox<Object> dropDownMenu = makeComboBox(defaultPrompt);
 	ObservableList<Object> simulationChoices = 
 		FXCollections.observableArrayList(defaultPrompt);
-	//TODO: simulationChoices.addAll(getLanguages());
-	simulationChoices.add("hi");
-	simulationChoices.add("test");
-	simulationChoices.add("four");
-	simulationChoices.add("five");
-	simulationChoices.add("more than five");
+	simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());
 	dropDownMenu.setItems(simulationChoices);
 	dropDownMenu.setId("languageChooser");
 	dropDownMenu.getSelectionModel().selectedIndexProperty()
