@@ -69,7 +69,7 @@ public class TextFieldParser {
 	 * Returns a Queue of commands given a String of concatenated commands (chops up the commands 
 	 * and sends them individually to CommandMaker)
 	 */
-	public double parseText(String userInputString) {
+	public double parseText(String language, String userInputString) {
 		String[] userInputArray = userInputString.split("\\s+");
 		parseTextArray(userInputArray);
 		return 0.0; // TODO FIX: this return is just to stop eclipse from complaining
