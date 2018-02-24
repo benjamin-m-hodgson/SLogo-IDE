@@ -1,10 +1,11 @@
 package mediator;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -41,13 +42,20 @@ public class Controller {
     private Stage PROGRAM_STAGE;
     // TODO: add in program titles
     private String PROGRAM_TITLE;
+    
     private TextFieldParser myTextFieldParser;
+    	private Map<String, Double> myVariables; 
+	private List<String> myCommandHistory; 
 
     public Controller(Stage primaryStage) {
 	PROGRAM_STAGE = primaryStage;
+	myTextFieldParser = new TextFieldParser();
+	myVariables = new HashMap<String, Double>();
+	myCommandHistory = new ArrayList<String>(); 
 	findSettings();
     }
     
+    //TODO what does this wrap?
     /**
      * Makes a new Turtle given a name, an ImageView (previously attached to the Stage), a penColor, and an empty Group
      * that has already been attached to the Stage to hold lines for the pen
@@ -147,9 +155,9 @@ public class Controller {
 	}
     }
 
-    public List<Turtle> onScreenTurtles() {
-	return null;
-    }
+//    public List<Turtle> onScreenTurtles() {
+//	return null;
+//    }
 
     /**
      * Change the Language. Changes the prompts displayed in the user interface as well as
