@@ -39,7 +39,7 @@ public class CommandMaker {
 	
 	public CommandMaker(String languageFileName, String numArgsFileName) {
 		myLanguageFileName = languageFileName;
-		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, new Turtle()); 
+		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName); 
 	}
 	
 	public Queue<Command> parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) {
@@ -72,5 +72,9 @@ public class CommandMaker {
         String commandType = regexMatcher.findMatchingKey(text);
         return commandType;
     }
+	
+	protected void changeLanguageFile(String fileName) {
+		myLanguageFileName = fileName; 
+	}
 	
 }

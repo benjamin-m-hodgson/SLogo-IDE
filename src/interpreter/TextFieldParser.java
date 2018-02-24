@@ -31,12 +31,12 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
-public class TextFieldParser {	
+class TextFieldParser {	
 	
-	public static final String DEFAULT_FILEPATH = "interpreter/";
-	public static final String DEFAULT_SYNTAX_FILENAME = "Syntax";
-	public static final String DEFAULT_LANGUAGE = "English";
-	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
+	protected static final String DEFAULT_FILEPATH = "interpreter/";
+	protected static final String DEFAULT_SYNTAX_FILENAME = "Syntax";
+	protected static final String DEFAULT_LANGUAGE = "English";
+	protected static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
 
 	private String mySyntaxFileName; 
 	private CommandMaker myCommandMaker; 
@@ -69,7 +69,7 @@ public class TextFieldParser {
 	 * Returns a Queue of commands given a String of concatenated commands (chops up the commands 
 	 * and sends them individually to CommandMaker)
 	 */
-	public double parseText(String language, String userInputString) {
+	protected double parseText(String userInputString) {
 		String[] userInputArray = userInputString.split("\\s+");
 		parseTextArray(userInputArray);
 		return 0.0; // TODO FIX: this return is just to stop eclipse from complaining
@@ -91,23 +91,36 @@ public class TextFieldParser {
 	/**
 	 * Returns and UnmodifiableMap of string variable keys to their double values
 	 */
-	public Map<String, Double> getVariables() {
+	protected Map<String, Double> getVariables() {
 		return myVariables;
 	}
 	
 	/**
 	 * Returns an ImmutableList of the user's command history (where commands are Strings) 
 	 */
-	public Map<String, Double> getCommandHistory() {
+	protected Map<String, Double> getCommandHistory() {
 		return myCommandAndReturnHistory; 
 	}
 	
 	/**
 	 * Returns an ImmutableQueue of the Command Queue (where commands are Command objects) 
 	 */
-	public Queue<Command> getCurrentCommandQueue() {
+	protected Queue<Command> getCurrentCommandQueue() {
 		return myCommandQueue;
 	}
+	
+	
+	
+	
+	// SETTERS
+	protected void changeLanguageFile(String fileName) {
+		myCommandMaker.changeLanguageFile(fileName);
+	}
+	
+	
+	
+	
+	
 	
 	public static void main(String[] args) {
 		TextFieldParser testingParser = new TextFieldParser();

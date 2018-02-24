@@ -25,14 +25,16 @@ import screen.StartScreen;
 import screen.UserScreen;
 
 public class Controller {
-	private final String FILE_ERROR_PROMPT = "Failed to obtain resource files!";
-	private final String SCREEN_ERROR_PROMPT = "Error loading Screen!";
-	private final String SYNTAX_FILE_NAME = "Syntax.properties";
-	private final String DEFAULT_LANGUAGE = "English";
-	private final String DEFAULT_SETTINGS = "settings";
+	public static final String FILE_ERROR_PROMPT = "Failed to obtain resource files!";
+	public static final String SCREEN_ERROR_PROMPT = "Error loading Screen!";
+	public static final String SYNTAX_FILE_NAME = "Syntax.properties";
+	public static final String DEFAULT_FILE_PATH = "interpreter/";
+	public static final String DEFAULT_LANGUAGE = "English";
+	public static final String DEFAULT_SETTINGS = "settings";
 	// TODO: Read this in from files rather than storing as instance variables
-	private final double DEFAULT_HEIGHT = 650;
-	private final double DEFAULT_WIDTH = 900;
+	public static final double DEFAULT_HEIGHT = 650;
+	public static final double DEFAULT_WIDTH = 900;
+	
 	private String DEFAULT_CSS = Controller.class.getClassLoader().
 			getResource("default.css").toExternalForm(); 
 	private ResourceBundle CURRENT_TEXT_DISPLAY;
@@ -127,7 +129,7 @@ public class Controller {
 	 * Parses input from a text field or button press by the user
 	 */
 	public double parseInput(String userTextInput) {
-		return myTextFieldParser.parseText(myLanguage, userTextInput);
+		return myTextFieldParser.parseText(userTextInput);
 	}
 
 	public void loadStartScreen() {
@@ -168,8 +170,9 @@ public class Controller {
 	 */
 	public void changeLanguage(String language) {
 		findResources(language);
+		myTextFieldParser.changeLanguageFile(DEFAULT_FILE_PATH+language);
 	}
-
+	
 	/**
 	 * Searches through the class path to find the appropriate resource files to use for 
 	 * the program. If it can't locate the files, it displays an error screen to the user
