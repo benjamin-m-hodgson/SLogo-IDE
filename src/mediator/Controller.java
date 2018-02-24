@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 
 import interpreter.TextFieldParser;
 import interpreter.Turtle;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -62,6 +63,22 @@ public class Controller {
      */
     public Map<String, Double> getVariables() {
 	return null;
+    }
+    
+    /**
+     * 
+     * @return ReadOnlyDoubleProperty: the height property of the application
+     */
+    public ReadOnlyDoubleProperty getHeightProperty() {
+	return PROGRAM_STAGE.heightProperty();
+    }
+    
+    /**
+     * 
+     * @return ReadOnlyDoubleProperty: the height property of the application
+     */
+    public ReadOnlyDoubleProperty getWidthProperty() {
+	return PROGRAM_STAGE.widthProperty();
     }
 
     /**

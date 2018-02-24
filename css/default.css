@@ -12,7 +12,7 @@
 /******************************************************************************************/
 #userScreenRoot {
 	-fx-alignment: center;
-	-fx-background-color: #f3f3f3;
+	-fx-background-color: #ffffff;
 }
 /******************************************************************************************/
 /* The root containing the elements displayed in the error screen*/
@@ -29,31 +29,47 @@
 	-fx-max-width: 200;
 	-fx-min-width: 200;
 	-fx-pref-width: 200;
-	-fx-background-color: #ffffff;
-	-fx-effect: innershadow(three-pass-box, rgba(100, 149, 237, 0.7), 10, 0.5, 0, 2);
+	-fx-background-color: #f3f3f3;
+	-fx-background-radius: 6;
 	-fx-padding: 5 15 5 15;
 	-fx-border-style: solid inside;
 	-fx-border-width: 1;
 	-fx-border-insets: 0;
-	-fx-border-radius: 2;
-	-fx-border-color: #6495ed;
+	-fx-border-radius: 6;
+	-fx-border-color: #555555;
 }
 /******************************************************************************************/
-/* The root containing the informational panel displayed on the screen */
+/* The root containing the turtle panel that houses the turtles displayed on the screen */
+/******************************************************************************************/
+#turtlePanel {
+	-fx-alignment: center;
+	-fx-background-color: transparent;
+	-fx-background-radius: 6;
+	-fx-border-style: solid inside;
+	-fx-border-width: 1;
+	-fx-border-insets: 0;
+	-fx-border-radius: 6;
+	-fx-border-color: #555555;
+}
+#turtlePanel > .viewport {
+	-fx-background-color: transparent;
+}
+/******************************************************************************************/
+/* The root containing the input panel that the user can interact with displayed on the screen */
 /******************************************************************************************/
 #inputPanel {
 	-fx-alignment: center;
 	-fx-max-height: 150;
 	-fx-min-height: 150;
 	-fx-pref-height: 150;
-	-fx-background-color: #ffffff;
-	-fx-effect: innershadow(three-pass-box, rgba(100, 149, 237, 0.7), 10, 0.5, 0, 2);
+	-fx-background-color: #f3f3f3;
+	-fx-background-radius: 6;
 	-fx-padding: 15 5 15 5;
 	-fx-border-style: solid inside;
 	-fx-border-width: 1;
 	-fx-border-insets: 0;
-	-fx-border-radius: 2;
-	-fx-border-color: #6495ed;
+	-fx-border-radius: 6;
+	-fx-border-color: #555555;
 }
 /******************************************************************************************/
 /* The label displaying the error message */ 
@@ -302,4 +318,19 @@
 	-fx-spacing: 20;
 	-fx-alignment: center;
 	-fx-background-color: #f3f3f3;
+}
+/******************************************************************************************/
+/* Box containing the run button */
+/******************************************************************************************/
+#runBox {
+	-fx-spacing: 20;
+	-fx-alignment: center;
+	-fx-background-color: #f3f3f3;
+	-fx-background-radius: 6;
+	-fx-padding: 15 5 15 5;
+	-fx-border-style: solid inside;
+	-fx-border-width: 1;
+	-fx-border-insets: 0;
+	-fx-border-radius: 6;
+	-fx-border-color: #555555;
 }

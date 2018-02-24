@@ -1,6 +1,7 @@
 package screen.panel;
 
 import javafx.scene.Parent;
+import javafx.scene.control.ScrollPane;
 import mediator.Controller;
 
 public class TurtlePanel implements Panel {
@@ -14,8 +15,9 @@ public class TurtlePanel implements Panel {
     
     @Override
     public void makePanel() {
-	// TODO Auto-generated method stub
-	
+	ScrollPane panelRoot = new ScrollPane();
+	panelRoot.setId("turtlePanel");
+	PANEL = panelRoot;
     }
 
     @Override

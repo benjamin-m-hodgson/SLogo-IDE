@@ -1,7 +1,10 @@
 package screen.panel;
 
+import javafx.beans.binding.Bindings;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import mediator.Controller;
 
 public class InputPanel implements Panel {
@@ -26,6 +29,19 @@ public class InputPanel implements Panel {
 	    makePanel();
 	}
 	return PANEL;
+    }
+    
+    private VBox drawRunBox() {
+	VBox runBox = new VBox();
+	runBox.setId("runBox");
+	Button runButton = drawRunButton();
+	runBox.getChildren().add(runButton);
+	return runBox;
+    }
+    
+    private Button drawRunButton() {
+	Button runButton = new Button();
+	return runButton;
     }
 
 }
