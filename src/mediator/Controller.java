@@ -11,6 +11,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import interpreter.TextFieldParser;
+import interpreter.Turtle;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,7 +22,6 @@ import javafx.stage.Stage;
 import screen.ErrorScreen;
 import screen.StartScreen;
 import screen.UserScreen;
-import model.Turtle;
 
 public class Controller {
     private final String FILE_ERROR_PROMPT = "Failed to obtain resource files!";
@@ -40,6 +41,7 @@ public class Controller {
     private Stage PROGRAM_STAGE;
     // TODO: add in program titles
     private String PROGRAM_TITLE;
+    private TextFieldParser myTextFieldParser;
 
     public Controller(Stage primaryStage) {
 	PROGRAM_STAGE = primaryStage;
