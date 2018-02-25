@@ -1,6 +1,10 @@
 package screen.panel;
 
+import interpreter.BadFormatException;
 import interpreter.Controller;
+import interpreter.MissingInformationException;
+import interpreter.TurtleNotFoundException;
+import interpreter.UnidentifiedCommandException;
 import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
@@ -43,7 +47,21 @@ public class TextPanel implements Panel {
 	String inputText = INPUT_AREA.getText().replaceAll("\n", 
 		System.getProperty("line.separator"));
 	CONSOLE_AREA.setText(inputText);
-	PROGRAM_CONTROLLER.parseInput(inputText);
+	try {
+	    PROGRAM_CONTROLLER.parseInput(inputText);
+	} catch (TurtleNotFoundException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	} catch (BadFormatException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	} catch (UnidentifiedCommandException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	} catch (MissingInformationException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
     }
     
     private TextArea makeInputArea() {
