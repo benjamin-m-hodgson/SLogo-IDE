@@ -64,8 +64,11 @@ class TextFieldParser {
 	 * Returns a Queue of commands given a String of concatenated commands (chops up the commands 
 	 * and sends them individually to CommandMaker)
 	 * @throws TurtleNotFoundException 
+	 * @throws MissingInformationException 
+	 * @throws UnidentifiedCommandException 
+	 * @throws BadFormatException 
 	 */
-	protected double parseText(String userInputString) throws TurtleNotFoundException {
+	protected double parseText(String userInputString) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String[] userInputByLine = userInputString.split("\\r?\\n");
 		String[] userInputTypes = new String[userInputByLine.length];
 
@@ -96,7 +99,7 @@ class TextFieldParser {
 		return parseTextArray(tokenizedInputArray);
 	}
 
-	private double parseTextArray(String[] userInputArray) throws TurtleNotFoundException {
+	private double parseTextArray(String[] userInputArray) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String[] listOfTypes = new String[userInputArray.length];
 		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
 		for (int idx = 0; idx < userInputArray.length; idx++) {

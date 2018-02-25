@@ -44,12 +44,12 @@ class CommandMaker {
 		myListForBuilder = new ArrayList<String>();
 	}
 
-	protected double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) throws TurtleNotFoundException {
+	protected double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		myListForBuilder = new ArrayList<String>(); 
 		return parseValidTextArray(turtleName, userInput, typesOfInput, DEFAULT_COMMAND_IDENTIFIER);
 	}
 
-	private double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput, String commandIdentifier) throws TurtleNotFoundException {
+	private double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput, String commandIdentifier) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		//		for (String s : userInput) System.out.println(s);
 		String[] commandTypes = new String[userInput.length];
 		for (int idx = 0; idx < userInput.length; idx++) {
@@ -80,7 +80,7 @@ class CommandMaker {
 		}
 	}
 
-	private String getCommandType(String text) {
+	private String getCommandType(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		RegexMatcher regexMatcher = new RegexMatcher(myLanguageFileName);
 		String commandType = regexMatcher.findMatchingKey(text);
 		return commandType;

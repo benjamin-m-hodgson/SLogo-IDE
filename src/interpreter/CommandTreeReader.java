@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 class CommandTreeReader {
 	CommandFactory myCommandFactory;
-	public CommandTreeReader(){
+	protected CommandTreeReader(){
 		myCommandFactory = new CommandFactory();
 	}
 	/**
@@ -39,7 +39,7 @@ class CommandTreeReader {
 	 * @param root
 	 * @return
 	 */
-	public double readAndExecute(CommandNode root) {
+	protected double readAndExecute(CommandNode root) {
 		if(!treeIsComplete(root)) {
 			throw new IllegalArgumentException("One or more of your commands does not have the proper number of arguments");
 		}
