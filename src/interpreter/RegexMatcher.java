@@ -14,12 +14,14 @@ public class RegexMatcher {
 	private String myFileName; 
 	private ResourceBundle myResources; 
 	private List<Entry<String, Pattern>> mySymbols;
+	private ExceptionFactory myExceptionFactory; 
 //	private Exception myException; 
 	
 	public RegexMatcher(String fileName) {
 		myFileName = fileName;
 		myResources = ResourceBundle.getBundle(fileName);
 		mySymbols = new ArrayList<Entry<String, Pattern>>();
+		myExceptionFactory = new ExceptionFactory(); 
 		populateWithSymbols(mySymbols, myResources);
 	}
 	
@@ -32,24 +34,23 @@ public class RegexMatcher {
         }
     }
 	
-	public String findMatchingKey(String text) {
+	public String findMatchingKey(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		for (Entry<String, Pattern> e : mySymbols) {
             if (match(text, e.getValue())) {
                 return e.getKey();
             }
         }
-		// TODO FIX ARGS
-		throw new MissingResourceException("Cannot find match in ResourceBundle "+myFileName+" for "+text, "", "");
+		myExceptionFactory.getException(myFileName, text);
+		return ""; 
 	}
 	
-	public String findMatchingVal(String text) {
+	public String findMatchingVal(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String val = ""; 
 		try {
 			val = myResources.getString(text);
 		}
 		catch (MissingResourceException e) {
-			// TODO FIX ARGS
-			throw new MissingResourceException("Missing resource about property "+myFileName+" for "+text, "", "");
+			myExceptionFactory.getException(myFileName, text);
 		}
 		return val; 
 	}
