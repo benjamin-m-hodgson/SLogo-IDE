@@ -1,10 +1,11 @@
-package mediator;
+package interpreter;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -12,6 +13,10 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import interpreter.TextFieldParser;
+<<<<<<< HEAD:src/mediator/Controller.java
+=======
+import javafx.beans.property.ReadOnlyDoubleProperty;
+>>>>>>> a0b4ada969f8204a5142792813a44932570e03ff:src/interpreter/Controller.java
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,11 +26,14 @@ import javafx.stage.Stage;
 import screen.ErrorScreen;
 import screen.StartScreen;
 import screen.UserScreen;
+<<<<<<< HEAD:src/mediator/Controller.java
 import model.Turtle;
+=======
+>>>>>>> a0b4ada969f8204a5142792813a44932570e03ff:src/interpreter/Controller.java
 
 public class Controller {
-    private final String FILE_ERROR_PROMPT = "Failed to obtain resource files!";
-    private final String SCREEN_ERROR_PROMPT = "Error loading Screen!";
+    private final String FILE_ERROR_KEY = "FileErrorPrompt";
+    private final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
     private final String SYNTAX_FILE_NAME = "Syntax.properties";
     private final String DEFAULT_LANGUAGE = "English";
     private final String DEFAULT_SETTINGS = "settings";
@@ -41,13 +49,28 @@ public class Controller {
     private Stage PROGRAM_STAGE;
     // TODO: add in program titles
     private String PROGRAM_TITLE;
+<<<<<<< HEAD:src/mediator/Controller.java
     private TextFieldParser myTextFieldParser;
+=======
+    
+    private TextFieldParser myTextFieldParser;
+    	private Map<String, Double> myVariables; 
+	private List<String> myCommandHistory; 
+>>>>>>> a0b4ada969f8204a5142792813a44932570e03ff:src/interpreter/Controller.java
 
     public Controller(Stage primaryStage) {
 	PROGRAM_STAGE = primaryStage;
+	//myTextFieldParser = new TextFieldParser();
+	myVariables = new HashMap<String, Double>();
+	myCommandHistory = new ArrayList<String>(); 
 	findSettings();
+<<<<<<< HEAD:src/mediator/Controller.java
+=======
+	findResources(DEFAULT_LANGUAGE);
+>>>>>>> a0b4ada969f8204a5142792813a44932570e03ff:src/interpreter/Controller.java
     }
     
+    //TODO what does this wrap?
     /**
      * Makes a new Turtle given a name, an ImageView (previously attached to the Stage), a penColor, and an empty Group
      * that has already been attached to the Stage to hold lines for the pen
@@ -62,6 +85,22 @@ public class Controller {
      */
     public Map<String, Double> getVariables() {
 	return null;
+    }
+    
+    /**
+     * 
+     * @return ReadOnlyDoubleProperty: the height property of the application
+     */
+    public ReadOnlyDoubleProperty getHeightProperty() {
+	return PROGRAM_STAGE.heightProperty();
+    }
+    
+    /**
+     * 
+     * @return ReadOnlyDoubleProperty: the height property of the application
+     */
+    public ReadOnlyDoubleProperty getWidthProperty() {
+	return PROGRAM_STAGE.widthProperty();
     }
 
     /**
@@ -95,8 +134,9 @@ public class Controller {
 	    return Collections.unmodifiableList(languages);
 	}
 	catch (Exception e) {
-	    String specification = "%nFailed to find language files";
-	    loadErrorScreen(FILE_ERROR_PROMPT + specification);
+	    // TODO: make custom exception super class with sub classes for specifications
+	    //String specification = "%nFailed to find language files";
+	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 	}
 	return Collections.unmodifiableList(new ArrayList<String>());
     }
@@ -129,7 +169,7 @@ public class Controller {
 	    PROGRAM_STAGE.show();	
 	}
 	catch (Exception e) {
-	    loadErrorScreen(SCREEN_ERROR_PROMPT);
+	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
 	}
     }
 
@@ -143,13 +183,17 @@ public class Controller {
 	}
 	catch (Exception e) {
 	    // TODO: make screen error exception class to handle error specification
+<<<<<<< HEAD:src/mediator/Controller.java
 	    loadErrorScreen(SCREEN_ERROR_PROMPT);
+=======
+	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
+>>>>>>> a0b4ada969f8204a5142792813a44932570e03ff:src/interpreter/Controller.java
 	}
     }
 
-    public List<Turtle> onScreenTurtles() {
-	return null;
-    }
+//    public List<Turtle> onScreenTurtles() {
+//	return null;
+//    }
 
     /**
      * Change the Language. Changes the prompts displayed in the user interface as well as
@@ -190,7 +234,7 @@ public class Controller {
 	    CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
 	}
 	catch (MalformedURLException e) {
-	    loadErrorScreen(FILE_ERROR_PROMPT);
+	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 	}
     }
     
@@ -210,8 +254,8 @@ public class Controller {
 	}
 	catch (MalformedURLException e) {
 	    // TODO: make screen error exception class to handle error specification
-	    String specification = "%nFailed to find settings files";
-	    loadErrorScreen(FILE_ERROR_PROMPT + specification);
+	    //String specification = "%nFailed to find settings files";
+	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 	}
     }
 
@@ -228,4 +272,14 @@ public class Controller {
 	errorScene.getStylesheets().add(DEFAULT_CSS);
 	PROGRAM_STAGE.setScene(errorScene);
     }
+    
+    /**
+     * 
+     * @param key
+     * @return
+     */
+    private String resourceErrorText(String key) {
+	return CURRENT_ERROR_DISPLAY.getString(key);
+    }
 }
+

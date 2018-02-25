@@ -50,6 +50,11 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * @author Sarahbland
+ * Collaboration with Susie Choi
+ *
+ */
 public class Turtle {
 
 	public static final String DEFAULT_NAME = "";
@@ -71,7 +76,7 @@ public class Turtle {
 	private double myY; 
 	private double myAngle; 
 
-	protected Turtle() {
+	public Turtle() {
 		this(DEFAULT_NAME, new ImageView(), new Group());
 	}
 
@@ -88,8 +93,11 @@ public class Turtle {
 	}	
 
 
-
 	// GETTERS
+	protected String getName() {
+		return myName; 
+	}
+	
 	/**
 	 * Returns the current x-position of the turtle
 	 */
@@ -155,13 +163,29 @@ public class Turtle {
 		setXY(myX, y);
 	}
 
-	protected void setXY(double x, double y) {
+	protected double setXY(double x, double y) {
 		setOld();
 		myX = x; 
 		myY = y; 
 		myImage.setLayoutX(myX);
 		myImage.setLayoutY(myY);
 		myPen.drawLine(myOldX, myOldY, myX, myY);
+		return calcDistance(myOldX, myOldY, myX, myY);
+	}
+	/**
+	 * Calculates the distance between two points (as in how far the turtle moved)
+	 * @param oldX first x coordinate
+	 * @param oldY first y coordinate
+	 * @param x new x coordinate
+	 * @param y new y coordinate
+	 * @return distance traveled
+	 */
+	protected double calcDistance(double oldX, double oldY, double x, double y) {
+		System.out.println("old x: " + oldX + " new x: "+ x);
+		System.out.println("old y" + oldY + " new y: "+ y);
+		double xSquared = Math.pow((oldX-x), 2);
+		double ySquared = Math.pow((oldY-y), 2);
+		return Math.sqrt(xSquared+ySquared);
 	}
 
 	/**
@@ -175,7 +199,7 @@ public class Turtle {
 	/**
 	 * Sets the visual image of the turtle to the image contained in filepath
 	 */
-	protected void setImage(String filepath) {
+	public void setImage(String filepath) {
 		Image newImg = new Image(filepath);
 		myImage.setImage(newImg);
 	}
@@ -190,7 +214,7 @@ public class Turtle {
 	
 	protected void setAngle(double angle) {
 		myAngle = angle;
-		myImage.setRotate(angle);
+		myImage.setRotate(Math.toRadians(angle));
 	}
 
 	protected void showPen() {

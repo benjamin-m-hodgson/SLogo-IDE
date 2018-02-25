@@ -1,9 +1,8 @@
 package screen.panel;
 
+import interpreter.Controller;
 import javafx.scene.Parent;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import mediator.Controller;
 
 public class InfoPanel implements Panel {
 
