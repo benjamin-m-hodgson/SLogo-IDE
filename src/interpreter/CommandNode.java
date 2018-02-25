@@ -10,7 +10,7 @@ class CommandNode {
 	private String myInfo;
 	private boolean isDouble; 
 	private int myNumArgs; 
-	private Command myCommand; 
+	//private Command myCommand; 
 	private List<CommandNode> myChildren; 
 	private Turtle myTurtle;
 

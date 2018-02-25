@@ -82,7 +82,7 @@ public class Turtle {
 
 	protected Turtle(String name, ImageView image, Group penGroup) {
 		myName = name; 
-		myImage = image; 
+		myImage = image;
 		myPen = new Pen(penGroup); 
 		myVisibility = true; 
 		myOldX = DEFAULT_X_POS; 
@@ -167,8 +167,8 @@ public class Turtle {
 		setOld();
 		myX = x; 
 		myY = y; 
-		myImage.setLayoutX(myX);
-		myImage.setLayoutY(myY);
+		myImage.setX(myX);
+		myImage.setY(myY);
 		myPen.drawLine(myOldX, myOldY, myX, myY);
 		return calcDistance(myOldX, myOldY, myX, myY);
 	}
