@@ -1,8 +1,6 @@
 package interpreter;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 
 class CommandTreeBuilder {
 
@@ -11,25 +9,27 @@ class CommandTreeBuilder {
 	//	private CommandTreeReader myCommandTreeReader; 
 	private String myNumArgsFileName; 
 	private ArrayList<CommandNode> myCommandTrees; 
-	private Turtle myTurtle;
 	private CommandTreeReader myCommandTreeReader;
 
-	public CommandTreeBuilder(String numArgsFileName, Turtle turtle) {
+	protected CommandTreeBuilder(String numArgsFileName) {
 		myNumArgsFileName = numArgsFileName; 
 		myCommandTrees = new ArrayList<CommandNode>(); 
-		myTurtle = turtle;
 		myCommandTreeReader = new CommandTreeReader();
 	}
 
-	public Queue<Command> createCommandQueue(Turtle turtle, String[] userInput, String[] commandTypes, String[] allInputTypes) {
+	protected double buildAndExecute(Turtle turtle, String[] userInput, String[] commandTypes, String[] allInputTypes) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		createCommandTree(turtle, userInput, commandTypes, allInputTypes, 0);
 		for (CommandNode n : myCommandTrees) {
 			System.out.println(n.toString());
 		}
-		return new LinkedList<Command>(); // TODO FIX: this return is just so eclipse won't complain...
+		double finalReturnVal = -1; 
+		for (CommandNode commandTree : myCommandTrees) {
+			finalReturnVal = myCommandTreeReader.readAndExecute(commandTree);
+		}
+		return finalReturnVal; 
 	}
 
-	private void createCommandTree(Turtle turtle, String[] userInput, String[] commandTypes, String[] allInputTypes, int startIdx) {
+	private void createCommandTree(Turtle turtle, String[] userInput, String[] commandTypes, String[] allInputTypes, int startIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		if (startIdx >= userInput.length) {
 			return; // TODO make this more detailed
 		}
@@ -39,7 +39,7 @@ class CommandTreeBuilder {
 		createAndSetChildren(turtle, newParentNode, userInput, commandTypes, allInputTypes, startIdx+1, true);
 	}
 
-	private void createAndSetChildren( Turtle turtle, CommandNode parent, String[] userInput, String[] commandTypes, String[] allInputTypes, int currIdx, boolean addToTrees) {
+	private void createAndSetChildren( Turtle turtle, CommandNode parent, String[] userInput, String[] commandTypes, String[] allInputTypes, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		if (currIdx >= userInput.length) {
 			if (addToTrees) {
 				myCommandTrees.add(parent);
@@ -85,7 +85,7 @@ class CommandTreeBuilder {
 		}
 	}
 
-	private int getNumArgs(String commandType) {
+	private int getNumArgs(String commandType) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		RegexMatcher regexMatcher = new RegexMatcher(myNumArgsFileName);
 		String numArgsAsString = regexMatcher.findMatchingVal(commandType);
 		int numArgs = Integer.parseInt(numArgsAsString);

@@ -264,3 +264,4 @@ public class Controller {
 	return CURRENT_ERROR_DISPLAY.getString(key);
     }
 }
+
