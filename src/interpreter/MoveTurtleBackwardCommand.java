@@ -20,15 +20,13 @@ public class MoveTurtleBackwardCommand implements Command{
 		myBackwardDistCommand = backwarddist;
 	}
 	
-<<<<<<< HEAD
 	@Override
-=======
+
 	/** 
 	 * Moves the turtle's image a certain distance backward and draws a line (if the pen is down)
 	 * @return distance the turtle moved backward
 	 * @see interpreter.Command#execute()
 	 */
->>>>>>> 13ea86aed5bef2fcbc241d9a3794e95720be3efc
 	public double execute() {
 		double dist = myBackwardDistCommand.execute();
 		double angle = Math.toRadians(myTurtle.getAngle());
