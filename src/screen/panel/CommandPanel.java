@@ -23,7 +23,7 @@ public class CommandPanel extends SpecificPanel {
 
     @Override
     public void makePanel() {
-		Button backButton = makeBackButton();
+		Button backButton = makeBackButton(PROGRAM_CONTROLLER);
 		ScrollPane scroll = new ScrollPane();
 		VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACEING, scroll,backButton );
 		panelRoot.setId("infoPanel");

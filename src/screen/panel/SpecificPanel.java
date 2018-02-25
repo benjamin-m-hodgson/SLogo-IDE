@@ -12,8 +12,8 @@ public abstract class SpecificPanel implements Panel {
 	protected abstract Controller getController();
 
 	
-	protected Button makeBackButton() {
-		Button backButton = new Button("Back");
+	protected Button makeBackButton(Controller PROGRAM_CONTROLLER) {
+		Button backButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText("backButton"));
 		backButton.setId("backButton");
 		// handle click event
 		backButton.setOnMouseClicked(new EventHandler<MouseEvent>() {

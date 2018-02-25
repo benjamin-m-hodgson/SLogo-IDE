@@ -21,9 +21,7 @@ public class InfoPanel implements Panel {
 
 	private final int DEFAULT_BUTTON_SPACEING = 10;
 
-    private final String[] BUTTON_LABELS = {"Settings", "Variables", "History", "User-Commands", "Help"};
     private final String[] BUTTON_IDS = {"settingsButton", "variablesButton", "historyButton", "commandsButton", "helpButton"};
-    private final Panel[] INSTANTIATIONS = {new SettingsPanel(PROGRAM_CONTROLLER, PANE)};
     
     public InfoPanel(Controller programController, BorderPane pane) {
 	PROGRAM_CONTROLLER = programController;
@@ -42,10 +40,8 @@ public class InfoPanel implements Panel {
     
     private List<Button> makeButtons()
     {
-    		if(BUTTON_LABELS.length != BUTTON_IDS.length)	//CHANGE THIS LATER!!!!!!!
-    				System.out.println("BUTTON_LABELS and BUTTON_IDS do not match!!!!!");
     		List<Button> buttons = new ArrayList<Button>();
-    		for(int i = 0; i < BUTTON_LABELS.length; i++) {
+    		for(int i = 0; i < BUTTON_IDS.length; i++) {
     			buttons.add(makeButton(i));
     		}
     		setLinks(buttons);
@@ -89,7 +85,7 @@ public class InfoPanel implements Panel {
     
     private Button makeButton(int buttonNum)
     {
-    		Button button = new Button(BUTTON_LABELS[buttonNum]);
+    		Button button = new Button(PROGRAM_CONTROLLER.resourceDisplayText(BUTTON_IDS[buttonNum]));
     		button.setId(BUTTON_IDS[buttonNum]);
     		return button;
     }

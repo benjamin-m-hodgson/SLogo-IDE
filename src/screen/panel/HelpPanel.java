@@ -23,7 +23,7 @@ public class HelpPanel extends SpecificPanel  {
 
     @Override
     public void makePanel() {
-    	Button backButton = makeBackButton();
+    	Button backButton = makeBackButton(PROGRAM_CONTROLLER);
 		VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACEING,backButton );
 		panelRoot.setId("infoPanel");
 		panelRoot.setAlignment(Pos.BASELINE_CENTER);

@@ -169,6 +169,7 @@ public class Controller {
 		}
 		catch (Exception e) {
 			// TODO: make screen error exception class to handle error specification
+			e.printStackTrace();
 			loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
 		}
 	}

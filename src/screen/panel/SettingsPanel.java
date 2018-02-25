@@ -20,9 +20,13 @@ import javafx.scene.control.ScrollPane;
 
 public class SettingsPanel extends SpecificPanel  {
 
+	private final int VISIBLE_ROW_COUNT = 5;
 	private Parent PANEL;
 	private Controller PROGRAM_CONTROLLER;
 	private BorderPane PANE;
+	private String DEFAULT_SELECTION_PROMPT;
+	private Button BACK;
+
 
 
 	private final int DEFAULT_BUTTON_SPACEING = 10;
@@ -30,51 +34,67 @@ public class SettingsPanel extends SpecificPanel  {
 	public SettingsPanel(Controller programController, BorderPane pane) {
 		PROGRAM_CONTROLLER = programController;
 		PANE = pane;
+		DEFAULT_SELECTION_PROMPT = PROGRAM_CONTROLLER.resourceDisplayText("LanguageSelection");
+
 	}
 
 	@Override
 	public void makePanel() {
-		Button back = makeBackButton();
-		VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACEING, back );
+		BACK = makeBackButton(PROGRAM_CONTROLLER);
+		ComboBox<Object> languageChooser = makeLanguageChooser();
+		VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACEING, languageChooser,BACK);
 		panelRoot.setId("infoPanel");
 		panelRoot.setAlignment(Pos.BASELINE_CENTER);
 		PANEL = panelRoot;
 
 	}
 
+	/**
+	 * 
+	 * @return dropDownMenu: a drop down menu that lets the user choose the
+	 * language for the simulation
+	 */
+	private ComboBox<Object> makeLanguageChooser() {
+		ComboBox<Object> dropDownMenu = makeComboBox(DEFAULT_SELECTION_PROMPT);
+		//dropDownMenu.setTooltip(SELECTION_TIP);
+		ObservableList<Object> simulationChoices = 
+				FXCollections.observableArrayList(DEFAULT_SELECTION_PROMPT);
+		simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());
+		dropDownMenu.setItems(simulationChoices);
+		dropDownMenu.setId("languageChooser");
+		dropDownMenu.getSelectionModel().selectedIndexProperty()
+		.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> arg0, 
+					Number arg1, Number arg2) {
+				String selected = (String) simulationChoices.get((Integer) arg2);
+				PROGRAM_CONTROLLER.changeLanguage(selected);
+				updatePrompt();
+			}
+		});
+		return dropDownMenu;
+	}
+
+	/**
+	 * Updates the text displayed to the user to match the current language
+	 */
+	private void updatePrompt() {
+		BACK.setText(PROGRAM_CONTROLLER.resourceDisplayText("backButton"));
+	}
+
+	/**
+	 * @param defaultChoice: String that represents the default value for this combo box
+	 * @return A ComboBox bearing the default choice
+	 */
+	private ComboBox<Object> makeComboBox(String defaultChoice) {
+		ComboBox<Object> dropDownMenu = new ComboBox<>();
+		dropDownMenu.setVisibleRowCount(VISIBLE_ROW_COUNT);
+		dropDownMenu.setValue(defaultChoice);
+		return dropDownMenu;
+	}
 
 
-//	/**
-//	 * 
-//	 * @return dropDownMenu: a drop down menu that lets the user choose the
-//	 * language for the simulation
-//	 */
-//	private ComboBox<Object> languageChooser() {
-//		String defaultPrompt = "Choose Background color: ";
-//		ComboBox<Object> dropDownMenu = makeComboBox(defaultPrompt);
-//		ObservableList<Object> simulationChoices = 
-//				FXCollections.observableArrayList(defaultPrompt);
-//		simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());
-//		dropDownMenu.setItems(simulationChoices);
-//		dropDownMenu.setId("languageChooser");
-//		dropDownMenu.getSelectionModel().selectedIndexProperty()
-//		.addListener(new ChangeListener<Number>() {
-//			@Override
-//			public void changed(ObservableValue<? extends Number> arg0, 
-//					Number arg1, Number arg2) {
-//				String selected = (String) simulationChoices.get((Integer) arg2);
-//				if (!selected.equals(defaultPrompt)) {
-//					APPLY.setDisable(false);
-//					LANGUAGE = selected;
-//				} 
-//				else {
-//					APPLY.setDisable(true);
-//					START.setDisable(true);
-//				}
-//			}
-//		});
-//		return dropDownMenu;
-//	}
+
 
 	@Override
 	public Parent getPanel() {
