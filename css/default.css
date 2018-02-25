@@ -100,6 +100,9 @@
 	-fx-prompt-text-fill: #c0bcb6;
 	-fx-font: 16px 'Nova Flat';
 }
+#inputField:focused {
+	-fx-faint-focus-color: rgba(192, 188, 182, 0.5);
+}
 #inputField .scroll-bar:horizontal ,
 #inputField  .scroll-bar:vertical {
     -fx-background-color: transparent;
@@ -140,6 +143,9 @@
 	-fx-text-fill: #555555;
 	-fx-prompt-text-fill: #c0bcb6;
 	-fx-font: 16px 'Nova Flat';
+}
+#consoleField:focused {
+	-fx-faint-focus-color: rgba(192, 188, 182, 0.5);
 }
 #consoleField .scroll-bar:horizontal ,
 #consoleField  .scroll-bar:vertical {

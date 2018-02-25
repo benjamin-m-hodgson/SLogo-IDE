@@ -42,7 +42,6 @@ public class TextPanel implements Panel {
     public void run() {
 	String inputText = INPUT_AREA.getText().replaceAll("\n", 
 		System.getProperty("line.separator"));
-	System.out.print(inputText);
 	CONSOLE_AREA.setText(inputText);
 	PROGRAM_CONTROLLER.parseInput(inputText);
     }
@@ -55,9 +54,11 @@ public class TextPanel implements Panel {
     }
     
     private TextArea makeConsoleArea() {
-	TextArea inputArea = new TextArea();
-	inputArea.setId("consoleField");
-	return inputArea;
+	TextArea consoleArea = new TextArea();
+	consoleArea.setId("consoleField");
+	consoleArea.setPromptText(PROGRAM_CONTROLLER.resourceDisplayText("ConsolePrompt"));
+	consoleArea.setEditable(false);
+	return consoleArea;
     }
 
 }
