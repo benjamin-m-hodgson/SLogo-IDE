@@ -1,4 +1,4 @@
-package commandnodetree;
+package interpreter;
 //
 //public interface CommandMaker {
 //	/**
@@ -17,10 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Queue;
-
-import interpreter.Command;
-import interpreter.RegexMatcher;
-import interpreter.Turtle;
 
 public class CommandMaker {
 	

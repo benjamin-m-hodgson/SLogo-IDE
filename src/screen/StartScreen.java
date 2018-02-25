@@ -1,5 +1,7 @@
 package screen;
 
+
+import interpreter.Controller;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -12,7 +14,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import mediator.Controller;
 
 public class StartScreen implements Screen {
     private final int VISIBLE_ROW_COUNT = 5;

@@ -1,9 +1,7 @@
-package commandnodetree;
+package interpreter;
 
 import java.util.ArrayList;
 import java.util.List;
-import interpreter.Turtle;
-import interpreter.Command;
 
 class CommandNode {
 
@@ -40,6 +38,7 @@ class CommandNode {
 		myNumArgs = numArgs;
 		myChildren = new ArrayList<CommandNode>(); 
 		myChildren.addAll(children); 
+		myTurtle = turtle;
 	}
 
 	public CommandNode(String info, int numArgs, List<CommandNode> children) {

@@ -1,4 +1,4 @@
-package mediator;
+package interpreter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,9 +11,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+<<<<<<< HEAD:src/mediator/Controller.java
 
 import interpreter.TextFieldParser;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+=======
+>>>>>>> 13ea86aed5bef2fcbc241d9a3794e95720be3efc:src/interpreter/Controller.java
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

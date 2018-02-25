@@ -24,6 +24,19 @@ public class CommandFactory {
 		else if(commandName.equals("Right")) {
 			return new RotateTurtleClockwiseCommand(commandArgs.get(0), turtle);
 		}
+
+		
+		else if(commandName.equals("SetHeading")) {
+			return new SetHeadingCommand(commandArgs.get(0), turtle);
+		}
+		else if(commandName.equals("SetTowards")) {
+			return new SetTowardsCommand(commandArgs.get(0), commandArgs.get(1), turtle);
+		}
+		
+		else if(commandName.equals("SetPosition")) {
+			return new SetPositionCommand(commandArgs.get(0), commandArgs.get(1), turtle);
+		}
+
 		// TODO: handle returning null value
 		return null;
 	}
