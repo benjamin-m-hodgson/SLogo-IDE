@@ -182,36 +182,38 @@ public class Controller {
 	//	return null;
 	//    }
 
-    /**
-     * Searches through the class path to find the appropriate resource files to use for 
-     * the program. If it can't locate the files, it displays an error screen to the user
-     * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
-     * 
-     * @param language: The language to define which .properties files to use in the Program
-     */
-    private void findResources(String language) {
-	String currentDir = System.getProperty("user.dir");
-	try {
-	    File file = new File(currentDir);
-	    URL[] urls = {file.toURI().toURL()};
-	    ClassLoader loader = new URLClassLoader(urls);
-	    try {
-		CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(language + "Prompts", 
-			Locale.getDefault(), loader);
-		CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(language + "Errors", 
-			Locale.getDefault(), loader);
-	    }
-	    // if .properties file doesn't exist for specified language, default to English
-	    catch (Exception e) {
-		CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Prompts", 
-			Locale.getDefault(), loader);
-		CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Errors", 
-			Locale.getDefault(), loader);
-	    }
-	    CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
-	    myTextFieldParser.changeLanguage(CURRENT_LANGUAGE);
-	    catch (MalformedURLException e) {
-	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+	/**
+	 * Searches through the class path to find the appropriate resource files to use for 
+	 * the program. If it can't locate the files, it displays an error screen to the user
+	 * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
+	 * 
+	 * @param language: The language to define which .properties files to use in the Program
+	 */
+	private void findResources(String language) {
+		String currentDir = System.getProperty("user.dir");
+		try {
+			File file = new File(currentDir);
+			URL[] urls = {file.toURI().toURL()};
+			ClassLoader loader = new URLClassLoader(urls);
+			try {
+				CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(language + "Prompts", 
+						Locale.getDefault(), loader);
+				CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(language + "Errors", 
+						Locale.getDefault(), loader);
+			}
+			// if .properties file doesn't exist for specified language, default to English
+			catch (Exception e) {
+				CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Prompts", 
+						Locale.getDefault(), loader);
+				CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Errors", 
+						Locale.getDefault(), loader);
+			}
+			CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
+			myTextFieldParser.changeLanguage(CURRENT_LANGUAGE);
+		}
+		catch (MalformedURLException e) {
+			loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+		}
 	}
 
 	/**
