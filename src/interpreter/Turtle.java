@@ -176,7 +176,7 @@ public class Turtle {
 	 * @param y new y coordinate
 	 * @return distance traveled
 	 */
-	private double calcDistance(double oldX, double oldY, double x, double y) {
+	protected double calcDistance(double oldX, double oldY, double x, double y) {
 		System.out.println("old x: " + oldX + " new x: "+ x);
 		System.out.println("old y" + oldY + " new y: "+ y);
 		double xSquared = Math.pow((oldX-x), 2);
@@ -210,7 +210,7 @@ public class Turtle {
 	
 	protected void setAngle(double angle) {
 		myAngle = angle;
-		myImage.setRotate(angle);
+		myImage.setRotate(Math.toRadians(angle));
 	}
 
 	protected void showPen() {
