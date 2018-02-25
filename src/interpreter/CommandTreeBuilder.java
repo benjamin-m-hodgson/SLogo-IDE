@@ -1,8 +1,6 @@
 package interpreter;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 
 class CommandTreeBuilder {
 
@@ -11,22 +9,24 @@ class CommandTreeBuilder {
 	//	private CommandTreeReader myCommandTreeReader; 
 	private String myNumArgsFileName; 
 	private ArrayList<CommandNode> myCommandTrees; 
-	private Turtle myTurtle;
 	private CommandTreeReader myCommandTreeReader;
 
-	public CommandTreeBuilder(String numArgsFileName, Turtle turtle) {
+	public CommandTreeBuilder(String numArgsFileName) {
 		myNumArgsFileName = numArgsFileName; 
 		myCommandTrees = new ArrayList<CommandNode>(); 
-		myTurtle = turtle;
 		myCommandTreeReader = new CommandTreeReader();
 	}
 
 	public double buildAndExecute(Turtle turtle, String[] userInput, String[] commandTypes, String[] allInputTypes) {
 		createCommandTree(turtle, userInput, commandTypes, allInputTypes, 0);
-//		for (CommandNode n : myCommandTrees) {
-//			System.out.println(n.toString());
-//		}
-// 	TODO RETURN READER'S DOUBLE RESULT
+		for (CommandNode n : myCommandTrees) {
+			System.out.println(n.toString());
+		}
+		double finalReturnVal = -1; 
+		for (CommandNode commandTree : myCommandTrees) {
+			finalReturnVal = myCommandTreeReader.readAndExecute(commandTree);
+		}
+		return finalReturnVal; 
 	}
 
 	private void createCommandTree(Turtle turtle, String[] userInput, String[] commandTypes, String[] allInputTypes, int startIdx) {

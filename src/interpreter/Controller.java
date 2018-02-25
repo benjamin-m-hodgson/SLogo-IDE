@@ -46,13 +46,11 @@ public class Controller {
 	private String PROGRAM_TITLE;
 
 	private TextFieldParser myTextFieldParser;
-	private Map<String, Double> myVariables; 
 	private List<String> myCommandHistory; 
 
 	public Controller(Stage primaryStage) {
 		PROGRAM_STAGE = primaryStage;
 		myTextFieldParser = new TextFieldParser();
-		myVariables = new HashMap<String, Double>();
 		myCommandHistory = new ArrayList<String>(); 
 		findSettings();
 	}
@@ -71,7 +69,14 @@ public class Controller {
 	 * Returns an UnmodifiableMap of variables to their values
 	 */
 	public Map<String, Double> getVariables() {
-		return null;
+		return myTextFieldParser.getVariables();
+	}
+	
+	/**
+	 * Returns an UnmodifiableList of available User Commands
+	 */
+	public List<String> getUserCommands() {
+		return Collections.unmodifiableList(myCommandHistory);
 	}
 
 	/**
@@ -88,13 +93,6 @@ public class Controller {
 	 */
 	public ReadOnlyDoubleProperty getWidthProperty() {
 		return PROGRAM_STAGE.widthProperty();
-	}
-
-	/**
-	 * Returns an ImmutableList of available User Commands
-	 */
-	public List<String> getUserCommands() {
-		return null;
 	}
 
 	//    public List<Turtle> onScreenTurtles() {
@@ -142,8 +140,10 @@ public class Controller {
 
 	/**
 	 * Parses input from a text field or button press by the user
+	 * @throws TurtleNotFoundException 
 	 */
-	public double parseInput(String userTextInput) {
+	public double parseInput(String userTextInput) throws TurtleNotFoundException {
+		myCommandHistory.add(userTextInput); // TODO consider whether we should only add if the command is valid? 
 		return myTextFieldParser.parseText(userTextInput);
 	}
 
