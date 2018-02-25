@@ -14,9 +14,9 @@ package interpreter;
 //}
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Queue;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CommandMaker {
 	
@@ -28,6 +28,7 @@ public class CommandMaker {
 	private ArrayList<Turtle> myTurtles; 
 	private String myLanguageFileName; 
 	private CommandTreeBuilder myCommandTreeBuilder; 
+	private HashMap<String, Double> myVariables; 
 	
 	public CommandMaker() {
 		this(DEFAULT_FILEPATH+DEFAULT_LANGUAGE, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
@@ -35,22 +36,23 @@ public class CommandMaker {
 	
 	public CommandMaker(String languageFileName, String numArgsFileName) {
 		myLanguageFileName = languageFileName;
-		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, new Turtle()); 
+		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName); 
+		myVariables = new HashMap<String, Double>(); 
 	}
 	
-	public Queue<Command> parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) {
+	public double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) throws TurtleNotFoundException {
 		return parseValidTextArray(turtleName, userInput, typesOfInput, DEFAULT_COMMAND_IDENTIFIER);
 	}
 	
-	public Queue<Command> parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput, String commandIdentifier) {
+	public double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput, String commandIdentifier) throws TurtleNotFoundException {
 		String[] commandTypes = new String[userInput.length];
 		for (int idx = 0; idx < userInput.length; idx++) {
 			if (typesOfInput[idx].equals(commandIdentifier)) {
 				commandTypes[idx] = getCommandType(userInput[idx]);
 			}
 		}
+		Turtle identifiedTurtle = null; 
 		boolean foundTurtle = false; 
-		Turtle identifiedTurtle; 
 		for (Turtle turtle : myTurtles) {
 			if (turtle.getName().equals(turtleName)) {
 				identifiedTurtle = turtle; 
@@ -60,7 +62,7 @@ public class CommandMaker {
 		if (! foundTurtle) {
 			throw new TurtleNotFoundException(turtleName);
 		}
-		return myCommandTreeBuilder.createCommandQueue(identifiedTurtle, userInput, commandTypes, typesOfInput); 
+		return myCommandTreeBuilder.buildAndExecute(identifiedTurtle, userInput, commandTypes, typesOfInput); 
 	}
 	
 	private String getCommandType(String text) {
@@ -68,5 +70,13 @@ public class CommandMaker {
         String commandType = regexMatcher.findMatchingKey(text);
         return commandType;
     }
+	
+	protected void changeLanguageFile(String fileName) {
+		myLanguageFileName = fileName; 
+	}
+	
+	protected Map<String, Double> getVariables() {
+		return Collections.unmodifiableMap(myVariables);
+	}
 	
 }

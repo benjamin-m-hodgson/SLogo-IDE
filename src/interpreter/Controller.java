@@ -124,115 +124,73 @@ public class Controller {
 	    //String specification = "%nFailed to find language files";
 	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 	}
-	return Collections.unmodifiableList(new ArrayList<String>());
-    }
-    
-    /**
-     * 
-     * @param key
-     * @return
-     */
-    public String resourceDisplayText(String key) {
-	return CURRENT_TEXT_DISPLAY.getString(key);
-    }
 
-    /**
-     * Parses input from a text field or button press by the user
-     */
-    public double parseInput(String userTextInput) {
-	return 0.0;
-    }
-    
-    public void loadStartScreen() {
-	try {
-	    StartScreen startScreen = new StartScreen(this);
-	    // test the ErrorScreen
-	    //ErrorScreen startScreen = new ErrorScreen(this, START_ERROR_PROMPT);
-	    Parent programRoot = startScreen.getRoot();
-	    Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-	    programScene.getStylesheets().add(DEFAULT_CSS);
-	    PROGRAM_STAGE.setScene(programScene);
-	    PROGRAM_STAGE.show();	
+	/**
+	 * Returns an UnmodifiableMap of variables to their values
+	 */
+	public Map<String, Double> getVariables() {
+		return myTextFieldParser.getVariables();
 	}
 	catch (Exception e) {
 	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
 	}
-    }
 
-    public void loadUserScreen() {
-	try {
-	    UserScreen programScreen = new UserScreen(this);
-	    Parent programRoot = programScreen.getRoot();
-	    Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);	
-	    programScene.getStylesheets().add(DEFAULT_CSS);
-	    PROGRAM_STAGE.setScene(programScene);
+	/**
+	 * 
+	 * @return ReadOnlyDoubleProperty: the height property of the application
+	 */
+	public ReadOnlyDoubleProperty getHeightProperty() {
+		return PROGRAM_STAGE.heightProperty();
 	}
 	catch (Exception e) {
 	    // TODO: make screen error exception class to handle error specification
 	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
 	}
-    }
 
-//    public List<Turtle> onScreenTurtles() {
-//	return null;
-//    }
+	//    public List<Turtle> onScreenTurtles() {
+	//	return null;
+	//    }
 
-    /**
-     * Change the Language. Changes the prompts displayed in the user interface as well as
-     * acceptable commands by changing the ResourceBundles used by the program.
-     * 
-     * @param language: the new language to be used in the program
-     */
-    public void changeLanguage(String language) {
-	findResources(language);
-    }
-
-    /**
-     * Searches through the class path to find the appropriate resource files to use for 
-     * the program. If it can't locate the files, it displays an error screen to the user
-     * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
-     * 
-     * @param language: The language to define which .properties files to use in the Program
-     */
-    private void findResources(String language) {
-	String currentDir = System.getProperty("user.dir");
-	try {
-	    File file = new File(currentDir);
-	    URL[] urls = {file.toURI().toURL()};
-	    ClassLoader loader = new URLClassLoader(urls);
-	    try {
-		CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(language + "Prompts", 
-			Locale.getDefault(), loader);
-		CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(language + "Errors", 
-			Locale.getDefault(), loader);
-	    }
-	    // if .properties file doesn't exist for specified language, default to English
-	    catch (Exception e) {
-		CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Prompts", 
-			Locale.getDefault(), loader);
-		CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Errors", 
-			Locale.getDefault(), loader);
-	    }
-	    CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
+	/**
+	 * 
+	 * @return an ImmutableList of all of the language options
+	 */
+	public List<String> getLanguages() {
+		String currentDir = System.getProperty("user.dir");
+		try {
+			File file = new File(currentDir + File.separator + "languages");
+			File syntaxFile = new File(currentDir + File.separator + "languages" + File.separator
+					+ SYNTAX_FILE_NAME);
+			File[] languageFiles = file.listFiles();
+			List<String> languages = new ArrayList<String>();
+			for (File languageFile : languageFiles) {
+				// ignore the syntax file used for input parsing
+				if (!languageFile.equals(syntaxFile)) { 
+					String languageName = languageFile.getName();
+					String[] nameSplit = languageName.split("\\.");
+					String language = nameSplit[0];
+					languages.add(language);
+				}
+			}
+			return Collections.unmodifiableList(languages);
+		}
+		catch (Exception e) {
+			String specification = "%nFailed to find language files";
+			loadErrorScreen(FILE_ERROR_PROMPT + specification);
+		}
+		return Collections.unmodifiableList(new ArrayList<String>());
 	}
 	catch (MalformedURLException e) {
 	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 	}
-    }
-    
-    /**
-     * Searches through the class path to find the appropriate settings resource file to use for 
-     * the program. If it can't locate the file, it displays an error screen to the user
-     * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
-     */
-    private void findSettings() {
-	String currentDir = System.getProperty("user.dir");
-	try {
-	    File file = new File(currentDir);
-	    URL[] urls = {file.toURI().toURL()};
-	    ClassLoader loader = new URLClassLoader(urls);
-	    CURRENT_SETTINGS = ResourceBundle.getBundle(DEFAULT_SETTINGS, 
-		    Locale.getDefault(), loader);
+
+	/**
+	 * Parses input from a text field or button press by the user
+	 * @throws TurtleNotFoundException 
+	 */
+	public double parseInput(String userTextInput) throws TurtleNotFoundException {
+		myCommandHistory.add(userTextInput); // TODO consider whether we should only add if the command is valid? 
+		return myTextFieldParser.parseText(userTextInput);
 	}
 	catch (MalformedURLException e) {
 	    // TODO: make screen error exception class to handle error specification

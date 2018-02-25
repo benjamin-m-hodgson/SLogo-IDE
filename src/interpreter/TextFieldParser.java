@@ -23,23 +23,22 @@
 //}
 
 package interpreter;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
-public class TextFieldParser {	
+class TextFieldParser {	
 	
 	public static final String DEFAULT_FILEPATH = "interpreter/";
 	public static final String DEFAULT_SYNTAX_FILENAME = "Syntax";
 	public static final String DEFAULT_LANGUAGE = "English";
 	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
+	public static final String DEFAULT_COMMENT_SYMBOL = "Comment";
 
 	private String mySyntaxFileName; 
 	private CommandMaker myCommandMaker; 
-    private HashMap<String, Double> myVariables; 
-	private HashMap<String, Double> myCommandAndReturnHistory;
 	private Queue<Command> myCommandQueue;
 	
 	protected TextFieldParser() {
@@ -53,8 +52,6 @@ public class TextFieldParser {
 	protected TextFieldParser(String syntaxFileName, String languageFileName, String numArgsFileName) {
 		mySyntaxFileName = syntaxFileName;
 		myCommandMaker = new CommandMaker(languageFileName, numArgsFileName); 
-		myVariables = new HashMap<String, Double>(); 
-		myCommandAndReturnHistory = new HashMap<String, Double>(); 
 		myCommandQueue = new LinkedList<Command>(); 
 	}
 	
@@ -66,20 +63,47 @@ public class TextFieldParser {
 	/**
 	 * Returns a Queue of commands given a String of concatenated commands (chops up the commands 
 	 * and sends them individually to CommandMaker)
+	 * @throws TurtleNotFoundException 
 	 */
-	public double parseText(String userInputString) {
-		String[] userInputArray = userInputString.split("\\s+");
-		parseTextArray(userInputArray);
-		return 0.0; // TODO FIX: this return is just to stop eclipse from complaining
+	protected double parseText(String userInputString) throws TurtleNotFoundException {
+		String[] userInputByLine = userInputString.split("\\r?\\n");
+		String[] userInputTypes = new String[userInputByLine.length];
+		
+		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
+		for (int idx = 0; idx < userInputByLine.length; idx++) {
+			userInputTypes[idx] = regexMatcher.findMatchingKey(userInputByLine[idx].substring(0, 1));
+		}
+		
+		ArrayList<String> nonCommentInputByLine = new ArrayList<String>();
+		for (int idx = 0; idx < userInputTypes.length; idx ++) {
+			if (! userInputTypes[idx].equals(DEFAULT_COMMENT_SYMBOL)) {
+				nonCommentInputByLine.add(userInputByLine[idx]);
+			}
+		}
+		
+		ArrayList<String> tokenizedInput = new ArrayList<String>();
+		for (int idx = 0; idx < nonCommentInputByLine.size(); idx ++) {
+			String[] whiteSpaceSplitLine = nonCommentInputByLine.get(idx).split("\\s+");
+			for (String token : whiteSpaceSplitLine) {
+				tokenizedInput.add(token);
+			}
+		}
+		
+		String[] tokenizedInputArray = tokenizedInput.toArray(new String[tokenizedInput.size()]);
+//		for (String s : tokenizedInputArray) {
+//			System.out.println(s);
+//		}
+		return parseTextArray(tokenizedInputArray);
 	}
 	
-	private void parseTextArray(String[] userInputArray) {
+	private double parseTextArray(String[] userInputArray) throws TurtleNotFoundException {
 		String[] listOfTypes = new String[userInputArray.length];
 		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
 		for (int idx = 0; idx < userInputArray.length; idx++) {
 			listOfTypes[idx] = regexMatcher.findMatchingKey(userInputArray[idx]);
 		}
-		myCommandQueue = myCommandMaker.parseValidTextArray(userInputArray[0], Arrays.copyOfRange(userInputArray, 1, userInputArray.length-1), listOfTypes); 
+		double finalReturnVal = myCommandMaker.parseValidTextArray(userInputArray[0], Arrays.copyOfRange(userInputArray, 1, userInputArray.length-1), listOfTypes); 
+		return finalReturnVal; 
 	}
     
     
@@ -89,27 +113,37 @@ public class TextFieldParser {
 	/**
 	 * Returns and UnmodifiableMap of string variable keys to their double values
 	 */
-	public Map<String, Double> getVariables() {
-		return myVariables;
-	}
-	
-	/**
-	 * Returns an ImmutableList of the user's command history (where commands are Strings) 
-	 */
-	public Map<String, Double> getCommandHistory() {
-		return myCommandAndReturnHistory; 
+	protected Map<String, Double> getVariables() {
+		return myCommandMaker.getVariables();
 	}
 	
 	/**
 	 * Returns an ImmutableQueue of the Command Queue (where commands are Command objects) 
 	 */
-	public Queue<Command> getCurrentCommandQueue() {
+	protected Queue<Command> getCurrentCommandQueue() {
 		return myCommandQueue;
 	}
 	
+	
+	
+	
+	// SETTERS
+	protected void changeLanguageFile(String fileName) {
+		myCommandMaker.changeLanguageFile(fileName);
+	}
+	
+	
+	
+	
+	
+	
 	public static void main(String[] args) {
 		TextFieldParser testingParser = new TextFieldParser();
-		testingParser.parseText("fd 50 setxy 20 50");
+		try {
+			testingParser.parseText("#hello\nfd 50 fd 50\n#bk 50");
+		} catch (Exception e) {
+			
+		}
 	}
 	
 }
