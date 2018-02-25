@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import mediator.Controller;
+import interpreter.Controller;
 
 public class CommandPanel extends SpecificPanel {
     

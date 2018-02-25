@@ -1,9 +1,9 @@
 package screen;
 
+import interpreter.Controller;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import mediator.Controller;
 
 public class ErrorScreen implements Screen {
     private final String LANGUAGE_CHOOSER_TEXT = "Select a Language";

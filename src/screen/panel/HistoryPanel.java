@@ -10,7 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import mediator.Controller;
+import interpreter.Controller;
 
 public class HistoryPanel extends SpecificPanel {
 

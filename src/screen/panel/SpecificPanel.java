@@ -4,7 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import mediator.Controller;
+import interpreter.Controller;
 
 public abstract class SpecificPanel implements Panel {
 	
