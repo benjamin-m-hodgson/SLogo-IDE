@@ -214,6 +214,7 @@ public class Controller {
 			Locale.getDefault(), loader);
 	    }
 	    CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
+	    myTextFieldParser.changeLanguage(CURRENT_LANGUAGE);
 	}
 	catch (MalformedURLException e) {
 	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));

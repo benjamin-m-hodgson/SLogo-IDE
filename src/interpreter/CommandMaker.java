@@ -18,27 +18,30 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
+
+import sun.security.tools.policytool.Resources;
 
 class CommandMaker {
 
 	public static final String DEFAULT_FILEPATH = "interpreter/";
-	public static final String DEFAULT_LANGUAGE = "English";
+	public static final ResourceBundle DEFAULT_LANGUAGE = Resources.getBundle("interpreter/English");
 	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
 	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command"; //TODO allow this to be client-specified
 	public static final String[] DEFAULT_CONTROLFLOW_IDENTIFIERS = {"Repeat", "DoTimes", "For"};
 
 	private ArrayList<Turtle> myTurtles; 
-	private String myLanguageFileName; 
+	private ResourceBundle myLanguage; 
 	private CommandTreeBuilder myCommandTreeBuilder; 
 	private HashMap<String, Double> myVariables; 
 	private ArrayList<String> myListForBuilder; 
 
 	protected CommandMaker() {
-		this(DEFAULT_FILEPATH+DEFAULT_LANGUAGE, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
+		this(DEFAULT_LANGUAGE, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
 	}
 
-	protected CommandMaker(String languageFileName, String numArgsFileName) {
-		myLanguageFileName = languageFileName;
+	protected CommandMaker(ResourceBundle languageBundle, String numArgsFileName) {
+		myLanguage = languageBundle;
 		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName); 
 		myVariables = new HashMap<String, Double>(); 
 		myListForBuilder = new ArrayList<String>();
@@ -81,13 +84,13 @@ class CommandMaker {
 	}
 
 	private String getCommandType(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		RegexMatcher regexMatcher = new RegexMatcher(myLanguageFileName);
+		RegexMatcher regexMatcher = new RegexMatcher(myLanguage);
 		String commandType = regexMatcher.findMatchingKey(text);
 		return commandType;
 	}
 
-	protected void changeLanguageFile(String fileName) {
-		myLanguageFileName = fileName; 
+	protected void changeLanguage(ResourceBundle languageBundle) {
+		myLanguage = languageBundle; 
 	}
 
 	protected Map<String, Double> getVariables() {

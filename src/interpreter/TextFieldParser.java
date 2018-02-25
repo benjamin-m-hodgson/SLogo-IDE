@@ -28,12 +28,15 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.ResourceBundle;
+
+import sun.security.util.Resources;
 
 class TextFieldParser {	
 
 	public static final String DEFAULT_FILEPATH = "interpreter/";
 	public static final String DEFAULT_SYNTAX_FILENAME = "Syntax";
-	public static final String DEFAULT_LANGUAGE = "English";
+	public static final ResourceBundle DEFAULT_LANGUAGE = Resources.getBundle("interpreter/English");
 	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
 	public static final String DEFAULT_COMMENT_SYMBOL = "Comment";
 
@@ -45,13 +48,13 @@ class TextFieldParser {
 		this(DEFAULT_FILEPATH+DEFAULT_SYNTAX_FILENAME, DEFAULT_LANGUAGE, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
 	}
 
-	protected TextFieldParser(String languageFileName) {
-		this(DEFAULT_FILEPATH+DEFAULT_SYNTAX_FILENAME, languageFileName, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
+	protected TextFieldParser(ResourceBundle language) {
+		this(DEFAULT_FILEPATH+DEFAULT_SYNTAX_FILENAME, language, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
 	}
 
-	protected TextFieldParser(String syntaxFileName, String languageFileName, String numArgsFileName) {
+	protected TextFieldParser(String syntaxFileName, ResourceBundle languageBundle, String numArgsFileName) {
 		mySyntaxFileName = syntaxFileName;
-		myCommandMaker = new CommandMaker(languageFileName, numArgsFileName); 
+		myCommandMaker = new CommandMaker(languageBundle, numArgsFileName); 
 		myCommandQueue = new LinkedList<Command>(); 
 	}
 
@@ -132,8 +135,8 @@ class TextFieldParser {
 
 
 	// SETTERS
-	protected void changeLanguageFile(String fileName) {
-		myCommandMaker.changeLanguageFile(fileName);
+	protected void changeLanguage(ResourceBundle languageBundle) {
+		myCommandMaker.changeLanguage(languageBundle);
 	}
 
 
