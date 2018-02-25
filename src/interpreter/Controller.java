@@ -13,10 +13,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import interpreter.TextFieldParser;
-<<<<<<< HEAD:src/mediator/Controller.java
-=======
-import javafx.beans.property.ReadOnlyDoubleProperty;
->>>>>>> a0b4ada969f8204a5142792813a44932570e03ff:src/interpreter/Controller.java
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,10 +22,6 @@ import javafx.stage.Stage;
 import screen.ErrorScreen;
 import screen.StartScreen;
 import screen.UserScreen;
-<<<<<<< HEAD:src/mediator/Controller.java
-import model.Turtle;
-=======
->>>>>>> a0b4ada969f8204a5142792813a44932570e03ff:src/interpreter/Controller.java
 
 public class Controller {
     private final String FILE_ERROR_KEY = "FileErrorPrompt";
@@ -49,25 +41,17 @@ public class Controller {
     private Stage PROGRAM_STAGE;
     // TODO: add in program titles
     private String PROGRAM_TITLE;
-<<<<<<< HEAD:src/mediator/Controller.java
     private TextFieldParser myTextFieldParser;
-=======
+    private Map<String, Double> myVariables; 
+    private List<String> myCommandHistory; 
     
-    private TextFieldParser myTextFieldParser;
-    	private Map<String, Double> myVariables; 
-	private List<String> myCommandHistory; 
->>>>>>> a0b4ada969f8204a5142792813a44932570e03ff:src/interpreter/Controller.java
-
     public Controller(Stage primaryStage) {
 	PROGRAM_STAGE = primaryStage;
 	//myTextFieldParser = new TextFieldParser();
 	myVariables = new HashMap<String, Double>();
 	myCommandHistory = new ArrayList<String>(); 
 	findSettings();
-<<<<<<< HEAD:src/mediator/Controller.java
-=======
 	findResources(DEFAULT_LANGUAGE);
->>>>>>> a0b4ada969f8204a5142792813a44932570e03ff:src/interpreter/Controller.java
     }
     
     //TODO what does this wrap?
@@ -85,22 +69,6 @@ public class Controller {
      */
     public Map<String, Double> getVariables() {
 	return null;
-    }
-    
-    /**
-     * 
-     * @return ReadOnlyDoubleProperty: the height property of the application
-     */
-    public ReadOnlyDoubleProperty getHeightProperty() {
-	return PROGRAM_STAGE.heightProperty();
-    }
-    
-    /**
-     * 
-     * @return ReadOnlyDoubleProperty: the height property of the application
-     */
-    public ReadOnlyDoubleProperty getWidthProperty() {
-	return PROGRAM_STAGE.widthProperty();
     }
 
     /**
@@ -182,12 +150,7 @@ public class Controller {
 	    PROGRAM_STAGE.setScene(programScene);
 	}
 	catch (Exception e) {
-	    // TODO: make screen error exception class to handle error specification
-<<<<<<< HEAD:src/mediator/Controller.java
-	    loadErrorScreen(SCREEN_ERROR_PROMPT);
-=======
 	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
->>>>>>> a0b4ada969f8204a5142792813a44932570e03ff:src/interpreter/Controller.java
 	}
     }
 

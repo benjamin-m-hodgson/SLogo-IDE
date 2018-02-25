@@ -39,6 +39,14 @@ public class TextPanel implements Panel {
 	CONSOLE_AREA.clear();
     }
     
+    public void run() {
+	String inputText = INPUT_AREA.getText().replaceAll("\n", 
+		System.getProperty("line.separator"));
+	System.out.print(inputText);
+	CONSOLE_AREA.setText(inputText);
+	PROGRAM_CONTROLLER.parseInput(inputText);
+    }
+    
     private TextArea makeInputArea() {
 	TextArea inputArea = new TextArea();
 	inputArea.setId("inputField");
