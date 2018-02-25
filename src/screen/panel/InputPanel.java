@@ -2,8 +2,10 @@ package screen.panel;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
@@ -14,6 +16,7 @@ public class InputPanel implements Panel {
     private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private Parent PANEL;
+    private TextPanel INPUT_AREA;
     private Controller PROGRAM_CONTROLLER;
     private Button RUN;
     private Button CLEAR;
@@ -24,9 +27,12 @@ public class InputPanel implements Panel {
 
     @Override
     public void makePanel() {
+	INPUT_AREA = new TextPanel(PROGRAM_CONTROLLER);
 	VBox runBox = drawRunBox();
+	Parent textPanel = drawTextPanel(INPUT_AREA);
 	BorderPane panelRoot = new BorderPane();
 	panelRoot.setRight(runBox);
+	panelRoot.setCenter(textPanel);
 	panelRoot.setId("inputPanel");
 	PANEL = panelRoot;
 	// attach "animation loop" to time line to play it
@@ -56,14 +62,33 @@ public class InputPanel implements Panel {
     
     private Button drawRunButton() {
 	Button runButton = new Button();
+	// handle click event
+	runButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+	    @Override
+	    public void handle(MouseEvent arg0) {
+		// TODO: send string from text area to back end and update console area
+	    }
+	});
 	runButton.setId("runButton");
 	return runButton;
     }
     
     private Button drawClearButton() {
 	Button clearButton = new Button();
+	// handle click event
+	clearButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+	    @Override
+	    public void handle(MouseEvent arg0) {
+		INPUT_AREA.clearInputArea();
+	    }
+	});
 	clearButton.setId("clearButton");
 	return clearButton;
+    }
+    
+    private Parent drawTextPanel(TextPanel inputArea) {
+	Parent textPanel = inputArea.getPanel();
+	return textPanel;
     }
     
     /**
