@@ -52,7 +52,7 @@ class CommandNode {
 			isDouble = false; 
 		}
 		myNumArgs = numArgs;
-		myChildren = (ArrayList<CommandNode>) children; 
+		myChildren = children; 
 	}
 
 	@Override

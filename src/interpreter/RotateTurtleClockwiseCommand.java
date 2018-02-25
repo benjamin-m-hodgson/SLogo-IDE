@@ -7,6 +7,7 @@ public class RotateTurtleClockwiseCommand implements Command{
 		myDegrees = degrees.execute();
 		myTurtle = turtle;
 	}
+	@Override
 	public double execute() {
 		myTurtle.setAngle(myTurtle.getAngle()+myDegrees);
 		return myDegrees;

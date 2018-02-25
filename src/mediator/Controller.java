@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import interpreter.TextFieldParser;
-import interpreter.Turtle;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -26,8 +25,8 @@ import screen.StartScreen;
 import screen.UserScreen;
 
 public class Controller {
-    private final String FILE_ERROR_PROMPT = "Failed to obtain resource files!";
-    private final String SCREEN_ERROR_PROMPT = "Error loading Screen!";
+    private final String FILE_ERROR_KEY = "FileErrorPrompt";
+    private final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
     private final String SYNTAX_FILE_NAME = "Syntax.properties";
     private final String DEFAULT_LANGUAGE = "English";
     private final String DEFAULT_SETTINGS = "settings";
@@ -50,10 +49,11 @@ public class Controller {
 
     public Controller(Stage primaryStage) {
 	PROGRAM_STAGE = primaryStage;
-	myTextFieldParser = new TextFieldParser();
+	//myTextFieldParser = new TextFieldParser();
 	myVariables = new HashMap<String, Double>();
 	myCommandHistory = new ArrayList<String>(); 
 	findSettings();
+	findResources(DEFAULT_LANGUAGE);
     }
     
     //TODO what does this wrap?
@@ -120,8 +120,9 @@ public class Controller {
 	    return Collections.unmodifiableList(languages);
 	}
 	catch (Exception e) {
-	    String specification = "%nFailed to find language files";
-	    loadErrorScreen(FILE_ERROR_PROMPT + specification);
+	    // TODO: make custom exception super class with sub classes for specifications
+	    //String specification = "%nFailed to find language files";
+	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 	}
 	return Collections.unmodifiableList(new ArrayList<String>());
     }
@@ -154,7 +155,7 @@ public class Controller {
 	    PROGRAM_STAGE.show();	
 	}
 	catch (Exception e) {
-	    loadErrorScreen(SCREEN_ERROR_PROMPT);
+	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
 	}
     }
 
@@ -168,7 +169,7 @@ public class Controller {
 	}
 	catch (Exception e) {
 	    // TODO: make screen error exception class to handle error specification
-	    loadErrorScreen(SCREEN_ERROR_PROMPT);
+	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
 	}
     }
 
@@ -215,7 +216,7 @@ public class Controller {
 	    CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
 	}
 	catch (MalformedURLException e) {
-	    loadErrorScreen(FILE_ERROR_PROMPT);
+	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 	}
     }
     
@@ -235,8 +236,8 @@ public class Controller {
 	}
 	catch (MalformedURLException e) {
 	    // TODO: make screen error exception class to handle error specification
-	    String specification = "%nFailed to find settings files";
-	    loadErrorScreen(FILE_ERROR_PROMPT + specification);
+	    //String specification = "%nFailed to find settings files";
+	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 	}
     }
 
@@ -252,5 +253,14 @@ public class Controller {
 	Scene errorScene = new Scene(errorScreenRoot);
 	errorScene.getStylesheets().add(DEFAULT_CSS);
 	PROGRAM_STAGE.setScene(errorScene);
+    }
+    
+    /**
+     * 
+     * @param key
+     * @return
+     */
+    private String resourceErrorText(String key) {
+	return CURRENT_ERROR_DISPLAY.getString(key);
     }
 }

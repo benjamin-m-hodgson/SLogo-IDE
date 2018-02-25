@@ -8,6 +8,7 @@ class MoveTurtleForwardCommand implements Command {
 		myForwardDist = forwarddist.execute();
 	}
 	
+	@Override
 	public double execute() {
 		double angle = Math.toRadians(myTurtle.getAngle());
 		myTurtle.setXY(myTurtle.getX()+myForwardDist*Math.sin(angle), myTurtle.getY()+myForwardDist*Math.cos(angle));
