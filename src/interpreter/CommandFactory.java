@@ -25,10 +25,41 @@ public class CommandFactory {
 			return new RotateTurtleClockwiseCommand(commandArgs.get(0), turtle);
 		}
 
+		
+		else if(commandName.equals("SetHeading")) {
+			return new SetHeadingCommand(commandArgs.get(0), turtle);
+		}
+		else if(commandName.equals("SetTowards")) {
+			return new SetTowardsCommand(commandArgs.get(0), commandArgs.get(1), turtle);
+		}
+		
 		else if(commandName.equals("SetPosition")) {
 			return new SetPositionCommand(commandArgs.get(0), commandArgs.get(1), turtle);
 		}
-		else if(commandName.equals("SetHeading"))
+		else if(commandName.equals("PenDown")) {
+			return new PenDownCommand(turtle);
+		}
+		else if(commandName.equals("PenUp")) {
+			return new PenUpCommand(turtle);
+		}
+		else if(commandName.equals("ShowTurtle")) {
+			return new ShowTurtleCommand(turtle);
+		}
+		else if(commandName.equals("HideTurtle")) {
+			return new HideTurtleCommand(turtle);
+		}
+		else if(commandName.equals("Home")) {
+			return new HomeCommand(turtle);
+		}
+		else if(commandName.equals("ClearScreen")) {
+			return new ClearScreenCommand(turtle);
+		}
+		else if(commandName.equals("XCoordinate")) {
+			return new XCoordinateQueryCommand(turtle);
+		}
+		else if(commandName.equals("YCoordinate")) {
+			return new YCoordinateQueryCommand(turtle);
+		}
 
 		// TODO: handle returning null value
 		return null;
