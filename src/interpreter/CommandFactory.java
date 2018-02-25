@@ -3,10 +3,17 @@ import java.util.List;
 
 public class CommandFactory {
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	public Command makeCommand() {
+	    return null;
+=======
+=======
 	public Command makeCommand() {
 	    return null;
 	}
 	    
+>>>>>>> a0b4ada969f8204a5142792813a44932570e03ff
 	public Command makeDoubleCommand(String doubleString) {
 		double doubleArg = Double.parseDouble(doubleString);
 		return new DoubleCommand(doubleArg);
@@ -24,6 +31,9 @@ public class CommandFactory {
 		else if(commandName.equals("Right")) {
 			return new RotateTurtleClockwiseCommand(commandArgs.get(0), turtle);
 		}
+<<<<<<< HEAD
+>>>>>>> d511c2f6ae739a1226fb61daf576efe0c9649ef7
+=======
 
 		
 		else if(commandName.equals("SetHeading")) {
@@ -63,5 +73,6 @@ public class CommandFactory {
 
 		// TODO: handle returning null value
 		return null;
+>>>>>>> a0b4ada969f8204a5142792813a44932570e03ff
 	}
 }

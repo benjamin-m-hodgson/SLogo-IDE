@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import interpreter.TextFieldParser;
-import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -42,11 +41,10 @@ public class Controller {
     private Stage PROGRAM_STAGE;
     // TODO: add in program titles
     private String PROGRAM_TITLE;
-    
     private TextFieldParser myTextFieldParser;
-    	private Map<String, Double> myVariables; 
-	private List<String> myCommandHistory; 
-
+    private Map<String, Double> myVariables; 
+    private List<String> myCommandHistory; 
+    
     public Controller(Stage primaryStage) {
 	PROGRAM_STAGE = primaryStage;
 	//myTextFieldParser = new TextFieldParser();
@@ -71,22 +69,6 @@ public class Controller {
      */
     public Map<String, Double> getVariables() {
 	return null;
-    }
-    
-    /**
-     * 
-     * @return ReadOnlyDoubleProperty: the height property of the application
-     */
-    public ReadOnlyDoubleProperty getHeightProperty() {
-	return PROGRAM_STAGE.heightProperty();
-    }
-    
-    /**
-     * 
-     * @return ReadOnlyDoubleProperty: the height property of the application
-     */
-    public ReadOnlyDoubleProperty getWidthProperty() {
-	return PROGRAM_STAGE.widthProperty();
     }
 
     /**
@@ -168,7 +150,6 @@ public class Controller {
 	    PROGRAM_STAGE.setScene(programScene);
 	}
 	catch (Exception e) {
-	    // TODO: make screen error exception class to handle error specification
 	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
 	}
     }
