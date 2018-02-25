@@ -47,41 +47,41 @@ class CommandMaker {
 		myListForBuilder = new ArrayList<String>();
 	}
 
-	protected double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	protected double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		myListForBuilder = new ArrayList<String>(); 
 		return parseValidTextArray(turtleName, userInput, typesOfInput, DEFAULT_COMMAND_IDENTIFIER);
 	}
 
-	private double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput, String commandIdentifier) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		//		for (String s : userInput) System.out.println(s);
+	private double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput, String commandIdentifier) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String[] commandTypes = new String[userInput.length];
 		for (int idx = 0; idx < userInput.length; idx++) {
 			if (typesOfInput[idx].equals(commandIdentifier)) {
 				commandTypes[idx] = getCommandType(userInput[idx]);
 			}
 		}
-		Turtle identifiedTurtle = null; 
-		//		boolean foundTurtle = false; 
-		//		for (Turtle turtle : myTurtles) {
-		//			if (turtle.getName().equals(turtleName)) {
-		//				identifiedTurtle = turtle; 
-		//				foundTurtle = true; 
-		//			}
-		//		}
-		//		if (! foundTurtle) {
-		//			throw new TurtleNotFoundException(turtleName);
-		//		}
-		makeListForBuilder(myListForBuilder, userInput, commandTypes, 1, DEFAULT_CONTROLFLOW_IDENTIFIERS);
-		return myCommandTreeBuilder.buildAndExecute(identifiedTurtle, userInput, commandTypes, typesOfInput); 
-	}
-
-	private void makeListForBuilder(ArrayList<String> currCommandList, String[] inputArray, String[] commandTypes, int numTimesToAdd, String[] controlFlowIdentifiers) {
-		for (int i = 0; i < inputArray.length; i++) {
-			if (Arrays.asList(controlFlowIdentifiers).contains(commandTypes[i])) {
-				
+		Turtle identifiedTurtle = myTurtles.get(0); 
+		String[] userInputArrayToPass = userInput; 
+		String[] commandTypesToPass = commandTypes;
+		String[] typesArrayToPass = typesOfInput; 
+		for (Turtle turtle : myTurtles) {
+			if (turtle.getName().equals(turtleName)) {
+				identifiedTurtle = turtle; 
+				userInputArrayToPass = Arrays.copyOfRange(userInputArrayToPass, 1, userInputArrayToPass.length); 
+				commandTypesToPass = Arrays.copyOfRange(commandTypes, 1, commandTypes.length);
+				typesArrayToPass = Arrays.copyOfRange(typesOfInput, 1, typesOfInput.length);
 			}
 		}
+//		makeListForBuilder(myListForBuilder, userInput, commandTypes, 1, DEFAULT_CONTROLFLOW_IDENTIFIERS);
+		return myCommandTreeBuilder.buildAndExecute(identifiedTurtle, userInputArrayToPass, commandTypesToPass, typesArrayToPass); 
 	}
+
+//	private void makeListForBuilder(ArrayList<String> currCommandList, String[] inputArray, String[] commandTypes, int numTimesToAdd, String[] controlFlowIdentifiers) {
+//		for (int i = 0; i < inputArray.length; i++) {
+//			if (Arrays.asList(controlFlowIdentifiers).contains(commandTypes[i])) {
+//
+//			}
+//		}
+//	}
 
 	private String getCommandType(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		RegexMatcher regexMatcher = new RegexMatcher(myLanguage);

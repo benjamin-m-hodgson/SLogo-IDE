@@ -102,14 +102,14 @@ class TextFieldParser {
 		return parseTextArray(tokenizedInputArray);
 	}
 
-	private double parseTextArray(String[] userInputArray) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private double parseTextArray(String[] userInputArray) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String[] listOfTypes = new String[userInputArray.length];
 		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
 		for (int idx = 0; idx < userInputArray.length; idx++) {
 			listOfTypes[idx] = regexMatcher.findMatchingKey(userInputArray[idx]);
 //			System.out.println(listOfTypes[idx]+" "+userInputArray[idx]);
 		}
-		double finalReturnVal = myCommandMaker.parseValidTextArray(userInputArray[0], Arrays.copyOfRange(userInputArray, 1, userInputArray.length), Arrays.copyOfRange(listOfTypes, 1, listOfTypes.length)); 
+		double finalReturnVal = myCommandMaker.parseValidTextArray(userInputArray[0], userInputArray, listOfTypes); // TODO consider special case in which turtle name is command name; 
 		return finalReturnVal; 
 	}
 
