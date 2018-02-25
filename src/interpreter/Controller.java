@@ -141,9 +141,13 @@ public class Controller {
 
 	/**
 	 * Parses input from a text field or button press by the user
+	 * @throws MissingInformationException 
+	 * @throws UnidentifiedCommandException 
+	 * @throws BadFormatException 
+	 * @throws TurtleNotFoundException 
 	 */
-	public double parseInput(String userTextInput) {
-		return 0.0;
+	public double parseInput(String userTextInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		return myTextFieldParser.parseText(userTextInput);
 	}
 
 	public void loadStartScreen() {
