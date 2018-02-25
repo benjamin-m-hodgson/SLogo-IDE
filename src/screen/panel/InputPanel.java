@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import mediator.Controller;
+import interpreter.Controller;
 
 public class InputPanel implements Panel {
     private final double FRAMES_PER_SECOND = 120;
