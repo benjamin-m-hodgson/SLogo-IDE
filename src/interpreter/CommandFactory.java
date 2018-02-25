@@ -54,6 +54,12 @@ public class CommandFactory {
 		else if(commandName.equals("ClearScreen")) {
 			return new ClearScreenCommand(turtle);
 		}
+		else if(commandName.equals("XCoordinate")) {
+			return new XCoordinateQueryCommand(turtle);
+		}
+		else if(commandName.equals("YCoordinate")) {
+			return new YCoordinateQueryCommand(turtle);
+		}
 
 		// TODO: handle returning null value
 		return null;
