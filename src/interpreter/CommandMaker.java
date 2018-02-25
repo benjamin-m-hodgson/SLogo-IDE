@@ -96,5 +96,6 @@ class CommandMaker {
 	protected Map<String, Double> getVariables() {
 		return Collections.unmodifiableMap(myVariables);
 	}
+	
 
 }
