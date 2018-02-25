@@ -19,6 +19,7 @@ public class XCoordinateQueryCommand implements Command{
 	 * @return x-coordinate of Turtle
 	 * @see interpreter.Command#execute()
 	 */
+	@Override
 	public double execute() {
 		return myTurtle.getX();
 	}

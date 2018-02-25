@@ -19,15 +19,13 @@ class MoveTurtleForwardCommand implements Command {
 		myForwardDistCommand = forwarddist;
 	}
 	
-<<<<<<< HEAD
+
 	@Override
-=======
 	/** 
 	 * Moves Turtle forward the specified number of pixels and draws a line if the pen is down
 	 * @return distance the turtle moved forward
 	 * @see interpreter.Command#execute()
 	 */
->>>>>>> 13ea86aed5bef2fcbc241d9a3794e95720be3efc
 	public double execute() {
 		double forwardDist = myForwardDistCommand.execute();
 		double angle = Math.toRadians(myTurtle.getAngle());

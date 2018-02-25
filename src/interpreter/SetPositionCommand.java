@@ -26,6 +26,7 @@ public class SetPositionCommand implements Command{
 	 * @return distance the Turtle traveled
 	 * @see interpreter.Command#execute()
 	 */
+	@Override 
 	public double execute() {
 		double newX = myNewXCommand.execute();
 		double newY = myNewYCommand.execute();
