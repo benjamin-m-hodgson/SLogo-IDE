@@ -49,19 +49,28 @@ public class TextPanel implements Panel {
 	CONSOLE_AREA.setText(inputText);
 	try {
 	    PROGRAM_CONTROLLER.parseInput(inputText);
-	} catch (TurtleNotFoundException e) {
+	} 
+	catch (TurtleNotFoundException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
-	} catch (BadFormatException e) {
+	} 
+	catch (BadFormatException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
-	} catch (UnidentifiedCommandException e) {
+	} 
+	catch (UnidentifiedCommandException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
-	} catch (MissingInformationException e) {
+	} 
+	catch (MissingInformationException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
+	catch (NullPointerException e) {
+	    // TODO handle null exception. What to return to parse? ""?
+	    System.out.println("NULL");
+	}
+	
     }
     
     private TextArea makeInputArea() {
