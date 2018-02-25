@@ -48,6 +48,12 @@ public class CommandFactory {
 		else if(commandName.equals("HideTurtle")) {
 			return new HideTurtleCommand(turtle);
 		}
+		else if(commandName.equals("Home")) {
+			return new HomeCommand(turtle);
+		}
+		else if(commandName.equals("ClearScreen")) {
+			return new ClearScreenCommand(turtle);
+		}
 
 		// TODO: handle returning null value
 		return null;
