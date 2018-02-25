@@ -66,6 +66,8 @@ public class Controller {
 		return 0.0;
 	}
 
+
+
 	/**
 	 * Returns an UnmodifiableMap of variables to their values
 	 */
@@ -134,6 +136,7 @@ public class Controller {
 	 */
 	public String resourceDisplayText(String key) {
 		return CURRENT_TEXT_DISPLAY.getString(key);
+
 	}
 
 	/**

@@ -93,9 +93,81 @@
 /******************************************************************************************/
 #inputField {
 	-fx-alignment: center;
-	-fx-text-alignment: center;
-	-fx-text-fill: #000033;
-	-fx-font: 12px 'Nova Flat';
+	-fx-background-color: transparent;
+	-fx-highlight-fill: #fbcbd7;
+	-fx-highlight-text-fill: #555555;
+	-fx-text-fill: #555555;
+	-fx-prompt-text-fill: #c0bcb6;
+	-fx-font: 16px 'Nova Flat';
+}
+#inputField .scroll-bar:horizontal ,
+#inputField  .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+#inputField .scroll-bar .increment-arrow ,
+#inputField .scroll-bar .decrement-arrow {
+	-fx-shape: " ";	
+	-fx-padding:0;
+}
+#inputField .increment-button ,
+#inputField .decrement-button {
+    -fx-background-color:transparent;
+	-fx-background-radius: 2em;
+}
+#inputField .scroll-bar:horizontal .thumb,
+#inputField .scroll-bar:vertical .thumb {
+    -fx-background-color: #c0bcb6;
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+#inputField .scroll-bar:horizontal .thumb:hover,
+#inputField .scroll-bar:vertical .thumb:hover,
+#inputField .scroll-bar:horizontal .thumb:pressed,
+#inputField .scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: linear-gradient(to right, #c0bcb6, #aca9a3);
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+/******************************************************************************************/
+/* The text field where the user can view the output of inputted commands */ 
+/******************************************************************************************/
+#consoleField {
+	-fx-alignment: center;
+	-fx-padding: 0 10 0 5;
+	-fx-background-color: transparent;
+	-fx-highlight-fill: #fbcbd7;
+	-fx-highlight-text-fill: #555555;
+	-fx-text-fill: #555555;
+	-fx-prompt-text-fill: #c0bcb6;
+	-fx-font: 16px 'Nova Flat';
+}
+#consoleField .scroll-bar:horizontal ,
+#consoleField  .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+#consoleField .scroll-bar .increment-arrow ,
+#consoleField .scroll-bar .decrement-arrow {
+	-fx-shape: " ";	
+	-fx-padding:0;
+}
+#consoleField .increment-button ,
+#consoleField .decrement-button {
+    -fx-background-color:transparent;
+	-fx-background-radius: 2em;
+}
+#consoleField .scroll-bar:horizontal .thumb,
+#consoleField .scroll-bar:vertical .thumb {
+    -fx-background-color: #c0bcb6;
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+#consoleField .scroll-bar:horizontal .thumb:hover,
+#consoleField .scroll-bar:vertical .thumb:hover,
+#consoleField .scroll-bar:horizontal .thumb:pressed,
+#consoleField .scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: linear-gradient(to right, #c0bcb6, #aca9a3);
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
 }
 /******************************************************************************************/
 /* The apply button to apply some visualization property changes */
@@ -559,6 +631,15 @@
 /******************************************************************************************/
 #centerBox {
 	-fx-spacing: 20;
+	-fx-alignment: center;
+	-fx-background-color: #f3f3f3;
+}
+/******************************************************************************************/
+/* Holds the user input area, used to position text area control object locations */
+/******************************************************************************************/
+#centerTextField {
+	-fx-spacing: 10;
+	-fx-padding: 0;
 	-fx-alignment: center;
 	-fx-background-color: #f3f3f3;
 }
