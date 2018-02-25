@@ -42,10 +42,10 @@ public class Controller {
     private Stage PROGRAM_STAGE;
     // TODO: add in program titles
     private String PROGRAM_TITLE;
-    
+
     private TextFieldParser myTextFieldParser;
-    	private Map<String, Double> myVariables; 
-	private List<String> myCommandHistory; 
+    private Map<String, Double> myVariables; 
+    private List<String> myCommandHistory; 
 
     public Controller(Stage primaryStage) {
 	PROGRAM_STAGE = primaryStage;
@@ -55,7 +55,7 @@ public class Controller {
 	findSettings();
 	findResources(DEFAULT_LANGUAGE);
     }
-    
+
     //TODO what does this wrap?
     /**
      * Makes a new Turtle given a name, an ImageView (previously attached to the Stage), a penColor, and an empty Group
@@ -66,13 +66,15 @@ public class Controller {
 	return 0.0;
     }
 
+
+
     /**
      * Returns an UnmodifiableMap of variables to their values
      */
     public Map<String, Double> getVariables() {
 	return null;
     }
-    
+
     /**
      * 
      * @return ReadOnlyDoubleProperty: the height property of the application
@@ -80,7 +82,7 @@ public class Controller {
     public ReadOnlyDoubleProperty getHeightProperty() {
 	return PROGRAM_STAGE.heightProperty();
     }
-    
+
     /**
      * 
      * @return ReadOnlyDoubleProperty: the height property of the application
@@ -95,7 +97,7 @@ public class Controller {
     public List<String> getUserCommands() {
 	return null;
     }
-    
+
     /**
      * 
      * @return an ImmutableList of all of the language options
@@ -126,7 +128,7 @@ public class Controller {
 	}
 	return Collections.unmodifiableList(new ArrayList<String>());
     }
-    
+
     /**
      * 
      * @param key
@@ -134,15 +136,20 @@ public class Controller {
      */
     public String resourceDisplayText(String key) {
 	return CURRENT_TEXT_DISPLAY.getString(key);
+
     }
 
     /**
      * Parses input from a text field or button press by the user
+     * @throws MissingInformationException 
+     * @throws UnidentifiedCommandException 
+     * @throws BadFormatException 
+     * @throws TurtleNotFoundException 
      */
-    public double parseInput(String userTextInput) {
-	return 0.0;
+    public double parseInput(String userTextInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	return myTextFieldParser.parseText(userTextInput);
     }
-    
+
     public void loadStartScreen() {
 	try {
 	    StartScreen startScreen = new StartScreen(this);
@@ -169,23 +176,15 @@ public class Controller {
 	}
 	catch (Exception e) {
 	    // TODO: make screen error exception class to handle error specification
+	    e.printStackTrace();
 	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
 	}
     }
 
-//    public List<Turtle> onScreenTurtles() {
-//	return null;
-//    }
 
-    /**
-     * Change the Language. Changes the prompts displayed in the user interface as well as
-     * acceptable commands by changing the ResourceBundles used by the program.
-     * 
-     * @param language: the new language to be used in the program
-     */
-    public void changeLanguage(String language) {
-	findResources(language);
-    }
+    //    public List<Turtle> onScreenTurtles() {
+    //	return null;
+    //    }
 
     /**
      * Searches through the class path to find the appropriate resource files to use for 
@@ -214,12 +213,23 @@ public class Controller {
 			Locale.getDefault(), loader);
 	    }
 	    CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
+	    // TODO: fix -> myTextFieldParser.changeLanguage(CURRENT_LANGUAGE);
 	}
 	catch (MalformedURLException e) {
 	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 	}
     }
-    
+
+    /**
+     * Change the Language. Changes the prompts displayed in the user interface as well as
+     * acceptable commands by changing the ResourceBundles used by the program.
+     * 
+     * @param language: the new language to be used in the program
+     */
+    public void changeLanguage(String language) {
+	findResources(language);
+    }
+
     /**
      * Searches through the class path to find the appropriate settings resource file to use for 
      * the program. If it can't locate the file, it displays an error screen to the user
@@ -254,7 +264,7 @@ public class Controller {
 	errorScene.getStylesheets().add(DEFAULT_CSS);
 	PROGRAM_STAGE.setScene(errorScene);
     }
-    
+
     /**
      * 
      * @param key

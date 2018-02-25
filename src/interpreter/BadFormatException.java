@@ -1,7 +1,7 @@
 package interpreter;
 
-class BadFormatException extends Exception {
-	protected BadFormatException(String text) {
+public class BadFormatException extends Exception {
+	public BadFormatException(String text) {
 		super("BadFormatException "+text);
 	}
 }

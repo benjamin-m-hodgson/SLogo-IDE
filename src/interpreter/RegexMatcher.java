@@ -17,6 +17,13 @@ public class RegexMatcher {
 	private ExceptionFactory myExceptionFactory; 
 //	private Exception myException; 
 	
+	public RegexMatcher(ResourceBundle resourceBundle) {
+		myResources = resourceBundle; 
+		mySymbols = new ArrayList<Entry<String, Pattern>>();
+		myExceptionFactory = new ExceptionFactory(); 
+		populateWithSymbols(mySymbols, myResources);
+	}
+	
 	public RegexMatcher(String fileName) {
 		myFileName = fileName;
 		myResources = ResourceBundle.getBundle(fileName);

@@ -66,7 +66,7 @@ public class InputPanel implements Panel {
 	runButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 	    @Override
 	    public void handle(MouseEvent arg0) {
-		// TODO: send string from text area to back end and update console area
+		INPUT_AREA.run();
 	    }
 	});
 	runButton.setId("runButton");

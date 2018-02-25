@@ -1,6 +1,10 @@
 package screen.panel;
 
+import interpreter.BadFormatException;
 import interpreter.Controller;
+import interpreter.MissingInformationException;
+import interpreter.TurtleNotFoundException;
+import interpreter.UnidentifiedCommandException;
 import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
@@ -39,6 +43,27 @@ public class TextPanel implements Panel {
 	CONSOLE_AREA.clear();
     }
     
+    public void run() {
+	String inputText = INPUT_AREA.getText().replaceAll("\n", 
+		System.getProperty("line.separator"));
+	CONSOLE_AREA.setText(inputText);
+	try {
+	    PROGRAM_CONTROLLER.parseInput(inputText);
+	} catch (TurtleNotFoundException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	} catch (BadFormatException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	} catch (UnidentifiedCommandException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	} catch (MissingInformationException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+    }
+    
     private TextArea makeInputArea() {
 	TextArea inputArea = new TextArea();
 	inputArea.setId("inputField");
@@ -47,9 +72,11 @@ public class TextPanel implements Panel {
     }
     
     private TextArea makeConsoleArea() {
-	TextArea inputArea = new TextArea();
-	inputArea.setId("consoleField");
-	return inputArea;
+	TextArea consoleArea = new TextArea();
+	consoleArea.setId("consoleField");
+	consoleArea.setPromptText(PROGRAM_CONTROLLER.resourceDisplayText("ConsolePrompt"));
+	consoleArea.setEditable(false);
+	return consoleArea;
     }
 
 }
