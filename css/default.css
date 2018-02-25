@@ -144,7 +144,7 @@
 	-fx-prompt-text-fill: #c0bcb6;
 	-fx-font: 16px 'Nova Flat';
 }
-#inputField:focused {
+#consoleField:focused {
 	-fx-faint-focus-color: rgba(192, 188, 182, 0.5);
 }
 #consoleField .scroll-bar:horizontal ,

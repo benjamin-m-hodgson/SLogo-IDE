@@ -54,9 +54,11 @@ public class TextPanel implements Panel {
     }
     
     private TextArea makeConsoleArea() {
-	TextArea inputArea = new TextArea();
-	inputArea.setId("consoleField");
-	return inputArea;
+	TextArea consoleArea = new TextArea();
+	consoleArea.setId("consoleField");
+	consoleArea.setPromptText(PROGRAM_CONTROLLER.resourceDisplayText("ConsolePrompt"));
+	consoleArea.setEditable(false);
+	return consoleArea;
     }
 
 }
