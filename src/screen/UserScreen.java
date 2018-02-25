@@ -8,39 +8,40 @@ import screen.panel.InputPanel;
 import screen.panel.TurtlePanel;
 
 public class UserScreen implements Screen {
-    
-    private Parent ROOT;
-    private Controller PROGRAM_CONTROLLER;
 
-    public UserScreen(Controller programController) {
-	PROGRAM_CONTROLLER = programController;
-    }
-    
-    @Override
-    public void makeRoot() {
-	BorderPane rootPane = new BorderPane();
-	rootPane.setId("userScreenRoot");
-	rootPane.setBottom(new InputPanel(PROGRAM_CONTROLLER).getPanel());
-	rootPane.setRight(new InfoPanel(PROGRAM_CONTROLLER).getPanel());
-	rootPane.setCenter(new TurtlePanel(PROGRAM_CONTROLLER).getPanel());
-	ROOT = rootPane;
-    }
+	private Parent ROOT;
+	private Controller PROGRAM_CONTROLLER;
 
-    @Override
-    public Parent getRoot() {
-	if (ROOT == null) {
-	    makeRoot();
+	public UserScreen(Controller programController) {
+		PROGRAM_CONTROLLER = programController;
 	}
-	return ROOT;
-    }
 
-    @Override
-    public void changeBackgroundColor(String color) {
-	// TODO Auto-generated method stub
-    }
+	@Override
+	public void makeRoot() {
+		BorderPane rootPane = new BorderPane();
+		rootPane.setId("userScreenRoot");
 
-    @Override
-    public void changeRightPanel(Parent panelRoot) {
-	// TODO Auto-generated method stub
-    }
+		rootPane.setBottom(new InputPanel(PROGRAM_CONTROLLER).getPanel());
+		rootPane.setRight(new InfoPanel(PROGRAM_CONTROLLER, rootPane).getPanel());
+		rootPane.setCenter(new TurtlePanel(PROGRAM_CONTROLLER).getPanel());
+		ROOT = rootPane;
+	}
+
+	@Override
+	public Parent getRoot() {
+		if (ROOT == null) {
+			makeRoot();
+		}
+		return ROOT;
+	}
+
+	@Override
+	public void changeBackgroundColor(String color) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void changeRightPanel(Parent panelRoot) {
+		// TODO Auto-generated method stub
+	}
 }
