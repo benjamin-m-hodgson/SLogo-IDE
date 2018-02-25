@@ -42,6 +42,12 @@ public class CommandFactory {
 		else if(commandName.equals("PenUp")) {
 			return new PenUpCommand(turtle);
 		}
+		else if(commandName.equals("ShowTurtle")) {
+			return new ShowTurtleCommand(turtle);
+		}
+		else if(commandName.equals("HideTurtle")) {
+			return new HideTurtleCommand(turtle);
+		}
 
 		// TODO: handle returning null value
 		return null;
