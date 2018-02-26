@@ -220,6 +220,7 @@ public class Turtle {
 	
 	protected void setAngle(double angle) {
 		myAngle = angle;
+		System.out.println("angle is: "  + angle);
 		myImage.setRotate(angle);
 	}
 
@@ -362,7 +363,7 @@ public class Turtle {
 		 * Clears all lines previously drawn by the pen from the screen
 		 */
 		private void clear() {
-			myPenLines.getChildren().removeAll();
+			myPenLines.getChildren().removeAll(myPenLines.getChildren());
 		}
 	}
 

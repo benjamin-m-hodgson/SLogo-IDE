@@ -29,8 +29,8 @@ public class MoveTurtleBackwardCommand implements Command{
 	 */
 	public double execute() {
 		double dist = myBackwardDistCommand.execute();
-		double angle = Math.toRadians(180 + myTurtle.getAngle());
-		myTurtle.setXY(myTurtle.getX()+dist*Math.sin(angle), myTurtle.getY()+dist*Math.cos(angle));
+		double angle = Math.toRadians(myTurtle.getAngle());
+		myTurtle.setXY(myTurtle.getX()+dist*Math.sin(-angle), myTurtle.getY()+dist*Math.cos(-angle));
 		return dist;
 	}
 }
