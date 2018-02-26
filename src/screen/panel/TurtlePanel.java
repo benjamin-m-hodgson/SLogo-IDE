@@ -3,9 +3,6 @@ package screen.panel;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.event.ChangeListener;
-
 import interpreter.Controller;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Group;
@@ -59,6 +56,7 @@ public class TurtlePanel implements Panel {
 	    turtleView.translateXProperty().bind(Bindings.divide(panelRoot.widthProperty(), 2));
 	    turtleView.translateYProperty().bind(Bindings.divide(panelRoot.heightProperty(), 2));
 	    panel.getChildren().add(turtleView);
+	    // TODO: possibly add turtles to list ?
 	    PROGRAM_CONTROLLER.makeNewTurtleCommand("Turtle", turtleView, Color.BLACK, new Group());
 	}
 	catch (Exception e) {
