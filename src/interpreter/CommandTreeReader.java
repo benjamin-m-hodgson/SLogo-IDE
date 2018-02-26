@@ -50,13 +50,14 @@ class CommandTreeReader {
 	 * Compressed the CommandNodeTree into a single Command with Command arguments (which, in turn, may have Command
 	 * arguments, etc.) that can be executed as part of the Command Queue
 	 * @param root
-	 * @return
+	 * @return command that when executed will be entire tree
 	 */
 	private Command compressTree(CommandNode root) {
 		ArrayList<Command> args = new ArrayList<>();
 		if(root.getIsDouble()) {
 			return myCommandFactory.makeDoubleCommand(root.getInfo());
 		}
+		//TODO: StringCommand
 		for(CommandNode k: root.getChildren()) {
 			args.add(compressTree(k));
 		}
