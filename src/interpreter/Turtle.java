@@ -59,7 +59,7 @@ public class Turtle {
 
 	public static final String DEFAULT_NAME = "";
 	public static final Color DEFAULT_PEN_COLOR = Color.BLACK;
-	public static final double DEFAULT_PEN_WIDTH = 0.0;
+	public static final double DEFAULT_PEN_WIDTH = 1.0;
 	public static final double DEFAULT_X_POS = 0; 
 	public static final double DEFAULT_Y_POS = 0; 
 	public static final double DEFAULT_ANGLE = 0; 
@@ -72,6 +72,8 @@ public class Turtle {
 
 	private double myOldX;
 	private double myOldY;
+	private double myOldImageX;
+	private double myOldImageY;
 	private double myX;
 	private double myY; 
 	private double myAngle; 
@@ -164,10 +166,14 @@ public class Turtle {
 	}
 
 	protected double setXY(double x, double y) {
+		myOldImageX = myImage.getX();
+		System.out.println("image x was: " + myOldImageX);
+		myOldImageY = myImage.getY();
 		setOld();
 		myX = x; 
 		myY = y; 
-		myImage.setX(myX);
+		myImage.setX(myX);;
+		System.out.println("image x is: " + myImage.getX());
 		myImage.setY(myY);
 		myPen.drawLine(myOldX, myOldY, myX, myY);
 		return calcDistance(myOldX, myOldY, myX, myY);
@@ -344,10 +350,11 @@ public class Turtle {
 		 */
 		private void drawLine(double oldX, double oldY, double newX, double newY) {
 			if(myIsDown) {
-				Line line = new Line(oldX, oldY, newX, newY);
+				Line line = new Line(newX, newY, oldX, oldY);
 				line.setFill(myColor);
 				line.setStrokeWidth(myWidth);
 				myPenLines.getChildren().add(line);
+				System.out.println("number of lines" + myPenLines.getChildren().size());
 			}
 		}
 		/**

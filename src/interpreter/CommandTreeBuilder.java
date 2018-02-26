@@ -19,6 +19,7 @@ class CommandTreeBuilder {
 	}
 
 	protected double buildAndExecute(Turtle turtle, String[] userInput, String[] commandTypes, String[] allInputTypes) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		myCommandTrees.clear();
 		createCommandTree(turtle, userInput, commandTypes, allInputTypes, 0);
 		for (CommandNode n : myCommandTrees) {
 			System.out.println(n.toString());

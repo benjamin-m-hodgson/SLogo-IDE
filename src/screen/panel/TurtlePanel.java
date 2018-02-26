@@ -56,8 +56,12 @@ public class TurtlePanel implements Panel {
 	    turtleView.translateXProperty().bind(Bindings.divide(panelRoot.widthProperty(), 2));
 	    turtleView.translateYProperty().bind(Bindings.divide(panelRoot.heightProperty(), 2));
 	    panel.getChildren().add(turtleView);
+	    Group penLines = new Group();
+	    penLines.translateXProperty().bind(Bindings.divide(panelRoot.widthProperty(), 2));
+	    penLines.translateYProperty().bind(Bindings.divide(panelRoot.heightProperty(), 2));
+	    panel.getChildren().add(penLines);
 	    // TODO: possibly add turtles to list ?
-	    PROGRAM_CONTROLLER.makeNewTurtleCommand("Turtle", turtleView, Color.BLACK, new Group());
+	    PROGRAM_CONTROLLER.makeNewTurtleCommand("Turtle", turtleView, Color.BLACK, penLines);
 	}
 	catch (Exception e) {
 	    // TODO: make custom exception super class with sub classes for specifications

@@ -49,7 +49,7 @@ public class Controller {
 
     public Controller(Stage primaryStage) {
 	PROGRAM_STAGE = primaryStage;
-	//myTextFieldParser = new TextFieldParser();
+	myTextFieldParser = new TextFieldParser();
 	myVariables = new HashMap<String, Double>();
 	myCommandHistory = new ArrayList<String>(); 
 	findSettings();
@@ -61,6 +61,7 @@ public class Controller {
      * that has already been attached to the Stage to hold lines for the pen
      */
     public double makeNewTurtleCommand(String name, ImageView turtleImage, Color penColor, Group penLines) {
+    		System.out.println("is it null" + turtleImage==null);
     		myTextFieldParser.addNewTurtle(name, turtleImage, penColor, penLines);
     		return 1.0; 
     }
