@@ -20,6 +20,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javafx.scene.Group;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import sun.security.tools.policytool.Resources;
 
 class CommandMaker {
@@ -105,6 +108,11 @@ class CommandMaker {
 
 	protected Map<String, Double> getVariables() {
 		return Collections.unmodifiableMap(myVariables);
+	}
+
+	public void addNewTurtle(String name, ImageView turtleImage, Color penColor, Group penLines) {
+		System.out.println(name);
+		myTurtles.add(new Turtle(name, turtleImage, penLines, penColor));
 	}
 	
 

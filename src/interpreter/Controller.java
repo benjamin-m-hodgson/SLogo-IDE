@@ -56,14 +56,13 @@ public class Controller {
 	findResources(DEFAULT_LANGUAGE);
     }
 
-    //TODO what does this wrap?
     /**
      * Makes a new Turtle given a name, an ImageView (previously attached to the Stage), a penColor, and an empty Group
      * that has already been attached to the Stage to hold lines for the pen
      */
-    public double makeNewTurtleCommand(String name, ImageView turtleImage, 
-	    Color penColor, Group penLines) {
-    		return 0.0;
+    public double makeNewTurtleCommand(String name, ImageView turtleImage, Color penColor, Group penLines) {
+    		myTextFieldParser.addNewTurtle(name, turtleImage, penColor, penLines);
+    		return 1.0; 
     }
 
 
