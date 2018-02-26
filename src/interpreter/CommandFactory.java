@@ -68,6 +68,9 @@ public class CommandFactory {
 		else if(commandName.equals("Product")) {
 			return new ProductCommand(commandArgs.get(0), commandArgs.get(1));
 		}
+		else if(commandName.equals("Quotient")) {
+			return new QuotientCommand(commandArgs.get(0), commandArgs.get(1));
+		}
 
 		// TODO: handle returning null value
 		return null;
