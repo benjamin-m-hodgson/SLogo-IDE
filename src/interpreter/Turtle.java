@@ -220,7 +220,7 @@ public class Turtle {
 	
 	protected void setAngle(double angle) {
 		myAngle = angle;
-		myImage.setRotate(Math.toRadians(angle));
+		myImage.setRotate(angle);
 	}
 
 	protected void showPen() {
