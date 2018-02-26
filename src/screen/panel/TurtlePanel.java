@@ -47,23 +47,27 @@ public class TurtlePanel implements Panel {
 		}
 		return PANEL;
 	}
-
-	private void createTurtle(Pane panel, ScrollPane panelRoot) {
-		String currentDir = System.getProperty("user.dir");
-		try {
-			File turtleFile = new File(currentDir + File.separator + "turtleimages" 
-					+ File.separator + DEFAULT_TURTLE);
-			Image turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
-			ImageView turtleView = new ImageView(turtleImage);
-			turtleView.setId("turtleView");
-			turtleView.setFitHeight(DEFAULT_TURTLE_SIZE);
-			turtleView.setFitWidth(DEFAULT_TURTLE_SIZE);
-			turtleView.translateXProperty().bind(Bindings.divide(panelRoot.widthProperty(), 2));
-			turtleView.translateYProperty().bind(Bindings.divide(panelRoot.heightProperty(), 2));
-			panel.getChildren().add(turtleView);
-			// TODO: possibly add turtles to list ?
-			PROGRAM_CONTROLLER.makeNewTurtleCommand("Turtle", turtleView, Color.BLACK, new Group());
-		}
+    
+    private void createTurtle(Pane panel, ScrollPane panelRoot) {
+	String currentDir = System.getProperty("user.dir");
+	try {
+	    File turtleFile = new File(currentDir + File.separator + "turtleimages" 
+		    + File.separator + DEFAULT_TURTLE);
+	    Image turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
+	    ImageView turtleView = new ImageView(turtleImage);
+	    turtleView.setId("turtleView");
+	    turtleView.setFitHeight(DEFAULT_TURTLE_SIZE);
+	    turtleView.setFitWidth(DEFAULT_TURTLE_SIZE);
+	    turtleView.translateXProperty().bind(Bindings.divide(panelRoot.widthProperty(), 2));
+	    turtleView.translateYProperty().bind(Bindings.divide(panelRoot.heightProperty(), 2));
+	    panel.getChildren().add(turtleView);
+	    Group penLines = new Group();
+	    penLines.translateXProperty().bind(Bindings.divide(panelRoot.widthProperty(), 2));
+	    penLines.translateYProperty().bind(Bindings.divide(panelRoot.heightProperty(), 2));
+	    panel.getChildren().add(penLines);
+	    // TODO: possibly add turtles to list ?
+	    PROGRAM_CONTROLLER.makeNewTurtleCommand("Turtle", turtleView, Color.BLACK, penLines);
+	}
 		catch (Exception e) {
 			// TODO: make custom exception super class with sub classes for specifications
 			//String specification = "%nFailed to find language files";

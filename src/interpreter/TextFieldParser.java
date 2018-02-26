@@ -144,6 +144,7 @@ class TextFieldParser {
 	}
 	
 	public void addNewTurtle(String name, ImageView turtleImage, Color penColor, Group penLines) {
+		System.out.println("made it to textfieldparser");
 		myCommandMaker.addNewTurtle(name, turtleImage, penColor, penLines);
 	}
 
