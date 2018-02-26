@@ -49,7 +49,7 @@ public class Controller {
 
     public Controller(Stage primaryStage) {
 	PROGRAM_STAGE = primaryStage;
-	//myTextFieldParser = new TextFieldParser();
+	myTextFieldParser = new TextFieldParser();
 	myVariables = new HashMap<String, Double>();
 	myCommandHistory = new ArrayList<String>(); 
 	findSettings();
