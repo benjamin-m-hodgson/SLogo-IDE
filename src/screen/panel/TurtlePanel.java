@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+
 public class TurtlePanel implements Panel {
 	// TODO: put in setting.properties file
 	private final double DEFAULT_TURTLE_SIZE = 20;
@@ -20,6 +21,9 @@ public class TurtlePanel implements Panel {
 	private Parent PANEL;
 	private Controller PROGRAM_CONTROLLER;
 	private List<ImageView> TURTLE_LIST;
+	private ScrollPane SCROLL_PANE;
+
+
 
 	public TurtlePanel(Controller programController) {
 		PROGRAM_CONTROLLER = programController;
@@ -30,6 +34,7 @@ public class TurtlePanel implements Panel {
 	public void makePanel() {
 		Pane panel = new Pane();
 		ScrollPane panelRoot = new ScrollPane(panel); 
+		SCROLL_PANE = panelRoot;
 		panelRoot.setId("turtlePanel");
 		createTurtle(panel, panelRoot);
 		PANEL = panelRoot;
@@ -64,5 +69,8 @@ public class TurtlePanel implements Panel {
 			//String specification = "%nFailed to find language files";
 			System.out.println("FAILED TO LOAD TURTLE IMG");
 		}
+	}
+	public void changeBackgroundColor(String colorCode) {
+		SCROLL_PANE.setStyle("-fx-background-color:" + colorCode + ";");
 	}
 }

@@ -98,13 +98,13 @@ class CommandTreeBuilder {
 			//TODO: add error checking
 			currIdx++;
 			parent.addChild(new CommandNode(userInput[currIdx]));
-			currIdx++
+			currIdx++;
 		}
 		if(userInput[currIdx].equals(DEFAULT_BRACKET_IDENTIFIER)) {
 			int currIdxCopy = currIdx;
 			currIdxCopy++;
 			ArrayList<String> withinBrackets;
-			while(!userInput[currId].equals(DEFAULT_BRACKET_IDENTIFIER)) {
+			while(!userInput[currIdx].equals(DEFAULT_BRACKET_IDENTIFIER)) {
 				
 			}
 		}

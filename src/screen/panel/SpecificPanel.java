@@ -4,12 +4,14 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import screen.UserScreen;
 import interpreter.Controller;
 
 public abstract class SpecificPanel implements Panel {
 	
 	protected abstract BorderPane getPane();
 	protected abstract Controller getController();
+	protected abstract UserScreen getUserScreen();
 
 	
 	protected Button makeBackButton(Controller PROGRAM_CONTROLLER) {
@@ -19,7 +21,7 @@ public abstract class SpecificPanel implements Panel {
 		backButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
-				getPane().setRight(new InfoPanel(getController(), getPane()).getPanel());
+				getPane().setRight(new InfoPanel(getController(), getPane(), getUserScreen()).getPanel());
 			}
 		});
 		return backButton;
