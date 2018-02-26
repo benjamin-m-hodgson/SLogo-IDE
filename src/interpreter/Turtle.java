@@ -52,7 +52,7 @@ import javafx.scene.image.ImageView;
 
 /**
  * @author Sarahbland
- * Collaboration with Susie Choi
+ * @author Susie Choi
  *
  */
 public class Turtle {
@@ -77,13 +77,13 @@ public class Turtle {
 	private double myAngle; 
 
 	public Turtle() {
-		this(DEFAULT_NAME, new ImageView(), new Group());
+		this(DEFAULT_NAME, new ImageView(), new Group(), DEFAULT_PEN_COLOR);
 	}
 
-	protected Turtle(String name, ImageView image, Group penGroup) {
+	protected Turtle(String name, ImageView image, Group penGroup, Color color) {
 		myName = name; 
 		myImage = image;
-		myPen = new Pen(penGroup); 
+		myPen = new Pen(penGroup, color); 
 		myVisibility = true; 
 		myOldX = DEFAULT_X_POS; 
 		myOldY = DEFAULT_Y_POS; 
@@ -240,7 +240,7 @@ public class Turtle {
 	 * @author Sarahbland
 	 *
 	 */
-	private class Pen {
+	private class Pen {		
 		private Group myPenLines;
 		private Color myColor;
 		private double myWidth;
@@ -253,6 +253,11 @@ public class Turtle {
 		private Pen(Group penLines) {
 			this(penLines, true, DEFAULT_PEN_COLOR, DEFAULT_PEN_WIDTH);
 		}
+		
+		private Pen(Group penLines, Color color) {
+			this(penLines, true, color, DEFAULT_PEN_WIDTH);
+		}
+		
 		/**
 		 * Constructor for a pen with default state as pen visible
 		 * @param penlines is (already-attached-to-stage) Group which will house lines drawn by Pen

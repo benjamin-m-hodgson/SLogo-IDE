@@ -29,6 +29,9 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.ResourceBundle;
 
+import javafx.scene.Group;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import sun.security.util.Resources;
 
 class TextFieldParser {	
@@ -137,6 +140,10 @@ class TextFieldParser {
 	// SETTERS
 	protected void changeLanguage(ResourceBundle languageBundle) {
 		myCommandMaker.changeLanguage(languageBundle);
+	}
+	
+	public void addNewTurtle(String name, ImageView turtleImage, Color penColor, Group penLines) {
+		myCommandMaker.addNewTurtle(name, turtleImage, penColor, penLines);
 	}
 
 
