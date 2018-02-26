@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import screen.UserScreen;
 import interpreter.Controller;
 
 public class CommandPanel extends SpecificPanel {
@@ -14,11 +15,13 @@ public class CommandPanel extends SpecificPanel {
 	private Controller PROGRAM_CONTROLLER;
 	private BorderPane PANE;
 	private final int DEFAULT_BUTTON_SPACEING = 10;
+    private UserScreen USER_SCREEN;
 
     
-    public CommandPanel(Controller programController, BorderPane pane) {
+    public CommandPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
     	PROGRAM_CONTROLLER = programController;
 		PANE = pane;
+		USER_SCREEN = userScreen;
     }
 
     @Override
@@ -49,6 +52,11 @@ public class CommandPanel extends SpecificPanel {
 	protected Controller getController() {
 		// TODO Auto-generated method stub
 		return PROGRAM_CONTROLLER;
+	}
+
+	@Override
+	protected UserScreen getUserScreen() {
+		return USER_SCREEN;
 	}
 
 }
