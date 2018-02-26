@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import interpreter.Controller;
 import javafx.beans.binding.Bindings;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -29,7 +33,7 @@ public class TurtlePanel implements Panel {
     @Override
     public void makePanel() {
 	Pane panel = new Pane();
-	ScrollPane panelRoot = new ScrollPane(panel); 
+	ScrollPane panelRoot = new ScrollPane(panel);
 	panelRoot.setId("turtlePanel");
 	createTurtle(panel, panelRoot);
 	PANEL = panelRoot;
