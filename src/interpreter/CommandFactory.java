@@ -74,6 +74,9 @@ public class CommandFactory {
 		else if(commandName.equals("Remainder")) {
 		    	return new RemainderCommand(commandArgs.get(0), commandArgs.get(1));
 		}
+		else if(commandName.equals("Minus")) {
+		    	return new MinusCommand(commandArgs.get(0));
+		}
 
 		// TODO: handle returning null value
 		return null;
