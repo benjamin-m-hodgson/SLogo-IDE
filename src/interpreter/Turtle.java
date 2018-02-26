@@ -59,7 +59,7 @@ public class Turtle {
 
 	public static final String DEFAULT_NAME = "";
 	public static final Color DEFAULT_PEN_COLOR = Color.BLACK;
-	public static final double DEFAULT_PEN_WIDTH = 0.0;
+	public static final double DEFAULT_PEN_WIDTH = 15.0;
 	public static final double DEFAULT_X_POS = 0; 
 	public static final double DEFAULT_Y_POS = 0; 
 	public static final double DEFAULT_ANGLE = 0; 
@@ -238,7 +238,8 @@ public class Turtle {
 	 * Depends on the UserView to attach to the screen and send to the Controller via the makeNewTurtle command a Group used to 
 	 * house the Turtle's pen lines.
 	 * @author Sarahbland
-	 *
+	 * @author Susie Choi
+	 * 
 	 */
 	private class Pen {		
 		private Group myPenLines;
