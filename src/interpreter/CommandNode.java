@@ -13,20 +13,24 @@ class CommandNode {
 	//private Command myCommand; 
 	private List<CommandNode> myChildren; 
 	private Turtle myTurtle;
+	private boolean isString;
 
+	public CommandNode(String info, boolean isString) {
+		this(info, DEFAULT_NUM_ARGS, new ArrayList<CommandNode>(), new Turtle(), true);
+	}
 	public CommandNode(String info, Turtle turtle) {
 		this(info, DEFAULT_NUM_ARGS, turtle);
 	}
 
 	public CommandNode(String info, int numArgs, Turtle turtle) { 
-		this(info, numArgs, new ArrayList<CommandNode>(), turtle);
+		this(info, numArgs, new ArrayList<CommandNode>(), turtle, false);
 	}
 	public CommandNode(String info, int numArgs, CommandNode child, Turtle turtle) {
-		this(info, numArgs, new ArrayList<CommandNode>(), turtle);
+		this(info, numArgs, new ArrayList<CommandNode>(), turtle, false);
 		myChildren.add(child);
 	}
 
-	public CommandNode(String info, int numArgs, List<CommandNode> children, Turtle turtle) {	
+	public CommandNode(String info, int numArgs, List<CommandNode> children, Turtle turtle, boolean isString) {	
 		myInfo = info; 
 		try {
 			Integer.parseInt(info);
@@ -82,6 +86,9 @@ class CommandNode {
 	}
 	public boolean getIsDouble() {
 		return isDouble;
+	}
+	public boolean getIsString() {
+		return isString;
 	}
 	public List<CommandNode> getChildren() {
 		return myChildren;
