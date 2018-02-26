@@ -71,6 +71,9 @@ public class CommandFactory {
 		else if(commandName.equals("Quotient")) {
 			return new QuotientCommand(commandArgs.get(0), commandArgs.get(1));
 		}
+		else if(commandName.equals("Remainder")) {
+		    	return new RemainderCommand(commandArgs.get(0), commandArgs.get(1));
+		}
 
 		// TODO: handle returning null value
 		return null;
