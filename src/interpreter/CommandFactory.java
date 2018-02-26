@@ -59,6 +59,9 @@ public class CommandFactory {
 		else if(commandName.equals("YCoordinate")) {
 			return new YCoordinateQueryCommand(turtle);
 		}
+		else if(commandName.equals("Sum")) {
+			return new SumCommand(commandArgs.get(0), commandArgs.get(1));
+		}
 
 		// TODO: handle returning null value
 		return null;
