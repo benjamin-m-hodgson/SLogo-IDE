@@ -145,10 +145,12 @@ public class Turtle {
 	// SETTERS
 	protected void hideTurtle() {
 		myVisibility = false; 
+		myImage.setVisible(false);
 	}
 
 	protected void showTurtle() {
 		myVisibility = true; 
+		myImage.setVisible(true);;
 	}
 
 	/**
@@ -167,13 +169,11 @@ public class Turtle {
 
 	protected double setXY(double x, double y) {
 		myOldImageX = myImage.getX();
-		System.out.println("image x was: " + myOldImageX);
 		myOldImageY = myImage.getY();
 		setOld();
 		myX = x; 
 		myY = y; 
 		myImage.setX(myX);;
-		System.out.println("image x is: " + myImage.getX());
 		myImage.setY(myY);
 		myPen.drawLine(myOldX, myOldY, myX, myY);
 		return calcDistance(myOldX, myOldY, myX, myY);

@@ -30,6 +30,6 @@ public class SetPositionCommand implements Command{
 	public double execute() {
 		double newX = myNewXCommand.execute();
 		double newY = myNewYCommand.execute();
-		return myTurtle.setXY(newX, newY);
+		return myTurtle.setXY(newX, -newY);
 	}
 }
