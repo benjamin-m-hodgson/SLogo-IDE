@@ -65,6 +65,9 @@ public class CommandFactory {
 		else if(commandName.equals("Difference")) {
 			return new DifferenceCommand(commandArgs.get(0), commandArgs.get(1));
 		}
+		else if(commandName.equals("Product")) {
+			return new ProductCommand(commandArgs.get(0), commandArgs.get(1));
+		}
 
 		// TODO: handle returning null value
 		return null;
