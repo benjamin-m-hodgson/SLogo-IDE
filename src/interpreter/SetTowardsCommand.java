@@ -24,17 +24,30 @@ public class SetTowardsCommand implements Command{
 	@Override 
 	/**
 	 * Calculates the heading necessary for the turtle to be facing the proper point and turns the turtle to that heading
-	 * @retun number of degrees turned
+	 * @return number of degrees turned
 	 * @see interpreter.Command#execute()
 	 */
 	public double execute() {
 		double xTowards = myXCommand.execute();
 		double yTowards = myYCommand.execute();
 		double dist = myTurtle.calcDistance(myTurtle.getX(), myTurtle.getY(), xTowards, yTowards);
+		if(dist == 0) {
+			return 0;
+		}
 		double oldAngle = myTurtle.getAngle();
 		double heading = Math.toDegrees(Math.asin((xTowards-myTurtle.getX())/dist));
+		if((oldAngle==heading)) {
+			if(sameDirection(heading, xTowards, yTowards)) {
+				heading = heading + 180;
+			}
+		}
 		myTurtle.setAngle(heading);
 		return (heading-oldAngle);
+	}
+	private boolean sameDirection(double heading, double x, double y) {
+		double newX = myTurtle.getX()-0.01*Math.sin(-heading);
+		double newY = myTurtle.getY()-0.01*Math.cos(-heading);
+		return (myTurtle.calcDistance(x, y, newX, newY)<myTurtle.calcDistance(x, y, newX, newY));
 	}
 
 }
