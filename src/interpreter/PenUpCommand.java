@@ -19,7 +19,7 @@ public class PenUpCommand implements Command{
 	 * @return 0 always
 	 */
 	public double execute() {
-		myTurtle.showPen();
+		myTurtle.hidePen();
 		return 0;
 	}
 

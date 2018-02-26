@@ -24,19 +24,22 @@
 
 package interpreter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.ResourceBundle;
 
-import sun.security.util.Resources;
+import javafx.scene.Group;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+
+import java.util.ResourceBundle;
 
 class TextFieldParser {	
 
 	public static final String DEFAULT_FILEPATH = "interpreter/";
 	public static final String DEFAULT_SYNTAX_FILENAME = "Syntax";
-	public static final ResourceBundle DEFAULT_LANGUAGE = Resources.getBundle("interpreter/English");
+	public static final ResourceBundle DEFAULT_LANGUAGE = ResourceBundle.getBundle("interpreter/English");
 	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
 	public static final String DEFAULT_COMMENT_SYMBOL = "Comment";
 
@@ -109,6 +112,7 @@ class TextFieldParser {
 			listOfTypes[idx] = regexMatcher.findMatchingKey(userInputArray[idx]);
 //			System.out.println(listOfTypes[idx]+" "+userInputArray[idx]);
 		}
+//		for (String s : userInputArray) System.out.println(s);
 		double finalReturnVal = myCommandMaker.parseValidTextArray(userInputArray[0], userInputArray, listOfTypes); // TODO consider special case in which turtle name is command name; 
 		return finalReturnVal; 
 	}
@@ -138,19 +142,24 @@ class TextFieldParser {
 	protected void changeLanguage(ResourceBundle languageBundle) {
 		myCommandMaker.changeLanguage(languageBundle);
 	}
-
-
-
-
-
-
-	public static void main(String[] args) {
-		TextFieldParser testingParser = new TextFieldParser();
-		try {
-			testingParser.parseText("turtle\n#hello\nfd 50 fd 20\n#bk 50");
-		} catch (Exception e) {
-
-		}
+	
+	public void addNewTurtle(String name, ImageView turtleImage, Color penColor, Group penLines) {
+		System.out.println("made it to textfieldparser");
+		myCommandMaker.addNewTurtle(name, turtleImage, penColor, penLines);
 	}
+
+
+
+
+
+
+//	public static void main(String[] args) {
+//		TextFieldParser testingParser = new TextFieldParser();
+//		try {
+//			testingParser.parseText("fd fd 50 bk 20");
+//		} catch (Exception e) {
+//
+//		}
+//	}
 
 }

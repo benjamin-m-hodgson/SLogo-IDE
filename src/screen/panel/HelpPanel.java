@@ -4,39 +4,48 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import screen.UserScreen;
 import interpreter.Controller;
 
 public class HelpPanel extends SpecificPanel  {
-    
-    private Parent PANEL;
+
+	private Parent PANEL;
 	private Controller PROGRAM_CONTROLLER;
 	private BorderPane PANE;
 	private final int DEFAULT_BUTTON_SPACEING = 10;
+	private UserScreen USER_SCREEN;
 
-    
-    public HelpPanel(Controller programController, BorderPane pane) {
-    	PROGRAM_CONTROLLER = programController;
+
+
+	public HelpPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
+		PROGRAM_CONTROLLER = programController;
 		PANE = pane;
-    }
+		USER_SCREEN = userScreen;
 
-    @Override
-    public void makePanel() {
-    	Button backButton = makeBackButton(PROGRAM_CONTROLLER);
-		VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACEING,backButton );
+	}
+
+	@Override
+	public void makePanel() {
+		Button backButton = makeBackButton(PROGRAM_CONTROLLER);
+		ScrollPane scroll = new ScrollPane();
+		TextArea text = new TextArea(PROGRAM_CONTROLLER.resourceDisplayText("HelpContent"));
+		scroll.setContent(text);
+		VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACEING,scroll,backButton );
 		panelRoot.setId("infoPanel");
 		panelRoot.setAlignment(Pos.BASELINE_CENTER);
 		PANEL = panelRoot;	
-    }
-
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
 	}
-	return PANEL;
-    }
+
+	@Override
+	public Parent getPanel() {
+		if (PANEL == null) {
+			makePanel();
+		}
+		return PANEL;
+	}
 
 	@Override
 	protected BorderPane getPane() {
@@ -48,6 +57,11 @@ public class HelpPanel extends SpecificPanel  {
 	protected Controller getController() {
 		// TODO Auto-generated method stub
 		return PROGRAM_CONTROLLER;
+	}
+
+	@Override
+	protected UserScreen getUserScreen() {
+		return USER_SCREEN;
 	}
 
 }

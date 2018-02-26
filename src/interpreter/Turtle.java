@@ -52,14 +52,14 @@ import javafx.scene.image.ImageView;
 
 /**
  * @author Sarahbland
- * Collaboration with Susie Choi
+ * @author Susie Choi
  *
  */
 public class Turtle {
 
 	public static final String DEFAULT_NAME = "";
 	public static final Color DEFAULT_PEN_COLOR = Color.BLACK;
-	public static final double DEFAULT_PEN_WIDTH = 0.0;
+	public static final double DEFAULT_PEN_WIDTH = 1.0;
 	public static final double DEFAULT_X_POS = 0; 
 	public static final double DEFAULT_Y_POS = 0; 
 	public static final double DEFAULT_ANGLE = 0; 
@@ -72,18 +72,20 @@ public class Turtle {
 
 	private double myOldX;
 	private double myOldY;
+	private double myOldImageX;
+	private double myOldImageY;
 	private double myX;
 	private double myY; 
 	private double myAngle; 
 
 	public Turtle() {
-		this(DEFAULT_NAME, new ImageView(), new Group());
+		this(DEFAULT_NAME, new ImageView(), new Group(), DEFAULT_PEN_COLOR);
 	}
 
-	protected Turtle(String name, ImageView image, Group penGroup) {
+	protected Turtle(String name, ImageView image, Group penGroup, Color color) {
 		myName = name; 
 		myImage = image;
-		myPen = new Pen(penGroup); 
+		myPen = new Pen(penGroup, color); 
 		myVisibility = true; 
 		myOldX = DEFAULT_X_POS; 
 		myOldY = DEFAULT_Y_POS; 
@@ -143,10 +145,12 @@ public class Turtle {
 	// SETTERS
 	protected void hideTurtle() {
 		myVisibility = false; 
+		myImage.setVisible(false);
 	}
 
 	protected void showTurtle() {
 		myVisibility = true; 
+		myImage.setVisible(true);;
 	}
 
 	/**
@@ -164,10 +168,12 @@ public class Turtle {
 	}
 
 	protected double setXY(double x, double y) {
+		myOldImageX = myImage.getX();
+		myOldImageY = myImage.getY();
 		setOld();
 		myX = x; 
 		myY = y; 
-		myImage.setX(myX);
+		myImage.setX(myX);;
 		myImage.setY(myY);
 		myPen.drawLine(myOldX, myOldY, myX, myY);
 		return calcDistance(myOldX, myOldY, myX, myY);
@@ -214,7 +220,8 @@ public class Turtle {
 	
 	protected void setAngle(double angle) {
 		myAngle = angle;
-		myImage.setRotate(Math.toRadians(angle));
+		System.out.println("angle is: "  + angle);
+		myImage.setRotate(angle);
 	}
 
 	protected void showPen() {
@@ -238,9 +245,10 @@ public class Turtle {
 	 * Depends on the UserView to attach to the screen and send to the Controller via the makeNewTurtle command a Group used to 
 	 * house the Turtle's pen lines.
 	 * @author Sarahbland
-	 *
+	 * @author Susie Choi
+	 * 
 	 */
-	private class Pen {
+	private class Pen {		
 		private Group myPenLines;
 		private Color myColor;
 		private double myWidth;
@@ -253,6 +261,11 @@ public class Turtle {
 		private Pen(Group penLines) {
 			this(penLines, true, DEFAULT_PEN_COLOR, DEFAULT_PEN_WIDTH);
 		}
+		
+		private Pen(Group penLines, Color color) {
+			this(penLines, true, color, DEFAULT_PEN_WIDTH);
+		}
+		
 		/**
 		 * Constructor for a pen with default state as pen visible
 		 * @param penlines is (already-attached-to-stage) Group which will house lines drawn by Pen
@@ -339,17 +352,18 @@ public class Turtle {
 		 */
 		private void drawLine(double oldX, double oldY, double newX, double newY) {
 			if(myIsDown) {
-				Line line = new Line(oldX, oldY, newX, newY);
+				Line line = new Line(newX, newY, oldX, oldY);
 				line.setFill(myColor);
 				line.setStrokeWidth(myWidth);
 				myPenLines.getChildren().add(line);
+				System.out.println("number of lines" + myPenLines.getChildren().size());
 			}
 		}
 		/**
 		 * Clears all lines previously drawn by the pen from the screen
 		 */
 		private void clear() {
-			myPenLines.getChildren().removeAll();
+			myPenLines.getChildren().removeAll(myPenLines.getChildren());
 		}
 	}
 

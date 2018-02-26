@@ -6,7 +6,7 @@
 	<classpathentry kind="src" path="errors"/>
 	<classpathentry kind="src" path="languages"/>
 	<classpathentry kind="src" path="prompts"/>
-	<classpathentry kind="src" path="turtleimages"/>
+	<classpathentry kind="src" path="colors"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
