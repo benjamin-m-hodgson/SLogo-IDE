@@ -34,54 +34,64 @@ class CommandMaker {
 	private ResourceBundle myLanguage; 
 	private CommandTreeBuilder myCommandTreeBuilder; 
 	private HashMap<String, Double> myVariables; 
-	private ArrayList<String> myListForBuilder; 
 
 	protected CommandMaker() {
 		this(DEFAULT_LANGUAGE, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
 	}
 
 	protected CommandMaker(ResourceBundle languageBundle, String numArgsFileName) {
+		myTurtles = new ArrayList<Turtle>(); 
 		myLanguage = languageBundle;
 		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName); 
 		myVariables = new HashMap<String, Double>(); 
-		myListForBuilder = new ArrayList<String>();
 	}
 
 	protected double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		myListForBuilder = new ArrayList<String>(); 
 		return parseValidTextArray(turtleName, userInput, typesOfInput, DEFAULT_COMMAND_IDENTIFIER);
 	}
 
 	private double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput, String commandIdentifier) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		Turtle identifiedTurtle = null;
+		if (myTurtles.size() > 0) {
+			identifiedTurtle = myTurtles.get(0); 
+		}
+		boolean turtleIdentified = false; 
+		for (Turtle turtle : myTurtles) {
+			if (turtle.getName().equals(turtleName)) {
+				identifiedTurtle = turtle; 
+				turtleIdentified = true; 
+			}
+		}
 		String[] commandTypes = new String[userInput.length];
-		for (int idx = 0; idx < userInput.length; idx++) {
+		int startIdx = 0; 
+		if (turtleIdentified) {
+			startIdx = 1; 
+		}
+		for (int idx = startIdx; idx < userInput.length; idx++) {
 			if (typesOfInput[idx].equals(commandIdentifier)) {
 				commandTypes[idx] = getCommandType(userInput[idx]);
 			}
 		}
-		Turtle identifiedTurtle = myTurtles.get(0); 
+
 		String[] userInputArrayToPass = userInput; 
-		String[] commandTypesToPass = commandTypes;
+		String[] commandTypesToPass = commandTypes; 
 		String[] typesArrayToPass = typesOfInput; 
-		for (Turtle turtle : myTurtles) {
-			if (turtle.getName().equals(turtleName)) {
-				identifiedTurtle = turtle; 
-				userInputArrayToPass = Arrays.copyOfRange(userInputArrayToPass, 1, userInputArrayToPass.length); 
-				commandTypesToPass = Arrays.copyOfRange(commandTypes, 1, commandTypes.length);
-				typesArrayToPass = Arrays.copyOfRange(typesOfInput, 1, typesOfInput.length);
-			}
+
+		if (turtleIdentified) {
+			userInputArrayToPass = Arrays.copyOfRange(userInputArrayToPass, 1, userInputArrayToPass.length); 
+			typesArrayToPass = Arrays.copyOfRange(typesOfInput, 1, typesOfInput.length);
 		}
-//		makeListForBuilder(myListForBuilder, userInput, commandTypes, 1, DEFAULT_CONTROLFLOW_IDENTIFIERS);
+		//		makeListForBuilder(myListForBuilder, userInput, commandTypes, 1, DEFAULT_CONTROLFLOW_IDENTIFIERS);
 		return myCommandTreeBuilder.buildAndExecute(identifiedTurtle, userInputArrayToPass, commandTypesToPass, typesArrayToPass); 
 	}
 
-//	private void makeListForBuilder(ArrayList<String> currCommandList, String[] inputArray, String[] commandTypes, int numTimesToAdd, String[] controlFlowIdentifiers) {
-//		for (int i = 0; i < inputArray.length; i++) {
-//			if (Arrays.asList(controlFlowIdentifiers).contains(commandTypes[i])) {
-//
-//			}
-//		}
-//	}
+	//	private void makeListForBuilder(ArrayList<String> currCommandList, String[] inputArray, String[] commandTypes, int numTimesToAdd, String[] controlFlowIdentifiers) {
+	//		for (int i = 0; i < inputArray.length; i++) {
+	//			if (Arrays.asList(controlFlowIdentifiers).contains(commandTypes[i])) {
+	//
+	//			}
+	//		}
+	//	}
 
 	private String getCommandType(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		RegexMatcher regexMatcher = new RegexMatcher(myLanguage);
