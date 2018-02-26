@@ -57,12 +57,14 @@ import javafx.scene.image.ImageView;
  */
 public class Turtle {
 
+    	// TODO: put in setting.properties file
+    	public static final double DEFAULT_TURTLE_SIZE = 20;
 	public static final String DEFAULT_NAME = "";
 	public static final Color DEFAULT_PEN_COLOR = Color.BLACK;
 	public static final double DEFAULT_PEN_WIDTH = 1.0;
-	public static final double DEFAULT_X_POS = 0; 
-	public static final double DEFAULT_Y_POS = 0; 
-	public static final double DEFAULT_ANGLE = 0; 
+	public static final double DEFAULT_X_POS = 0.0; 
+	public static final double DEFAULT_Y_POS = 0.0; 
+	public static final double DEFAULT_ANGLE = 0.0; 
 	//	public static final ImageView DEFAULT_IMAGE = ;
 
 	private String myName;
@@ -173,8 +175,10 @@ public class Turtle {
 		setOld();
 		myX = x; 
 		myY = y; 
-		myImage.setX(myX);;
-		myImage.setY(myY);
+		myImage.setX(myX - DEFAULT_TURTLE_SIZE/2);
+		myImage.setY(myY - DEFAULT_TURTLE_SIZE/2);
+		System.out.println(myImage.getX());
+		System.out.println(myImage.getY());
 		myPen.drawLine(myOldX, myOldY, myX, myY);
 		return calcDistance(myOldX, myOldY, myX, myY);
 	}

@@ -59,8 +59,11 @@ public class TurtlePanel implements Panel {
 	    turtleView.setId("turtleView");
 	    turtleView.setFitHeight(DEFAULT_TURTLE_SIZE);
 	    turtleView.setFitWidth(DEFAULT_TURTLE_SIZE);
+	    // center the turtle on the screen
 	    turtleView.translateXProperty().bind(Bindings.divide(panelRoot.widthProperty(), 2));
 	    turtleView.translateYProperty().bind(Bindings.divide(panelRoot.heightProperty(), 2));
+	    turtleView.setX(-DEFAULT_TURTLE_SIZE/2);
+	    turtleView.setY(-DEFAULT_TURTLE_SIZE/2);
 	    panel.getChildren().add(turtleView);
 	    Group penLines = new Group();
 	    penLines.translateXProperty().bind(Bindings.divide(panelRoot.widthProperty(), 2));
@@ -75,6 +78,7 @@ public class TurtlePanel implements Panel {
 	    System.out.println("FAILED TO LOAD TURTLE IMG");
 	}
     }
+    
     public void changeBackgroundColor(String colorCode) {
 	SCROLL_PANE.setStyle("-fx-background-color:" + colorCode + ";");
     }
