@@ -48,7 +48,7 @@ public class TextPanel implements Panel {
 		System.getProperty("line.separator"));
 	CONSOLE_AREA.setText(inputText);
 	try {
-	    PROGRAM_CONTROLLER.parseInput(inputText);
+	   CONSOLE_AREA.setText(Double.toString(PROGRAM_CONTROLLER.parseInput(inputText)));
 	} 
 	catch (TurtleNotFoundException e) {
 	    // TODO Auto-generated catch block

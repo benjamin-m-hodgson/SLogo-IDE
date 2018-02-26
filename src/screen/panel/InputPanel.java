@@ -82,7 +82,7 @@ public class InputPanel implements Panel {
 		INPUT_AREA.clearInputArea();
 	    }
 	});
-	clearButton.setId("clearButton");
+	clearButton.setId("clearButton"); 
 	return clearButton;
     }
     
