@@ -52,14 +52,14 @@ import javafx.scene.image.ImageView;
 
 /**
  * @author Sarahbland
- * Collaboration with Susie Choi
+ * @author Susie Choi
  *
  */
 public class Turtle {
 
 	public static final String DEFAULT_NAME = "";
 	public static final Color DEFAULT_PEN_COLOR = Color.BLACK;
-	public static final double DEFAULT_PEN_WIDTH = 0.0;
+	public static final double DEFAULT_PEN_WIDTH = 15.0;
 	public static final double DEFAULT_X_POS = 0; 
 	public static final double DEFAULT_Y_POS = 0; 
 	public static final double DEFAULT_ANGLE = 0; 
@@ -77,13 +77,13 @@ public class Turtle {
 	private double myAngle; 
 
 	public Turtle() {
-		this(DEFAULT_NAME, new ImageView(), new Group());
+		this(DEFAULT_NAME, new ImageView(), new Group(), DEFAULT_PEN_COLOR);
 	}
 
-	protected Turtle(String name, ImageView image, Group penGroup) {
+	protected Turtle(String name, ImageView image, Group penGroup, Color color) {
 		myName = name; 
-		myImage = image; 
-		myPen = new Pen(penGroup); 
+		myImage = image;
+		myPen = new Pen(penGroup, color); 
 		myVisibility = true; 
 		myOldX = DEFAULT_X_POS; 
 		myOldY = DEFAULT_Y_POS; 
@@ -167,8 +167,8 @@ public class Turtle {
 		setOld();
 		myX = x; 
 		myY = y; 
-		myImage.setLayoutX(myX);
-		myImage.setLayoutY(myY);
+		myImage.setX(myX);
+		myImage.setY(myY);
 		myPen.drawLine(myOldX, myOldY, myX, myY);
 		return calcDistance(myOldX, myOldY, myX, myY);
 	}
@@ -238,9 +238,10 @@ public class Turtle {
 	 * Depends on the UserView to attach to the screen and send to the Controller via the makeNewTurtle command a Group used to 
 	 * house the Turtle's pen lines.
 	 * @author Sarahbland
-	 *
+	 * @author Susie Choi
+	 * 
 	 */
-	private class Pen {
+	private class Pen {		
 		private Group myPenLines;
 		private Color myColor;
 		private double myWidth;
@@ -253,6 +254,11 @@ public class Turtle {
 		private Pen(Group penLines) {
 			this(penLines, true, DEFAULT_PEN_COLOR, DEFAULT_PEN_WIDTH);
 		}
+		
+		private Pen(Group penLines, Color color) {
+			this(penLines, true, color, DEFAULT_PEN_WIDTH);
+		}
+		
 		/**
 		 * Constructor for a pen with default state as pen visible
 		 * @param penlines is (already-attached-to-stage) Group which will house lines drawn by Pen

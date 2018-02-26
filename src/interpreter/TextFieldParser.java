@@ -24,16 +24,22 @@
 
 package interpreter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.ResourceBundle;
+
+import javafx.scene.Group;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+
+import java.util.ResourceBundle;
 
 class TextFieldParser {	
 
 	public static final String DEFAULT_FILEPATH = "interpreter/";
 	public static final String DEFAULT_SYNTAX_FILENAME = "Syntax";
-	public static final String DEFAULT_LANGUAGE = "English";
+	public static final ResourceBundle DEFAULT_LANGUAGE = ResourceBundle.getBundle("interpreter/English");
 	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
 	public static final String DEFAULT_COMMENT_SYMBOL = "Comment";
 
@@ -45,13 +51,13 @@ class TextFieldParser {
 		this(DEFAULT_FILEPATH+DEFAULT_SYNTAX_FILENAME, DEFAULT_LANGUAGE, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
 	}
 
-	protected TextFieldParser(String languageFileName) {
-		this(DEFAULT_FILEPATH+DEFAULT_SYNTAX_FILENAME, languageFileName, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
+	protected TextFieldParser(ResourceBundle language) {
+		this(DEFAULT_FILEPATH+DEFAULT_SYNTAX_FILENAME, language, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
 	}
 
-	protected TextFieldParser(String syntaxFileName, String languageFileName, String numArgsFileName) {
+	protected TextFieldParser(String syntaxFileName, ResourceBundle languageBundle, String numArgsFileName) {
 		mySyntaxFileName = syntaxFileName;
-		myCommandMaker = new CommandMaker(languageFileName, numArgsFileName); 
+		myCommandMaker = new CommandMaker(languageBundle, numArgsFileName); 
 		myCommandQueue = new LinkedList<Command>(); 
 	}
 
@@ -99,14 +105,15 @@ class TextFieldParser {
 		return parseTextArray(tokenizedInputArray);
 	}
 
-	private double parseTextArray(String[] userInputArray) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private double parseTextArray(String[] userInputArray) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String[] listOfTypes = new String[userInputArray.length];
 		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
 		for (int idx = 0; idx < userInputArray.length; idx++) {
 			listOfTypes[idx] = regexMatcher.findMatchingKey(userInputArray[idx]);
 //			System.out.println(listOfTypes[idx]+" "+userInputArray[idx]);
 		}
-		double finalReturnVal = myCommandMaker.parseValidTextArray(userInputArray[0], Arrays.copyOfRange(userInputArray, 1, userInputArray.length), Arrays.copyOfRange(listOfTypes, 1, listOfTypes.length)); 
+//		for (String s : userInputArray) System.out.println(s);
+		double finalReturnVal = myCommandMaker.parseValidTextArray(userInputArray[0], userInputArray, listOfTypes); // TODO consider special case in which turtle name is command name; 
 		return finalReturnVal; 
 	}
 
@@ -132,8 +139,12 @@ class TextFieldParser {
 
 
 	// SETTERS
-	protected void changeLanguageFile(String fileName) {
-		myCommandMaker.changeLanguageFile(fileName);
+	protected void changeLanguage(ResourceBundle languageBundle) {
+		myCommandMaker.changeLanguage(languageBundle);
+	}
+	
+	public void addNewTurtle(String name, ImageView turtleImage, Color penColor, Group penLines) {
+		myCommandMaker.addNewTurtle(name, turtleImage, penColor, penLines);
 	}
 
 
@@ -141,13 +152,13 @@ class TextFieldParser {
 
 
 
-	public static void main(String[] args) {
-		TextFieldParser testingParser = new TextFieldParser();
-		try {
-			testingParser.parseText("turtle\n#hello\nfd 50 fd 20\n#bk 50");
-		} catch (Exception e) {
-
-		}
-	}
+//	public static void main(String[] args) {
+//		TextFieldParser testingParser = new TextFieldParser();
+//		try {
+//			testingParser.parseText("fd fd 50 bk 20");
+//		} catch (Exception e) {
+//
+//		}
+//	}
 
 }

@@ -18,6 +18,7 @@ public class ShowTurtleCommand implements Command{
 	 * Shows turtle's image to the user
 	 * @return 1 always
 	 */
+	@Override 
 	public double execute() {
 		myTurtle.showTurtle();
 		return 1;

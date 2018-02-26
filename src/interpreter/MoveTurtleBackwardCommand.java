@@ -19,7 +19,7 @@ public class MoveTurtleBackwardCommand implements Command{
 		myTurtle = turtle;
 		myBackwardDistCommand = backwarddist;
 	}
-	
+
 	@Override
 
 	/** 

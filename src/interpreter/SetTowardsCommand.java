@@ -21,6 +21,7 @@ public class SetTowardsCommand implements Command{
 		myYCommand = y;
 		myTurtle = turtle;
 	}
+	@Override 
 	/**
 	 * Calculates the heading necessary for the turtle to be facing the proper point and turns the turtle to that heading
 	 * @retun number of degrees turned
