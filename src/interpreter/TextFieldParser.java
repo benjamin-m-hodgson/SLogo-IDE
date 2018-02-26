@@ -32,13 +32,14 @@ import java.util.ResourceBundle;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import sun.security.util.Resources;
+
+import java.util.ResourceBundle;
 
 class TextFieldParser {	
 
 	public static final String DEFAULT_FILEPATH = "interpreter/";
 	public static final String DEFAULT_SYNTAX_FILENAME = "Syntax";
-	public static final ResourceBundle DEFAULT_LANGUAGE = Resources.getBundle("interpreter/English");
+	public static final ResourceBundle DEFAULT_LANGUAGE = ResourceBundle.getBundle("interpreter/English");
 	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
 	public static final String DEFAULT_COMMENT_SYMBOL = "Comment";
 

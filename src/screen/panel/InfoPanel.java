@@ -12,20 +12,24 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
+import screen.UserScreen;
 
 public class InfoPanel implements Panel {
 
     private Parent PANEL;
     private Controller PROGRAM_CONTROLLER;
     private BorderPane PANE;
+    private UserScreen USER_SCREEN;
 
 	private final int DEFAULT_BUTTON_SPACEING = 10;
 
     private final String[] BUTTON_IDS = {"settingsButton", "variablesButton", "historyButton", "commandsButton", "helpButton"};
     
-    public InfoPanel(Controller programController, BorderPane pane) {
+    public InfoPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
 	PROGRAM_CONTROLLER = programController;
 	PANE = pane;
+	USER_SCREEN = userScreen;
     }
 
     @Override
@@ -42,7 +46,7 @@ public class InfoPanel implements Panel {
     {
     		List<Button> buttons = new ArrayList<Button>();
     		for(int i = 0; i < BUTTON_IDS.length; i++) {
-    			buttons.add(makeButton(i));
+    			buttons.add(makeButton(BUTTON_IDS[i]));
     		}
     		setLinks(buttons);
     		return buttons;
@@ -53,40 +57,39 @@ public class InfoPanel implements Panel {
     		buttons.get(0).setOnMouseClicked(new EventHandler<MouseEvent>() {
     		    @Override
     		    public void handle(MouseEvent arg0) {
-    		    	PANE.setRight(new SettingsPanel(PROGRAM_CONTROLLER, PANE).getPanel());
+    		    	PANE.setRight(new SettingsPanel(PROGRAM_CONTROLLER, PANE, USER_SCREEN).getPanel());
     		    }
     		});
     		buttons.get(1).setOnMouseClicked(new EventHandler<MouseEvent>() {
     		    @Override
     		    public void handle(MouseEvent arg0) {
-    		    	PANE.setRight(new VariablesPanel(PROGRAM_CONTROLLER, PANE).getPanel());
+    		    	PANE.setRight(new VariablesPanel(PROGRAM_CONTROLLER, PANE, USER_SCREEN).getPanel());
     		    }
     		});
     		buttons.get(2).setOnMouseClicked(new EventHandler<MouseEvent>() {
     		    @Override
     		    public void handle(MouseEvent arg0) {
-    		    	PANE.setRight(new HistoryPanel(PROGRAM_CONTROLLER, PANE).getPanel());
+    		    	PANE.setRight(new HistoryPanel(PROGRAM_CONTROLLER, PANE, USER_SCREEN).getPanel());
     		    }
     		});
     		buttons.get(3).setOnMouseClicked(new EventHandler<MouseEvent>() {
     		    @Override
     		    public void handle(MouseEvent arg0) {
-    		    	PANE.setRight(new CommandPanel(PROGRAM_CONTROLLER, PANE).getPanel());
+    		    	PANE.setRight(new CommandPanel(PROGRAM_CONTROLLER, PANE, USER_SCREEN).getPanel());
     		    }
     		});
     		buttons.get(4).setOnMouseClicked(new EventHandler<MouseEvent>() {
     		    @Override
     		    public void handle(MouseEvent arg0) {
-    		    	PANE.setRight(new HelpPanel(PROGRAM_CONTROLLER, PANE).getPanel());
+    		    	PANE.setRight(new HelpPanel(PROGRAM_CONTROLLER, PANE, USER_SCREEN).getPanel());
     		    }
     		});
     }
     
     
-    private Button makeButton(int buttonNum)
-    {
-    		Button button = new Button(PROGRAM_CONTROLLER.resourceDisplayText(BUTTON_IDS[buttonNum]));
-    		button.setId(BUTTON_IDS[buttonNum]);
+    private Button makeButton(String buttonId) {
+    		Button button = new Button(PROGRAM_CONTROLLER.resourceDisplayText(buttonId));
+    		button.setId(buttonId);
     		return button;
     }
     

@@ -13,35 +13,40 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class TurtlePanel implements Panel {
-    // TODO: put in setting.properties file
-    private final double DEFAULT_TURTLE_SIZE = 20;
-    private final String DEFAULT_TURTLE = "TurtleDefault.png";
-    private Parent PANEL;
-    private Controller PROGRAM_CONTROLLER;
-    private List<ImageView> TURTLE_LIST;
-    
-    public TurtlePanel(Controller programController) {
-	PROGRAM_CONTROLLER = programController;
-	TURTLE_LIST = new ArrayList<ImageView>();
-    }
-    
-    @Override
-    public void makePanel() {
-	Pane panel = new Pane();
-	ScrollPane panelRoot = new ScrollPane(panel); 
-	panelRoot.setId("turtlePanel");
-	createTurtle(panel, panelRoot);
-	PANEL = panelRoot;
-    }
 
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
+public class TurtlePanel implements Panel {
+	// TODO: put in setting.properties file
+	private final double DEFAULT_TURTLE_SIZE = 20;
+	private final String DEFAULT_TURTLE = "TurtleDefault.png";
+	private Parent PANEL;
+	private Controller PROGRAM_CONTROLLER;
+	private List<ImageView> TURTLE_LIST;
+	private ScrollPane SCROLL_PANE;
+
+
+
+	public TurtlePanel(Controller programController) {
+		PROGRAM_CONTROLLER = programController;
+		TURTLE_LIST = new ArrayList<ImageView>();
 	}
-	return PANEL;
-    }
+
+	@Override
+	public void makePanel() {
+		Pane panel = new Pane();
+		ScrollPane panelRoot = new ScrollPane(panel); 
+		SCROLL_PANE = panelRoot;
+		panelRoot.setId("turtlePanel");
+		createTurtle(panel, panelRoot);
+		PANEL = panelRoot;
+	}
+
+	@Override
+	public Parent getPanel() {
+		if (PANEL == null) {
+			makePanel();
+		}
+		return PANEL;
+	}
     
     private void createTurtle(Pane panel, ScrollPane panelRoot) {
 	String currentDir = System.getProperty("user.dir");
@@ -63,10 +68,13 @@ public class TurtlePanel implements Panel {
 	    // TODO: possibly add turtles to list ?
 	    PROGRAM_CONTROLLER.makeNewTurtleCommand("Turtle", turtleView, Color.BLACK, penLines);
 	}
-	catch (Exception e) {
-	    // TODO: make custom exception super class with sub classes for specifications
-	    //String specification = "%nFailed to find language files";
-	    System.out.println("FAILED TO LOAD TURTLE IMG");
+		catch (Exception e) {
+			// TODO: make custom exception super class with sub classes for specifications
+			//String specification = "%nFailed to find language files";
+			System.out.println("FAILED TO LOAD TURTLE IMG");
+		}
 	}
-    }
+	public void changeBackgroundColor(String colorCode) {
+		SCROLL_PANE.setStyle("-fx-background-color:" + colorCode + ";");
+	}
 }

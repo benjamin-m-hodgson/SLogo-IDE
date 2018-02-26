@@ -244,7 +244,8 @@ public class Turtle {
 	 * Depends on the UserView to attach to the screen and send to the Controller via the makeNewTurtle command a Group used to 
 	 * house the Turtle's pen lines.
 	 * @author Sarahbland
-	 *
+	 * @author Susie Choi
+	 * 
 	 */
 	private class Pen {		
 		private Group myPenLines;

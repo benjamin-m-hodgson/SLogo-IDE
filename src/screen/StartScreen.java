@@ -29,7 +29,7 @@ public class StartScreen implements Screen {
 
 	public StartScreen(Controller programController) {
 		PROGRAM_CONTROLLER = programController;
-		DEFAULT_SELECTION_PROMPT = PROGRAM_CONTROLLER.resourceDisplayText("LanguageSelection");
+		DEFAULT_SELECTION_PROMPT = PROGRAM_CONTROLLER.resourceDisplayText("languageChooser");
 	}
 
 	@Override
