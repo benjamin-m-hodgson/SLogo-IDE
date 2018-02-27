@@ -10,6 +10,10 @@ class CommandTreeBuilder {
 
 	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command";
 	public static final String DEFAULT_CONSTANT_IDENTIFIER = "Constant";
+	public static final String DEFAULT_BRACKET_IDENTIFIER = "Bracket";
+	public static final String DEFAULT_IF_IDENTIFIER = "If"; 
+	public static final String DEFAULT_IFEXPR_END = "[";
+	public static final String DEFAULT_IFBODY_END = "]";
 	public static final String DEFAULT_BRACKET_START_IDENTIFIER = "BracketStart";
 	public static final String DEFAULT_BRACKET_END_IDENTIFIER = "BracketEnd";
 	//	private CommandTreeReader myCommandTreeReader; 
@@ -43,6 +47,13 @@ class CommandTreeBuilder {
 		String currCommand = commandTypes[startIdx]; 
 		int numArgs = getNumArgs(currCommand);
 		CommandNode newParentNode = new CommandNode(currCommand, numArgs, turtle);
+		while (newParentNode.getNumArgs() == 0) { // accounts for multiple 1-arg arguments before args that need child nodes 
+			myCommandTrees.add(newParentNode);
+			startIdx++; 
+			currCommand = commandTypes[startIdx]; 
+			numArgs = getNumArgs(currCommand);
+			newParentNode = new CommandNode(currCommand, numArgs, turtle);
+		}
 		createAndSetChildren(turtle, newParentNode, userInput, commandTypes, allInputTypes, startIdx+1, true);
 		return newParentNode;
 	}
@@ -69,6 +80,20 @@ class CommandTreeBuilder {
 			}
 			return; 
 		}
+		if (commandTypes[currIdx].equals("If")) { // TODO finish dealing with if
+			int ifExprEndSearch = 0; 
+			while (! userInput[ifExprEndSearch].equals(DEFAULT_IFEXPR_END)) {
+				ifExprEndSearch++; 
+			}
+			// ifExprEndSearch is now at "["
+			int ifBodyEndSearch = ifExprEndSearch; 
+			while (! userInput[ifBodyEndSearch].equals(DEFAULT_IFBODY_END)) {
+				ifBodyEndSearch++; 
+			}
+			// ifBodyEndSearch is now at "]"
+			
+			currIdx = ifBodyEndSearch+1; // TODO consider if's parent 
+		}
 		for (int idx = currIdx+1; idx < userInput.length; idx++) { 
 			if (allInputTypes[idx].equals(DEFAULT_CONSTANT_IDENTIFIER)) {
 				CommandNode newChildNode = new CommandNode(userInput[idx], turtle);
@@ -77,7 +102,7 @@ class CommandTreeBuilder {
 				if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
 					createAndSetChildren(turtle, newCommandNode, userInput, commandTypes, allInputTypes, idx+1, false);
 				}
-				for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) {
+				for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) { // TODO re-evaluate back-track for when do times comes into the picture....
 					int backTrackNumArgs = getNumArgs(commandTypes[backtrack]);
 					CommandNode backtrackCommandNode = new CommandNode(commandTypes[backtrack], backTrackNumArgs, newCommandNode, turtle);
 					newCommandNode = backtrackCommandNode; 
