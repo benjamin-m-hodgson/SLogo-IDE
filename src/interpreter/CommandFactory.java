@@ -92,6 +92,9 @@ public class CommandFactory {
 		else if(commandName.equals("ArcTangent")) {
 		    	return new ArcTangentCommand(commandArgs.get(0));
 		}
+		else if(commandName.equals("NaturalLog")) {
+		    	return new NaturalLogCommand(commandArgs.get(0));
+		}
 
 		// TODO: handle returning null value
 		return null;
