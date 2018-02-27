@@ -125,6 +125,9 @@ public class CommandFactory {
 		else if(commandName.equals("And")) {
 		    	return new AndCommand(commandArgs.get(0), commandArgs.get(1));
 		}
+		else if(commandName.equals("Or")) {
+		    	return new OrCommand(commandArgs.get(0), commandArgs.get(1));
+		}
 		//elseif (commandName.equals("set") do variable map looping
 		//if unidentified
 			//loop through map of user commands
