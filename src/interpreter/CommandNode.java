@@ -33,7 +33,7 @@ class CommandNode {
 	public CommandNode(String info, int numArgs, List<CommandNode> children, Turtle turtle, boolean isString) {	
 		myInfo = info; 
 		try {
-			Integer.parseInt(info);
+			Double.parseDouble(info);
 			isDouble = true; 
 		}
 		catch (NumberFormatException e) {
