@@ -36,18 +36,37 @@ public class SetTowardsCommand implements Command{
 		}
 		double oldAngle = myTurtle.getAngle();
 		double heading = Math.toDegrees(Math.asin((xTowards-myTurtle.getX())/dist));
-		if((oldAngle==heading)) {
-			if(sameDirection(heading, xTowards, yTowards)) {
+		System.out.println("absolute angle" + heading);
+		if(!upperHemisphere(xTowards, yTowards)) {
+			if(heading>0) {
+				heading = heading + 90;
+			}
+			else if(heading<0) {
+				heading = heading - 90;
+			}
+			else if(heading == 0) {
+				heading = heading + 180;
+			}
+			myTurtle.setAngle(heading);
+			return (heading-oldAngle);
+		}
+		else if((oldAngle==heading)) {
+			if(!sameDirection(oldAngle, xTowards, yTowards)) {
 				heading = heading + 180;
 			}
 		}
 		myTurtle.setAngle(heading);
 		return (heading-oldAngle);
+
 	}
 	private boolean sameDirection(double heading, double x, double y) {
-		double newX = myTurtle.getX()-0.01*Math.sin(-heading);
-		double newY = myTurtle.getY()-0.01*Math.cos(-heading);
-		return (myTurtle.calcDistance(x, y, newX, newY)<myTurtle.calcDistance(x, y, newX, newY));
+		double newX = myTurtle.getX()+0.05*Math.sin(-heading);
+		double newY = myTurtle.getY()+0.05*Math.cos(-heading);
+		System.out.println("same direction? " + "new dist: " + myTurtle.calcDistance(x, y, newX, newY) + " old dist " + myTurtle.calcDistance(x, y, myTurtle.getX(), myTurtle.getY()));
+		return (myTurtle.calcDistance(x, y, newX, newY)<myTurtle.calcDistance(x, y, myTurtle.getX(), myTurtle.getY()));
+	}
+	private boolean upperHemisphere(double x, double y) {
+		return ((myTurtle.getY()-y)<=0);
 	}
 
 }
