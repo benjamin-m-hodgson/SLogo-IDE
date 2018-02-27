@@ -170,6 +170,8 @@ class TextFieldParser {
 //					"rt 90\n" + 
 //					"fd 100\n" + 
 //					"rt 90");
+//			testingParser.parseText("fd sum 20 20");
+//			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
 		} catch (Exception e) {
 
 		}
