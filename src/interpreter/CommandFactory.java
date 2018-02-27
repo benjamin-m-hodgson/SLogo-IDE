@@ -86,6 +86,9 @@ public class CommandFactory {
 		else if(commandName.equals("Cosine")) {
 		    	return new CosineCommand(commandArgs.get(0));
 		}
+		else if(commandName.equals("Tangent")) {
+		    	return new TangentCommand(commandArgs.get(0));
+		}
 
 		// TODO: handle returning null value
 		return null;
