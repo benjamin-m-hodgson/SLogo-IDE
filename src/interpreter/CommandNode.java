@@ -15,7 +15,7 @@ class CommandNode {
 	private Turtle myTurtle;
 	private boolean isString;
 
-	public CommandNode(String info, boolean isString) {
+	public CommandNode(String info) {
 		this(info, DEFAULT_NUM_ARGS, new ArrayList<CommandNode>(), new Turtle(), true);
 	}
 	public CommandNode(String info, Turtle turtle) {
