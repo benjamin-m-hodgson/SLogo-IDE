@@ -59,6 +59,15 @@ public class CommandFactory {
 		else if(commandName.equals("YCoordinate")) {
 			return new YCoordinateQueryCommand(turtle);
 		}
+		else if (commandName.equals("Heading")) {
+			return new HeadingQueryCommand(turtle);
+		}
+		else if (commandName.equals("IsPenDown")) {
+			return new IsPenDownQueryCommand(turtle);
+		}
+		else if (commandName.equals("IsShowing")) {
+			return new IsShowingQueryCommand(turtle);
+		}
 		else if(commandName.equals("Sum")) {
 			return new SumCommand(commandArgs.get(0), commandArgs.get(1));
 		}

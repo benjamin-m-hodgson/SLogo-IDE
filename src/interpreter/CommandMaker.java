@@ -1,4 +1,3 @@
-package interpreter;
 //
 //public interface CommandMaker {
 //	/**
@@ -13,6 +12,9 @@ package interpreter;
 //
 //}
 
+package interpreter;
+
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,7 +25,10 @@ import java.util.ResourceBundle;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import java.util.ResourceBundle;
+
+/** 
+ * @author Susie Choi
+ */
 
 class CommandMaker {
 

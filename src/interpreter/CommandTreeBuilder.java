@@ -2,6 +2,10 @@ package interpreter;
 
 import java.util.ArrayList;
 
+/** 
+ * @author Susie Choi
+ */
+
 class CommandTreeBuilder {
 
 	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command";

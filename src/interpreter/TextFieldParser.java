@@ -35,6 +35,10 @@ import javafx.scene.paint.Color;
 
 import java.util.ResourceBundle;
 
+/** 
+ * @author Susie Choi
+ */
+
 class TextFieldParser {	
 
 	public static final String DEFAULT_FILEPATH = "interpreter/";
