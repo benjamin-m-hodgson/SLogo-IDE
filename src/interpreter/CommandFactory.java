@@ -110,6 +110,9 @@ public class CommandFactory {
 		else if(commandName.equals("Pi")) {
 		    	return new PiCommand();
 		}
+		else if(commandName.equals("LessThan")) {
+		    	return new LessThanCommand(commandArgs.get(0), commandArgs.get(1));
+		}
 
 		// TODO: handle returning null value
 		return null;
