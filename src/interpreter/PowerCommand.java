@@ -1,7 +1,7 @@
 package interpreter;
 
 /**
- * returns sum of the values of expr1 and expr2
+ * returns base raised to the power of the exponent
  * 
  * @author Benjamin Hodgson
  * @date 2/26/18

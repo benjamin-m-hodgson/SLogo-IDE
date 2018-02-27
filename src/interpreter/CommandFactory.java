@@ -98,6 +98,9 @@ public class CommandFactory {
 		else if(commandName.equals("Power")) {
 		    	return new PowerCommand(commandArgs.get(0), commandArgs.get(1));
 		}
+		else if(commandName.equals("Pi")) {
+		    	return new PiCommand();
+		}
 
 		// TODO: handle returning null value
 		return null;
