@@ -119,6 +119,9 @@ public class CommandFactory {
 		else if(commandName.equals("Equal")) {
 		    	return new EqualCommand(commandArgs.get(0), commandArgs.get(1));
 		}
+		else if(commandName.equals("NotEqual")) {
+		    	return new NotEqualCommand(commandArgs.get(0), commandArgs.get(1));
+		}
 		//elseif (commandName.equals("set") do variable map looping
 		//if unidentified
 			//loop through map of user commands
