@@ -48,6 +48,7 @@ class CommandTreeBuilder {
 			}
 			return; 
 		}
+		System.out.println(userInput[currIdx]);
 		if (allInputTypes[currIdx].equals(DEFAULT_CONSTANT_IDENTIFIER)) {
 			CommandNode newChildNode = new CommandNode(userInput[currIdx], turtle);
 			parent.addChild(newChildNode);
@@ -62,16 +63,13 @@ class CommandTreeBuilder {
 			}
 			return; 
 		}
-		for (int idx = currIdx+1; idx < userInput.length; idx++) { // where else to return in here? 
+		for (int idx = currIdx+1; idx < userInput.length; idx++) { 
 			if (allInputTypes[idx].equals(DEFAULT_CONSTANT_IDENTIFIER)) {
 				CommandNode newChildNode = new CommandNode(userInput[idx], turtle);
 				int numArgs = getNumArgs(commandTypes[idx-1]);
 				CommandNode newCommandNode = new CommandNode(commandTypes[idx-1], numArgs, newChildNode, turtle);
-				if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
+				if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { // what if both new and parent nodes have no children
 					createAndSetChildren(turtle, newCommandNode, userInput, commandTypes, allInputTypes, idx+1, false);
-				} 
-				else {
-					createCommandTree(turtle, userInput, commandTypes, allInputTypes, idx+1);
 				}
 				for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) {
 					int backTrackNumArgs = getNumArgs(commandTypes[backtrack]);
@@ -79,14 +77,20 @@ class CommandTreeBuilder {
 					newCommandNode = backtrackCommandNode; 
 				}
 				parent.addChild(newCommandNode);
-				if (addToTrees) {
+				if (parent.getNumChildren() < parent.getNumArgs()) { 
+					createAndSetChildren(turtle, parent, userInput, commandTypes, allInputTypes, idx+1, addToTrees);
+				}
+				else {
+					createCommandTree(turtle, userInput, commandTypes, allInputTypes, idx+1);
+				}
+				if (parent.getNumChildren() == parent.getNumArgs() && addToTrees && !myCommandTrees.contains(parent)) {
 					myCommandTrees.add(parent);
 				}
 				return; 
 			}
 		}
 	}
-	
+
 	private void createAndSetDoTimesChildren(Turtle turtle, CommandNode parent, String[] userInput, String[] commandTypes, String[] allInputTypes, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		if (currIdx >= userInput.length) {
 			if (addToTrees) {
@@ -105,10 +109,10 @@ class CommandTreeBuilder {
 			currIdxCopy++;
 			ArrayList<String> withinBrackets;
 			while(!userInput[currId].equals(DEFAULT_BRACKET_IDENTIFIER)) {
-				
+
 			}
 		}
-		
+
 	}
 
 	private int getNumArgs(String commandType) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
