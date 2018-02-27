@@ -51,8 +51,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * @author Sarahbland
- * @author Susie Choi
+ * @author Sarahbland - Pen inner class
+ * @author Susie Choi - Surrounding Turtle class
  *
  */
 public class Turtle {

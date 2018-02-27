@@ -2,6 +2,10 @@ package interpreter;
 
 import java.util.ArrayList;
 
+/** 
+ * @author Susie Choi
+ */
+
 class CommandTreeBuilder {
 
 	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command";
@@ -117,7 +121,7 @@ class CommandTreeBuilder {
 	}
 
 	private int getNumArgs(String commandType) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		System.out.println(commandType);
+//		System.out.println(commandType);
 		RegexMatcher regexMatcher = new RegexMatcher(myNumArgsFileName);
 		String numArgsAsString = regexMatcher.findMatchingVal(commandType);
 		int numArgs = Integer.parseInt(numArgsAsString);

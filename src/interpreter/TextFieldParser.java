@@ -35,6 +35,10 @@ import javafx.scene.paint.Color;
 
 import java.util.ResourceBundle;
 
+/** 
+ * @author Susie Choi
+ */
+
 class TextFieldParser {	
 
 	public static final String DEFAULT_FILEPATH = "interpreter/";
@@ -156,7 +160,8 @@ class TextFieldParser {
 	public static void main(String[] args) {
 		TextFieldParser testingParser = new TextFieldParser();
 		try {
-			testingParser.parseText("showing?");
+			testingParser.parseText("if");
+//			testingParser.parseText("showing?");
 //			testingParser.parseText("setxy fd 50 fd 30");
 //			testingParser.parseText("fd rt fd 50 bk 30");
 //			testingParser.parseText("fd rt bk 50");
