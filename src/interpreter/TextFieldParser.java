@@ -160,7 +160,7 @@ class TextFieldParser {
 	public static void main(String[] args) {
 		TextFieldParser testingParser = new TextFieldParser();
 		try {
-			testingParser.parseText("if");
+			testingParser.parseText("pu fd 50");
 //			testingParser.parseText("showing?");
 //			testingParser.parseText("setxy fd 50 fd 30");
 //			testingParser.parseText("fd rt fd 50 bk 30");
