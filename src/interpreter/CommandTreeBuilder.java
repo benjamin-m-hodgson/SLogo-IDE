@@ -32,7 +32,7 @@ class CommandTreeBuilder {
 	}
 
 	private CommandNode createCommandTree(Turtle turtle, String[] userInput, String[] commandTypes, String[] allInputTypes, int startIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		if (startIdx >= userInput.length) {
+		if (startIdx >= userInput.length || commandTypes[startIdx] == null) {
 			return null; // TODO make this more detailed
 		}
 		String currCommand = commandTypes[startIdx]; 
@@ -49,7 +49,7 @@ class CommandTreeBuilder {
 			}
 			return; 
 		}
-		System.out.println(userInput[currIdx]);
+//		System.out.println(userInput[currIdx]);
 		if (allInputTypes[currIdx].equals(DEFAULT_CONSTANT_IDENTIFIER)) {
 			CommandNode newChildNode = new CommandNode(userInput[currIdx], turtle);
 			parent.addChild(newChildNode);
@@ -69,7 +69,7 @@ class CommandTreeBuilder {
 				CommandNode newChildNode = new CommandNode(userInput[idx], turtle);
 				int numArgs = getNumArgs(commandTypes[idx-1]);
 				CommandNode newCommandNode = new CommandNode(commandTypes[idx-1], numArgs, newChildNode, turtle);
-				if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { // what if both new and parent nodes have no children
+				if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
 					createAndSetChildren(turtle, newCommandNode, userInput, commandTypes, allInputTypes, idx+1, false);
 				}
 				for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) {
@@ -117,6 +117,7 @@ class CommandTreeBuilder {
 	}
 
 	private int getNumArgs(String commandType) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		System.out.println(commandType);
 		RegexMatcher regexMatcher = new RegexMatcher(myNumArgsFileName);
 		String numArgsAsString = regexMatcher.findMatchingVal(commandType);
 		int numArgs = Integer.parseInt(numArgsAsString);

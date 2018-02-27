@@ -80,6 +80,27 @@ public class CommandFactory {
 		else if(commandName.equals("Random")) {
 		    	return new RandomCommand(commandArgs.get(0));
 		}
+		else if(commandName.equals("Sine")) {
+		    	return new SineCommand(commandArgs.get(0));
+		}
+		else if(commandName.equals("Cosine")) {
+		    	return new CosineCommand(commandArgs.get(0));
+		}
+		else if(commandName.equals("Tangent")) {
+		    	return new TangentCommand(commandArgs.get(0));
+		}
+		else if(commandName.equals("ArcTangent")) {
+		    	return new ArcTangentCommand(commandArgs.get(0));
+		}
+		else if(commandName.equals("NaturalLog")) {
+		    	return new NaturalLogCommand(commandArgs.get(0));
+		}
+		else if(commandName.equals("Power")) {
+		    	return new PowerCommand(commandArgs.get(0), commandArgs.get(1));
+		}
+		else if(commandName.equals("Pi")) {
+		    	return new PiCommand();
+		}
 
 		// TODO: handle returning null value
 		return null;
