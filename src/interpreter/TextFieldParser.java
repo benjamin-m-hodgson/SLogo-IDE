@@ -156,10 +156,20 @@ class TextFieldParser {
 	public static void main(String[] args) {
 		TextFieldParser testingParser = new TextFieldParser();
 		try {
-			testingParser.parseText("fd 50");
+//			testingParser.parseText("fd 50");
 //			testingParser.parseText("setxy fd 50 fd 30");
 //			testingParser.parseText("fd rt fd 50 bk 30");
 //			testingParser.parseText("fd rt bk 50");
+//			testingParser.parseText("fd fd 50");
+//			testingParser.parseText("fd rt 100");
+//			testingParser.parseText("fd 100\n" + 
+//					"rt 90\n" + 
+//					"fd 100\n" + 
+//					"rt 90\n" + 
+//					"fd 100\n" + 
+//					"rt 90\n" + 
+//					"fd 100\n" + 
+//					"rt 90");
 		} catch (Exception e) {
 
 		}
