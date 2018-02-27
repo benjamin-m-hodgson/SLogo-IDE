@@ -95,6 +95,9 @@ public class CommandFactory {
 		else if(commandName.equals("NaturalLog")) {
 		    	return new NaturalLogCommand(commandArgs.get(0));
 		}
+		else if(commandName.equals("Power")) {
+		    	return new PowerCommand(commandArgs.get(0), commandArgs.get(1));
+		}
 
 		// TODO: handle returning null value
 		return null;
