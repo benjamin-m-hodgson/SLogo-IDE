@@ -77,6 +77,9 @@ public class CommandFactory {
 		else if(commandName.equals("Minus")) {
 		    	return new MinusCommand(commandArgs.get(0));
 		}
+		else if(commandName.equals("Random")) {
+		    	return new RandomCommand(commandArgs.get(0));
+		}
 
 		// TODO: handle returning null value
 		return null;
