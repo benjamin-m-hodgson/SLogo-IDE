@@ -60,13 +60,13 @@ public class CommandFactory {
 			return new YCoordinateQueryCommand(turtle);
 		}
 		else if (commandName.equals("Heading")) {
-			return new HeadingQueryCommand(turtle);
+			// TODO return new HeadingQueryCommand(turtle);
 		}
 		else if (commandName.equals("IsPenDown")) {
-			return new IsPenDownQueryCommand(turtle);
+			// TODO return new IsPenDownQueryCommand(turtle);
 		}
 		else if (commandName.equals("IsShowing")) {
-			return new IsShowingQueryCommand(turtle);
+			// TODO return new IsShowingQueryCommand(turtle);
 		}
 		else if(commandName.equals("Sum")) {
 			return new SumCommand(commandArgs.get(0), commandArgs.get(1));
@@ -110,27 +110,33 @@ public class CommandFactory {
 		else if(commandName.equals("Pi")) {
 			return new PiCommand();
 		}
-		else if (commandName.equals("LessThan")) {
-
+		else if(commandName.equals("LessThan")) {
+		    	return new LessThanCommand(commandArgs.get(0), commandArgs.get(1));
 		}
-		else if (commandName.equals("GreaterThan")) {
-
+		else if(commandName.equals("GreaterThan")) {
+		    	return new GreaterThanCommand(commandArgs.get(0), commandArgs.get(1));
 		}
-		else if (commandName.equals("Equal")) {
-
+		else if(commandName.equals("Equal")) {
+		    	return new EqualCommand(commandArgs.get(0), commandArgs.get(1));
 		}
-		else if (commandName.equals("NotEqual")) {
-
+		else if(commandName.equals("NotEqual")) {
+		    	return new NotEqualCommand(commandArgs.get(0), commandArgs.get(1));
 		}
-		else if (commandName.equals("And")) {
-
+		else if(commandName.equals("And")) {
+		    	return new AndCommand(commandArgs.get(0), commandArgs.get(1));
 		}
-		else if (commandName.equals("Or")) {
-
+		else if(commandName.equals("Or")) {
+		    	return new OrCommand(commandArgs.get(0), commandArgs.get(1));
 		}
-		else if (commandName.equals("Not")) {
-
+		else if(commandName.equals("Not")) {
+		    	return new NotCommand(commandArgs.get(0));
 		}
+		//elseif (commandName.equals("set") do variable map looping
+		//if unidentified
+			//loop through map of user commands
+			//make a new commandtree builder
+			//build and execute that tree
+			//make a double command with its return value
 		// TODO: handle returning null value
 		return null;
 	}

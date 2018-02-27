@@ -14,7 +14,8 @@ class CommandTreeBuilder {
 	public static final String DEFAULT_IF_IDENTIFIER = "If"; 
 	public static final String DEFAULT_IFEXPR_END = "[";
 	public static final String DEFAULT_IFBODY_END = "]";
-	
+	public static final String DEFAULT_BRACKET_START_IDENTIFIER = "BracketStart";
+	public static final String DEFAULT_BRACKET_END_IDENTIFIER = "BracketEnd";
 	//	private CommandTreeReader myCommandTreeReader; 
 	private String myNumArgsFileName; 
 	private ArrayList<CommandNode> myCommandTrees; 
@@ -58,7 +59,7 @@ class CommandTreeBuilder {
 	}
 
 	private void createAndSetChildren(Turtle turtle, CommandNode parent, String[] userInput, String[] commandTypes, String[] allInputTypes, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		if (currIdx >= userInput.length) {
+		if (currIdx >= userInput.length) { //base case if out of bounds
 			if (addToTrees) {
 				myCommandTrees.add(parent);
 			}
@@ -121,19 +122,27 @@ class CommandTreeBuilder {
 		}
 	}
 
-	private void createAndSetDoTimesChildren(Turtle turtle, CommandNode parent, String[] userInput, String[] commandTypes, String[] allInputTypes, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private int createAndSetDoTimesChildren(Turtle turtle, CommandNode parent, String[] userInput, String[] commandTypes, String[] allInputTypes, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		if (currIdx >= userInput.length) {
 			if (addToTrees) {
 				myCommandTrees.add(parent);
 			}
-			return; 
+			return currIdx; 
 		}
-		if(userInput[currIdx].equals(DEFAULT_BRACKET_IDENTIFIER)) {
-			//TODO: add error checking
+		//adding temporary variable name to children
+		if(userInput[currIdx].equals(DEFAULT_BRACKET_START_IDENTIFIER)) {
 			currIdx++;
-			parent.addChild(new CommandNode(userInput[currIdx]));
+			parent.addChild(new CommandNode(userInput[currIdx]) );
 			currIdx++;
 		}
+		else {
+			throw new UnidentifiedCommandException("Dotimes syntax incorrect");
+		}
+		ArrayList<String> doTimesEndValInfo = new ArrayList<>;
+		while()
+		//adding command info to children
+		parent.addChild(createCommandTree(turtle, String[] userInput, String[] commandTypes, String[] allInputTypes, int startIdx));
+		//adding string info to children
 		if(userInput[currIdx].equals(DEFAULT_BRACKET_IDENTIFIER)) {
 			int currIdxCopy = currIdx;
 			currIdxCopy++;
@@ -142,6 +151,10 @@ class CommandTreeBuilder {
 				
 			}
 		}
+		else {
+			throw new UnidentifiedCommandException("Dotimes syntax incorrect");
+		}
+		return currIdx;
 
 	}
 
