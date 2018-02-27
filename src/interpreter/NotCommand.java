@@ -1,7 +1,7 @@
 package interpreter;
 
 /**
- * returns 1 if test1 or test2 are non-zero, otherwise 0
+ * returns 1 if test is 0 and 0 if test is non-zero
  * 
  * @author Benjamin Hodgson
  * @date 2/26/18
@@ -10,13 +10,13 @@ package interpreter;
 public class NotCommand implements Command{
     	private final double TRUE = 1;
     	private final double FALSE = 0;
-    	double EXPR1;
-	protected NotCommand(Command expr1) {
-		EXPR1 = expr1.execute();
+    	double TEST;
+	protected NotCommand(Command test) {
+		TEST = test.execute();
 	}
 	@Override
 	public double execute() {
-		if (EXPR1 == FALSE) {
+		if (TEST == FALSE) {
 		    return TRUE;
 		}
 		else {

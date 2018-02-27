@@ -10,15 +10,15 @@ package interpreter;
 public class AndCommand implements Command{
     	private final double TRUE = 1;
     	private final double FALSE = 0;
-    	double EXPR1;
-    	double EXPR2;
-	protected AndCommand(Command expr1, Command expr2) {
-		EXPR1 = expr1.execute();
-		EXPR2 = expr2.execute();
+    	double TEST1;
+    	double TEST2;
+	protected AndCommand(Command test1, Command test2) {
+		TEST1 = test1.execute();
+		TEST2 = test2.execute();
 	}
 	@Override
 	public double execute() {
-		if (EXPR1 != FALSE && EXPR2 != FALSE) {
+		if (TEST1 != FALSE && TEST2 != FALSE) {
 		    return TRUE;
 		}
 		else {
