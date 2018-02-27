@@ -23,12 +23,12 @@ import java.util.ResourceBundle;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import sun.security.tools.policytool.Resources;
+import java.util.ResourceBundle;
 
 class CommandMaker {
 
 	public static final String DEFAULT_FILEPATH = "interpreter/";
-	public static final ResourceBundle DEFAULT_LANGUAGE = Resources.getBundle("interpreter/English");
+	public static final ResourceBundle DEFAULT_LANGUAGE = ResourceBundle.getBundle("interpreter/English");
 	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
 	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command"; //TODO allow this to be client-specified
 	public static final String[] DEFAULT_CONTROLFLOW_IDENTIFIERS = {"Repeat", "DoTimes", "For"};

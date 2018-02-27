@@ -32,6 +32,7 @@ class CommandTreeReader {
 				completedChildren++;
 			}
 		}
+		System.out.println("pu numargs: " + root.getNumArgs());
 		return completedChildren==root.getNumArgs();
 	}
 	/**

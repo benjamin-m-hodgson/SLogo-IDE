@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import screen.UserScreen;
 import interpreter.Controller;
 
 public class HistoryPanel extends SpecificPanel {
@@ -17,13 +18,15 @@ public class HistoryPanel extends SpecificPanel {
 	private Parent PANEL;
 	private Controller PROGRAM_CONTROLLER;
 	private BorderPane PANE;
+    private UserScreen USER_SCREEN;
 
 	private final int DEFAULT_BUTTON_SPACEING = 10;
 
 
-	public HistoryPanel(Controller programController, BorderPane pane) {
+	public HistoryPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
 		PROGRAM_CONTROLLER = programController;
 		PANE = pane;
+		USER_SCREEN = userScreen;
 	}
 
 	@Override
@@ -56,6 +59,11 @@ public class HistoryPanel extends SpecificPanel {
 	protected Controller getController() {
 		// TODO Auto-generated method stub
 		return PROGRAM_CONTROLLER;
+	}
+
+	@Override
+	protected UserScreen getUserScreen() {
+		return USER_SCREEN;
 	}
 
 }

@@ -19,6 +19,7 @@ class CommandTreeBuilder {
 	}
 
 	protected double buildAndExecute(Turtle turtle, String[] userInput, String[] commandTypes, String[] allInputTypes) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		myCommandTrees.clear();
 		createCommandTree(turtle, userInput, commandTypes, allInputTypes, 0);
 		for (CommandNode n : myCommandTrees) {
 			System.out.println(n.toString());
@@ -102,14 +103,14 @@ class CommandTreeBuilder {
 			//TODO: add error checking
 			currIdx++;
 			parent.addChild(new CommandNode(userInput[currIdx]));
-			currIdx++
+			currIdx++;
 		}
 		if(userInput[currIdx].equals(DEFAULT_BRACKET_IDENTIFIER)) {
 			int currIdxCopy = currIdx;
 			currIdxCopy++;
 			ArrayList<String> withinBrackets;
-			while(!userInput[currId].equals(DEFAULT_BRACKET_IDENTIFIER)) {
-
+			while(!userInput[currIdx].equals(DEFAULT_BRACKET_IDENTIFIER)) {
+				
 			}
 		}
 

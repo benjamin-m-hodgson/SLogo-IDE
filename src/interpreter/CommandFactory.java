@@ -32,7 +32,6 @@ public class CommandFactory {
 		else if(commandName.equals("SetTowards")) {
 			return new SetTowardsCommand(commandArgs.get(0), commandArgs.get(1), turtle);
 		}
-
 		else if(commandName.equals("SetPosition")) {
 			return new SetPositionCommand(commandArgs.get(0), commandArgs.get(1), turtle);
 		}
@@ -59,6 +58,24 @@ public class CommandFactory {
 		}
 		else if(commandName.equals("YCoordinate")) {
 			return new YCoordinateQueryCommand(turtle);
+		}
+		else if(commandName.equals("Sum")) {
+			return new SumCommand(commandArgs.get(0), commandArgs.get(1));
+		}
+		else if(commandName.equals("Difference")) {
+			return new DifferenceCommand(commandArgs.get(0), commandArgs.get(1));
+		}
+		else if(commandName.equals("Product")) {
+			return new ProductCommand(commandArgs.get(0), commandArgs.get(1));
+		}
+		else if(commandName.equals("Quotient")) {
+			return new QuotientCommand(commandArgs.get(0), commandArgs.get(1));
+		}
+		else if(commandName.equals("Remainder")) {
+		    	return new RemainderCommand(commandArgs.get(0), commandArgs.get(1));
+		}
+		else if(commandName.equals("Minus")) {
+		    	return new MinusCommand(commandArgs.get(0));
 		}
 
 		// TODO: handle returning null value
