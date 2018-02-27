@@ -110,6 +110,13 @@ public class CommandFactory {
 		else if(commandName.equals("Pi")) {
 		    	return new PiCommand();
 		}
+		//elseif (commandName.equals("set") do variable map looping
+		//if unidentified
+			//loop through map of user commands
+			//make a new commandtree builder
+			//build and execute that tree
+			//make a double command with its return value
+			
 
 		// TODO: handle returning null value
 		return null;
