@@ -157,6 +157,14 @@ public class Controller {
 		}
 		return Collections.unmodifiableList(new ArrayList<String>());
 	}
+	
+	public List<String> translateColors(List<String> colors){
+		List<String> translatedColors = new ArrayList<String>();
+		for(int i =0; i<colors.size(); i++) {
+			translatedColors.add(resourceDisplayText(colors.get(i)));
+		}
+		return translatedColors;
+	}
 
 	/**
 	 * 

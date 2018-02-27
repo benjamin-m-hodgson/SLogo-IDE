@@ -33,7 +33,6 @@ import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
-import java.util.ResourceBundle;
 
 class TextFieldParser {	
 
