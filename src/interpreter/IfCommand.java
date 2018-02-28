@@ -9,18 +9,29 @@ class IfCommand implements Command{
 	private Command myIfExprCommand; 
 	private String myIfBody; 
 	
-	protected IfCommand(Command ifExprCommand, String ifBody, Turtle turtle) {
+	protected IfCommand(Command ifExprCommand, Command ifBody, Turtle turtle) {
 		myTurtle = turtle;
 		myIfExprCommand = ifExprCommand;
-		myIfBody = ifBody; 
+		myIfBody = ((StringCommand)ifBody).getString(); 
 	}
 
-	public double execute() {
-		double ifExprRetVal = myIfExprCommand.execute(); 
+	public double execute() { // TODO discuss throwing of exceptions 
+		double ifExprRetVal = 0;
+		double ifBodyRetVal = 0; 
+		try {
+			ifExprRetVal = myIfExprCommand.execute();
+		} catch (UnidentifiedCommandException e1) {
+			return ifBodyRetVal; 
+		} 
 		if (ifExprRetVal > 0) {
 			CommandTreeBuilder buildIfBody = new CommandTreeBuilder(); 
 			String[] userInput = myIfBody.split("\\s+");
-			buildIfBody.buildAndExecute(myTurtle, );
+			try {
+				ifBodyRetVal = buildIfBody.buildAndExecute(myTurtle, userInput);
+			} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
+				return ifBodyRetVal; 
+			}
 		}
+		return ifBodyRetVal; 
 	}
 }
