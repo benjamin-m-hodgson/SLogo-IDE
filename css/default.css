@@ -181,7 +181,7 @@
 /******************************************************************************************/
 #settingsField {
 	-fx-alignment: center;
-	-fx-padding: 0 10 0 5;
+	-fx-padding: 5 5 5 5;
 	-fx-background-color: transparent;
 	-fx-highlight-fill: #fbcbd7;
 	-fx-highlight-text-fill: #555555;
@@ -1048,10 +1048,6 @@
 #turtleImageChooser .arrow {
 	-fx-background-color: #ffffff;
 	-fx-font: 12px Dekko;
-}
-#turtleImageChooser {
-	-fx-background-color: linear-gradient(#fa9873, #f97f51);
-    -fx-text-fill: #ffffff;
 }
 #turtleImageChooser:hover .list-cell {
 	-fx-background-color: linear-gradient(#fa9873, #f97f51);
