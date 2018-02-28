@@ -15,7 +15,6 @@ public class HelpPanel extends SpecificPanel  {
 	private Parent PANEL;
 	private Controller PROGRAM_CONTROLLER;
 	private BorderPane PANE;
-	private final int DEFAULT_BUTTON_SPACEING = 10;
 	private UserScreen USER_SCREEN;
 
 
@@ -33,7 +32,7 @@ public class HelpPanel extends SpecificPanel  {
 		ScrollPane scroll = new ScrollPane();
 		TextArea text = new TextArea(PROGRAM_CONTROLLER.resourceDisplayText("HelpContent"));
 		scroll.setContent(text);
-		VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACEING,scroll,backButton );
+		VBox panelRoot = new VBox(scroll,backButton );
 		panelRoot.setId("infoPanel");
 		panelRoot.setAlignment(Pos.BASELINE_CENTER);
 		PANEL = panelRoot;	

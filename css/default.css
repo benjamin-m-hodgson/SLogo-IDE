@@ -999,7 +999,7 @@
     -fx-font-weight: bold;
 }
 #turtleImageChooser .arrow-button {
-	-fx-background-color: transparent
+	-fx-background-color: transparent;
 }
 #turtleImageChooser .arrow {
 	-fx-background-color: #ffffff;
@@ -1265,11 +1265,11 @@
 	-fx-max-height: 40px;
 	-fx-min-height: 40px;
 	-fx-background-radius: 6;
-	-fx-background-color: #3ea3f8;
+	-fx-background-color: #8f8fd3;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #0c8bf6;
+    -fx-border-color: #6f6fc7;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-font: 12px Dekko;
@@ -1277,7 +1277,7 @@
     -fx-underline: false;
 }
 #backButton:hover {
-	-fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
+	-fx-background-color: linear-gradient(#8f8fd3, #6f6fc7);
 	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
