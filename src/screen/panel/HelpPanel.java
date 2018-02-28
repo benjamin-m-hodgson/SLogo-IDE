@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import screen.UserScreen;
 import interpreter.Controller;
@@ -29,12 +30,13 @@ public class HelpPanel extends SpecificPanel  {
 	@Override
 	public void makePanel() {
 		Button backButton = makeBackButton(PROGRAM_CONTROLLER);
-		ScrollPane scroll = new ScrollPane();
 		TextArea text = new TextArea(PROGRAM_CONTROLLER.resourceDisplayText("HelpContent"));
-		scroll.setContent(text);
-		VBox panelRoot = new VBox(scroll,backButton );
+		text.setId("settingsField");
+		text.setEditable(false);
+		VBox panelRoot = new VBox(text, backButton);
 		panelRoot.setId("infoPanel");
 		panelRoot.setAlignment(Pos.BASELINE_CENTER);
+		VBox.setVgrow(text, Priority.ALWAYS);
 		PANEL = panelRoot;	
 	}
 

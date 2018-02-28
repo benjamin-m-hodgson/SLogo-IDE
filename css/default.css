@@ -40,7 +40,7 @@
 	-fx-pref-width: 200;
 	-fx-background-color: #f3f3f3;
 	-fx-background-radius: 6;
-	-fx-padding: 5 15 5 15;
+	-fx-padding: 15 15 15 15;
 	-fx-border-style: solid inside;
 	-fx-border-width: 1 1 1 1;
 	-fx-border-insets: 0;
@@ -172,6 +172,50 @@
 #consoleField .scroll-bar:vertical .thumb:hover,
 #consoleField .scroll-bar:horizontal .thumb:pressed,
 #consoleField .scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: linear-gradient(to right, #c0bcb6, #aca9a3);
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+/******************************************************************************************/
+/* The settings text areas for displaying text */ 
+/******************************************************************************************/
+#settingsField {
+	-fx-alignment: center;
+	-fx-padding: 0 10 0 5;
+	-fx-background-color: transparent;
+	-fx-highlight-fill: #fbcbd7;
+	-fx-highlight-text-fill: #555555;
+	-fx-text-fill: #555555;
+	-fx-prompt-text-fill: #c0bcb6;
+	-fx-font: 12px 'Nova Flat';
+}
+#settingsField:focused {
+	-fx-faint-focus-color: rgba(192, 188, 182, 0.5);
+}
+#settingsField .scroll-bar:horizontal ,
+#settingsField  .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+#settingsField .scroll-bar .increment-arrow ,
+#settingsField .scroll-bar .decrement-arrow {
+	-fx-shape: " ";	
+	-fx-padding:0;
+}
+#settingsField .increment-button ,
+#settingsField .decrement-button {
+    -fx-background-color:transparent;
+	-fx-background-radius: 2em;
+}
+#settingsField .scroll-bar:horizontal .thumb,
+#settingsField .scroll-bar:vertical .thumb {
+    -fx-background-color: #c0bcb6;
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+#settingsField .scroll-bar:horizontal .thumb:hover,
+#settingsField .scroll-bar:vertical .thumb:hover,
+#settingsField .scroll-bar:horizontal .thumb:pressed,
+#settingsField .scroll-bar:vertical .thumb:pressed {
     -fx-background-color: linear-gradient(to right, #c0bcb6, #aca9a3);
 	-fx-background-insets: 2, 0, 0;
 	-fx-background-radius: 2em;
