@@ -9,13 +9,14 @@ package interpreter;
  */
 public class CosineCommand implements Command{
 
-    	double DEGREES;
+    	Command degreesCommand;
 	protected CosineCommand(Command degrees) {
-		DEGREES = degrees.execute();
+		degreesCommand = degrees;
 	}
 	@Override
-	public double execute() {
-	    	return Math.cos(Math.toRadians(DEGREES));
+	public double execute() throws UnidentifiedCommandException {
+	    double DEGREES = degreesCommand.execute();
+		return Math.cos(Math.toRadians(DEGREES));
 	}
 	public int getNumArgs() {
 		return 1;

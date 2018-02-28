@@ -27,7 +27,7 @@ public class SetTowardsCommand implements Command{
 	 * @return number of degrees turned
 	 * @see interpreter.Command#execute()
 	 */
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
 		double xTowards = myXCommand.execute();
 		double yTowards = myYCommand.execute();
 		double dist = myTurtle.calcDistance(myTurtle.getX(), myTurtle.getY(), xTowards, yTowards);

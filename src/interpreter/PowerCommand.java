@@ -9,14 +9,16 @@ package interpreter;
  */
 public class PowerCommand implements Command{
 
-    	double BASE;
-    	double POWER;
+    	Command baseCommand;
+    	Command powerCommand;
 	protected PowerCommand(Command base, Command power) {
-		BASE = base.execute();
-		POWER = power.execute();
+		baseCommand = base;
+		powerCommand = power;
 	}
 	@Override
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
+		double BASE = baseCommand.execute();
+		double POWER = powerCommand.execute();
 		return Math.pow(BASE, POWER);
 	}
 	public int getNumArgs() {

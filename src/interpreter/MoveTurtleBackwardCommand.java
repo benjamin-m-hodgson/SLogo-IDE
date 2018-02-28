@@ -27,7 +27,7 @@ public class MoveTurtleBackwardCommand implements Command{
 	 * @return distance the turtle moved backward
 	 * @see interpreter.Command#execute()
 	 */
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
 		double dist = myBackwardDistCommand.execute();
 		double angle = Math.toRadians(myTurtle.getAngle());
 		myTurtle.setXY(myTurtle.getX()+dist*Math.sin(-angle), myTurtle.getY()+dist*Math.cos(-angle));
