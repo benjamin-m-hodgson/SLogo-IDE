@@ -31,22 +31,22 @@ public class TextPanel implements Panel {
 		return PANEL;
 	}
 
-	@Override
-	public void makePanel() {
-		INPUT_AREA = makeInputArea();
-		CONSOLE_AREA = makeConsoleArea();
-		HBox centerInputArea = new HBox(INPUT_AREA, CONSOLE_AREA);
-		VBox textPanel = new VBox(centerInputArea);
-		textPanel.setId("centerTextPanel");
-		PANEL = textPanel;
-	}
-
-	public void clearInputArea() {
-		INPUT_AREA.clear();
-		CONSOLE_AREA.clear();
-	}
-
-	public void run() {
+    @Override
+    public void makePanel() {
+	INPUT_AREA = makeInputArea();
+	CONSOLE_AREA = makeConsoleArea();
+	HBox centerInputArea = new HBox(INPUT_AREA, CONSOLE_AREA);
+	VBox textPanel = new VBox(centerInputArea);
+	textPanel.setId("centerTextPanel");
+	PANEL = textPanel;
+    }
+    
+    public void clearInputArea() {
+	INPUT_AREA.clear();
+	CONSOLE_AREA.clear();
+    }
+    
+   public void run() {
 		String inputText = INPUT_AREA.getText().replaceAll("\n", 
 				System.getProperty("line.separator"));
 		CONSOLE_AREA.setText(inputText);
@@ -79,20 +79,20 @@ public class TextPanel implements Panel {
 		}
 
 	}
-
-	private TextArea makeInputArea() {
-		TextArea inputArea = new TextArea();
-		inputArea.setId("inputField");
-		inputArea.setPromptText(PROGRAM_CONTROLLER.resourceDisplayText("InputPrompt"));
-		return inputArea;
-	}
-
-	private TextArea makeConsoleArea() {
-		TextArea consoleArea = new TextArea();
-		consoleArea.setId("consoleField");
-		consoleArea.setPromptText(PROGRAM_CONTROLLER.resourceDisplayText("ConsolePrompt"));
-		consoleArea.setEditable(false);
-		return consoleArea;
-	}
+    
+    private TextArea makeInputArea() {
+	TextArea inputArea = new TextArea();
+	inputArea.setId("inputField");
+	inputArea.setPromptText(PROGRAM_CONTROLLER.resourceDisplayText("InputPrompt"));
+	return inputArea;
+    }
+    
+    private TextArea makeConsoleArea() {
+	TextArea consoleArea = new TextArea();
+	consoleArea.setId("consoleField");
+	consoleArea.setPromptText(PROGRAM_CONTROLLER.resourceDisplayText("ConsolePrompt"));
+	consoleArea.setEditable(false);
+	return consoleArea;
+    }
 
 }
