@@ -1,6 +1,7 @@
 package interpreter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /** 
  * @author Susie Choi
@@ -44,6 +45,10 @@ class CommandTreeBuilder {
 		if (startIdx >= userInput.length || commandTypes[startIdx] == null) {
 			return null; // TODO make this more detailed
 		}
+		if (commandTypes[startIdx].equals(DEFAULT_IF_IDENTIFIER)) { // TODO deal with if "if" is first 
+			parseIf(turtle, userInput, commandTypes, allInputTypes, startIdx); 
+			return null; 
+		}
 		String currCommand = commandTypes[startIdx]; 
 		int numArgs = getNumArgs(currCommand);
 		CommandNode newParentNode = new CommandNode(currCommand, numArgs, turtle);
@@ -80,20 +85,12 @@ class CommandTreeBuilder {
 			}
 			return; 
 		}
-		if (commandTypes[currIdx].equals("If")) { // TODO finish dealing with if
-			int ifExprEndSearch = 0; 
-			while (! userInput[ifExprEndSearch].equals(DEFAULT_IFEXPR_END)) {
-				ifExprEndSearch++; 
-			}
-			// ifExprEndSearch is now at "["
-			int ifBodyEndSearch = ifExprEndSearch; 
-			while (! userInput[ifBodyEndSearch].equals(DEFAULT_IFBODY_END)) {
-				ifBodyEndSearch++; 
-			}
-			// ifBodyEndSearch is now at "]"
-			
-			currIdx = ifBodyEndSearch+1; // TODO consider if's parent 
-		}
+//		if (commandTypes[currIdx].equals("DEFAULT_IF_IDENTIFIER")) { 
+//			// currIdx = 
+//			parseIf(turtle, userInput, commandTypes, allInputTypes, currIdx); // TODO consider if's parent 
+//			System.out.println("returning");
+//			return; 
+//		}
 		for (int idx = currIdx+1; idx < userInput.length; idx++) { 
 			if (allInputTypes[idx].equals(DEFAULT_CONSTANT_IDENTIFIER)) {
 				CommandNode newChildNode = new CommandNode(userInput[idx], turtle);
@@ -120,6 +117,44 @@ class CommandTreeBuilder {
 				return; 
 			}
 		}
+	}
+
+	private int parseIf(Turtle turtle, String[] userInput, String[] commandTypes, String[] allInputTypes, int ifIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		int ifExprEndSearch = ifIdx; 
+		while (! userInput[ifExprEndSearch].equals(DEFAULT_IFEXPR_END)) {
+			ifExprEndSearch++; 
+		}
+		// ifExprEndSearch is now at "["
+		int ifBodyEndSearch = ifExprEndSearch; 
+		while (! userInput[ifBodyEndSearch].equals(DEFAULT_IFBODY_END)) {
+			ifBodyEndSearch++; 
+		}
+		// ifBodyEndSearch is now at "]"
+		String[] ifExpr = Arrays.copyOfRange(userInput, ifIdx+1, ifExprEndSearch);
+		String[] ifExprCommandTypes = Arrays.copyOfRange(commandTypes, ifIdx+1, ifExprEndSearch);
+		String[] ifExprInputTypes = Arrays.copyOfRange(allInputTypes, ifIdx+1, ifExprEndSearch);
+//		for (String s : ifExpr) {
+//			System.out.println("ifExpr "+s);
+//		}
+		
+		String[] ifBody = Arrays.copyOfRange(userInput, ifExprEndSearch+1, ifBodyEndSearch);
+		String[] ifBodyCommandTypes = Arrays.copyOfRange(commandTypes, ifExprEndSearch+1, ifBodyEndSearch);
+		String[] ifBodyInputTypes = Arrays.copyOfRange(allInputTypes, ifExprEndSearch+1, ifBodyEndSearch);
+//		for (String s : ifBody) {
+//			System.out.println("ifBody "+s);
+//		}
+		
+		String ifCommand = commandTypes[ifIdx]; 
+		int numArgs = getNumArgs(ifCommand);
+		CommandNode ifCommandNode = new CommandNode(userInput[ifIdx], numArgs, turtle);
+		
+		ArrayList<String> ifBodyString = new ArrayList<String>(Arrays.asList(ifBody)); 
+		String commandNodeInfo = String.join(" ", ifBodyString);
+		ifCommandNode.addChild(new CommandNode(commandNodeInfo));
+		
+		createAndSetChildren(turtle, ifCommandNode, ifExpr, ifExprCommandTypes, ifExprInputTypes, 0, true);
+//		System.out.println(ifCommandNode.toString());
+		return ifBodyEndSearch+1;
 	}
 
 	private int createAndSetDoTimesChildren(Turtle turtle, CommandNode parent, String[] userInput, String[] commandTypes, String[] allInputTypes, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
