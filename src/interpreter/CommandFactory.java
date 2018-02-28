@@ -131,9 +131,9 @@ public class CommandFactory {
 		else if(commandName.equals("Not")) {
 		    	return new NotCommand(commandArgs.get(0));
 		}
-		else if(commandName.equals("If")) {
-			return new IfCommand(); 
-		}
+//		else if(commandName.equals("If")) {
+//			return new IfCommand(); 
+//		}
 		else {
 			return new StringCommand(commandName);
 		}
@@ -143,8 +143,5 @@ public class CommandFactory {
 			//make a new commandtree builder
 			//build and execute that tree
 			//make a double command with its return value
-
-		// TODO: handle returning null value
-		return null;
 	}
 }
