@@ -13,6 +13,7 @@ class CommandTreeBuilder {
 	public static final String DEFAULT_CONSTANT_IDENTIFIER = "Constant";
 	public static final String DEFAULT_BRACKET_IDENTIFIER = "Bracket";
 	public static final String DEFAULT_IF_IDENTIFIER = "If"; 
+	public static final String DEFAULT_DOTIMES_IDENTIFIER = "DoTimes";
 	public static final String DEFAULT_IFEXPR_END = "[";
 	public static final String DEFAULT_IFBODY_END = "]";
 	public static final String DEFAULT_BRACKET_START_IDENTIFIER = "BracketStart";
@@ -48,6 +49,10 @@ class CommandTreeBuilder {
 		if (commandTypes[startIdx].equals(DEFAULT_IF_IDENTIFIER)) { // TODO deal with if "if" is first 
 			parseIf(turtle, userInput, commandTypes, allInputTypes, startIdx); 
 			return null; 
+		}
+		if (commandTypes[startIdx].equals(DEFAULT_DOTIMES_IDENTIFIER)) { 
+			CommandNode tempParentNode = new CommandNode(commandTypes[startIdx], getNumArgs(commandTypes[startIdx]), turtle);
+			createAndSetDoTimesChildren(turtle, tempParentNode, userInput, commandTypes, allInputTypes, 1, true); 
 		}
 		String currCommand = commandTypes[startIdx]; 
 		int numArgs = getNumArgs(currCommand);
@@ -173,7 +178,7 @@ class CommandTreeBuilder {
 //		else {
 //			throw new UnidentifiedCommandException("Dotimes syntax incorrect");
 //		}
-		int currIdxCopy = currIdx;
+		int currIdxCopy = currIdx;  
 		while(!userInput[currIdxCopy].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
 			currIdxCopy++;
 		}
