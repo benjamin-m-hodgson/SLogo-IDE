@@ -9,24 +9,27 @@ import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import screen.UserScreen;
 
 public class TextPanel implements Panel {
-    private Parent PANEL;
-    private Controller PROGRAM_CONTROLLER;
-    private TextArea INPUT_AREA;
-    private TextArea CONSOLE_AREA;
-    
-    public TextPanel(Controller programController) {
-	PROGRAM_CONTROLLER = programController;
-    }
-    
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
+	private Parent PANEL;
+	private final Controller PROGRAM_CONTROLLER;
+	private final UserScreen USER_SCREEN;
+	private TextArea INPUT_AREA;
+	private TextArea CONSOLE_AREA;
+
+	public TextPanel(Controller programController, UserScreen userScreen) {
+		PROGRAM_CONTROLLER = programController;
+		USER_SCREEN = userScreen;
 	}
-	return PANEL;
-    }
+
+	@Override
+	public Parent getPanel() {
+		if (PANEL == null) {
+			makePanel();
+		}
+		return PANEL;
+	}
 
     @Override
     public void makePanel() {
