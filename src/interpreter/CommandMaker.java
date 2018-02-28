@@ -36,9 +36,6 @@ class CommandMaker {
 	public static final ResourceBundle DEFAULT_LANGUAGE = ResourceBundle.getBundle("interpreter/English");
 	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
 	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command"; //TODO allow this to be client-specified
-	public static final String DEFAULT_IF_IDENTIFIER = "If"; 
-	public static final String DEFAULT_IFEXPR_END = "[";
-	public static final String DEFAULT_IFBODY_END = "[";
 	public static final String[] DEFAULT_CONTROLFLOW_IDENTIFIERS = {"Repeat", "DoTimes", "For"};
 
 	private ArrayList<Turtle> myTurtles; 
@@ -81,9 +78,6 @@ class CommandMaker {
 		for (int idx = startIdx; idx < userInput.length; idx++) {
 			if (typesOfInput[idx].equals(commandIdentifier)) {
 				commandTypes[idx] = getCommandType(userInput[idx]);
-				if (commandTypes[idx].equals(DEFAULT_IF_IDENTIFIER)) {
-					System.out.println("hi");
-				}
 			}
 		}
 
@@ -107,26 +101,26 @@ class CommandMaker {
 	//		}
 	//	}
 
-	// TODO if node where children are if statement and if body?
-	// shouldn't build body tree unless if statement evaluates to true 
-	private ArrayList<String> parseIf(int ifIdx, Turtle turtle, String[] userInput, String[] commandTypes, String[] allTypes) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		ArrayList<String> ifExpression = new ArrayList<String>(); 
-		int i = ifIdx+1; 
-		while (! userInput[i].equals(DEFAULT_IFEXPR_END)) {
-			ifExpression.add(userInput[i]);
-			i++; 
-		}
-		// TODO COPY RANGE OF COMMANDTYPES, USERINPUTARRAY, TYPESARRAY
-		String[] ifExprArray = ifExpression.toArray(new String[ifExpression.size()]);
-		double ifExprEval = myCommandTreeBuilder.buildAndExecute(turtle, ifExprArray, commandTypes, allTypes);
-		if (ifExprEval > 0) {
-			ArrayList<String> ifExprBody = new ArrayList<String>(); 
-			while (! userInput[i].equals(DEFAULT_IFBODY_END)) {
-				ifExprBody.add(userInput[i]);
-				i++;
-			}
-		}
-	} 
+//	// TODO if node where children are if statement and if body?
+//	// shouldn't build body tree unless if statement evaluates to true 
+//	private ArrayList<String> parseIf(int ifIdx, Turtle turtle, String[] userInput, String[] commandTypes, String[] allTypes) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+//		ArrayList<String> ifExpression = new ArrayList<String>(); 
+//		int i = ifIdx+1; 
+//		while (! userInput[i].equals(DEFAULT_IFEXPR_END)) {
+//			ifExpression.add(userInput[i]);
+//			i++; 
+//		}
+//		// TODO COPY RANGE OF COMMANDTYPES, USERINPUTARRAY, TYPESARRAY
+//		String[] ifExprArray = ifExpression.toArray(new String[ifExpression.size()]);
+//		double ifExprEval = myCommandTreeBuilder.buildAndExecute(turtle, ifExprArray, commandTypes, allTypes);
+//		if (ifExprEval > 0) {
+//			ArrayList<String> ifExprBody = new ArrayList<String>(); 
+//			while (! userInput[i].equals(DEFAULT_IFBODY_END)) {
+//				ifExprBody.add(userInput[i]);
+//				i++;
+//			}
+//		}
+//	} 
 	
 	private String getCommandType(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		RegexMatcher regexMatcher = new RegexMatcher(myLanguage);

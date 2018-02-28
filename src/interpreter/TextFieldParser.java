@@ -33,8 +33,6 @@ import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
-import java.util.ResourceBundle;
-
 /** 
  * @author Susie Choi
  */
@@ -160,7 +158,7 @@ class TextFieldParser {
 	public static void main(String[] args) {
 		TextFieldParser testingParser = new TextFieldParser();
 		try {
-			testingParser.parseText("if");
+			testingParser.parseText("if less? 1 5 [ fd 50 ]");
 //			testingParser.parseText("showing?");
 //			testingParser.parseText("setxy fd 50 fd 30");
 //			testingParser.parseText("fd rt fd 50 bk 30");
