@@ -170,27 +170,32 @@ class CommandTreeBuilder {
 			parent.addChild(new CommandNode(userInput[currIdx]) );
 			currIdx++;
 		}
-		else {
-			throw new UnidentifiedCommandException("Dotimes syntax incorrect");
-		}
-		ArrayList<String> doTimesEndValInfo = new ArrayList<>;
-		while()
-		//adding command info to children
-		parent.addChild(createCommandTree(turtle, String[] userInput, String[] commandTypes, String[] allInputTypes, int startIdx));
-		//adding string info to children
-		if(userInput[currIdx].equals(DEFAULT_BRACKET_IDENTIFIER)) {
-			int currIdxCopy = currIdx;
+//		else {
+//			throw new UnidentifiedCommandException("Dotimes syntax incorrect");
+//		}
+		int currIdxCopy = currIdx;
+		while(!userInput[currIdxCopy].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
 			currIdxCopy++;
-			ArrayList<String> withinBrackets;
-			while(!userInput[currIdx].equals(DEFAULT_BRACKET_IDENTIFIER)) {
-				
+		}
+		//adding command info to children
+		parent.addChild(createCommandTree(turtle, Arrays.copyOfRange(userInput, currIdx, currIdxCopy), Arrays.copyOfRange(userInput, currIdx, currIdxCopy), Arrays.copyOfRange(allInputTypes, currIdx, currIdxCopy), 0));
+		currIdxCopy++;
+		currIdx = currIdxCopy;
+		//adding string info to children
+		if(userInput[currIdx].equals(DEFAULT_BRACKET_START_IDENTIFIER)) {
+			currIdx++;
+			String repeatedCommand = userInput[currIdx];
+			while(!userInput[currIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
+				currIdx++;
+				String.join(" ", repeatedCommand, userInput[currIdx]);
 			}
+			parent.addChild(new CommandNode(repeatedCommand));
+			currIdxCopy++;
 		}
 		else {
 			throw new UnidentifiedCommandException("Dotimes syntax incorrect");
 		}
 		return currIdx;
-
 	}
 
 	private int getNumArgs(String commandType) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {

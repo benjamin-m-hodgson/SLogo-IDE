@@ -23,7 +23,7 @@ class CommandTreeReader {
 	 * @return true if the tree is complete
 	 */
 	private boolean treeIsComplete(CommandNode root) {
-		if(root.getIsDouble()) {
+		if(root.getIsDouble()||root.getIsString()) {
 			return true;
 		}
 		int completedChildren = 0;
