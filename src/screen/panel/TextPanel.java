@@ -43,29 +43,6 @@ public class TextPanel implements Panel {
 	CONSOLE_AREA.clear();
     }
     
-    public void run() {
-	String inputText = INPUT_AREA.getText().replaceAll("\n", 
-		System.getProperty("line.separator"));
-	CONSOLE_AREA.setText(inputText);
-	try {
-	   CONSOLE_AREA.setText(Double.toString(PROGRAM_CONTROLLER.parseInput(inputText)));
-	} 
-	catch (TurtleNotFoundException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	} 
-	catch (BadFormatException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	} 
-	catch (UnidentifiedCommandException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	} 
-	catch (MissingInformationException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
 
 	public void run() {
 		String inputText = INPUT_AREA.getText().replaceAll("\n", 
@@ -118,19 +95,5 @@ public class TextPanel implements Panel {
 	
     }
     
-    private TextArea makeInputArea() {
-	TextArea inputArea = new TextArea();
-	inputArea.setId("inputField");
-	inputArea.setPromptText(PROGRAM_CONTROLLER.resourceDisplayText("InputPrompt"));
-	return inputArea;
-    }
-    
-    private TextArea makeConsoleArea() {
-	TextArea consoleArea = new TextArea();
-	consoleArea.setId("consoleField");
-	consoleArea.setPromptText(PROGRAM_CONTROLLER.resourceDisplayText("ConsolePrompt"));
-	consoleArea.setEditable(false);
-	return consoleArea;
-    }
 
-}
+
