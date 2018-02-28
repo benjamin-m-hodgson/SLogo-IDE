@@ -54,24 +54,28 @@ public class TextPanel implements Panel {
 			PROGRAM_CONTROLLER.parseInput(inputText);
 		} 
 		catch (TurtleNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			clearInputArea();
+			USER_SCREEN.displayErrorMessage("Turtle Not Found");
 		} 
 		catch (BadFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			clearInputArea();
+			USER_SCREEN.displayErrorMessage("Bad Format");
+
 		} 
 		catch (UnidentifiedCommandException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			clearInputArea();
+			USER_SCREEN.displayErrorMessage("Unidentified Command");
+
 		} 
 		catch (MissingInformationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			clearInputArea();
+			USER_SCREEN.displayErrorMessage("Missing Information");
+
 		}
 		catch (NullPointerException e) {
-			// TODO handle null exception. What to return to parse? ""?
-			System.out.println("NULL");
+			clearInputArea();
+			USER_SCREEN.displayErrorMessage("Null!");
+
 		}
 
 	}

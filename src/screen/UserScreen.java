@@ -43,7 +43,7 @@ public class UserScreen implements Screen {
 	}
 	
 	public void displayErrorMessage(String errorMessage) {
-		
+		TURTLE_PANEL.displayErrorMessage(errorMessage);
 	}
 
 	@Override
