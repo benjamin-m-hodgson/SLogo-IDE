@@ -45,8 +45,6 @@ public class Controller {
     private Stage PROGRAM_STAGE;
     // TODO: add in program titles
     private String PROGRAM_TITLE;
-
-
     private TextFieldParser myTextFieldParser;
     private Map<String, Double> myVariables; 
     private List<String> myCommandHistory; 

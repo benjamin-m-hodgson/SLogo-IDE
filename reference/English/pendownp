@@ -1,0 +1,13 @@
+Turtle Queries:
+PENDOWN?
+PENDOWNP
+
+Description:
+N/A
+
+Parameters:
+N/A
+
+Returns:
+1 if turtle's pen is down
+0 if it is up
