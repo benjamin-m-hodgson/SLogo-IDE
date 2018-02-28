@@ -187,7 +187,7 @@ class CommandTreeBuilder {
 		//adding temporary variable name to children
 		if(userInput[currIdx].equals(DEFAULT_BRACKET_START_IDENTIFIER)) {
 			currIdx++;
-			parent.addChild(new CommandNode(userInput[currIdx]) );
+			parent.addChild(new CommandNode(userInput[currIdx]));
 			currIdx++;
 		}
 //		else {
