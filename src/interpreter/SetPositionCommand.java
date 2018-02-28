@@ -27,9 +27,9 @@ public class SetPositionCommand implements Command{
 	 * @see interpreter.Command#execute()
 	 */
 	@Override 
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
 		double newX = myNewXCommand.execute();
 		double newY = myNewYCommand.execute();
-		return myTurtle.setXY(newX, newY);
+		return myTurtle.setXY(newX, -newY);
 	}
 }

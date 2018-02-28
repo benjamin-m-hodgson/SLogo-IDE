@@ -8,6 +8,7 @@ import javafx.beans.binding.Bindings;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -20,6 +21,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
@@ -38,11 +42,27 @@ public class TurtlePanel implements Panel {
 	private ScrollPane SCROLL_PANE;
 
 
+    public TurtlePanel(Controller programController) {
+	PROGRAM_CONTROLLER = programController;
+	TURTLE_LIST = new ArrayList<ImageView>();
+    }
 
-	public TurtlePanel(Controller programController) {
-		PROGRAM_CONTROLLER = programController;
-		TURTLE_LIST = new ArrayList<ImageView>();
+    @Override
+    public void makePanel() {
+	Pane panel = new Pane();
+	SCROLL_PANE = new ScrollPane(panel);
+	SCROLL_PANE.setId("turtlePanel");
+	createTurtle(panel, SCROLL_PANE);
+	PANEL = SCROLL_PANE;
+    }
+
+    @Override
+    public Parent getPanel() {
+	if (PANEL == null) {
+	    makePanel();
 	}
+	return PANEL;
+    }
 
 	@Override
 	public void makePanel() {
@@ -107,4 +127,9 @@ public class TurtlePanel implements Panel {
 	public void changeBackgroundColor(String colorCode) {
 		SCROLL_PANE.setStyle("-fx-background-color:" + colorCode + ";");
 	}
+    
+    
+    public void changeBackgroundColor(String colorCode) {
+	SCROLL_PANE.setStyle("-fx-background-color:" + colorCode + ";");
+    }
 }

@@ -23,7 +23,7 @@ class CommandTreeReader {
 	 * @return true if the tree is complete
 	 */
 	private boolean treeIsComplete(CommandNode root) {
-		if(root.getIsDouble()) {
+		if(root.getIsDouble()||root.getIsString()) {
 			return true;
 		}
 		int completedChildren = 0;
@@ -39,7 +39,7 @@ class CommandTreeReader {
 	 * @param root
 	 * @return
 	 */
-	protected double readAndExecute(CommandNode root) {
+	protected double readAndExecute(CommandNode root) throws UnidentifiedCommandException{
 		if(!treeIsComplete(root)) {
 			throw new IllegalArgumentException("One or more of your commands does not have the proper number of arguments");
 		}

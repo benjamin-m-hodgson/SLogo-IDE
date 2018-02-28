@@ -1,4 +1,3 @@
-package interpreter;
 //
 //public interface CommandMaker {
 //	/**
@@ -13,6 +12,9 @@ package interpreter;
 //
 //}
 
+package interpreter;
+
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,7 +25,10 @@ import java.util.ResourceBundle;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import java.util.ResourceBundle;
+
+/** 
+ * @author Susie Choi
+ */
 
 class CommandMaker {
 
@@ -96,6 +101,27 @@ class CommandMaker {
 	//		}
 	//	}
 
+//	// TODO if node where children are if statement and if body?
+//	// shouldn't build body tree unless if statement evaluates to true 
+//	private ArrayList<String> parseIf(int ifIdx, Turtle turtle, String[] userInput, String[] commandTypes, String[] allTypes) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+//		ArrayList<String> ifExpression = new ArrayList<String>(); 
+//		int i = ifIdx+1; 
+//		while (! userInput[i].equals(DEFAULT_IFEXPR_END)) {
+//			ifExpression.add(userInput[i]);
+//			i++; 
+//		}
+//		// TODO COPY RANGE OF COMMANDTYPES, USERINPUTARRAY, TYPESARRAY
+//		String[] ifExprArray = ifExpression.toArray(new String[ifExpression.size()]);
+//		double ifExprEval = myCommandTreeBuilder.buildAndExecute(turtle, ifExprArray, commandTypes, allTypes);
+//		if (ifExprEval > 0) {
+//			ArrayList<String> ifExprBody = new ArrayList<String>(); 
+//			while (! userInput[i].equals(DEFAULT_IFBODY_END)) {
+//				ifExprBody.add(userInput[i]);
+//				i++;
+//			}
+//		}
+//	} 
+	
 	private String getCommandType(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		RegexMatcher regexMatcher = new RegexMatcher(myLanguage);
 		String commandType = regexMatcher.findMatchingKey(text);

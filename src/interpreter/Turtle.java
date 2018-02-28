@@ -51,18 +51,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * @author Sarahbland
- * @author Susie Choi
+ * @author Sarahbland - Pen inner class
+ * @author Susie Choi - Surrounding Turtle class
  *
  */
 public class Turtle {
 
+    	// TODO: put in setting.properties file
+    	public static final double DEFAULT_TURTLE_SIZE = 20;
 	public static final String DEFAULT_NAME = "";
 	public static final Color DEFAULT_PEN_COLOR = Color.BLACK;
 	public static final double DEFAULT_PEN_WIDTH = 1.0;
-	public static final double DEFAULT_X_POS = 0; 
-	public static final double DEFAULT_Y_POS = 0; 
-	public static final double DEFAULT_ANGLE = 0; 
+	public static final double DEFAULT_X_POS = 0.0; 
+	public static final double DEFAULT_Y_POS = 0.0; 
+	public static final double DEFAULT_ANGLE = 0.0; 
 	//	public static final ImageView DEFAULT_IMAGE = ;
 
 	private String myName;
@@ -145,10 +147,12 @@ public class Turtle {
 	// SETTERS
 	protected void hideTurtle() {
 		myVisibility = false; 
+		myImage.setVisible(false);
 	}
 
 	protected void showTurtle() {
 		myVisibility = true; 
+		myImage.setVisible(true);;
 	}
 
 	/**
@@ -167,14 +171,14 @@ public class Turtle {
 
 	protected double setXY(double x, double y) {
 		myOldImageX = myImage.getX();
-		System.out.println("image x was: " + myOldImageX);
 		myOldImageY = myImage.getY();
 		setOld();
 		myX = x; 
 		myY = y; 
-		myImage.setX(myX);;
-		System.out.println("image x is: " + myImage.getX());
-		myImage.setY(myY);
+		myImage.setX(myX - DEFAULT_TURTLE_SIZE/2);
+		myImage.setY(myY - DEFAULT_TURTLE_SIZE/2);
+		System.out.println(myImage.getX());
+		System.out.println(myImage.getY());
 		myPen.drawLine(myOldX, myOldY, myX, myY);
 		return calcDistance(myOldX, myOldY, myX, myY);
 	}
@@ -220,7 +224,8 @@ public class Turtle {
 	
 	protected void setAngle(double angle) {
 		myAngle = angle;
-		myImage.setRotate(Math.toRadians(angle));
+		System.out.println("angle is: "  + angle);
+		myImage.setRotate(angle);
 	}
 
 	protected void showPen() {
@@ -362,7 +367,7 @@ public class Turtle {
 		 * Clears all lines previously drawn by the pen from the screen
 		 */
 		private void clear() {
-			myPenLines.getChildren().removeAll();
+			myPenLines.getChildren().removeAll(myPenLines.getChildren());
 		}
 	}
 

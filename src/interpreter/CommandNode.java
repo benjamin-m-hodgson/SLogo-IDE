@@ -15,7 +15,7 @@ class CommandNode {
 	private Turtle myTurtle;
 	private boolean isString;
 
-	public CommandNode(String info, boolean isString) {
+	public CommandNode(String info) {
 		this(info, DEFAULT_NUM_ARGS, new ArrayList<CommandNode>(), new Turtle(), true);
 	}
 	public CommandNode(String info, Turtle turtle) {
@@ -33,7 +33,7 @@ class CommandNode {
 	public CommandNode(String info, int numArgs, List<CommandNode> children, Turtle turtle, boolean isString) {	
 		myInfo = info; 
 		try {
-			Integer.parseInt(info);
+			Double.parseDouble(info);
 			isDouble = true; 
 		}
 		catch (NumberFormatException e) {
