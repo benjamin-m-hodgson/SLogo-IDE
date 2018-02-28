@@ -664,8 +664,8 @@
 	-fx-pref-width: 190px;
 	-fx-max-width: 190px;
 	-fx-min-width: 190px;
-	-fx-pref-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
     -fx-background: #69b9af;
     -fx-background-color: #69b9af;
 	-fx-background-radius: 6;
@@ -724,8 +724,8 @@
 	-fx-pref-width: 150px;
 	-fx-max-width: 150px;
 	-fx-min-width: 150px;
-	-fx-pref-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
     -fx-background-color: transparent;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
@@ -806,42 +806,42 @@
 /******************************************************************************************/
 #penColorChooser {
 	-fx-alignment: center;
-    -fx-background-color: #fe9c6f;
+    -fx-background-color: #3ea3f8;
     -fx-background-radius: 6;
     -fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #fe793c;
+    -fx-border-color: #0c8bf6;
     -fx-padding: 0;
 }
 #penColorChooser .list-cell {
 	-fx-pref-width: 190px;
 	-fx-max-width: 190px;
 	-fx-min-width: 190px;
-	-fx-pref-height: 50px;
-	-fx-min-height: 50px;
-    -fx-background: #fe9c6f;
-    -fx-background-color: #fe9c6f;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
+    -fx-background: #3ea3f8;
+    -fx-background-color: #3ea3f8;
 	-fx-background-radius: 6;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #penColorChooser .list-view {
     -fx-background-color: transparent;
 }    
 #penColorChooser .list-view .list-cell {
-	-fx-background-color: #fe9c6f;
+	-fx-background-color: #3ea3f8;
     -fx-background-radius: 6;
     -fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #fe793c;
+    -fx-border-color: #0c8bf6;
     -fx-text-fill: #ffffff;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #penColorChooser .arrow-button {
@@ -852,17 +852,17 @@
 	-fx-font: 12px Dekko;
 }
 #penColorChooser:hover {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
     -fx-text-fill: #ffffff;
 }
 #penColorChooser:hover .list-cell {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #penColorChooser:hover .arrow-button {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
 }
 #penColorChooser:hover .arrow {
 	-fx-background-color: #ffffff;
@@ -871,22 +871,22 @@
 #penColorChooser:showing {
     -fx-text-fill: #ffffff;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #penColorChooser:showing .list-cell {
-	-fx-pref-width: 160px;
-	-fx-max-width: 160px;
-	-fx-min-width: 160px;
-	-fx-pref-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
     -fx-background-color: transparent;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
 	-fx-background-radius: 6;
     -fx-text-fill: #ffffff;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #penColorChooser:showing .arrow {
@@ -897,15 +897,15 @@
 	-fx-background-color: transparent;
 }
 #penColorChooser:showing:hover {
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #penColorChooser:showing:hover .list-cell{
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #penColorChooser:showing:hover .arrow {
@@ -914,14 +914,14 @@
 }
 #penColorChooser .list-view .list-cell:filled:selected, 
 #penColorChooser .list-view .list-cell:filled:selected:hover {
-    -fx-background: linear-gradient(#fe9c6f, #fe793c);
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background: linear-gradient(#3ea3f8, #0c8bf6);
+    -fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
     -fx-text-fill: #ffffff;
 }
 #penColorChooser .list-view .list-cell:filled:hover {
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #penColorChooser .scroll-bar:horizontal ,
@@ -960,42 +960,42 @@
 /******************************************************************************************/
 #turtleImageChooser {
 	-fx-alignment: center;
-    -fx-background-color: #fe9c6f;
+    -fx-background-color: #fa9873;
     -fx-background-radius: 6;
     -fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #fe793c;
+    -fx-border-color: #f97f51;
     -fx-padding: 0;
 }
 #turtleImageChooser .list-cell {
 	-fx-pref-width: 190px;
 	-fx-max-width: 190px;
 	-fx-min-width: 190px;
-	-fx-pref-height: 50px;
-	-fx-min-height: 50px;
-    -fx-background: #fe9c6f;
-    -fx-background-color: #fe9c6f;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
+    -fx-background: #fa9873;
+    -fx-background-color: #fa9873;
 	-fx-background-radius: 6;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #turtleImageChooser .list-view {
     -fx-background-color: transparent;
 }    
 #turtleImageChooser .list-view .list-cell {
-	-fx-background-color: #fe9c6f;
+	-fx-background-color: #fa9873;
     -fx-background-radius: 6;
     -fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #fe793c;
+    -fx-border-color: #f97f51;
     -fx-text-fill: #ffffff;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #turtleImageChooser .arrow-button {
@@ -1006,17 +1006,17 @@
 	-fx-font: 12px Dekko;
 }
 #turtleImageChooser {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
 }
 #turtleImageChooser:hover .list-cell {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #turtleImageChooser:hover .arrow-button {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#fa9873, #f97f51);
 }
 #turtleImageChooser:hover .arrow {
 	-fx-background-color: #ffffff;
@@ -1025,22 +1025,22 @@
 #turtleImageChooser:showing {
     -fx-text-fill: #ffffff;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #turtleImageChooser:showing .list-cell {
-	-fx-pref-width: 160px;
-	-fx-max-width: 160px;
-	-fx-min-width: 160px;
-	-fx-pref-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
     -fx-background-color: transparent;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
 	-fx-background-radius: 6;
     -fx-text-fill: #ffffff;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #turtleImageChooser:showing .arrow {
@@ -1051,15 +1051,15 @@
 	-fx-background-color: transparent;
 }
 #turtleImageChooser:showing:hover {
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #turtleImageChooser:showing:hover .list-cell{
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #turtleImageChooser:showing:hover .arrow {
@@ -1068,14 +1068,14 @@
 }
 #turtleImageChooser .list-view .list-cell:filled:selected, 
 #turtleImageChooser .list-view .list-cell:filled:selected:hover {
-    -fx-background: linear-gradient(#fe9c6f, #fe793c);
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background: linear-gradient(#fa9873, #f97f51);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
 }
 #turtleImageChooser .list-view .list-cell:filled:hover {
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #turtleImageChooser .scroll-bar:horizontal ,

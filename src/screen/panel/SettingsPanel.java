@@ -21,6 +21,7 @@ import java.util.List;
 
 import interpreter.Controller;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 
 
 public class SettingsPanel extends SpecificPanel  {
@@ -36,12 +37,14 @@ public class SettingsPanel extends SpecificPanel  {
 	private ComboBox<Object> TURTLE_IMAGE_CHOOSER;
 	private List<String> colorsUntranslated;
 	private List<String> colorsTranslated;
+	private Tooltip LANGUAGE_TIP;
+	private Tooltip BACKGROUND_TIP;
+	private Tooltip PEN_TIP;
+	private Tooltip TURTLE_TIP;
+	
 
 	private UserScreen USER_SCREEN;
 
-
-
-	private final int DEFAULT_BUTTON_SPACEING = 10;
 	private final String[] DROPDOWN_IDS = {"languageSettingsChooser", "backgroundColorChooser", "penColorChooser", "turtleImageChooser"};
 
 	public SettingsPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
@@ -53,12 +56,16 @@ public class SettingsPanel extends SpecificPanel  {
 
 	@Override
 	public void makePanel() {
+	    	// must make the tips before making the buttons
+	    	makeTips();
 		BACK = makeBackButton(PROGRAM_CONTROLLER);
 		LANGUAGE_CHOOSER = makeLanguageChooser(DROPDOWN_IDS[0]);
 		BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[1]);
 		PEN_COLOR_CHOOSER = makePenColorChooser(DROPDOWN_IDS[2]);
 		TURTLE_IMAGE_CHOOSER= makeTurtleImageChooser(DROPDOWN_IDS[3]);
-		VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACEING, LANGUAGE_CHOOSER,BACKGROUND_COLOR_CHOOSER,PEN_COLOR_CHOOSER,TURTLE_IMAGE_CHOOSER,BACK);
+		// must make the buttons before writing the tooltip text
+		writeTipText();
+		VBox panelRoot = new VBox(LANGUAGE_CHOOSER,BACKGROUND_COLOR_CHOOSER,PEN_COLOR_CHOOSER,TURTLE_IMAGE_CHOOSER,BACK);
 		panelRoot.setId("infoPanel");
 		panelRoot.setAlignment(Pos.BASELINE_CENTER);
 		PANEL = panelRoot;
@@ -72,7 +79,7 @@ public class SettingsPanel extends SpecificPanel  {
 	private ComboBox<Object> makeLanguageChooser(String itemID) {
 		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
 		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
-		//dropDownMenu.setTooltip(SELECTION_TIP);
+		dropDownMenu.setTooltip(LANGUAGE_TIP);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
 		simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());
@@ -97,7 +104,7 @@ public class SettingsPanel extends SpecificPanel  {
 	private ComboBox<Object> makeBackgroundColorChooser(String itemID) {
 		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
 		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
-		//dropDownMenu.setTooltip(SELECTION_TIP);
+		dropDownMenu.setTooltip(BACKGROUND_TIP);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
 		colorsUntranslated = PROGRAM_CONTROLLER.getColors();
@@ -123,7 +130,7 @@ public class SettingsPanel extends SpecificPanel  {
 	private ComboBox<Object> makePenColorChooser(String itemID) {
 		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
 		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
-		//dropDownMenu.setTooltip(SELECTION_TIP);
+		dropDownMenu.setTooltip(PEN_TIP);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
 		colorsUntranslated = PROGRAM_CONTROLLER.getColors();
@@ -149,7 +156,7 @@ public class SettingsPanel extends SpecificPanel  {
 	private ComboBox<Object> makeTurtleImageChooser(String itemID) {
 		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
 		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
-		//dropDownMenu.setTooltip(SELECTION_TIP);
+		dropDownMenu.setTooltip(TURTLE_TIP);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
 		//simulationChoices.addAll(PROGRAM_CONTROLLER.getColors());
@@ -169,15 +176,15 @@ public class SettingsPanel extends SpecificPanel  {
 	 * Updates the text displayed to the user to match the current language
 	 */
 	private void updatePrompt() {
+	    	makeTips();
+	    	LANGUAGE_CHOOSER = makeLanguageChooser(DROPDOWN_IDS[0]);
 		BACK.setText(PROGRAM_CONTROLLER.resourceDisplayText("backButton"));
-		ObservableList<Object> simulationChoices;	
-		simulationChoices = FXCollections.observableArrayList(PROGRAM_CONTROLLER.resourceDisplayText(DROPDOWN_IDS[0]));
-		simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());
-		LANGUAGE_CHOOSER.setItems(simulationChoices);
 		BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[1]);
 		PEN_COLOR_CHOOSER = makePenColorChooser(DROPDOWN_IDS[2]);
 		TURTLE_IMAGE_CHOOSER= makeTurtleImageChooser(DROPDOWN_IDS[3]);
-		((VBox)PANEL).getChildren().setAll(LANGUAGE_CHOOSER,BACKGROUND_COLOR_CHOOSER,PEN_COLOR_CHOOSER,TURTLE_IMAGE_CHOOSER,BACK);
+		writeTipText();
+		((VBox)PANEL).getChildren().setAll(LANGUAGE_CHOOSER,
+			BACKGROUND_COLOR_CHOOSER, PEN_COLOR_CHOOSER, TURTLE_IMAGE_CHOOSER, BACK);
 	}
 
 
@@ -190,6 +197,26 @@ public class SettingsPanel extends SpecificPanel  {
 		dropDownMenu.setVisibleRowCount(VISIBLE_ROW_COUNT);
 		dropDownMenu.setValue(defaultChoice);
 		return dropDownMenu;
+	}
+	
+	/**
+	 * Creates the necessary Tooltips and sets their text styling
+	 */
+	private void makeTips() {
+		LANGUAGE_TIP = new Tooltip();
+		BACKGROUND_TIP = new Tooltip();
+		PEN_TIP = new Tooltip();
+		TURTLE_TIP = new Tooltip();
+	}
+
+	/**
+	 * Writes the appropriate text on each Tooltip
+	 */
+	private void writeTipText() {
+	    	LANGUAGE_TIP.setText(PROGRAM_CONTROLLER.resourceDisplayText(DROPDOWN_IDS[0]));
+		BACKGROUND_TIP.setText(PROGRAM_CONTROLLER.resourceDisplayText(DROPDOWN_IDS[1]));
+		PEN_TIP.setText(PROGRAM_CONTROLLER.resourceDisplayText(DROPDOWN_IDS[2]));
+		TURTLE_TIP.setText(PROGRAM_CONTROLLER.resourceDisplayText(DROPDOWN_IDS[3]));
 	}
 
 
