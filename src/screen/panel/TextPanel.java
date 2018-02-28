@@ -74,7 +74,7 @@ public class TextPanel implements Panel {
 		}
 		catch (NullPointerException e) {
 			clearInputArea();
-			USER_SCREEN.displayErrorMessage("Invalid Format");
+			USER_SCREEN.displayErrorMessage("Invalid Format!");
 
 		}
 
