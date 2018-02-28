@@ -9,12 +9,13 @@ package interpreter;
  */
 public class SineCommand implements Command{
 
-    	double DEGREES;
+    Command degreesCommand;
 	protected SineCommand(Command degrees) {
-		DEGREES = degrees.execute();
+		degreesCommand = degrees;
 	}
 	@Override
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
+		double DEGREES = degreesCommand.execute();
 	    	return Math.sin(Math.toRadians(DEGREES));
 	}
 	public int getNumArgs() {

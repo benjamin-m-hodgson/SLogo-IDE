@@ -9,15 +9,13 @@ package interpreter;
  */
 public class ArcTangentCommand implements Command{
 
-    	double DEGREES;
+	Command degreesCommand;
 	protected ArcTangentCommand(Command degrees) {
-		DEGREES = degrees.execute();
+		degreesCommand = degrees;
 	}
 	@Override
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
+		double DEGREES = degreesCommand.execute();
 	    	return Math.toDegrees(Math.atan(Math.toRadians(DEGREES)));
-	}
-	public int getNumArgs() {
-		return 1;
 	}
 }

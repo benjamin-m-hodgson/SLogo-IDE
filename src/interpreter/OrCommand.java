@@ -10,14 +10,16 @@ package interpreter;
 public class OrCommand implements Command{
     	private final double TRUE = 1;
     	private final double FALSE = 0;
-    	double TEST1;
-    	double TEST2;
+    	Command test1Command;
+    	Command test2Command;
 	protected OrCommand(Command test1, Command test2) {
-		TEST1 = test1.execute();
-		TEST2 = test2.execute();
+		test1Command = test1;
+		test2Command = test2;
 	}
 	@Override
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
+		double TEST1 = test1Command.execute();
+		double TEST2 = test2Command.execute();
 		if (TEST1 != FALSE || TEST2 != FALSE) {
 		    return TRUE;
 		}

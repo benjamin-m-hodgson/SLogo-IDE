@@ -23,7 +23,7 @@ class SetHeadingCommand implements Command{
 	 * @see interpreter.Command#execute()
 	 */
 	@Override 
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
 		double newAngle = myDegreesCommand.execute();
 		double oldAngle = myTurtle.getAngle();
 		myTurtle.setAngle(newAngle);

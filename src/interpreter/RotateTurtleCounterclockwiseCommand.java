@@ -26,7 +26,7 @@ public class RotateTurtleCounterclockwiseCommand implements Command{
 	 * @return number of degrees moved
 	 * @see interpreter.Command#execute()
 	 */
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
 		double degrees = myDegreesCommand.execute();
 		myTurtle.setAngle(myTurtle.getAngle()-degrees);
 		return degrees;

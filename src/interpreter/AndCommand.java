@@ -10,14 +10,16 @@ package interpreter;
 public class AndCommand implements Command{
     	private final double TRUE = 1;
     	private final double FALSE = 0;
-    	double TEST1;
-    	double TEST2;
+    Command testOneCommand;
+    	Command testTwoCommand;
 	protected AndCommand(Command test1, Command test2) {
-		TEST1 = test1.execute();
-		TEST2 = test2.execute();
+		testOneCommand = test1;
+		testTwoCommand = test2;
 	}
 	@Override
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
+		double TEST1 = testOneCommand.execute();
+		double TEST2 = testTwoCommand.execute();
 		if (TEST1 != FALSE && TEST2 != FALSE) {
 		    return TRUE;
 		}

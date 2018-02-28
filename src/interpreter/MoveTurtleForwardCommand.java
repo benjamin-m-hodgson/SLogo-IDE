@@ -27,7 +27,7 @@ class MoveTurtleForwardCommand implements Command {
 	 * @return distance the turtle moved forward
 	 * @see interpreter.Command#execute()
 	 */
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
 		double forwardDist = myForwardDistCommand.execute();
 		double angle = Math.toRadians(myTurtle.getAngle());
 		myTurtle.setXY(myTurtle.getX()-forwardDist*Math.sin(-angle), myTurtle.getY()-forwardDist*Math.cos(-angle));

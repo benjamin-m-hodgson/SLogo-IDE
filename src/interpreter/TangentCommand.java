@@ -9,12 +9,13 @@ package interpreter;
  */
 public class TangentCommand implements Command{
 
-    	double DEGREES;
+    	Command degreesCommand;
 	protected TangentCommand(Command degrees) {
-		DEGREES = degrees.execute();
+		degreesCommand = degrees;
 	}
 	@Override
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
+		double DEGREES = degreesCommand.execute();
 	    	return Math.tan(Math.toRadians(DEGREES));
 	}
 	public int getNumArgs() {
