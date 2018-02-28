@@ -5,8 +5,11 @@ import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
@@ -24,17 +27,14 @@ public class HistoryPanel extends SpecificPanel {
     private Parent PANEL;
     private Controller PROGRAM_CONTROLLER;
     private BorderPane PANE;
-    private TextArea HISTORY; 
+    private VBox HISTORY_BOX; 
     private UserScreen USER_SCREEN;
-    private List<String> INPUT_HISTORY;
-    private int INPUTS_RUN;
 
 
     public HistoryPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
 	PROGRAM_CONTROLLER = programController;
 	PANE = pane;
 	USER_SCREEN = userScreen;
-	INPUTS_RUN = 0;
 	// attach "animation loop" to time line to play it
 	KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
 		e -> setHistory(SECOND_DELAY));
@@ -47,14 +47,14 @@ public class HistoryPanel extends SpecificPanel {
     @Override
     public void makePanel() {
 	Button backButton = makeBackButton(PROGRAM_CONTROLLER);
-	HISTORY = new TextArea();
-	HISTORY.setId("settingsField");
-	HISTORY.setEditable(false);
-	HISTORY.setPromptText(PROGRAM_CONTROLLER.resourceDisplayText("historyContent"));
-	VBox panelRoot = new VBox(HISTORY,backButton );
+	ScrollPane historyPane = new ScrollPane();
+	historyPane.setId("settingsField");
+	HISTORY_BOX = new VBox();
+	historyPane.setContent(HISTORY_BOX);
+	VBox panelRoot = new VBox(historyPane, backButton);
 	panelRoot.setId("infoPanel");
 	panelRoot.setAlignment(Pos.BASELINE_CENTER);
-	VBox.setVgrow(HISTORY, Priority.ALWAYS);
+	VBox.setVgrow(historyPane, Priority.ALWAYS);
 	PANEL = panelRoot;
     }
 
@@ -86,19 +86,19 @@ public class HistoryPanel extends SpecificPanel {
     }
     
     private void setHistory(double elapsedTime) {
-	StringBuilder buildHistory = new StringBuilder();
+	HISTORY_BOX.getChildren().clear();
 	Iterator<String> commandHistory = USER_SCREEN.commandHistory();
 	int currentRun = 1; 
 	while (commandHistory.hasNext()) {
-	    buildHistory.append("------" + System.lineSeparator()
-	    		+ PROGRAM_CONTROLLER.resourceDisplayText("RunPrompt") 
-		    	+ " " + Integer.toString(currentRun) + System.lineSeparator()
-	    		+ "======" + System.lineSeparator());
-	    String command = commandHistory.next() + System.lineSeparator();
-	    buildHistory.append(command);
+	    String command = commandHistory.next();
+	    Label numberLabel = new Label(Integer.toString(currentRun));
+	    numberLabel.setId("numberLabel");
+	    Label commandLabel = new Label(command);
+	    commandLabel.setId("historyLabel");
+	    HBox numberedCommand = new HBox(numberLabel, commandLabel);
+	    HISTORY_BOX.getChildren().add(numberedCommand);
 	    currentRun++;
 	}
-	HISTORY.setText(buildHistory.toString());
     }
 
 }

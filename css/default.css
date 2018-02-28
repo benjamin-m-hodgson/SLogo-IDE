@@ -90,6 +90,44 @@
 	-fx-font: 32px Dekko;
 }
 /******************************************************************************************/
+/* The label displaying a command from the command history */ 
+/******************************************************************************************/
+#historyLabel {
+	-fx-min-width: 100;
+	-fx-pref-width: 100;
+	-fx-background-color: #ffffff;
+	-fx-border-style: solid inside;
+	-fx-border-width: 1;
+	-fx-border-insets: 0;
+	-fx-border-radius: 0;
+	-fx-border-color: rgba(192, 188, 182, 0.5);
+	-fx-text-alignment: left;
+	-fx-font: 12px Dekko;
+}
+#historyLabel .text {
+	-fx-stroke: #555555;
+	-fx-stroke-width: 0.3px;
+}
+/******************************************************************************************/
+/* The label displaying a single integer */ 
+/******************************************************************************************/
+#numberLabel {
+	-fx-min-width: 50;
+	-fx-pref-width: 50;
+	-fx-background-color: #ffffff;
+	-fx-border-style: solid inside;
+	-fx-border-width: 0 1 0 0;
+	-fx-border-insets: 0;
+	-fx-border-radius: 0;
+	-fx-border-color: rgba(192, 188, 182, 0.5);
+	-fx-text-alignment: left;
+	-fx-font: 12px Dekko;
+}
+#numberLabel .text {
+	-fx-stroke: #555555;
+	-fx-stroke-width: 1px;
+}
+/******************************************************************************************/
 /* The text field where the user can input commands */ 
 /******************************************************************************************/
 #inputField {
