@@ -30,7 +30,7 @@ public class InputPanel implements Panel {
 
 	@Override
 	public void makePanel() {
-		INPUT_AREA = new TextPanel(PROGRAM_CONTROLLER, USER_SCREEN);
+		INPUT_AREA = new TextPanel(PROGRAM_CONTROLLER, USER_SCREEN); 
 		VBox runBox = drawRunBox();
 		Parent textPanel = drawTextPanel(INPUT_AREA);
 		BorderPane panelRoot = new BorderPane();

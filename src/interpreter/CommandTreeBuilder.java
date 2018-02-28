@@ -197,7 +197,7 @@ class CommandTreeBuilder {
 			currIdxCopy++;
 		}
 		//adding command info to children
-		System.out.println("currIdx" + currIdx + "currIdxCopy" + currIdxCopy);
+		//System.out.println("currIdx" + currIdx + "currIdxCopy" + currIdxCopy);
 		parent.addChild(createCommandTree(turtle, Arrays.copyOfRange(userInput, currIdx, currIdxCopy), 0));
 		currIdxCopy++;
 		currIdx = currIdxCopy;
@@ -206,12 +206,13 @@ class CommandTreeBuilder {
 			currIdx++;
 			String repeatedCommand = userInput[currIdx];
 			currIdx++;
-			while(!userInput[currIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
+			while(currIdx < userInput.length) {
 				repeatedCommand = String.join(" ", repeatedCommand, userInput[currIdx]);
 				currIdx++;
 			}
-			parent.addChild(new CommandNode(repeatedCommand));
-			currIdxCopy++;
+			if(!userInput[currIdx-1].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
+				parent.addChild(new CommandNode(repeatedCommand));
+			}
 		}
 		else {
 			throw new UnidentifiedCommandException("Dotimes syntax incorrect");
