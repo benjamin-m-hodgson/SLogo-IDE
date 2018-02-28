@@ -956,12 +956,12 @@
 /******************************************************************************************/
 #settingsButton {
 	-fx-alignment: center;
-	-fx-pref-width: 100px;
-	-fx-max-width: 100px;
-	-fx-min-width: 100px;
-	-fx-pref-height: 50px;
-	-fx-max-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-max-height: 40px;
+	-fx-min-height: 40px;
 	-fx-background-radius: 6;
 	-fx-background-color: #1fbed6;
 	-fx-border-style: solid inside;
@@ -970,7 +970,7 @@
     -fx-border-color: #0077b5;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
     -fx-underline: false;
 }
@@ -979,7 +979,7 @@
 }
 #settingsButton:hover {
 	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
-	-fx-font: 18px Dekko;
+	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
 /******************************************************************************************/
@@ -987,12 +987,12 @@
 /******************************************************************************************/
 #variablesButton {
 	-fx-alignment: center;
-	-fx-pref-width: 100px;
-	-fx-max-width: 100px;
-	-fx-min-width: 100px;
-	-fx-pref-height: 50px;
-	-fx-max-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-max-height: 40px;
+	-fx-min-height: 40px;
 	-fx-background-radius: 6;
 	-fx-background-color: #1fbed6;
 	-fx-border-style: solid inside;
@@ -1001,13 +1001,13 @@
     -fx-border-color: #0077b5;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
     -fx-underline: false;
 }
 #variablesButton:hover {
 	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
-	-fx-font: 18px Dekko;
+	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
 /******************************************************************************************/
@@ -1015,12 +1015,12 @@
 /******************************************************************************************/
 #historyButton {
 	-fx-alignment: center;
-	-fx-pref-width: 100px;
-	-fx-max-width: 100px;
-	-fx-min-width: 100px;
-	-fx-pref-height: 50px;
-	-fx-max-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-max-height: 40px;
+	-fx-min-height: 40px;
 	-fx-background-radius: 6;
 	-fx-background-color: #1fbed6;
 	-fx-border-style: solid inside;
@@ -1029,13 +1029,13 @@
     -fx-border-color: #0077b5;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
     -fx-underline: false;
 }
 #historyButton:hover {
 	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
-	-fx-font: 18px Dekko;
+	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
 
@@ -1044,12 +1044,12 @@
 /******************************************************************************************/
 #helpButton {
 	-fx-alignment: center;
-	-fx-pref-width: 100px;
-	-fx-max-width: 100px;
-	-fx-min-width: 100px;
-	-fx-pref-height: 50px;
-	-fx-max-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-max-height: 40px;
+	-fx-min-height: 40px;
 	-fx-background-radius: 6;
 	-fx-background-color: #1fbed6;
 	-fx-border-style: solid inside;
@@ -1058,13 +1058,13 @@
     -fx-border-color: #0077b5;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
     -fx-underline: false;
 }
 #helpButton:hover {
 	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
-	-fx-font: 18px Dekko;
+	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
 /******************************************************************************************/
@@ -1072,12 +1072,12 @@
 /******************************************************************************************/
 #commandsButton {
 	-fx-alignment: center;
-	-fx-pref-width: 100px;
-	-fx-max-width: 100px;
-	-fx-min-width: 100px;
-	-fx-pref-height: 50px;
-	-fx-max-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-max-height: 40px;
+	-fx-min-height: 40px;
 	-fx-background-radius: 6;
 	-fx-background-color: #1fbed6;
 	-fx-border-style: solid inside;
@@ -1086,13 +1086,13 @@
     -fx-border-color: #0077b5;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
-    -fx-font: 10px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
     -fx-underline: false;
 }
 #commandsButton:hover {
 	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
-	-fx-font: 10px Dekko;
+	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
 /******************************************************************************************/
@@ -1100,12 +1100,12 @@
 /******************************************************************************************/
 #backButton {
 	-fx-alignment: center;
-	-fx-pref-width: 100px;
-	-fx-max-width: 100px;
-	-fx-min-width: 100px;
-	-fx-pref-height: 50px;
-	-fx-max-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-max-height: 40px;
+	-fx-min-height: 40px;
 	-fx-background-radius: 6;
 	-fx-background-color: #1fbed6;
 	-fx-border-style: solid inside;
@@ -1114,13 +1114,13 @@
     -fx-border-color: #0077b5;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
     -fx-underline: false;
 }
 #backButton:hover {
 	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
-	-fx-font: 18px Dekko;
+	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
 /******************************************************************************************/
