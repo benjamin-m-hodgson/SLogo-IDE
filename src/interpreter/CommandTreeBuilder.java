@@ -88,7 +88,6 @@ class CommandTreeBuilder {
 		}
 	}
 
-	// TODO account for when 0-args are in the middle of the seq of commands 
 	private void createAndSetChildren(Turtle turtle, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		if (currIdx >= userInput.length) { //base case if out of bounds
 			if (addToTrees) {
