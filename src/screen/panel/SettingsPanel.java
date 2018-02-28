@@ -170,10 +170,7 @@ public class SettingsPanel extends SpecificPanel  {
 	 */
 	private void updatePrompt() {
 		BACK.setText(PROGRAM_CONTROLLER.resourceDisplayText("backButton"));
-		ObservableList<Object> simulationChoices;	
-		simulationChoices = FXCollections.observableArrayList(PROGRAM_CONTROLLER.resourceDisplayText(DROPDOWN_IDS[0]));
-		simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());
-		LANGUAGE_CHOOSER.setItems(simulationChoices);
+		LANGUAGE_CHOOSER = makeLanguageChooser(DROPDOWN_IDS[0]);
 		BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[1]);
 		PEN_COLOR_CHOOSER = makePenColorChooser(DROPDOWN_IDS[2]);
 		TURTLE_IMAGE_CHOOSER= makeTurtleImageChooser(DROPDOWN_IDS[3]);
