@@ -56,7 +56,6 @@ class CommandTreeBuilder {
 			return null; // TODO make this more detailed
 		}
 		Double checkIfDouble; 
-		System.out.println(userInput[startIdx]);
 		try {
 			checkIfDouble = Double.parseDouble(userInput[startIdx]);
 			return null; 
@@ -77,6 +76,7 @@ class CommandTreeBuilder {
 			//		}
 			int numArgs = getNumArgs(currCommand);
 			CommandNode newParentNode = new CommandNode(currCommand, numArgs, turtle);
+//			System.out.println("new parent node "+newParentNode.toString());
 			while (newParentNode.getNumArgs() == 0) { // accounts for multiple 1-arg arguments before args that need child nodes 
 				if (startIdx >= userInput.length) {
 					return newParentNode; 
@@ -210,7 +210,7 @@ class CommandTreeBuilder {
 			if (addToTrees) {
 				myCommandTrees.add(parent);
 			}
-			return; 
+ 			return;
 		}
 		//		System.out.println(userInput[currIdx]);
 		Double firstIsDouble; 
@@ -252,6 +252,9 @@ class CommandTreeBuilder {
 						newCommandNode = backtrackCommandNode; 
 					}
 					parent.addChild(newCommandNode);
+					if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
+						createAndSetChildren(turtle, newCommandNode, userInput, idx+1, false);
+					}
 					if (parent.getNumChildren() < parent.getNumArgs()) { 
 						createAndSetChildren(turtle, parent, userInput, idx+1, addToTrees);
 					}
