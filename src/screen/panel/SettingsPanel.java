@@ -79,15 +79,11 @@ public class SettingsPanel extends SpecificPanel  {
 		dropDownMenu.setItems(simulationChoices);
 		dropDownMenu.setId(itemID);
 		dropDownMenu.getSelectionModel().selectedIndexProperty()
-		.addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> arg0, 
-					Number arg1, Number arg2) {
-				String selected = (String) simulationChoices.get((Integer) arg2);
-				if (!selected.equals(selectionPrompt)) {
-					PROGRAM_CONTROLLER.changeLanguage(selected);
-					updatePrompt();
-				}
+		.addListener(( arg0, arg1,  arg2) ->{
+			String selected = (String) simulationChoices.get((Integer) arg2);
+			if (!selected.equals(selectionPrompt)) {
+				PROGRAM_CONTROLLER.changeLanguage(selected);
+				updatePrompt();
 			}
 		});
 		return dropDownMenu;
@@ -110,19 +106,15 @@ public class SettingsPanel extends SpecificPanel  {
 		dropDownMenu.setItems(simulationChoices);
 		dropDownMenu.setId(itemID);
 		dropDownMenu.getSelectionModel().selectedIndexProperty()
-		.addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> arg0, 
-					Number arg1, Number arg2) {
-				String selected = (String) dropDownMenu.getItems().get((Integer) arg2);
-				if (!selected.equals(selectionPrompt)) {
-					USER_SCREEN.changeBackgroundColor(colorsUntranslated.get(colorsTranslated.indexOf(selected)));
-				}
+		.addListener((arg0,arg1, arg2)->{
+			String selected = (String) dropDownMenu.getItems().get((Integer) arg2);
+			if (!selected.equals(selectionPrompt)) {
+				USER_SCREEN.changeBackgroundColor(colorsUntranslated.get(colorsTranslated.indexOf(selected)));
 			}
 		});
 		return dropDownMenu;
 	}
-	
+
 	/**
 	 * 
 	 * @return dropDownMenu: a drop down menu that lets the user choose the
@@ -140,19 +132,15 @@ public class SettingsPanel extends SpecificPanel  {
 		dropDownMenu.setItems(simulationChoices);
 		dropDownMenu.setId(itemID);
 		dropDownMenu.getSelectionModel().selectedIndexProperty()
-		.addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> arg0, 
-					Number arg1, Number arg2) {
-				String selected = (String) dropDownMenu.getItems().get((Integer) arg2);
-				if (!selected.equals(selectionPrompt)) {
-					//controller.changePenColor(colorsUntranslated.get(colorsTranslated.indexOf(selected)))) //something like this
-				}
+		.addListener(( arg0, arg1, arg2) ->{
+			String selected = (String) dropDownMenu.getItems().get((Integer) arg2);
+			if (!selected.equals(selectionPrompt)) {
+				//controller.changePenColor(colorsUntranslated.get(colorsTranslated.indexOf(selected)))) //something like this
 			}
 		});
 		return dropDownMenu;
 	}
-	
+
 	/**
 	 * 
 	 * @return dropDownMenu: a drop down menu that lets the user choose the
@@ -168,14 +156,10 @@ public class SettingsPanel extends SpecificPanel  {
 		dropDownMenu.setItems(simulationChoices);
 		dropDownMenu.setId(itemID);
 		dropDownMenu.getSelectionModel().selectedIndexProperty()
-		.addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> arg0, 
-					Number arg1, Number arg2) {
-				String selected = (String) simulationChoices.get((Integer) arg2);
-				if (!selected.equals(selectionPrompt)) {
-					//controller.changePenColor() //something like this
-				}
+		.addListener((arg0,arg1, arg2)-> {
+			String selected = (String) simulationChoices.get((Integer) arg2);
+			if (!selected.equals(selectionPrompt)) {
+				//controller.changeTurtleImage() //something like this
 			}
 		});
 		return dropDownMenu;
@@ -195,7 +179,7 @@ public class SettingsPanel extends SpecificPanel  {
 		TURTLE_IMAGE_CHOOSER= makeTurtleImageChooser(DROPDOWN_IDS[3]);
 		((VBox)PANEL).getChildren().setAll(LANGUAGE_CHOOSER,BACKGROUND_COLOR_CHOOSER,PEN_COLOR_CHOOSER,TURTLE_IMAGE_CHOOSER,BACK);
 	}
-	
+
 
 	/**
 	 * @param defaultChoice: String that represents the default value for this combo box
