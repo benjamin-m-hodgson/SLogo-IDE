@@ -10,12 +10,13 @@ package interpreter;
 public class NotCommand implements Command{
     	private final double TRUE = 1;
     	private final double FALSE = 0;
-    	double TEST;
+    	Command testCommand;
 	protected NotCommand(Command test) {
-		TEST = test.execute();
+		testCommand = test;
 	}
 	@Override
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
+		double TEST = testCommand.execute();
 		if (TEST == FALSE) {
 		    return TRUE;
 		}

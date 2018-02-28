@@ -39,7 +39,7 @@ class CommandTreeReader {
 	 * @param root
 	 * @return
 	 */
-	protected double readAndExecute(CommandNode root) {
+	protected double readAndExecute(CommandNode root) throws UnidentifiedCommandException{
 		if(!treeIsComplete(root)) {
 			throw new IllegalArgumentException("One or more of your commands does not have the proper number of arguments");
 		}

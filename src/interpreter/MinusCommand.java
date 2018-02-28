@@ -9,12 +9,13 @@ package interpreter;
  */
 public class MinusCommand implements Command{
 
-    	double EXPR;
+    Command exprCommand;
 	protected MinusCommand(Command expr) {
-		EXPR = expr.execute();
+		exprCommand = expr;
 	}
 	@Override
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
+		double EXPR = exprCommand.execute();
 		return -EXPR;
 	}
 	public int getNumArgs() {

@@ -10,14 +10,16 @@ package interpreter;
 public class NotEqualCommand implements Command{
     	private final double TRUE = 1;
     	private final double FALSE = 0;
-    	double EXPR1;
-    	double EXPR2;
+    Command expr1Command;
+    Command expr2Command;
 	protected NotEqualCommand(Command expr1, Command expr2) {
-		EXPR1 = expr1.execute();
-		EXPR2 = expr2.execute();
+		expr1Command = expr1;
+		expr2Command = expr2;
 	}
 	@Override
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
+		double EXPR1 = expr1Command.execute();
+		double EXPR2 = expr2Command.execute();
 		if (EXPR1 != EXPR2) {
 		    return TRUE;
 		}

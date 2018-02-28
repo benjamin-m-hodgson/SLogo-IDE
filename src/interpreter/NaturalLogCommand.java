@@ -9,12 +9,13 @@ package interpreter;
  */
 public class NaturalLogCommand implements Command{
 
-    	double EXPR;
+    	Command exprCommand;
 	protected NaturalLogCommand(Command expr) {
-		EXPR = expr.execute();
+		exprCommand = expr;
 	}
 	@Override
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
+		Double EXPR = exprCommand.execute();
 	    	return Math.log(EXPR);
 	}
 	public int getNumArgs() {

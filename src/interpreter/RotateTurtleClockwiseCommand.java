@@ -25,7 +25,7 @@ public class RotateTurtleClockwiseCommand implements Command{
 	 * Sets the heading of the turtle to the specified number of degrees clockwise of its current position
 	 * @see interpreter.Command#execute()
 	 */
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
 		double degrees = myDegreesCommand.execute(); 
 		myTurtle.setAngle(myTurtle.getAngle()+degrees);
 		return degrees;

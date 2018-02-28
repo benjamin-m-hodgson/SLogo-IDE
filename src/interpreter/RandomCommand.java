@@ -11,12 +11,13 @@ import java.util.Random;
  */
 public class RandomCommand implements Command{
 
-    	double MAX;
+    Command maxCommand;
 	protected RandomCommand(Command max) {
-		MAX = max.execute();
+		maxCommand = max;
 	}
 	@Override
-	public double execute() {
+	public double execute() throws UnidentifiedCommandException{
+		double MAX = maxCommand.execute();
 	    	Random randGenerator = new Random();
 	    	return randGenerator.nextDouble() * MAX;
 	}
