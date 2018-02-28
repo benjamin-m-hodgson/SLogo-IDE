@@ -98,6 +98,8 @@ public class TurtlePanel implements Panel {
 			turtleView.setFitWidth(DEFAULT_TURTLE_SIZE);
 			turtleView.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
 			turtleView.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
+			turtleView.setX(-DEFAULT_TURTLE_SIZE/2);
+			turtleView.setY(-DEFAULT_TURTLE_SIZE/2);
 			panel.getChildren().add(turtleView);
 			// TODO: possibly add turtles to list ?
 			PROGRAM_CONTROLLER.makeNewTurtleCommand("Turtle", turtleView, Color.BLACK, new Group());

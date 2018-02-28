@@ -34,6 +34,7 @@
 /******************************************************************************************/
 #infoPanel {
 	-fx-alignment: center;
+	-fx-spacing: 20;
 	-fx-max-width: 200;
 	-fx-min-width: 200;
 	-fx-pref-width: 200;
@@ -188,11 +189,11 @@
 	-fx-max-height: 50px;
 	-fx-min-height: 50px;
 	-fx-background-radius: 6;
-	-fx-background-color: #1fbed6;
+	-fx-background-color: #3ea3f8;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #0077b5;
+    -fx-border-color: #0c8bf6;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
@@ -204,7 +205,7 @@
 	-fx-opacity: 0.7;
 }
 #applyButton:hover {
-	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
+	-fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
 } 
 #applyButton:hover {
 	-fx-font: 18px Dekko;
@@ -222,11 +223,11 @@
 	-fx-max-height: 50px;
 	-fx-min-height: 50px;
 	-fx-background-radius: 6;
-	-fx-background-color: #69b366;
+	-fx-background-color: #8f8fd3;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #1e8d19;
+    -fx-border-color: #6f6fc7;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
@@ -238,7 +239,7 @@
 	-fx-opacity: 0.7;
 }
 #startButton:hover {
-	-fx-background-color: linear-gradient(#69b366, #1e8d19);
+	-fx-background-color: linear-gradient(#8f8fd3, #6f6fc7);
 	-fx-font: 18px Dekko;
 	-fx-font-weight: bold;
 } 
@@ -254,11 +255,11 @@
 	-fx-max-height: 50px;
 	-fx-min-height: 50px;
 	-fx-background-radius: 6;
-	-fx-background-color: #69b366;
+	-fx-background-color: #ffa6a6;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #1e8d19;
+    -fx-border-color: #ff8888;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
@@ -270,7 +271,7 @@
 	-fx-opacity: 0.7;
 }
 #runButton:hover {
-	-fx-background-color: linear-gradient(#69b366, #1e8d19);
+	-fx-background-color: linear-gradient(#ffa6a6, #ff8888);
 	-fx-font: 18px Dekko;
 	-fx-font-weight: bold;
 } 
@@ -340,12 +341,12 @@
 /******************************************************************************************/
 #languageChooser {
 	-fx-alignment: center;
-    -fx-background-color: #fe9c6f;
+    -fx-background-color: #fa9873;
     -fx-background-radius: 6;
     -fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #fe793c;
+    -fx-border-color: #f97f51;
     -fx-padding: 0;
 }
 #languageChooser .list-cell {
@@ -354,8 +355,8 @@
 	-fx-min-width: 190px;
 	-fx-pref-height: 50px;
 	-fx-min-height: 50px;
-    -fx-background: #fe9c6f;
-    -fx-background-color: #fe9c6f;
+    -fx-background: #fa9873;
+    -fx-background-color: #fa9873;
 	-fx-background-radius: 6;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
@@ -367,12 +368,12 @@
     -fx-background-color: transparent;
 }    
 #languageChooser .list-view .list-cell {
-	-fx-background-color: #fe9c6f;
+	-fx-background-color: #fa9873;
     -fx-background-radius: 6;
     -fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #fe793c;
+    -fx-border-color: #f97f51;
     -fx-text-fill: #ffffff;
     -fx-wrap-text: true;
     -fx-font: 16px Dekko;
@@ -386,17 +387,17 @@
 	-fx-font: 12px Dekko;
 }
 #languageChooser:hover {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
 }
 #languageChooser:hover .list-cell {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
     -fx-font: 18px Dekko;
     -fx-font-weight: bold;
 }
 #languageChooser:hover .arrow-button {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#fa9873, #f97f51);
 }
 #languageChooser:hover .arrow {
 	-fx-background-color: #ffffff;
@@ -431,13 +432,13 @@
 	-fx-background-color: transparent;
 }
 #languageChooser:showing:hover {
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
     -fx-font: 18px Dekko;
     -fx-font-weight: bold;
 }
 #languageChooser:showing:hover .list-cell{
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
     -fx-font: 18px Dekko;
     -fx-font-weight: bold;
@@ -448,12 +449,12 @@
 }
 #languageChooser .list-view .list-cell:filled:selected, 
 #languageChooser .list-view .list-cell:filled:selected:hover {
-    -fx-background: linear-gradient(#fe9c6f, #fe793c);
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background: linear-gradient(#fa9873, #f97f51);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
 }
 #languageChooser .list-view .list-cell:filled:hover {
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
     -fx-font: 18px Dekko;
     -fx-font-weight: bold;
@@ -490,16 +491,173 @@
     -fx-opacity: .4;
 }
 /******************************************************************************************/
-/* The drop down choice box the user uses to pick a background color of the turtle panel */
+/* The drop down choice box in the settings used to pick a language to use in the program */
 /******************************************************************************************/
-#backgroundColorChooser {
+#languageSettingsChooser {
 	-fx-alignment: center;
-    -fx-background-color: #fe9c6f;
+    -fx-background-color: #eb8585;
     -fx-background-radius: 6;
     -fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #fe793c;
+    -fx-border-color: #e66767;
+    -fx-padding: 0;
+}
+#languageSettingsChooser .list-cell {
+	-fx-pref-width: 190px;
+	-fx-max-width: 190px;
+	-fx-min-width: 190px;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
+    -fx-background: #eb8585;
+    -fx-background-color: #eb8585;
+	-fx-background-radius: 6;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+    -fx-font: 12px Dekko;
+    -fx-font-weight: bold;
+}
+#languageSettingsChooser .list-view {
+    -fx-background-color: transparent;
+}    
+#languageSettingsChooser .list-view .list-cell {
+	-fx-background-color: #eb8585;
+    -fx-background-radius: 6;
+    -fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-border-color: #e66767;
+    -fx-text-fill: #ffffff;
+    -fx-wrap-text: true;
+    -fx-font: 12px Dekko;
+    -fx-font-weight: bold;
+}
+#languageSettingsChooser .arrow-button {
+	-fx-background-color: transparent
+}
+#languageSettingsChooser .arrow {
+	-fx-background-color: #ffffff;
+	-fx-font: 12px Dekko;
+}
+#languageSettingsChooser:hover {
+	-fx-background-color: linear-gradient(#eb8585, #e66767);
+    -fx-text-fill: #ffffff;
+}
+#languageSettingsChooser:hover .list-cell {
+	-fx-background-color: linear-gradient(#eb8585, #e66767);
+    -fx-text-fill: #ffffff;
+    -fx-font: 14px Dekko;
+    -fx-font-weight: bold;
+}
+#languageSettingsChooser:hover .arrow-button {
+	-fx-background-color: linear-gradient(#eb8585, #e66767);
+}
+#languageSettingsChooser:hover .arrow {
+	-fx-background-color: #ffffff;
+	-fx-font: 14px Dekko;
+}
+#languageSettingsChooser:showing {
+    -fx-text-fill: #ffffff;
+    -fx-wrap-text: true;
+    -fx-font: 12px Dekko;
+    -fx-font-weight: bold;
+}
+#languageSettingsChooser:showing .list-cell {
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+	-fx-background-radius: 6;
+    -fx-text-fill: #ffffff;
+    -fx-font: 12px Dekko;
+    -fx-font-weight: bold;
+}
+#languageSettingsChooser:showing .arrow {
+	-fx-background-color: #ffffff;
+	-fx-font: 12px Dekko;
+}
+#languageSettingsChooser:showing .arrow-button {
+	-fx-background-color: transparent;
+}
+#languageSettingsChooser:showing:hover {
+    -fx-background-color: linear-gradient(#eb8585, #e66767);
+    -fx-text-fill: #ffffff;
+    -fx-font: 14px Dekko;
+    -fx-font-weight: bold;
+}
+#languageSettingsChooser:showing:hover .list-cell{
+    -fx-background-color: linear-gradient(#eb8585, #e66767);
+    -fx-text-fill: #ffffff;
+    -fx-font: 14px Dekko;
+    -fx-font-weight: bold;
+}
+#languageSettingsChooser:showing:hover .arrow {
+	-fx-background-color: #ffffff;
+	-fx-font: 12px Dekko;
+}
+#languageSettingsChooser:showing:hover .arrow-button {
+	
+}
+#languageSettingsChooser .list-view .list-cell:filled:selected, 
+#languageSettingsChooser .list-view .list-cell:filled:selected:hover {
+    -fx-background: linear-gradient(#eb8585, #e66767);
+    -fx-background-color: linear-gradient(#eb8585, #e66767);
+    -fx-text-fill: #ffffff;
+}
+#languageSettingsChooser .list-view .list-cell:filled:hover {
+    -fx-background-color: linear-gradient(#eb8585, #e66767);
+    -fx-text-fill: #ffffff;
+    -fx-font: 14px Dekko;
+    -fx-font-weight: bold;
+}
+#languageSettingsChooser .scroll-bar:horizontal ,
+#languageSettingsChooser  .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+#languageSettingsChooser .scroll-bar .increment-arrow ,
+#languageSettingsChooser .scroll-bar .decrement-arrow {
+	-fx-shape: " ";	
+	-fx-padding:0;
+}
+#languageSettingsChooser .increment-button ,
+#languageSettingsChooser .decrement-button {
+    -fx-background-color:transparent;
+	-fx-background-radius: 2em;
+}
+#languageSettingsChooser .scroll-bar:horizontal .thumb,
+#languageSettingsChooser .scroll-bar:vertical .thumb {
+    -fx-background-color: #c0bcb6;
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+#languageSettingsChooser .scroll-bar:horizontal .thumb:hover,
+#languageSettingsChooser .scroll-bar:vertical .thumb:hover,
+#languageSettingsChooser .scroll-bar:horizontal .thumb:pressed,
+#languageSettingsChooser .scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: linear-gradient(to right, #c0bcb6, #aca9a3);
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+#languageSettingsChooser:disabled {
+    -fx-opacity: .4;
+}
+/******************************************************************************************/
+/* The drop down choice box the user uses to pick a background color of the turtle panel */
+/******************************************************************************************/
+#backgroundColorChooser {
+	-fx-alignment: center;
+    -fx-background-color: #69b9af;
+    -fx-background-radius: 6;
+    -fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-border-color: #4ca398;
     -fx-padding: 0;
 }
 #backgroundColorChooser .list-cell {
@@ -508,28 +666,28 @@
 	-fx-min-width: 190px;
 	-fx-pref-height: 50px;
 	-fx-min-height: 50px;
-    -fx-background: #fe9c6f;
-    -fx-background-color: #fe9c6f;
+    -fx-background: #69b9af;
+    -fx-background-color: #69b9af;
 	-fx-background-radius: 6;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #backgroundColorChooser .list-view {
     -fx-background-color: transparent;
 }    
 #backgroundColorChooser .list-view .list-cell {
-	-fx-background-color: #fe9c6f;
+	-fx-background-color: #69b9af;
     -fx-background-radius: 6;
     -fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #fe793c;
+    -fx-border-color: #4ca398;
     -fx-text-fill: #ffffff;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #backgroundColorChooser .arrow-button {
@@ -540,17 +698,17 @@
 	-fx-font: 12px Dekko;
 }
 #backgroundColorChooser:hover {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#69b9af, #4ca398);
     -fx-text-fill: #ffffff;
 }
 #backgroundColorChooser:hover .list-cell {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#69b9af, #4ca398);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #backgroundColorChooser:hover .arrow-button {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#69b9af, #4ca398);
 }
 #backgroundColorChooser:hover .arrow {
 	-fx-background-color: #ffffff;
@@ -559,13 +717,13 @@
 #backgroundColorChooser:showing {
     -fx-text-fill: #ffffff;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #backgroundColorChooser:showing .list-cell {
-	-fx-pref-width: 160px;
-	-fx-max-width: 160px;
-	-fx-min-width: 160px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
 	-fx-pref-height: 50px;
 	-fx-min-height: 50px;
     -fx-background-color: transparent;
@@ -574,7 +732,7 @@
     -fx-wrap-text: true;
 	-fx-background-radius: 6;
     -fx-text-fill: #ffffff;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #backgroundColorChooser:showing .arrow {
@@ -585,15 +743,15 @@
 	-fx-background-color: transparent;
 }
 #backgroundColorChooser:showing:hover {
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#69b9af, #4ca398);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #backgroundColorChooser:showing:hover .list-cell{
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#69b9af, #4ca398);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #backgroundColorChooser:showing:hover .arrow {
@@ -602,14 +760,14 @@
 }
 #backgroundColorChooser .list-view .list-cell:filled:selected, 
 #backgroundColorChooser .list-view .list-cell:filled:selected:hover {
-    -fx-background: linear-gradient(#fe9c6f, #fe793c);
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background: linear-gradient(#69b9af, #4ca398);
+    -fx-background-color: linear-gradient(#69b9af, #4ca398);
     -fx-text-fill: #ffffff;
 }
 #backgroundColorChooser .list-view .list-cell:filled:hover {
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#69b9af, #4ca398);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #backgroundColorChooser .scroll-bar:horizontal ,
@@ -963,11 +1121,11 @@
 	-fx-max-height: 40px;
 	-fx-min-height: 40px;
 	-fx-background-radius: 6;
-	-fx-background-color: #1fbed6;
+	-fx-background-color: #eb8585;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #0077b5;
+    -fx-border-color: #e66767;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-font: 12px Dekko;
@@ -978,7 +1136,7 @@
 	-fx-opacity: 0.7;
 }
 #settingsButton:hover {
-	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
+	-fx-background-color: linear-gradient(#eb8585, #e66767);
 	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
@@ -994,11 +1152,11 @@
 	-fx-max-height: 40px;
 	-fx-min-height: 40px;
 	-fx-background-radius: 6;
-	-fx-background-color: #1fbed6;
+	-fx-background-color: #69b9af;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #0077b5;
+    -fx-border-color: #4ca398;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-font: 12px Dekko;
@@ -1006,7 +1164,7 @@
     -fx-underline: false;
 }
 #variablesButton:hover {
-	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
+	-fx-background-color: linear-gradient(#69b9af, #4ca398);
 	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
@@ -1022,11 +1180,11 @@
 	-fx-max-height: 40px;
 	-fx-min-height: 40px;
 	-fx-background-radius: 6;
-	-fx-background-color: #1fbed6;
+	-fx-background-color: #3ea3f8;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #0077b5;
+    -fx-border-color: #0c8bf6;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-font: 12px Dekko;
@@ -1034,7 +1192,7 @@
     -fx-underline: false;
 }
 #historyButton:hover {
-	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
+	-fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
 	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
@@ -1051,11 +1209,11 @@
 	-fx-max-height: 40px;
 	-fx-min-height: 40px;
 	-fx-background-radius: 6;
-	-fx-background-color: #1fbed6;
+	-fx-background-color: #8f8fd3;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #0077b5;
+    -fx-border-color: #6f6fc7;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-font: 12px Dekko;
@@ -1063,7 +1221,7 @@
     -fx-underline: false;
 }
 #helpButton:hover {
-	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
+	-fx-background-color: linear-gradient(#8f8fd3, #6f6fc7);
 	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
@@ -1079,11 +1237,11 @@
 	-fx-max-height: 40px;
 	-fx-min-height: 40px;
 	-fx-background-radius: 6;
-	-fx-background-color: #1fbed6;
+	-fx-background-color: #fa9873;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #0077b5;
+    -fx-border-color: #f97f51;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-font: 12px Dekko;
@@ -1091,7 +1249,7 @@
     -fx-underline: false;
 }
 #commandsButton:hover {
-	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
+	-fx-background-color: linear-gradient(#fa9873, #f97f51);
 	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
@@ -1107,11 +1265,11 @@
 	-fx-max-height: 40px;
 	-fx-min-height: 40px;
 	-fx-background-radius: 6;
-	-fx-background-color: #1fbed6;
+	-fx-background-color: #3ea3f8;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #0077b5;
+    -fx-border-color: #0c8bf6;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-font: 12px Dekko;
@@ -1119,7 +1277,7 @@
     -fx-underline: false;
 }
 #backButton:hover {
-	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
+	-fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
 	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
