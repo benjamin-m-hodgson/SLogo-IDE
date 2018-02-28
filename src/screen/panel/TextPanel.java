@@ -43,35 +43,39 @@ public class TextPanel implements Panel {
 	CONSOLE_AREA.clear();
     }
     
-    public void run() {
-	String inputText = INPUT_AREA.getText().replaceAll("\n", 
-		System.getProperty("line.separator"));
-	CONSOLE_AREA.setText(inputText);
-	try {
-	   CONSOLE_AREA.setText(Double.toString(PROGRAM_CONTROLLER.parseInput(inputText)));
-	} 
-	catch (TurtleNotFoundException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	} 
-	catch (BadFormatException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	} 
-	catch (UnidentifiedCommandException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	} 
-	catch (MissingInformationException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+   public void run() {
+		String inputText = INPUT_AREA.getText().replaceAll("\n", 
+				System.getProperty("line.separator"));
+		CONSOLE_AREA.setText(inputText);
+		try {
+			PROGRAM_CONTROLLER.parseInput(inputText);
+		} 
+		catch (TurtleNotFoundException e) {
+			clearInputArea();
+			USER_SCREEN.displayErrorMessage(e.getMessage());
+		} 
+		catch (BadFormatException e) {
+			clearInputArea();
+			USER_SCREEN.displayErrorMessage(e.getMessage());
+
+		} 
+		catch (UnidentifiedCommandException e) {
+			clearInputArea();
+			USER_SCREEN.displayErrorMessage(e.getMessage());
+
+		} 
+		catch (MissingInformationException e) {
+			clearInputArea();
+			USER_SCREEN.displayErrorMessage(e.getMessage());
+
+		}
+		catch (NullPointerException e) {
+			clearInputArea();
+			USER_SCREEN.displayErrorMessage("Invalid Format");
+
+		}
+
 	}
-	catch (NullPointerException e) {
-	    // TODO handle null exception. What to return to parse? ""?
-	    System.out.println("NULL!");
-	}
-	
-    }
     
     private TextArea makeInputArea() {
 	TextArea inputArea = new TextArea();
