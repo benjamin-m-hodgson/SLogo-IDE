@@ -60,13 +60,13 @@ public class CommandFactory {
 			return new YCoordinateQueryCommand(turtle);
 		}
 		else if (commandName.equals("Heading")) {
-			// TODO return new HeadingQueryCommand(turtle);
+			return new HeadingQueryCommand(turtle);
 		}
 		else if (commandName.equals("IsPenDown")) {
-			// TODO return new IsPenDownQueryCommand(turtle);
+			return new IsPenDownQueryCommand(turtle);
 		}
 		else if (commandName.equals("IsShowing")) {
-			// TODO return new IsShowingQueryCommand(turtle);
+			return new IsShowingQueryCommand(turtle);
 		}
 		else if(commandName.equals("Sum")) {
 			return new SumCommand(commandArgs.get(0), commandArgs.get(1));
@@ -131,6 +131,9 @@ public class CommandFactory {
 		else if(commandName.equals("Not")) {
 		    	return new NotCommand(commandArgs.get(0));
 		}
+//		else if(commandName.equals("If")) {
+//			return new ; 
+//		}
 		//elseif (commandName.equals("set") do variable map looping
 		//if unidentified
 			//loop through map of user commands
