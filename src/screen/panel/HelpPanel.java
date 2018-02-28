@@ -3,19 +3,14 @@ package screen.panel;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import screen.UserScreen;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 
 import interpreter.Controller;
@@ -124,23 +119,26 @@ public class HelpPanel extends SpecificPanel  {
 		.setRight(PANEL));
 	ScrollPane commandInfoPane = new ScrollPane();
 	commandInfoPane.setId("settingsField");
-	VBox infoBox = new VBox();
-	infoBox.setId("commandInfoBox");
-	commandInfoPane.setContent(infoBox);
-	populateInfoBox(commandFile, infoBox);
-	VBox panelRoot = new VBox(commandButton, infoBox, backButton);
+	TextArea commandInfoArea = new TextArea();
+	commandInfoArea.setId("settingsField");
+	commandInfoPane.setContent(commandInfoArea);
+	populateInfoBox(commandFile, commandInfoArea);
+	VBox panelRoot = new VBox(commandButton, commandInfoArea, backButton);
 	panelRoot.setId("infoPanel");
+	VBox.setVgrow(commandInfoArea, Priority.ALWAYS);
 	return panelRoot;
     }
     
-    private void populateInfoBox(File commandFile, VBox infoBox) throws FileNotFoundException {
+    private void populateInfoBox(File commandFile, TextArea infoBox) throws FileNotFoundException {
 	Scanner in = new Scanner(commandFile);
+	StringBuilder commandInfoBuilder = new StringBuilder();
 	while (in.hasNextLine()) {
 	    String line = in.nextLine();
-	    Label commandLabel = new Label(line);
-	    commandLabel.setId("helpLabel");
-	    infoBox.getChildren().add(commandLabel);
+	    commandInfoBuilder.append(line);
+	    commandInfoBuilder.append(System.lineSeparator());
 	}
+	infoBox.setText(commandInfoBuilder.toString());
+	infoBox.setEditable(false);
 	in.close();
     }
 }

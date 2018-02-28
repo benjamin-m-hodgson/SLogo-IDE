@@ -114,7 +114,6 @@
 #helpLabel {
 	-fx-min-width: 150;
 	-fx-pref-width: 150;
-	-fx-max-width: 150;
 	-fx-background-color: transparent;
 	-fx-border-style: solid inside;
 	-fx-border-width: 0;
@@ -128,6 +127,7 @@
 #helpLabel .text {
 	-fx-stroke: #555555;
 	-fx-stroke-width: 0.3px;
+	-fx-wrap-text: true;
 }
 /******************************************************************************************/
 /* The label displaying a single integer */ 
@@ -240,12 +240,14 @@
 /******************************************************************************************/
 #settingsField {
 	-fx-alignment: center;
+	-fx-pref-width: 150px;
 	-fx-padding: 5 5 5 5;
 	-fx-background-color: transparent;
 	-fx-highlight-fill: #fbcbd7;
 	-fx-highlight-text-fill: #555555;
 	-fx-text-fill: #555555;
 	-fx-prompt-text-fill: #c0bcb6;
+	-fx-wrap-text: true;
 	-fx-font: 12px 'Nova Flat';
 }
 #settingsField:focused {
@@ -1426,6 +1428,8 @@
 #commandInfoBox {
 	-fx-spacing: 0;
 	-fx-alignment: center;
+	-fx-pref-width: 150px;
+	-fx-min-width: 150px;
 	-fx-background-color: #f3f3f3;
 	-fx-border-color: rgba(192, 188, 182, 0.5);
 }
