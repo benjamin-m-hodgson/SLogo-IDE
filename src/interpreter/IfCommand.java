@@ -32,6 +32,9 @@ class IfCommand implements Command{
 				return ifBodyRetVal; 
 			}
 		}
+//		else {
+//			System.out.println("if DID NOT execute");
+//		}
 		return ifBodyRetVal; 
 	}
 }

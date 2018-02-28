@@ -59,9 +59,9 @@ class CommandTreeBuilder {
 			return null; 
 		}
 		catch (NumberFormatException e) {
-			if (userInput[startIdx].equals(DEFAULT_IF_IDENTIFIER)) { // TODO deal with if "if" is first 
-				parseIf(turtle, userInput, startIdx); 
-				return null; 
+			if (userInput[startIdx].equals(DEFAULT_IF_IDENTIFIER)) { // TODO deal with if "if" is not first 
+				int newStartIdx = parseIf(turtle, userInput, startIdx); 
+				return createCommandTree(turtle, userInput, newStartIdx);
 			}
 			//		if (userInput[startIdx].equals(DEFAULT_DOTIMES_IDENTIFIER)) { 
 			//			CommandNode tempParentNode = new CommandNode(userInput[startIdx], getNumArgs(userInput[startIdx]), turtle);
