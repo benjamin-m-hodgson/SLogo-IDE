@@ -104,6 +104,9 @@ class TextFieldParser {
 //		for (String s : tokenizedInputArray) {
 //			System.out.println(s);
 //		}
+//		for (String s : tokenizedInputArray) {
+//			System.out.println(s);
+//		}
 		return parseTextArray(tokenizedInputArray);
 	}
 
@@ -158,13 +161,14 @@ class TextFieldParser {
 	public static void main(String[] args) {
 		TextFieldParser testingParser = new TextFieldParser();
 		try {
-			testingParser.parseText("if less? 1 5 [ fd 50 ]");
-//			testingParser.parseText("fd 50");
-//			testingParser.parseText("showing?");
-//			testingParser.parseText("setxy fd 50 fd 30");
+//			testingParser.parseText("ifelse less? 5 5 [ fd 50 ] [ bk 30 ] rt 90");
+//			testingParser.parseText("if less? 1 5 [ fd 50 ] rt 90");
+			//			testingParser.parseText("pd pd pd pd fd 50");
+//			testingParser.parseText("fd fd fd pd"); // CHECK AGAIN
+			testingParser.parseText("fd 1 rt / sin :t 2");
 //			testingParser.parseText("fd rt fd 50 bk 30");
 //			testingParser.parseText("fd rt bk 50");
-//			testingParser.parseText("fd fd 50");
+//			testingParser.parseText("fd 50\n\n\nfd 50");
 //			testingParser.parseText("fd rt 100");
 //			testingParser.parseText("fd 100\n" + 
 //					"rt 90\n" + 
@@ -174,7 +178,6 @@ class TextFieldParser {
 //					"rt 90\n" + 
 //					"fd 100\n" + 
 //					"rt 90");
-//			testingParser.parseText("fd sum 20 20");
 //			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
 		} catch (Exception e) {
 

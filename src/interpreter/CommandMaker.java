@@ -86,11 +86,9 @@ class CommandMaker {
 
 		String[] userInputArrayToPass = userInput; 
 		String[] commandTypesToPass = commandTypes; 
-		String[] typesArrayToPass = typesOfInput; 
 
 		if (turtleIdentified) {
 			userInputArrayToPass = Arrays.copyOfRange(userInputArrayToPass, 1, userInputArrayToPass.length); 
-			typesArrayToPass = Arrays.copyOfRange(typesOfInput, 1, typesOfInput.length);
 		}
 		
 		for (int i = 0; i < userInputArrayToPass.length; i++) {
