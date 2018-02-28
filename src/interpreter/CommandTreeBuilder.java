@@ -56,6 +56,7 @@ class CommandTreeBuilder {
 			return null; // TODO make this more detailed
 		}
 		Double checkIfDouble; 
+		System.out.println(userInput[startIdx]);
 		try {
 			checkIfDouble = Double.parseDouble(userInput[startIdx]);
 			return null; 
