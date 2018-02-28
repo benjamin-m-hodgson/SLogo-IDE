@@ -133,10 +133,16 @@ public class CommandFactory {
 		}
 		else if(commandName.equals("DoTimes")) {
 			return new DoTimesCommand(commandArgs.get(0), commandArgs.get(1), commandArgs.get(2), turtle);
+<<<<<<< HEAD
 		}
 		else if(commandName.equals("If")) {
 			return new IfCommand(commandArgs.get(1), commandArgs.get(0), turtle); 
+=======
+>>>>>>> d9648c5e05458f85f86dbfcf6eec91240437c1d8
 		}
+		//else if(commandName.equals("If")) {
+			//return new IfCommand(); 
+		//}
 		else {
 			return new StringCommand(commandName);
 		}
@@ -148,3 +154,4 @@ public class CommandFactory {
 		//make a double command with its return value
 	}
 }
+

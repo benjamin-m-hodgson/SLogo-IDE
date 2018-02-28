@@ -34,12 +34,13 @@
 /******************************************************************************************/
 #infoPanel {
 	-fx-alignment: center;
+	-fx-spacing: 20;
 	-fx-max-width: 200;
 	-fx-min-width: 200;
 	-fx-pref-width: 200;
 	-fx-background-color: #f3f3f3;
 	-fx-background-radius: 6;
-	-fx-padding: 5 15 5 15;
+	-fx-padding: 15 15 15 15;
 	-fx-border-style: solid inside;
 	-fx-border-width: 1 1 1 1;
 	-fx-border-insets: 0;
@@ -87,6 +88,44 @@
 	-fx-text-alignment: center;
 	-fx-text-fill: #000033;
 	-fx-font: 32px Dekko;
+}
+/******************************************************************************************/
+/* The label displaying a command from the command history */ 
+/******************************************************************************************/
+#historyLabel {
+	-fx-min-width: 100;
+	-fx-pref-width: 100;
+	-fx-background-color: #ffffff;
+	-fx-border-style: solid inside;
+	-fx-border-width: 1;
+	-fx-border-insets: 0;
+	-fx-border-radius: 0;
+	-fx-border-color: rgba(192, 188, 182, 0.5);
+	-fx-text-alignment: left;
+	-fx-font: 12px Dekko;
+}
+#historyLabel .text {
+	-fx-stroke: #555555;
+	-fx-stroke-width: 0.3px;
+}
+/******************************************************************************************/
+/* The label displaying a single integer */ 
+/******************************************************************************************/
+#numberLabel {
+	-fx-min-width: 50;
+	-fx-pref-width: 50;
+	-fx-background-color: #ffffff;
+	-fx-border-style: solid inside;
+	-fx-border-width: 0 1 0 0;
+	-fx-border-insets: 0;
+	-fx-border-radius: 0;
+	-fx-border-color: rgba(192, 188, 182, 0.5);
+	-fx-text-alignment: left;
+	-fx-font: 12px Dekko;
+}
+#numberLabel .text {
+	-fx-stroke: #555555;
+	-fx-stroke-width: 1px;
 }
 /******************************************************************************************/
 /* The text field where the user can input commands */ 
@@ -176,6 +215,50 @@
 	-fx-background-radius: 2em;
 }
 /******************************************************************************************/
+/* The settings text areas for displaying text */ 
+/******************************************************************************************/
+#settingsField {
+	-fx-alignment: center;
+	-fx-padding: 5 5 5 5;
+	-fx-background-color: transparent;
+	-fx-highlight-fill: #fbcbd7;
+	-fx-highlight-text-fill: #555555;
+	-fx-text-fill: #555555;
+	-fx-prompt-text-fill: #c0bcb6;
+	-fx-font: 12px 'Nova Flat';
+}
+#settingsField:focused {
+	-fx-faint-focus-color: rgba(192, 188, 182, 0.5);
+}
+#settingsField .scroll-bar:horizontal ,
+#settingsField  .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+#settingsField .scroll-bar .increment-arrow ,
+#settingsField .scroll-bar .decrement-arrow {
+	-fx-shape: " ";	
+	-fx-padding:0;
+}
+#settingsField .increment-button ,
+#settingsField .decrement-button {
+    -fx-background-color:transparent;
+	-fx-background-radius: 2em;
+}
+#settingsField .scroll-bar:horizontal .thumb,
+#settingsField .scroll-bar:vertical .thumb {
+    -fx-background-color: #c0bcb6;
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+#settingsField .scroll-bar:horizontal .thumb:hover,
+#settingsField .scroll-bar:vertical .thumb:hover,
+#settingsField .scroll-bar:horizontal .thumb:pressed,
+#settingsField .scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: linear-gradient(to right, #c0bcb6, #aca9a3);
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+/******************************************************************************************/
 /* The apply button to apply some visualization property changes */
 /******************************************************************************************/
 #applyButton {
@@ -188,11 +271,11 @@
 	-fx-max-height: 50px;
 	-fx-min-height: 50px;
 	-fx-background-radius: 6;
-	-fx-background-color: #1fbed6;
+	-fx-background-color: #3ea3f8;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #0077b5;
+    -fx-border-color: #0c8bf6;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
@@ -204,7 +287,7 @@
 	-fx-opacity: 0.7;
 }
 #applyButton:hover {
-	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
+	-fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
 } 
 #applyButton:hover {
 	-fx-font: 18px Dekko;
@@ -222,11 +305,11 @@
 	-fx-max-height: 50px;
 	-fx-min-height: 50px;
 	-fx-background-radius: 6;
-	-fx-background-color: #69b366;
+	-fx-background-color: #8f8fd3;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #1e8d19;
+    -fx-border-color: #6f6fc7;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
@@ -238,7 +321,7 @@
 	-fx-opacity: 0.7;
 }
 #startButton:hover {
-	-fx-background-color: linear-gradient(#69b366, #1e8d19);
+	-fx-background-color: linear-gradient(#8f8fd3, #6f6fc7);
 	-fx-font: 18px Dekko;
 	-fx-font-weight: bold;
 } 
@@ -254,11 +337,11 @@
 	-fx-max-height: 50px;
 	-fx-min-height: 50px;
 	-fx-background-radius: 6;
-	-fx-background-color: #69b366;
+	-fx-background-color: #ffa6a6;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #1e8d19;
+    -fx-border-color: #ff8888;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
@@ -270,7 +353,7 @@
 	-fx-opacity: 0.7;
 }
 #runButton:hover {
-	-fx-background-color: linear-gradient(#69b366, #1e8d19);
+	-fx-background-color: linear-gradient(#ffa6a6, #ff8888);
 	-fx-font: 18px Dekko;
 	-fx-font-weight: bold;
 } 
@@ -307,16 +390,45 @@
 	-fx-font-weight: bold;
 } 
 /******************************************************************************************/
+/* The Error button which displays the error and closes on click */
+/******************************************************************************************/
+#errorButton {
+	-fx-alignment: center;
+	-fx-pref-width: 120px;
+	-fx-max-width: 700px;
+	-fx-min-width: 700px;
+	-fx-pref-height: 50px;
+	-fx-max-height: 50px;
+	-fx-min-height: 50px;
+	-fx-background-radius: 6;
+	-fx-background-color: #69b366;
+	-fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-border-color: #1e8d19;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+    -fx-font: 16px Dekko;
+    -fx-font-weight: bold;
+    -fx-underline: false;
+}
+#errorButton:hover {
+	-fx-background-color: linear-gradient(#69b366, #1e8d19);
+	-fx-font: 18px Dekko;
+	-fx-font-weight: bold;
+} 
+/******************************************************************************************/
 /* The drop down choice box the user uses to pick a language to use in the program */
 /******************************************************************************************/
 #languageChooser {
 	-fx-alignment: center;
-    -fx-background-color: #fe9c6f;
+    -fx-background-color: #fa9873;
     -fx-background-radius: 6;
     -fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #fe793c;
+    -fx-border-color: #f97f51;
     -fx-padding: 0;
 }
 #languageChooser .list-cell {
@@ -325,8 +437,8 @@
 	-fx-min-width: 190px;
 	-fx-pref-height: 50px;
 	-fx-min-height: 50px;
-    -fx-background: #fe9c6f;
-    -fx-background-color: #fe9c6f;
+    -fx-background: #fa9873;
+    -fx-background-color: #fa9873;
 	-fx-background-radius: 6;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
@@ -338,12 +450,12 @@
     -fx-background-color: transparent;
 }    
 #languageChooser .list-view .list-cell {
-	-fx-background-color: #fe9c6f;
+	-fx-background-color: #fa9873;
     -fx-background-radius: 6;
     -fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #fe793c;
+    -fx-border-color: #f97f51;
     -fx-text-fill: #ffffff;
     -fx-wrap-text: true;
     -fx-font: 16px Dekko;
@@ -357,17 +469,17 @@
 	-fx-font: 12px Dekko;
 }
 #languageChooser:hover {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
 }
 #languageChooser:hover .list-cell {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
     -fx-font: 18px Dekko;
     -fx-font-weight: bold;
 }
 #languageChooser:hover .arrow-button {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#fa9873, #f97f51);
 }
 #languageChooser:hover .arrow {
 	-fx-background-color: #ffffff;
@@ -402,13 +514,13 @@
 	-fx-background-color: transparent;
 }
 #languageChooser:showing:hover {
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
     -fx-font: 18px Dekko;
     -fx-font-weight: bold;
 }
 #languageChooser:showing:hover .list-cell{
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
     -fx-font: 18px Dekko;
     -fx-font-weight: bold;
@@ -419,12 +531,12 @@
 }
 #languageChooser .list-view .list-cell:filled:selected, 
 #languageChooser .list-view .list-cell:filled:selected:hover {
-    -fx-background: linear-gradient(#fe9c6f, #fe793c);
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background: linear-gradient(#fa9873, #f97f51);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
 }
 #languageChooser .list-view .list-cell:filled:hover {
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
     -fx-font: 18px Dekko;
     -fx-font-weight: bold;
@@ -461,46 +573,203 @@
     -fx-opacity: .4;
 }
 /******************************************************************************************/
-/* The drop down choice box the user uses to pick a background color of the turtle panel */
+/* The drop down choice box in the settings used to pick a language to use in the program */
 /******************************************************************************************/
-#backgroundColorChooser {
+#languageSettingsChooser {
 	-fx-alignment: center;
-    -fx-background-color: #fe9c6f;
+    -fx-background-color: #eb8585;
     -fx-background-radius: 6;
     -fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #fe793c;
+    -fx-border-color: #e66767;
+    -fx-padding: 0;
+}
+#languageSettingsChooser .list-cell {
+	-fx-pref-width: 190px;
+	-fx-max-width: 190px;
+	-fx-min-width: 190px;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
+    -fx-background: #eb8585;
+    -fx-background-color: #eb8585;
+	-fx-background-radius: 6;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+    -fx-font: 12px Dekko;
+    -fx-font-weight: bold;
+}
+#languageSettingsChooser .list-view {
+    -fx-background-color: transparent;
+}    
+#languageSettingsChooser .list-view .list-cell {
+	-fx-background-color: #eb8585;
+    -fx-background-radius: 6;
+    -fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-border-color: #e66767;
+    -fx-text-fill: #ffffff;
+    -fx-wrap-text: true;
+    -fx-font: 12px Dekko;
+    -fx-font-weight: bold;
+}
+#languageSettingsChooser .arrow-button {
+	-fx-background-color: transparent
+}
+#languageSettingsChooser .arrow {
+	-fx-background-color: #ffffff;
+	-fx-font: 12px Dekko;
+}
+#languageSettingsChooser:hover {
+	-fx-background-color: linear-gradient(#eb8585, #e66767);
+    -fx-text-fill: #ffffff;
+}
+#languageSettingsChooser:hover .list-cell {
+	-fx-background-color: linear-gradient(#eb8585, #e66767);
+    -fx-text-fill: #ffffff;
+    -fx-font: 14px Dekko;
+    -fx-font-weight: bold;
+}
+#languageSettingsChooser:hover .arrow-button {
+	-fx-background-color: linear-gradient(#eb8585, #e66767);
+}
+#languageSettingsChooser:hover .arrow {
+	-fx-background-color: #ffffff;
+	-fx-font: 14px Dekko;
+}
+#languageSettingsChooser:showing {
+    -fx-text-fill: #ffffff;
+    -fx-wrap-text: true;
+    -fx-font: 12px Dekko;
+    -fx-font-weight: bold;
+}
+#languageSettingsChooser:showing .list-cell {
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+	-fx-background-radius: 6;
+    -fx-text-fill: #ffffff;
+    -fx-font: 12px Dekko;
+    -fx-font-weight: bold;
+}
+#languageSettingsChooser:showing .arrow {
+	-fx-background-color: #ffffff;
+	-fx-font: 12px Dekko;
+}
+#languageSettingsChooser:showing .arrow-button {
+	-fx-background-color: transparent;
+}
+#languageSettingsChooser:showing:hover {
+    -fx-background-color: linear-gradient(#eb8585, #e66767);
+    -fx-text-fill: #ffffff;
+    -fx-font: 14px Dekko;
+    -fx-font-weight: bold;
+}
+#languageSettingsChooser:showing:hover .list-cell{
+    -fx-background-color: linear-gradient(#eb8585, #e66767);
+    -fx-text-fill: #ffffff;
+    -fx-font: 14px Dekko;
+    -fx-font-weight: bold;
+}
+#languageSettingsChooser:showing:hover .arrow {
+	-fx-background-color: #ffffff;
+	-fx-font: 12px Dekko;
+}
+#languageSettingsChooser:showing:hover .arrow-button {
+	
+}
+#languageSettingsChooser .list-view .list-cell:filled:selected, 
+#languageSettingsChooser .list-view .list-cell:filled:selected:hover {
+    -fx-background: linear-gradient(#eb8585, #e66767);
+    -fx-background-color: linear-gradient(#eb8585, #e66767);
+    -fx-text-fill: #ffffff;
+}
+#languageSettingsChooser .list-view .list-cell:filled:hover {
+    -fx-background-color: linear-gradient(#eb8585, #e66767);
+    -fx-text-fill: #ffffff;
+    -fx-font: 14px Dekko;
+    -fx-font-weight: bold;
+}
+#languageSettingsChooser .scroll-bar:horizontal ,
+#languageSettingsChooser  .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+#languageSettingsChooser .scroll-bar .increment-arrow ,
+#languageSettingsChooser .scroll-bar .decrement-arrow {
+	-fx-shape: " ";	
+	-fx-padding:0;
+}
+#languageSettingsChooser .increment-button ,
+#languageSettingsChooser .decrement-button {
+    -fx-background-color:transparent;
+	-fx-background-radius: 2em;
+}
+#languageSettingsChooser .scroll-bar:horizontal .thumb,
+#languageSettingsChooser .scroll-bar:vertical .thumb {
+    -fx-background-color: #c0bcb6;
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+#languageSettingsChooser .scroll-bar:horizontal .thumb:hover,
+#languageSettingsChooser .scroll-bar:vertical .thumb:hover,
+#languageSettingsChooser .scroll-bar:horizontal .thumb:pressed,
+#languageSettingsChooser .scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: linear-gradient(to right, #c0bcb6, #aca9a3);
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+#languageSettingsChooser:disabled {
+    -fx-opacity: .4;
+}
+/******************************************************************************************/
+/* The drop down choice box the user uses to pick a background color of the turtle panel */
+/******************************************************************************************/
+#backgroundColorChooser {
+	-fx-alignment: center;
+    -fx-background-color: #69b9af;
+    -fx-background-radius: 6;
+    -fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-border-color: #4ca398;
     -fx-padding: 0;
 }
 #backgroundColorChooser .list-cell {
 	-fx-pref-width: 190px;
 	-fx-max-width: 190px;
 	-fx-min-width: 190px;
-	-fx-pref-height: 50px;
-	-fx-min-height: 50px;
-    -fx-background: #fe9c6f;
-    -fx-background-color: #fe9c6f;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
+    -fx-background: #69b9af;
+    -fx-background-color: #69b9af;
 	-fx-background-radius: 6;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #backgroundColorChooser .list-view {
     -fx-background-color: transparent;
 }    
 #backgroundColorChooser .list-view .list-cell {
-	-fx-background-color: #fe9c6f;
+	-fx-background-color: #69b9af;
     -fx-background-radius: 6;
     -fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #fe793c;
+    -fx-border-color: #4ca398;
     -fx-text-fill: #ffffff;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #backgroundColorChooser .arrow-button {
@@ -511,17 +780,17 @@
 	-fx-font: 12px Dekko;
 }
 #backgroundColorChooser:hover {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#69b9af, #4ca398);
     -fx-text-fill: #ffffff;
 }
 #backgroundColorChooser:hover .list-cell {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#69b9af, #4ca398);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #backgroundColorChooser:hover .arrow-button {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#69b9af, #4ca398);
 }
 #backgroundColorChooser:hover .arrow {
 	-fx-background-color: #ffffff;
@@ -530,22 +799,22 @@
 #backgroundColorChooser:showing {
     -fx-text-fill: #ffffff;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #backgroundColorChooser:showing .list-cell {
-	-fx-pref-width: 160px;
-	-fx-max-width: 160px;
-	-fx-min-width: 160px;
-	-fx-pref-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
     -fx-background-color: transparent;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
 	-fx-background-radius: 6;
     -fx-text-fill: #ffffff;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #backgroundColorChooser:showing .arrow {
@@ -556,15 +825,15 @@
 	-fx-background-color: transparent;
 }
 #backgroundColorChooser:showing:hover {
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#69b9af, #4ca398);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #backgroundColorChooser:showing:hover .list-cell{
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#69b9af, #4ca398);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #backgroundColorChooser:showing:hover .arrow {
@@ -573,14 +842,14 @@
 }
 #backgroundColorChooser .list-view .list-cell:filled:selected, 
 #backgroundColorChooser .list-view .list-cell:filled:selected:hover {
-    -fx-background: linear-gradient(#fe9c6f, #fe793c);
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background: linear-gradient(#69b9af, #4ca398);
+    -fx-background-color: linear-gradient(#69b9af, #4ca398);
     -fx-text-fill: #ffffff;
 }
 #backgroundColorChooser .list-view .list-cell:filled:hover {
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#69b9af, #4ca398);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #backgroundColorChooser .scroll-bar:horizontal ,
@@ -619,42 +888,42 @@
 /******************************************************************************************/
 #penColorChooser {
 	-fx-alignment: center;
-    -fx-background-color: #fe9c6f;
+    -fx-background-color: #3ea3f8;
     -fx-background-radius: 6;
     -fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #fe793c;
+    -fx-border-color: #0c8bf6;
     -fx-padding: 0;
 }
 #penColorChooser .list-cell {
 	-fx-pref-width: 190px;
 	-fx-max-width: 190px;
 	-fx-min-width: 190px;
-	-fx-pref-height: 50px;
-	-fx-min-height: 50px;
-    -fx-background: #fe9c6f;
-    -fx-background-color: #fe9c6f;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
+    -fx-background: #3ea3f8;
+    -fx-background-color: #3ea3f8;
 	-fx-background-radius: 6;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #penColorChooser .list-view {
     -fx-background-color: transparent;
 }    
 #penColorChooser .list-view .list-cell {
-	-fx-background-color: #fe9c6f;
+	-fx-background-color: #3ea3f8;
     -fx-background-radius: 6;
     -fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #fe793c;
+    -fx-border-color: #0c8bf6;
     -fx-text-fill: #ffffff;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #penColorChooser .arrow-button {
@@ -665,17 +934,17 @@
 	-fx-font: 12px Dekko;
 }
 #penColorChooser:hover {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
     -fx-text-fill: #ffffff;
 }
 #penColorChooser:hover .list-cell {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #penColorChooser:hover .arrow-button {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
 }
 #penColorChooser:hover .arrow {
 	-fx-background-color: #ffffff;
@@ -684,22 +953,22 @@
 #penColorChooser:showing {
     -fx-text-fill: #ffffff;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #penColorChooser:showing .list-cell {
-	-fx-pref-width: 160px;
-	-fx-max-width: 160px;
-	-fx-min-width: 160px;
-	-fx-pref-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
     -fx-background-color: transparent;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
 	-fx-background-radius: 6;
     -fx-text-fill: #ffffff;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #penColorChooser:showing .arrow {
@@ -710,15 +979,15 @@
 	-fx-background-color: transparent;
 }
 #penColorChooser:showing:hover {
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #penColorChooser:showing:hover .list-cell{
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #penColorChooser:showing:hover .arrow {
@@ -727,14 +996,14 @@
 }
 #penColorChooser .list-view .list-cell:filled:selected, 
 #penColorChooser .list-view .list-cell:filled:selected:hover {
-    -fx-background: linear-gradient(#fe9c6f, #fe793c);
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background: linear-gradient(#3ea3f8, #0c8bf6);
+    -fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
     -fx-text-fill: #ffffff;
 }
 #penColorChooser .list-view .list-cell:filled:hover {
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #penColorChooser .scroll-bar:horizontal ,
@@ -773,63 +1042,59 @@
 /******************************************************************************************/
 #turtleImageChooser {
 	-fx-alignment: center;
-    -fx-background-color: #fe9c6f;
+    -fx-background-color: #fa9873;
     -fx-background-radius: 6;
     -fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #fe793c;
+    -fx-border-color: #f97f51;
     -fx-padding: 0;
 }
 #turtleImageChooser .list-cell {
 	-fx-pref-width: 190px;
 	-fx-max-width: 190px;
 	-fx-min-width: 190px;
-	-fx-pref-height: 50px;
-	-fx-min-height: 50px;
-    -fx-background: #fe9c6f;
-    -fx-background-color: #fe9c6f;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
+    -fx-background: #fa9873;
+    -fx-background-color: #fa9873;
 	-fx-background-radius: 6;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #turtleImageChooser .list-view {
     -fx-background-color: transparent;
 }    
 #turtleImageChooser .list-view .list-cell {
-	-fx-background-color: #fe9c6f;
+	-fx-background-color: #fa9873;
     -fx-background-radius: 6;
     -fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #fe793c;
+    -fx-border-color: #f97f51;
     -fx-text-fill: #ffffff;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #turtleImageChooser .arrow-button {
-	-fx-background-color: transparent
+	-fx-background-color: transparent;
 }
 #turtleImageChooser .arrow {
 	-fx-background-color: #ffffff;
 	-fx-font: 12px Dekko;
 }
-#turtleImageChooser {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
-    -fx-text-fill: #ffffff;
-}
 #turtleImageChooser:hover .list-cell {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #turtleImageChooser:hover .arrow-button {
-	-fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+	-fx-background-color: linear-gradient(#fa9873, #f97f51);
 }
 #turtleImageChooser:hover .arrow {
 	-fx-background-color: #ffffff;
@@ -838,22 +1103,22 @@
 #turtleImageChooser:showing {
     -fx-text-fill: #ffffff;
     -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #turtleImageChooser:showing .list-cell {
-	-fx-pref-width: 160px;
-	-fx-max-width: 160px;
-	-fx-min-width: 160px;
-	-fx-pref-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
     -fx-background-color: transparent;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
     -fx-wrap-text: true;
 	-fx-background-radius: 6;
     -fx-text-fill: #ffffff;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
 }
 #turtleImageChooser:showing .arrow {
@@ -864,15 +1129,15 @@
 	-fx-background-color: transparent;
 }
 #turtleImageChooser:showing:hover {
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #turtleImageChooser:showing:hover .list-cell{
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #turtleImageChooser:showing:hover .arrow {
@@ -881,14 +1146,14 @@
 }
 #turtleImageChooser .list-view .list-cell:filled:selected, 
 #turtleImageChooser .list-view .list-cell:filled:selected:hover {
-    -fx-background: linear-gradient(#fe9c6f, #fe793c);
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background: linear-gradient(#fa9873, #f97f51);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
 }
 #turtleImageChooser .list-view .list-cell:filled:hover {
-    -fx-background-color: linear-gradient(#fe9c6f, #fe793c);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
     -fx-text-fill: #ffffff;
-    -fx-font: 18px Dekko;
+    -fx-font: 14px Dekko;
     -fx-font-weight: bold;
 }
 #turtleImageChooser .scroll-bar:horizontal ,
@@ -927,21 +1192,21 @@
 /******************************************************************************************/
 #settingsButton {
 	-fx-alignment: center;
-	-fx-pref-width: 100px;
-	-fx-max-width: 100px;
-	-fx-min-width: 100px;
-	-fx-pref-height: 50px;
-	-fx-max-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-max-height: 40px;
+	-fx-min-height: 40px;
 	-fx-background-radius: 6;
-	-fx-background-color: #1fbed6;
+	-fx-background-color: #eb8585;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #0077b5;
+    -fx-border-color: #e66767;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
     -fx-underline: false;
 }
@@ -949,8 +1214,8 @@
 	-fx-opacity: 0.7;
 }
 #settingsButton:hover {
-	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
-	-fx-font: 18px Dekko;
+	-fx-background-color: linear-gradient(#eb8585, #e66767);
+	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
 /******************************************************************************************/
@@ -958,27 +1223,27 @@
 /******************************************************************************************/
 #variablesButton {
 	-fx-alignment: center;
-	-fx-pref-width: 100px;
-	-fx-max-width: 100px;
-	-fx-min-width: 100px;
-	-fx-pref-height: 50px;
-	-fx-max-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-max-height: 40px;
+	-fx-min-height: 40px;
 	-fx-background-radius: 6;
-	-fx-background-color: #1fbed6;
+	-fx-background-color: #69b9af;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #0077b5;
+    -fx-border-color: #4ca398;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
     -fx-underline: false;
 }
 #variablesButton:hover {
-	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
-	-fx-font: 18px Dekko;
+	-fx-background-color: linear-gradient(#69b9af, #4ca398);
+	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
 /******************************************************************************************/
@@ -986,27 +1251,27 @@
 /******************************************************************************************/
 #historyButton {
 	-fx-alignment: center;
-	-fx-pref-width: 100px;
-	-fx-max-width: 100px;
-	-fx-min-width: 100px;
-	-fx-pref-height: 50px;
-	-fx-max-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-max-height: 40px;
+	-fx-min-height: 40px;
 	-fx-background-radius: 6;
-	-fx-background-color: #1fbed6;
+	-fx-background-color: #3ea3f8;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #0077b5;
+    -fx-border-color: #0c8bf6;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
     -fx-underline: false;
 }
 #historyButton:hover {
-	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
-	-fx-font: 18px Dekko;
+	-fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
+	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
 
@@ -1015,27 +1280,27 @@
 /******************************************************************************************/
 #helpButton {
 	-fx-alignment: center;
-	-fx-pref-width: 100px;
-	-fx-max-width: 100px;
-	-fx-min-width: 100px;
-	-fx-pref-height: 50px;
-	-fx-max-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-max-height: 40px;
+	-fx-min-height: 40px;
 	-fx-background-radius: 6;
-	-fx-background-color: #1fbed6;
+	-fx-background-color: #8f8fd3;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #0077b5;
+    -fx-border-color: #6f6fc7;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
     -fx-underline: false;
 }
 #helpButton:hover {
-	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
-	-fx-font: 18px Dekko;
+	-fx-background-color: linear-gradient(#8f8fd3, #6f6fc7);
+	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
 /******************************************************************************************/
@@ -1043,27 +1308,27 @@
 /******************************************************************************************/
 #commandsButton {
 	-fx-alignment: center;
-	-fx-pref-width: 100px;
-	-fx-max-width: 100px;
-	-fx-min-width: 100px;
-	-fx-pref-height: 50px;
-	-fx-max-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-max-height: 40px;
+	-fx-min-height: 40px;
 	-fx-background-radius: 6;
-	-fx-background-color: #1fbed6;
+	-fx-background-color: #fa9873;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #0077b5;
+    -fx-border-color: #f97f51;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
-    -fx-font: 10px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
     -fx-underline: false;
 }
 #commandsButton:hover {
-	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
-	-fx-font: 10px Dekko;
+	-fx-background-color: linear-gradient(#fa9873, #f97f51);
+	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
 /******************************************************************************************/
@@ -1071,27 +1336,27 @@
 /******************************************************************************************/
 #backButton {
 	-fx-alignment: center;
-	-fx-pref-width: 100px;
-	-fx-max-width: 100px;
-	-fx-min-width: 100px;
-	-fx-pref-height: 50px;
-	-fx-max-height: 50px;
-	-fx-min-height: 50px;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-max-height: 40px;
+	-fx-min-height: 40px;
 	-fx-background-radius: 6;
-	-fx-background-color: #1fbed6;
+	-fx-background-color: #8f8fd3;
 	-fx-border-style: solid inside;
     -fx-border-width: 2;
     -fx-border-radius: 6;
-    -fx-border-color: #0077b5;
+    -fx-border-color: #6f6fc7;
     -fx-text-fill: #ffffff;
     -fx-text-alignment: center;
-    -fx-font: 16px Dekko;
+    -fx-font: 12px Dekko;
     -fx-font-weight: bold;
     -fx-underline: false;
 }
 #backButton:hover {
-	-fx-background-color: linear-gradient(#1fbed6, #0077b5);
-	-fx-font: 18px Dekko;
+	-fx-background-color: linear-gradient(#8f8fd3, #6f6fc7);
+	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
 /******************************************************************************************/
