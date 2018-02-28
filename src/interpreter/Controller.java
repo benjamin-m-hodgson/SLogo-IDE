@@ -45,6 +45,7 @@ public class Controller {
     private Stage PROGRAM_STAGE;
     // TODO: add in program titles
     private String PROGRAM_TITLE;
+
     private TextFieldParser myTextFieldParser;
     private Map<String, Double> myVariables; 
     private List<String> myCommandHistory; 
@@ -155,14 +156,6 @@ public class Controller {
 	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 	}
 	return Collections.unmodifiableList(new ArrayList<String>());
-    }
-
-    public List<String> translateColors(List<String> colors){
-	List<String> translatedColors = new ArrayList<String>();
-	for(int i =0; i<colors.size(); i++) {
-	    translatedColors.add(resourceDisplayText(colors.get(i)));
-	}
-	return translatedColors;
     }
 
     /**
@@ -300,6 +293,14 @@ public class Controller {
 	catch (MalformedURLException e) {
 	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 	}
+    }
+
+    public List<String> translateColors(List<String> colors){
+	List<String> translatedColors = new ArrayList<String>();
+	for(int i =0; i<colors.size(); i++) {
+	    translatedColors.add(resourceDisplayText(colors.get(i)));
+	}
+	return translatedColors;
     }
 
     /**

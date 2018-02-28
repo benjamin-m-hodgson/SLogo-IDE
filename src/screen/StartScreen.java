@@ -73,7 +73,7 @@ public class StartScreen implements Screen {
 	private Button makeStartButton() {
 		Button startButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText("StartPrompt"));
 		startButton.setId("startButton");
-		//startButton.setTooltip(START_TIP);
+		startButton.setTooltip(START_TIP);
 		// handle click event
 		startButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -92,7 +92,7 @@ public class StartScreen implements Screen {
 	private Button makeApplyButton() {
 		Button applyButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText("ApplyPrompt"));
 		applyButton.setId("applyButton");
-		//applyButton.setTooltip(APPLY_TIP);
+		applyButton.setTooltip(APPLY_TIP);
 		// handle click event
 		applyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -113,7 +113,7 @@ public class StartScreen implements Screen {
 	 */
 	private ComboBox<Object> makeLanguageChooser() {
 		ComboBox<Object> dropDownMenu = makeComboBox(DEFAULT_SELECTION_PROMPT);
-		dropDownMenu.setTooltip(SELECTION_TIP);
+		//dropDownMenu.setTooltip(SELECTION_TIP);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(DEFAULT_SELECTION_PROMPT);
 		simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());

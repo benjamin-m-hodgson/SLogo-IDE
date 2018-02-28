@@ -22,8 +22,6 @@ public class InfoPanel implements Panel {
 	private BorderPane PANE;
 	private UserScreen USER_SCREEN;
 
-	private final int DEFAULT_BUTTON_SPACEING = 10;
-
 	private final String[] BUTTON_IDS = {"settingsButton", "variablesButton", "historyButton", "commandsButton", "helpButton"};
 
 	public InfoPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
@@ -35,7 +33,7 @@ public class InfoPanel implements Panel {
 	@Override
 	public void makePanel() {
 		List<Button> buttons = makeButtons();
-		VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACEING);
+		VBox panelRoot = new VBox();
 		panelRoot.getChildren().addAll(buttons);
 		panelRoot.setId("infoPanel");
 		panelRoot.setAlignment(Pos.CENTER);

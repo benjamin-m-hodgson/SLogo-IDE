@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import screen.UserScreen;
 import java.util.Iterator;
+
 import interpreter.Controller;
 
 public class HistoryPanel extends SpecificPanel {
@@ -22,14 +23,13 @@ public class HistoryPanel extends SpecificPanel {
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private Parent PANEL;
     private Controller PROGRAM_CONTROLLER;
-    private BorderPane PANE;
-    private VBox HISTORY_BOX; 
+    private VBox HISTORY_BOX;
     private UserScreen USER_SCREEN;
+    
 
 
     public HistoryPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
 	PROGRAM_CONTROLLER = programController;
-	PANE = pane;
 	USER_SCREEN = userScreen;
 	// attach "animation loop" to time line to play it
 	KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
@@ -52,33 +52,10 @@ public class HistoryPanel extends SpecificPanel {
 	panelRoot.setAlignment(Pos.BASELINE_CENTER);
 	VBox.setVgrow(historyPane, Priority.ALWAYS);
 	PANEL = panelRoot;
+
     }
 
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
-	}
-	return PANEL;
-    }
 
-    @Override
-    protected BorderPane getPane() {
-	// TODO Auto-generated method stub
-	return PANE;
-    }
-
-    @Override
-    protected Controller getController() {
-	// TODO Auto-generated method stub
-	return PROGRAM_CONTROLLER;
-    }
-
-    @Override
-    protected UserScreen getUserScreen() {
-	return USER_SCREEN;
-    }
-    
     private void setHistory(double elapsedTime) {
 	HISTORY_BOX.getChildren().clear();
 	Iterator<String> commandHistory = USER_SCREEN.commandHistory();
@@ -95,4 +72,31 @@ public class HistoryPanel extends SpecificPanel {
 	}
     }
 
+    @Override
+    public Parent getPanel() {
+	if(PANEL == null) {
+	    makePanel();
+	}
+	return PANEL;
+    }
+
+    @Override
+    protected BorderPane getPane() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    @Override
+    protected UserScreen getUserScreen() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    @Override
+    protected Controller getController() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
 }
+
