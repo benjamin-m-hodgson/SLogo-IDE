@@ -9,24 +9,27 @@ import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import screen.UserScreen;
 
 public class TextPanel implements Panel {
-    private Parent PANEL;
-    private Controller PROGRAM_CONTROLLER;
-    private TextArea INPUT_AREA;
-    private TextArea CONSOLE_AREA;
-    
-    public TextPanel(Controller programController) {
-	PROGRAM_CONTROLLER = programController;
-    }
-    
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
+	private Parent PANEL;
+	private final Controller PROGRAM_CONTROLLER;
+	private final UserScreen USER_SCREEN;
+	private TextArea INPUT_AREA;
+	private TextArea CONSOLE_AREA;
+
+	public TextPanel(Controller programController, UserScreen userScreen) {
+		PROGRAM_CONTROLLER = programController;
+		USER_SCREEN = userScreen;
 	}
-	return PANEL;
-    }
+
+	@Override
+	public Parent getPanel() {
+		if (PANEL == null) {
+			makePanel();
+		}
+		return PANEL;
+	}
 
     @Override
     public void makePanel() {
@@ -43,35 +46,42 @@ public class TextPanel implements Panel {
 	CONSOLE_AREA.clear();
     }
     
-    public void run() {
-	String inputText = INPUT_AREA.getText().replaceAll("\n", 
-		System.getProperty("line.separator"));
-	CONSOLE_AREA.setText(inputText);
-	try {
-	   CONSOLE_AREA.setText(Double.toString(PROGRAM_CONTROLLER.parseInput(inputText)));
-	} 
-	catch (TurtleNotFoundException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	} 
-	catch (BadFormatException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	} 
-	catch (UnidentifiedCommandException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	} 
-	catch (MissingInformationException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+   public void run() {
+		String inputText = INPUT_AREA.getText().replaceAll("\n", 
+				System.getProperty("line.separator"));
+		CONSOLE_AREA.setText(inputText);
+		if (inputText != null) {
+		    USER_SCREEN.addCommand(inputText);
+		}
+		try {
+			PROGRAM_CONTROLLER.parseInput(inputText);
+		} 
+		catch (TurtleNotFoundException e) {
+			clearInputArea();
+			USER_SCREEN.displayErrorMessage(e.getMessage());
+		} 
+		catch (BadFormatException e) {
+			clearInputArea();
+			USER_SCREEN.displayErrorMessage(e.getMessage());
+
+		} 
+		catch (UnidentifiedCommandException e) {
+			clearInputArea();
+			USER_SCREEN.displayErrorMessage(e.getMessage());
+
+		} 
+		catch (MissingInformationException e) {
+			clearInputArea();
+			USER_SCREEN.displayErrorMessage(e.getMessage());
+
+		}
+		catch (NullPointerException e) {
+			clearInputArea();
+			USER_SCREEN.displayErrorMessage("Invalid Format");
+
+		}
+
 	}
-	catch (NullPointerException e) {
-	    // TODO handle null exception. What to return to parse? ""?
-	    System.out.println("NULL");
-	}
-	
-    }
     
     private TextArea makeInputArea() {
 	TextArea inputArea = new TextArea();

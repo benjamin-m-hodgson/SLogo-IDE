@@ -166,6 +166,7 @@ class TextFieldParser {
 			//			testingParser.parseText("pd pd pd pd fd 50");
 //			testingParser.parseText("fd fd fd pd"); // CHECK AGAIN
 			testingParser.parseText("dotimes [ :k 360 ] [ fd :k rt 90 ]");
+//			testingParser.parseText("fd 1 rt / sin 20 2");
 //			testingParser.parseText("fd rt fd 50 bk 30");
 //			testingParser.parseText("fd rt bk 50");
 //			testingParser.parseText("fd 50\n\n\nfd 50");
@@ -179,6 +180,7 @@ class TextFieldParser {
 //					"fd 100\n" + 
 //					"rt 90");
 //			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
+//			testingParser.parseText("setxy fd fd fd fd bk 50 rt 90");
 		} catch (Exception e) {
 
 		}
