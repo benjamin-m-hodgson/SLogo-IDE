@@ -160,7 +160,7 @@ class TextFieldParser {
 		try {
 //			testingParser.parseText("if less? 1 5 [ fd 50 ]");
 //			testingParser.parseText("fd 50 bk 20");
-//			testingParser.parseText("showing?");
+			testingParser.parseText("pd pd pd pd");
 //			testingParser.parseText("setxy fd 50 fd 30");
 //			testingParser.parseText("fd rt fd 50 bk 30");
 //			testingParser.parseText("fd rt bk 50");

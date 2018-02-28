@@ -35,7 +35,7 @@ class CommandTreeBuilder {
 	}
 
 	protected double buildAndExecute(Turtle turtle, String[] userInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		myCommandTrees.clear();
+		myCommandTrees.clear(); 
 		createCommandTree(turtle, userInput, 0);
 		for (CommandNode n : myCommandTrees) {
 			System.out.println(n.toString());
@@ -69,17 +69,26 @@ class CommandTreeBuilder {
 			int numArgs = getNumArgs(currCommand);
 			CommandNode newParentNode = new CommandNode(currCommand, numArgs, turtle);
 			while (newParentNode.getNumArgs() == 0) { // accounts for multiple 1-arg arguments before args that need child nodes 
+				if (startIdx >= userInput.length) {
+					return newParentNode; 
+				}
 				myCommandTrees.add(newParentNode);
 				startIdx++; 
-				currCommand = userInput[startIdx]; 
-				numArgs = getNumArgs(currCommand);
-				newParentNode = new CommandNode(currCommand, numArgs, turtle);
+				if (startIdx < userInput.length) {
+					currCommand = userInput[startIdx]; 
+					numArgs = getNumArgs(currCommand);
+					newParentNode = new CommandNode(currCommand, numArgs, turtle);
+				}
+				else {
+					return newParentNode;
+				}
 			}
 			createAndSetChildren(turtle, newParentNode, userInput, startIdx+1, true);
 			return newParentNode;
 		}
 	}
 
+	// TODO account for when 0-args are in the middle of the seq of commands 
 	private void createAndSetChildren(Turtle turtle, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		if (currIdx >= userInput.length) { //base case if out of bounds
 			if (addToTrees) {
