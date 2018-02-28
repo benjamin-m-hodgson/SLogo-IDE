@@ -148,3 +148,4 @@ public class CommandFactory {
 		//make a double command with its return value
 	}
 }
+

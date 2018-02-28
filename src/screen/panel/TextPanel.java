@@ -68,7 +68,7 @@ public class TextPanel implements Panel {
 	}
 	catch (NullPointerException e) {
 	    // TODO handle null exception. What to return to parse? ""?
-	    System.out.println("NULL");
+	    System.out.println("NULL!");
 	}
 	
     }
