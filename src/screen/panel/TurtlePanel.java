@@ -97,6 +97,7 @@ public class TurtlePanel implements Panel {
 			// TODO: possibly add turtles to list ?
 			PROGRAM_CONTROLLER.makeNewTurtleCommand("Turtle", turtleView, Color.BLACK, new Group());
 		}
+
 		catch (Exception e) {
 			// TODO: make custom exception super class with sub classes for specifications
 			//String specification = "%nFailed to find language files";
