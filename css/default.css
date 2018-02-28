@@ -307,35 +307,6 @@
 	-fx-font-weight: bold;
 } 
 /******************************************************************************************/
-/* The Error button which displays the error and closes on click */
-/******************************************************************************************/
-#errorButton {
-	-fx-alignment: center;
-	-fx-pref-width: 120px;
-	-fx-max-width: 700px;
-	-fx-min-width: 700px;
-	-fx-pref-height: 50px;
-	-fx-max-height: 50px;
-	-fx-min-height: 50px;
-	-fx-background-radius: 6;
-	-fx-background-color: #69b366;
-	-fx-border-style: solid inside;
-    -fx-border-width: 2;
-    -fx-border-radius: 6;
-    -fx-border-color: #1e8d19;
-    -fx-text-fill: #ffffff;
-    -fx-text-alignment: center;
-    -fx-wrap-text: true;
-    -fx-font: 16px Dekko;
-    -fx-font-weight: bold;
-    -fx-underline: false;
-}
-#errorButton:hover {
-	-fx-background-color: linear-gradient(#69b366, #1e8d19);
-	-fx-font: 18px Dekko;
-	-fx-font-weight: bold;
-} 
-/******************************************************************************************/
 /* The drop down choice box the user uses to pick a language to use in the program */
 /******************************************************************************************/
 #languageChooser {

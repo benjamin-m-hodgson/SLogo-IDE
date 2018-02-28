@@ -16,9 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import screen.UserScreen;
-
-import java.util.List;
-
 import interpreter.Controller;
 import javafx.scene.control.ScrollPane;
 
@@ -26,17 +23,10 @@ import javafx.scene.control.ScrollPane;
 public class SettingsPanel extends SpecificPanel  {
 
 	private final int VISIBLE_ROW_COUNT = 5;
-	private  Parent PANEL;
-	private final Controller PROGRAM_CONTROLLER;
-	private final BorderPane PANE;
-	private  Button BACK;
-	private ComboBox<Object> LANGUAGE_CHOOSER;
-	private ComboBox<Object> BACKGROUND_COLOR_CHOOSER;
-	private ComboBox<Object> PEN_COLOR_CHOOSER;
-	private ComboBox<Object> TURTLE_IMAGE_CHOOSER;
-	private List<String> colorsUntranslated;
-	private List<String> colorsTranslated;
-
+	private Parent PANEL;
+	private Controller PROGRAM_CONTROLLER;
+	private BorderPane PANE;
+	private Button BACK;
 	private UserScreen USER_SCREEN;
 
 
@@ -54,14 +44,16 @@ public class SettingsPanel extends SpecificPanel  {
 	@Override
 	public void makePanel() {
 		BACK = makeBackButton(PROGRAM_CONTROLLER);
-		LANGUAGE_CHOOSER = makeLanguageChooser(DROPDOWN_IDS[0]);
-		BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[1]);
-		PEN_COLOR_CHOOSER = makePenColorChooser(DROPDOWN_IDS[2]);
-		TURTLE_IMAGE_CHOOSER= makeTurtleImageChooser(DROPDOWN_IDS[3]);
-		VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACEING, LANGUAGE_CHOOSER,BACKGROUND_COLOR_CHOOSER,PEN_COLOR_CHOOSER,TURTLE_IMAGE_CHOOSER,BACK);
+		ComboBox<Object> languageChooser = makeLanguageChooser(DROPDOWN_IDS[0]);
+		ComboBox<Object> backgroundColorChooser = makeBackgroundColorChooser(DROPDOWN_IDS[1]);
+		ComboBox<Object> penColorChooser = makePenColorChooser(DROPDOWN_IDS[2]);
+		ComboBox<Object> turtleImageChooser= makeTurtleImageChooser(DROPDOWN_IDS[3]);
+
+		VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACEING, languageChooser,backgroundColorChooser,penColorChooser,turtleImageChooser,BACK);
 		panelRoot.setId("infoPanel");
 		panelRoot.setAlignment(Pos.BASELINE_CENTER);
 		PANEL = panelRoot;
+
 	}
 
 	/**
@@ -79,11 +71,15 @@ public class SettingsPanel extends SpecificPanel  {
 		dropDownMenu.setItems(simulationChoices);
 		dropDownMenu.setId(itemID);
 		dropDownMenu.getSelectionModel().selectedIndexProperty()
-		.addListener(( arg0, arg1,  arg2) ->{
-			String selected = (String) simulationChoices.get((Integer) arg2);
-			if (!selected.equals(selectionPrompt)) {
-				PROGRAM_CONTROLLER.changeLanguage(selected);
-				updatePrompt();
+		.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> arg0, 
+					Number arg1, Number arg2) {
+				String selected = (String) simulationChoices.get((Integer) arg2);
+				if (!selected.equals(selectionPrompt)) {
+					PROGRAM_CONTROLLER.changeLanguage(selected);
+					updatePrompt();
+				}
 			}
 		});
 		return dropDownMenu;
@@ -100,21 +96,23 @@ public class SettingsPanel extends SpecificPanel  {
 		//dropDownMenu.setTooltip(SELECTION_TIP);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
-		colorsUntranslated = PROGRAM_CONTROLLER.getColors();
-		colorsTranslated = PROGRAM_CONTROLLER.translateColors(colorsUntranslated);
-		simulationChoices.addAll(colorsTranslated);
+		simulationChoices.addAll(PROGRAM_CONTROLLER.getColors());
 		dropDownMenu.setItems(simulationChoices);
 		dropDownMenu.setId(itemID);
 		dropDownMenu.getSelectionModel().selectedIndexProperty()
-		.addListener((arg0,arg1, arg2)->{
-			String selected = (String) dropDownMenu.getItems().get((Integer) arg2);
-			if (!selected.equals(selectionPrompt)) {
-				USER_SCREEN.changeBackgroundColor(colorsUntranslated.get(colorsTranslated.indexOf(selected)));
+		.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> arg0, 
+					Number arg1, Number arg2) {
+				String selected = (String) simulationChoices.get((Integer) arg2);
+				if (!selected.equals(selectionPrompt)) {
+					USER_SCREEN.changeBackgroundColor(selected);
+				}
 			}
 		});
 		return dropDownMenu;
 	}
-
+	
 	/**
 	 * 
 	 * @return dropDownMenu: a drop down menu that lets the user choose the
@@ -126,21 +124,23 @@ public class SettingsPanel extends SpecificPanel  {
 		//dropDownMenu.setTooltip(SELECTION_TIP);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
-		colorsUntranslated = PROGRAM_CONTROLLER.getColors();
-		colorsTranslated = PROGRAM_CONTROLLER.translateColors(colorsUntranslated);
-		simulationChoices.addAll(colorsTranslated);
+		simulationChoices.addAll(PROGRAM_CONTROLLER.getColors());
 		dropDownMenu.setItems(simulationChoices);
 		dropDownMenu.setId(itemID);
 		dropDownMenu.getSelectionModel().selectedIndexProperty()
-		.addListener(( arg0, arg1, arg2) ->{
-			String selected = (String) dropDownMenu.getItems().get((Integer) arg2);
-			if (!selected.equals(selectionPrompt)) {
-				//controller.changePenColor(colorsUntranslated.get(colorsTranslated.indexOf(selected)))) //something like this
+		.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> arg0, 
+					Number arg1, Number arg2) {
+				String selected = (String) simulationChoices.get((Integer) arg2);
+				if (!selected.equals(selectionPrompt)) {
+					//controller.changePenColor() //something like this
+				}
 			}
 		});
 		return dropDownMenu;
 	}
-
+	
 	/**
 	 * 
 	 * @return dropDownMenu: a drop down menu that lets the user choose the
@@ -156,10 +156,41 @@ public class SettingsPanel extends SpecificPanel  {
 		dropDownMenu.setItems(simulationChoices);
 		dropDownMenu.setId(itemID);
 		dropDownMenu.getSelectionModel().selectedIndexProperty()
-		.addListener((arg0,arg1, arg2)-> {
-			String selected = (String) simulationChoices.get((Integer) arg2);
-			if (!selected.equals(selectionPrompt)) {
-				//controller.changeTurtleImage() //something like this
+		.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> arg0, 
+					Number arg1, Number arg2) {
+				String selected = (String) simulationChoices.get((Integer) arg2);
+				if (!selected.equals(selectionPrompt)) {
+					//controller.changePenColor() //something like this
+				}
+			}
+		});
+		return dropDownMenu;
+	}
+
+	/**
+	 * 
+	 * @return dropDownMenu: a drop down menu that lets the user choose the
+	 * language for the simulation
+	 */
+	private ComboBox<Object> makeDropDown(String itemId) {
+		String selctionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemId);
+		ComboBox<Object> dropDownMenu = makeComboBox(selctionPrompt);
+		//dropDownMenu.setTooltip(SELECTION_TIP);
+		ObservableList<Object> simulationChoices = 
+				FXCollections.observableArrayList(selctionPrompt);
+		simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());
+		dropDownMenu.setItems(simulationChoices);
+		dropDownMenu.setId(itemId);
+		dropDownMenu.getSelectionModel().selectedIndexProperty()
+		.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> arg0, 
+					Number arg1, Number arg2) {
+				String selected = (String) simulationChoices.get((Integer) arg2);
+				PROGRAM_CONTROLLER.changeLanguage(selected);
+				updatePrompt();
 			}
 		});
 		return dropDownMenu;
@@ -170,16 +201,7 @@ public class SettingsPanel extends SpecificPanel  {
 	 */
 	private void updatePrompt() {
 		BACK.setText(PROGRAM_CONTROLLER.resourceDisplayText("backButton"));
-		ObservableList<Object> simulationChoices;	
-		simulationChoices = FXCollections.observableArrayList(PROGRAM_CONTROLLER.resourceDisplayText(DROPDOWN_IDS[0]));
-		simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());
-		LANGUAGE_CHOOSER.setItems(simulationChoices);
-		BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[1]);
-		PEN_COLOR_CHOOSER = makePenColorChooser(DROPDOWN_IDS[2]);
-		TURTLE_IMAGE_CHOOSER= makeTurtleImageChooser(DROPDOWN_IDS[3]);
-		((VBox)PANEL).getChildren().setAll(LANGUAGE_CHOOSER,BACKGROUND_COLOR_CHOOSER,PEN_COLOR_CHOOSER,TURTLE_IMAGE_CHOOSER,BACK);
 	}
-
 
 	/**
 	 * @param defaultChoice: String that represents the default value for this combo box
@@ -218,4 +240,5 @@ public class SettingsPanel extends SpecificPanel  {
 	protected UserScreen getUserScreen() {
 		return USER_SCREEN;
 	}
+
 }
