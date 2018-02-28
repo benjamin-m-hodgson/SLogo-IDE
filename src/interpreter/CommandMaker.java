@@ -79,6 +79,9 @@ class CommandMaker {
 			if (typesOfInput[idx].equals(commandIdentifier)) {
 				commandTypes[idx] = getCommandType(userInput[idx]);
 			}
+			else {
+				commandTypes[idx] = "";
+			}
 		}
 
 		String[] userInputArrayToPass = userInput; 
@@ -89,8 +92,14 @@ class CommandMaker {
 			userInputArrayToPass = Arrays.copyOfRange(userInputArrayToPass, 1, userInputArrayToPass.length); 
 			typesArrayToPass = Arrays.copyOfRange(typesOfInput, 1, typesOfInput.length);
 		}
-		//		makeListForBuilder(myListForBuilder, userInput, commandTypes, 1, DEFAULT_CONTROLFLOW_IDENTIFIERS);
-		return myCommandTreeBuilder.buildAndExecute(identifiedTurtle, userInputArrayToPass, commandTypesToPass, typesArrayToPass); 
+		
+		for (int i = 0; i < userInputArrayToPass.length; i++) {
+			if (commandTypesToPass[i].length() > 0) {
+				userInputArrayToPass[i] = commandTypesToPass[i];
+			}
+		}
+ 		//		makeListForBuilder(myListForBuilder, userInput, commandTypes, 1, DEFAULT_CONTROLFLOW_IDENTIFIERS);
+		return myCommandTreeBuilder.buildAndExecute(identifiedTurtle, userInputArrayToPass); 
 	}
 
 	//	private void makeListForBuilder(ArrayList<String> currCommandList, String[] inputArray, String[] commandTypes, int numTimesToAdd, String[] controlFlowIdentifiers) {
