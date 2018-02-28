@@ -24,6 +24,7 @@ class IfCommand implements Command{
 			return ifBodyRetVal; 
 		} 
 		if (ifExprRetVal > 0) {
+			System.out.println("if executed");
 			CommandTreeBuilder buildIfBody = new CommandTreeBuilder(); 
 			String[] userInput = myIfBody.split("\\s+");
 			try {
@@ -32,9 +33,9 @@ class IfCommand implements Command{
 				return ifBodyRetVal; 
 			}
 		}
-//		else {
-//			System.out.println("if DID NOT execute");
-//		}
+		else {
+			System.out.println("if DID NOT execute");
+		}
 		return ifBodyRetVal; 
 	}
 }

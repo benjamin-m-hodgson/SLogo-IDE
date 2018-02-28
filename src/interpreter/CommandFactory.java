@@ -137,6 +137,9 @@ public class CommandFactory {
 		else if(commandName.equals("If")) {
 			return new IfCommand(commandArgs.get(1), commandArgs.get(0), turtle); 
 		}
+		else if (commandName.equals("IfElse")) {
+			return new IfElseCommand(commandArgs.get(2), commandArgs.get(0), commandArgs.get(1), turtle); 
+		}
 		else {
 			return new StringCommand(commandName);
 		}

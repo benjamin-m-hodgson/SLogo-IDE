@@ -158,8 +158,9 @@ class TextFieldParser {
 	public static void main(String[] args) {
 		TextFieldParser testingParser = new TextFieldParser();
 		try {
-			testingParser.parseText("rt 90 if less? 1 5 [ fd 50 ] bk 30");
-//			testingParser.parseText("pd pd pd pd fd 50");
+			testingParser.parseText("ifelse less? 5 5 [ fd 50 ] [ bk 30 ] rt 90");
+//			testingParser.parseText("if less? 1 5 [ fd 50 ] rt 90");
+			//			testingParser.parseText("pd pd pd pd fd 50");
 //			testingParser.parseText("fd fd fd pd"); // CHECK AGAIN
 //			testingParser.parseText("setxy fd 50 fd 30");
 //			testingParser.parseText("fd rt fd 50 bk 30");
