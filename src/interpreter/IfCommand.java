@@ -17,5 +17,10 @@ class IfCommand implements Command{
 
 	public double execute() {
 		double ifExprRetVal = myIfExprCommand.execute(); 
+		if (ifExprRetVal > 0) {
+			CommandTreeBuilder buildIfBody = new CommandTreeBuilder(); 
+			String[] userInput = myIfBody.split("\\s+");
+			buildIfBody.buildAndExecute(myTurtle, );
+		}
 	}
 }

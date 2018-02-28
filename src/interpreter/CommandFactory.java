@@ -143,8 +143,5 @@ public class CommandFactory {
 			//make a new commandtree builder
 			//build and execute that tree
 			//make a double command with its return value
-
-		// TODO: handle returning null value
-		return null;
 	}
 }
