@@ -21,7 +21,7 @@ public class UserScreen implements Screen {
 	public void makeRoot() {
 		BorderPane rootPane = new BorderPane();
 		rootPane.setId("userScreenRoot");
-		rootPane.setBottom(new InputPanel(PROGRAM_CONTROLLER).getPanel());
+		rootPane.setBottom(new InputPanel(PROGRAM_CONTROLLER, this).getPanel());
 		rootPane.setRight(new InfoPanel(PROGRAM_CONTROLLER, rootPane, this).getPanel());
 		TURTLE_PANEL = new TurtlePanel(PROGRAM_CONTROLLER);
 		rootPane.setCenter(TURTLE_PANEL.getPanel());
@@ -34,6 +34,10 @@ public class UserScreen implements Screen {
 			makeRoot();
 		}
 		return ROOT;
+	}
+	
+	public void displayErrorMessage(String errorMessage) {
+		TURTLE_PANEL.displayErrorMessage(errorMessage);
 	}
 
 	@Override

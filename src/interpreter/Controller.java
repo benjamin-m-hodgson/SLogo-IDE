@@ -295,6 +295,14 @@ public class Controller {
 			loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 		}
 	}
+	
+	public List<String> translateColors(List<String> colors){
+		List<String> translatedColors = new ArrayList<String>();
+		for(int i =0; i<colors.size(); i++) {
+			translatedColors.add(resourceDisplayText(colors.get(i)));
+		}
+		return translatedColors;
+	}
 
 	/**
 	 * Searches through the class path to find the appropriate settings resource file to use for 
