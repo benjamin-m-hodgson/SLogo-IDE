@@ -55,26 +55,26 @@ public class TextPanel implements Panel {
 		} 
 		catch (TurtleNotFoundException e) {
 			clearInputArea();
-			USER_SCREEN.displayErrorMessage("Turtle Not Found");
+			USER_SCREEN.displayErrorMessage(e.getMessage());
 		} 
 		catch (BadFormatException e) {
 			clearInputArea();
-			USER_SCREEN.displayErrorMessage("Bad Format");
+			USER_SCREEN.displayErrorMessage(e.getMessage());
 
 		} 
 		catch (UnidentifiedCommandException e) {
 			clearInputArea();
-			USER_SCREEN.displayErrorMessage("Unidentified Command");
+			USER_SCREEN.displayErrorMessage(e.getMessage());
 
 		} 
 		catch (MissingInformationException e) {
 			clearInputArea();
-			USER_SCREEN.displayErrorMessage("Missing Information");
+			USER_SCREEN.displayErrorMessage(e.getMessage());
 
 		}
 		catch (NullPointerException e) {
 			clearInputArea();
-			USER_SCREEN.displayErrorMessage("Null!");
+			USER_SCREEN.displayErrorMessage("Invalid Format");
 
 		}
 
