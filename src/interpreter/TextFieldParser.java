@@ -78,6 +78,13 @@ class TextFieldParser {
 	 */
 	protected double parseText(String userInputString) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String[] userInputByLine = userInputString.split("\\r?\\n");
+		ArrayList<String> userInputList = new ArrayList<String>();
+		for (int i = 0; i < userInputByLine.length; i++) {
+			if (userInputByLine[i] != null && userInputByLine[i].length() > 0) {
+				userInputList.add(userInputByLine[i]);
+			}
+		}
+		userInputByLine = userInputList.toArray(new String[userInputList.size()]);
 		String[] userInputTypes = new String[userInputByLine.length];
 
 		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
@@ -169,7 +176,7 @@ class TextFieldParser {
 //			testingParser.parseText("fd 1 rt / sin 20 2");
 //			testingParser.parseText("fd rt fd 50 bk 30");
 //			testingParser.parseText("fd rt bk 50");
-//			testingParser.parseText("fd 50\n\n\nfd 50");
+			testingParser.parseText("fd 50\n\n\nbk 50");
 //			testingParser.parseText("fd rt 100");
 //			testingParser.parseText("fd 100\n" + 
 //					"rt 90\n" + 
