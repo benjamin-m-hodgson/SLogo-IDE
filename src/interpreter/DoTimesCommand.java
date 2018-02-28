@@ -21,6 +21,7 @@ public class DoTimesCommand implements Command{
 		double returnVal = 0.0;
 		List<Integer> indices = getTempVarIndices(tempVar, executeArray);
 		for(Double k = 1.0; k<ending; k+=1) {
+			findAndReplace(indices, k, executeArray);
 			for(int i = 0; i<executeArray.length; i+=1) {
 				System.out.println("executing " + executeArray[i]);
 			}
