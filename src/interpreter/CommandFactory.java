@@ -131,9 +131,9 @@ public class CommandFactory {
 		else if(commandName.equals("Not")) {
 		    	return new NotCommand(commandArgs.get(0));
 		}
-//		else if(commandName.equals("If")) {
-//			return new ; 
-//		}
+		else if(commandName.equals("If")) {
+			return new IfCommand(); 
+		}
 		//elseif (commandName.equals("set") do variable map looping
 		//if unidentified
 			//loop through map of user commands
