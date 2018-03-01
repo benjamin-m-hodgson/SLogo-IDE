@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -17,7 +18,7 @@ import java.util.Iterator;
 import interpreter.Controller;
 
 public class HistoryPanel extends SpecificPanel {
-    private final double FRAMES_PER_SECOND = 120;
+    private final double FRAMES_PER_SECOND = 2;
     private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private Parent PANEL;
@@ -78,21 +79,49 @@ public class HistoryPanel extends SpecificPanel {
     protected UserScreen getUserScreen() {
 	return USER_SCREEN;
     }
-    
+
     private void setHistory(double elapsedTime) {
 	HISTORY_BOX.getChildren().clear();
 	Iterator<String> commandHistory = USER_SCREEN.commandHistory();
 	int currentRun = 1; 
 	while (commandHistory.hasNext()) {
 	    String command = commandHistory.next();
-	    Label numberLabel = new Label(Integer.toString(currentRun));
+	    String commandNumber = Integer.toString(currentRun);
+	    Label numberLabel = new Label(commandNumber);
 	    numberLabel.setId("numberLabel");
+	    numberLabel.setDisable(true);
 	    Label commandLabel = new Label(command);
+	    // override click event
+	    commandLabel.setOnMouseClicked((arg0)-> getPane()
+		    .setRight(verboseCommand(command,
+			    PROGRAM_CONTROLLER.resourceDisplayText("RunPrompt") 
+			    + " " + commandNumber)));
 	    commandLabel.setId("historyLabel");
 	    HBox numberedCommand = new HBox(numberLabel, commandLabel);
 	    HISTORY_BOX.getChildren().add(numberedCommand);
 	    currentRun++;
 	}
+    }
+    private VBox verboseCommand(String command, String commandNumberHeading) {
+	Button commandButton = new Button(commandNumberHeading);
+	commandButton.setId("commandButton");
+	commandButton.setDisable(true);
+	Button backButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText("backButton"));
+	backButton.setId("backButton");
+	// override click event
+	backButton.setOnMouseClicked((arg0)-> getPane()
+		.setRight(PANEL));
+	ScrollPane commandInfoPane = new ScrollPane();
+	commandInfoPane.setId("historyField");
+	TextArea commandInfoArea = new TextArea();
+	commandInfoArea.setId("historyField");
+	commandInfoPane.setContent(commandInfoArea);
+	commandInfoArea.setText(command);
+	commandInfoArea.setEditable(false);
+	VBox panelRoot = new VBox(commandButton, commandInfoArea, backButton);
+	panelRoot.setId("infoPanel");
+	VBox.setVgrow(commandInfoArea, Priority.ALWAYS);
+	return panelRoot;
     }
 
 }
