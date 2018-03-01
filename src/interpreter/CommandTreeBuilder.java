@@ -25,21 +25,27 @@ class CommandTreeBuilder {
 	public static final String DEFAULT_BRACKET_START_IDENTIFIER = "[";
 	public static final String DEFAULT_BRACKET_END_IDENTIFIER = "]";
 	public static final String DEFAULT_VAR_IDENTIFIER = ":";
+	public static final String DEFAULT_USERCOMMAND_IDENTIFIER = "To";
+	public static final String DEFAULT_USERCOMMAND_NAME = "UserInstruction";
 	public static final String[] DEFAULT_DOUBLE_SUBSTITUTES = {"PenDown","PenUp","ShowTurtle","HideTurtle","Home","ClearScreen",
 			"XCoordinate","YCoordinate","Heading","IsPenDown","IsShowing","Pi"};
 	//	private CommandTreeReader myCommandTreeReader; 
 	private String myNumArgsFileName; 
 	private ArrayList<CommandNode> myCommandTrees; 
 	private CommandTreeReader myCommandTreeReader;
+	private HashMap<String, String> myUserDefCommands; 
+	private HashMap<String, Integer> myUserCommandsNumArgs; 
 
-	protected CommandTreeBuilder(Map<String, Double> variables) {
-		this(DEFAULT_NUM_ARGS_FNAME, variables);
+	protected CommandTreeBuilder(Map<String, Double> variables, Map<String, String> userDefCommands, Map<String, Integer> userCommandsNumArgs) {
+		this(DEFAULT_NUM_ARGS_FNAME, variables, userDefCommands, userCommandsNumArgs);
 	}
 
-	protected CommandTreeBuilder(String numArgsFileName, Map<String, Double> variables) {
+	protected CommandTreeBuilder(String numArgsFileName, Map<String, Double> variables, Map<String, String> userDefCommands, Map<String, Integer> userCommandsNumArgs) {
 		myNumArgsFileName = numArgsFileName; 
-		myCommandTrees = new ArrayList<CommandNode>(); 
-		myCommandTreeReader = new CommandTreeReader(variables);
+		myCommandTrees = new ArrayList<CommandNode>();  
+		myCommandTreeReader = new CommandTreeReader(variables, userDefCommands, userCommandsNumArgs);
+		myUserDefCommands = (HashMap<String, String>)userDefCommands; 
+		myUserCommandsNumArgs = (HashMap<String, Integer>)userCommandsNumArgs;
 	}
 
 	protected double buildAndExecute(Turtle turtle, String[] userInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
@@ -49,7 +55,7 @@ class CommandTreeBuilder {
 			System.out.println(n.toString());
 		}
 		double finalReturnVal = -1; 
-//		System.out.println("number of command trees" + myCommandTrees.size());
+		//		System.out.println("number of command trees" + myCommandTrees.size());
 		for (CommandNode commandTree : myCommandTrees) {
 			finalReturnVal = myCommandTreeReader.readAndExecute(commandTree);
 		}
@@ -80,10 +86,14 @@ class CommandTreeBuilder {
 				int startAfterDoTimes = createAndSetDoTimesChildren(turtle, tempParentNode, userInput, startIdx+1, true); 
 				return createCommandTree(turtle, userInput, startAfterDoTimes);
 			}
-			if (currCommand.equals(DEFAULT_REPEAT_IDENTIFIER)) {
-				CommandNode tempParentNode = new CommandNode(userInput[startIdx], 3, turtle);
-				int startAfterRepeat = createAndSetRepeatChildren(turtle, tempParentNode, userInput, startIdx+1, true); 
-				return createCommandTree(turtle, userInput, startAfterRepeat);
+			if (currCommand.equals(DEFAULT_USERCOMMAND_IDENTIFIER)) {
+				int startAfterTo = parseMakeUserCommand(turtle, userInput, startIdx);
+				return createCommandTree(turtle, userInput, startAfterTo);
+			}
+			if (myUserDefCommands.containsKey(currCommand)) {
+				int numArgs = myUserCommandsNumArgs.get(currCommand);
+				int startAfterUserCommand = parseUserCommand(turtle, userInput, startIdx, numArgs);
+				return createCommandTree(turtle, userInput, startAfterUserCommand);
 			}
 			int numArgs = getNumArgs(currCommand);
 			CommandNode newParentNode = new CommandNode(currCommand, numArgs, turtle);
@@ -260,7 +270,7 @@ class CommandTreeBuilder {
 				}
 				return; 
 			}
-			
+
 			for (int idx = currIdx+1; idx < userInput.length; idx++) { 
 				Double currDouble; 
 				try {
@@ -349,7 +359,7 @@ class CommandTreeBuilder {
 		// ifExprEndSearch is now at first "["
 		int ifBodyEndSearch = ifExprEndSearch; 
 		while (! userInput[ifBodyEndSearch].equals(DEFAULT_IFBODY_END)) {
-			ifBodyEndSearch++; 
+			ifBodyEndSearch++;  
 		}
 		// ifBodyEndSearch is now at first "]"
 		int elseBodyEndSearch = ifBodyEndSearch+2; // skipping over [ 
@@ -468,6 +478,43 @@ class CommandTreeBuilder {
 		}
 		currIdx++;
 		return currIdx;
+	}
+
+	private int parseMakeUserCommand(Turtle turtle, String[] userInput, int startIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		int endToIdx = startIdx; 
+		while (! userInput[endToIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
+			endToIdx++; 
+		} // endToIdx is at FIRST ']' 
+		String[] varsArray = Arrays.copyOfRange(userInput, startIdx+3, endToIdx);
+		CommandNode varsNode = new CommandNode(String.join(" ", varsArray)); 
+
+		int finalEndToIdx = endToIdx+1;
+		while (! userInput[finalEndToIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
+			finalEndToIdx++; 
+		} // finalEndToIdx is at FINAL ']'
+		
+		String[] commandContent = Arrays.copyOfRange(userInput, endToIdx+2, finalEndToIdx);
+		String userCommandString = String.join(" ", commandContent);
+		CommandNode userCommandContent = new CommandNode(userCommandString);
+
+		
+		String userCommandName = userInput[startIdx+1];
+		CommandNode userCommandNameNode = new CommandNode(userCommandName);
+		
+		CommandNode userCommandNode = new CommandNode(userInput[startIdx], getNumArgs(userInput[startIdx]), userCommandNameNode, turtle);
+		userCommandNode.addChild(varsNode);
+		userCommandNode.addChild(userCommandContent);
+
+		myCommandTrees.add(userCommandNode);
+		return endToIdx;
+	}
+
+	private int parseUserCommand(Turtle turtle, String[] userInput, int startIdx, int numArgs) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+//		String userCommandName = userInput[startIdx];
+//		CommandNode userCommandNameNode = new CommandNode(userCommandName); 
+//		CommandNode userCommandNode = new CommandNode(DEFAULT_USERCOMMAND_NAME, numArgs, userCommandNameNode, turtle);
+		return 5; 
+		
 	}
 
 	private int getNumArgs(String commandType) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {

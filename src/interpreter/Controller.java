@@ -51,10 +51,11 @@ public class Controller {
     private double DEFAULT_HEIGHT;
     private double DEFAULT_WIDTH;
     private TextFieldParser myTextFieldParser;
-    private Map<String, Double> myVariables;  
+    private List<String> myCommandHistory; 
 
     public Controller(Stage primaryStage) {
 	myTextFieldParser = new TextFieldParser();
+	myCommandHistory = new ArrayList<String>(); 
 	findSettings();
 	findResources(DEFAULT_LANGUAGE);
 	PROGRAM_STAGE = primaryStage;
@@ -131,7 +132,7 @@ public class Controller {
      * Returns an UnmodifiableMap of variables to their values
      */
     public Map<String, Double> getVariables() {
-	return null;
+	return myTextFieldParser.getVariables();
     }
 
     /**
