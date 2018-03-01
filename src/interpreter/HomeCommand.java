@@ -1,4 +1,4 @@
-package interpreter;
+package interpreter; 
 
 /**
  * Command class that moves the turtle back to its home position (center of the screen). Dependent on the CommandFactory
@@ -6,7 +6,8 @@ package interpreter;
  * @author Sarahbland
  *
  */
-HomeCommand extends Command{
+
+class HomeCommand extends Command{
     Turtle myTurtle;
     /**
      * Creates a new instance of the command to be executed at the proper time
