@@ -173,9 +173,11 @@ public class Controller {
     }
 
     /**
+     * Looks in the CURRENT_TEXT_DISPLAY resourceBundle to determine the String
+     * that should be used for text display.
      * 
-     * @param key
-     * @return
+     * @param key: the key used for look up in the .properties file
+     * @return The string value @param key is assigned to in the .properties file
      */
     public String resourceDisplayText(String key) {
 	try {
@@ -219,6 +221,12 @@ public class Controller {
 	}
     }
 
+    /**
+     * Load the UserScreen that houses the main panels required for program operation. 
+     * These include the input panel where the user can input commands, the info panel
+     * where the user can access and change certain properties about the program, and 
+     * the turtle panel where the turtle and drawings are displayed.
+     */
     public void loadUserScreen() {
 	try {
 	    UserScreen programScreen = new UserScreen(this);
@@ -282,6 +290,13 @@ public class Controller {
     }
 
 
+    /**
+     * Takes a list of String color names and generates a new list of String hex values
+     * taken from the colors.properties file.
+     * 
+     * @param colors: A list of Strings representing color names
+     * @return A List<String> containing string representations of hex codes 
+     */
     public List<String> translateColors(List<String> colors){
 	List<String> translatedColors = new ArrayList<String>();
 	for(int i =0; i<colors.size(); i++) {
@@ -290,6 +305,13 @@ public class Controller {
 	return translatedColors;
     }
 
+    /**
+     * Takes a String color name and generates a new String representing the 
+     * colors associated hex value taken from the colors.properties file.
+     * 
+     * @param color: The String color name for the newly desired background color
+     * @return String representation of @param colors hex value.
+     */
     public String changeBackgroundColor(String color) {
 	CURRENT_BACKGROUND_COLOR = findColorFile(color);
 	try {
@@ -307,6 +329,14 @@ public class Controller {
 	}
     }
 
+    /**
+     * 
+     * @param hexCodeUnParsed
+     * @throws TurtleNotFoundException
+     * @throws BadFormatException
+     * @throws UnidentifiedCommandException
+     * @throws MissingInformationException
+     */
     private void parseHexCodeandPass(String hexCodeUnParsed) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
 	String hexCode = hexCodeUnParsed.substring(1, hexCodeUnParsed.length());
 	int hexConvert = Integer.parseInt(hexCode,16);
