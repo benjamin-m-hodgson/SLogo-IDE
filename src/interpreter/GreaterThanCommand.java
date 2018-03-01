@@ -10,7 +10,7 @@ import java.util.Map;
  * @date 2/26/18
  *
  */
-public class GreaterThanCommand extends Command{
+class GreaterThanCommand extends Command{
 
     	Command expr1Command;
     Command expr2Command;
@@ -23,7 +23,7 @@ public class GreaterThanCommand extends Command{
 	}
 	
 	@Override
-	public double execute() throws UnidentifiedCommandException{
+	protected double execute() throws UnidentifiedCommandException{
 		double arg1Val; 
 		double arg2Val; 
 		if (expr1Command instanceof StringCommand) {

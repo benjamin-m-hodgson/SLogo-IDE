@@ -421,7 +421,6 @@ class CommandTreeBuilder {
 		catch(NumberFormatException e) {
 			RegexMatcher regexMatcher = new RegexMatcher(myNumArgsFileName);
 			String numArgsAsString = regexMatcher.findMatchingVal(commandType);
-			System.out.println(commandType);
 			int numArgs = Integer.parseInt(numArgsAsString);
 			return numArgs;
 		}

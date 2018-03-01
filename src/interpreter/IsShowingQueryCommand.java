@@ -6,7 +6,7 @@ package interpreter;
  * @author Susie Choi
  *
  */
-public class IsShowingQueryCommand implements Command{
+public class IsShowingQueryCommand extends Command{
 	Turtle myTurtle;
 	/**
 	 * @param turtle is turtle whose visibility is desired

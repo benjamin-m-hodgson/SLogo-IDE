@@ -1,11 +1,30 @@
 package interpreter;
 
-public class MakeVariableCommand implements Command {
+import java.util.Map;
 
+/**
+ * 
+ * @author susiechoi
+ *
+ */
+
+class MakeVariableCommand extends Command {
+	
+	private Command myVarName; 
+	private Command myVarVal;
+	private Map<String, Double> myVariables; 
+
+	protected MakeVariableCommand(Command varName, Command varVal, Map<String, Double> variables) {
+		myVarName = varName; 
+		myVarVal = varVal;
+		myVariables = variables; 
+	}
+	
 	@Override
-	public double execute() throws UnidentifiedCommandException {
-		// TODO Auto-generated method stub
-		return 0;
+	protected double execute() throws UnidentifiedCommandException {
+		double exprEval = myVarVal.execute();
+		myVariables.put(((StringCommand)myVarName).getString(), exprEval);
+		return exprEval; 
 	}
 
 }

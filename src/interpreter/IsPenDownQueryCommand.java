@@ -6,7 +6,7 @@ package interpreter;
  * @author Susie Choi
  *
  */
-public class IsPenDownQueryCommand implements Command{
+public class IsPenDownQueryCommand extends Command{
 	Turtle myTurtle;
 	/**
 	 * @param turtle is turtle whose pen visibility is desired

@@ -1,5 +1,6 @@
 package interpreter;
 
+import java.util.Map;
 
 /**
  * Command class that moves a Turtle back a specified number of pixels. Dependent on the CommandFactory class to create
@@ -7,17 +8,22 @@ package interpreter;
  * @author Sarahbland
  *
  */
-public class MoveTurtleBackwardCommand implements Command{
+
+class MoveTurtleBackwardCommand extends Command{
+	
 	private Command myBackwardDistCommand;
 	private Turtle myTurtle;
+	private Map<String, Double> myVariables; 
+	
 	/**
 	 * Creates a new instance of this Command that can be executed at the proper time
 	 * @param backwarddist is the distance the Turtle will move backward
 	 * @param turtle is the Turtle that should move
 	 */
-	protected MoveTurtleBackwardCommand(Command backwarddist, Turtle turtle){
+	protected MoveTurtleBackwardCommand(Command backwarddist, Turtle turtle, Map<String, Double> variables){
 		myTurtle = turtle;
 		myBackwardDistCommand = backwarddist;
+		myVariables = variables; 
 	}
 
 	@Override
@@ -27,8 +33,16 @@ public class MoveTurtleBackwardCommand implements Command{
 	 * @return distance the turtle moved backward
 	 * @see interpreter.Command#execute()
 	 */
-	public double execute() throws UnidentifiedCommandException{
-		double dist = myBackwardDistCommand.execute();
+	protected double execute() throws UnidentifiedCommandException{
+		double dist = 0; 
+		
+		if (myBackwardDistCommand instanceof StringCommand) {
+			dist = getValueOfVar(((StringCommand)myBackwardDistCommand).toString(), myVariables);
+		}
+		else {
+			dist = myBackwardDistCommand.execute();
+		}
+		
 		double angle = Math.toRadians(myTurtle.getAngle());
 		myTurtle.setXY(myTurtle.getX()+dist*Math.sin(-angle), myTurtle.getY()+dist*Math.cos(-angle));
 		return dist;

@@ -51,7 +51,6 @@ class CommandMaker {
 		myTurtles = new ArrayList<Turtle>(); 
 		myLanguage = languageBundle;
 		myVariables = new HashMap<String, Double>(); 
-		myVariables.put(":a", 50.0);
 		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, myVariables); 
 	}
 
@@ -97,7 +96,8 @@ class CommandMaker {
 				userInputArrayToPass[i] = commandTypesToPass[i];
 			}
 		}
- 		//		makeListForBuilder(myListForBuilder, userInput, commandTypes, 1, DEFAULT_CONTROLFLOW_IDENTIFIERS);
+
+		//		makeListForBuilder(myListForBuilder, userInput, commandTypes, 1, DEFAULT_CONTROLFLOW_IDENTIFIERS);
 		return myCommandTreeBuilder.buildAndExecute(identifiedTurtle, userInputArrayToPass); 
 	}
 
