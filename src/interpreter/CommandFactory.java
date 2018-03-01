@@ -5,10 +5,12 @@ import java.util.Map;
 public class CommandFactory {
 	Map<String, Double> myVariables; 
 	Map<String, String> myUserDefCommands;
-
-	public CommandFactory(Map<String, Double> variables, Map<String, String> userDefCommands) {
+	Map<String, Integer> myUserDefCommandsNumArgs;
+	
+	public CommandFactory(Map<String, Double> variables, Map<String, String> userDefCommands, Map<String, Integer> userDefCommandsNumArgs) {
 		myVariables = variables; 
 		myUserDefCommands = userDefCommands; 
+		myUserDefCommandsNumArgs = userDefCommandsNumArgs;
 	}
 
 	public Command makeCommand() {
@@ -151,7 +153,10 @@ public class CommandFactory {
 			return new MakeVariableCommand(commandArgs.get(0), commandArgs.get(1), myVariables); 
 		}
 		else if (commandName.equals("MakeUserInstruction")) {
-			return new MakeUserInstructionCommand(commandArgs.get(0), commandArgs.get(1), commandArgs.get(2), myVariables, myUserDefCommands);
+			return new MakeUserInstructionCommand(commandArgs.get(0), commandArgs.get(1), commandArgs.get(2), myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
+		}
+		else if (commandName.equals("UserInstruction")) {
+			return new UserInstructionCommand(commandArgs.get(0), myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
 		}
 		else if(commandName.equals("SetPenColor")) {
 			return new SetPenColorCommand(commandArgs.get(0), turtle, myVariables);

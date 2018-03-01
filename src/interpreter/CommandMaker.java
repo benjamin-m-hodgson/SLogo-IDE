@@ -54,7 +54,8 @@ class CommandMaker {
 		myLanguage = languageBundle;
 		myVariables = new HashMap<String, Double>(); 
 		myUserDefCommands = new HashMap<String, String>(); 
-		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, myVariables, myUserDefCommands); 
+		myUserCommandsNumArgs = new HashMap<String, Integer>(); 
+		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, myVariables, myUserDefCommands, myUserCommandsNumArgs); 
 	}
 
 	protected double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
@@ -155,6 +156,10 @@ class CommandMaker {
 	public void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
 		System.out.println(name);
 		myTurtles.add(new Turtle(name, turtleImage, penLines, penColor));
+	}
+
+	public Map<String, String> getUserDefined() {
+		return myUserDefCommands;
 	}
 	
 

@@ -122,6 +122,11 @@ public class Controller {
 	return 1.0; 
     }
 
+    public Map<String, String> getUserDefined() {
+    	return myTextFieldParser.getUserDefined(); 
+    }
+    
+
     /**
      * TODO: optimize this to return an unmodifiable version of the map
      * Returns an UnmodifiableMap of variables to their values
