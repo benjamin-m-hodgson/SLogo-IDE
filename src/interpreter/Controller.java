@@ -25,6 +25,13 @@ import screen.ErrorScreen;
 import screen.StartScreen;
 import screen.UserScreen;
 
+/**
+ * 
+ * @author Ben Hodgson
+ * 
+ * The main class for reading in data files and relaying information about these files 
+ * to the front end. Also acts as a mediator and handles front end to back end communication.
+ */
 public class Controller {
 
     private final String FILE_ERROR_KEY = "FileErrorPrompt";
@@ -104,6 +111,8 @@ public class Controller {
     }
 
     /**
+     * Loops through the files in the "languages" sub directory to determine which 
+     * language options the program can support.
      * 
      * @return an ImmutableList of all of the language options
      */
@@ -137,6 +146,8 @@ public class Controller {
 
 
     /**
+     * Loops through the files in the "colors" sub directory to determine which 
+     * color options the program can support. 
      * 
      * @return an ImmutableList of all of the color options
      */
@@ -155,9 +166,8 @@ public class Controller {
 	    return Collections.unmodifiableList(colors);
 	}
 	catch (Exception e) {
-	    // TODO: make custom exception super class with sub classes for specifications
-	    //String specification = "%nFailed to find color files";
-	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY) + System.lineSeparator()
+		    	+ resourceErrorText("ColorErrorPrompt"));
 	}
 	return Collections.unmodifiableList(new ArrayList<String>());
     }
@@ -172,7 +182,10 @@ public class Controller {
 	    return CURRENT_TEXT_DISPLAY.getString(key);
 	}
 	catch (Exception e) {
-
+	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY) 
+		    + System.lineSeparator() + key + " "
+		    + resourceErrorText("DNEin") + System.lineSeparator()
+		    + CURRENT_TEXT_DISPLAY.getBaseBundleName());
 	    return "";
 	}
     }
@@ -219,10 +232,20 @@ public class Controller {
 	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
 	}
     }
-
-    //    public List<Turtle> onScreenTurtles() {
-    //	return null;
-    //    }
+    
+    /**
+     * Creates an Error Screen to display to the user indicating an error type by the String
+     * @param errorMessage. 
+     * 
+     * @param errorMessage: The message to be displayed to the user on the Error Screen
+     */
+    public void loadErrorScreen(String errorMessage) {
+	ErrorScreen errorScreen = new ErrorScreen(this, errorMessage);
+	Parent errorScreenRoot = errorScreen.getRoot();
+	Scene errorScene = new Scene(errorScreenRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	errorScene.getStylesheets().add(DEFAULT_CSS);
+	PROGRAM_STAGE.setScene(errorScene);
+    }
 
     /**
      * Searches through the class path to find the appropriate resource files to use for 
@@ -372,21 +395,6 @@ public class Controller {
      */
     public void changeLanguage(String language) {
 	findResources(language);
-    }
-
-
-    /**
-     * Creates an Error Screen to display to the user indicating an error type by the String
-     * @param errorMessage. 
-     * 
-     * @param errorMessage: The message to be displayed to the user on the Error Screen
-     */
-    private void loadErrorScreen(String errorMessage) {
-	ErrorScreen errorScreen = new ErrorScreen(this, errorMessage);
-	Parent errorScreenRoot = errorScreen.getRoot();
-	Scene errorScene = new Scene(errorScreenRoot);
-	errorScene.getStylesheets().add(DEFAULT_CSS);
-	PROGRAM_STAGE.setScene(errorScene);
     }
 
     /**

@@ -10,7 +10,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import screen.UserScreen;
 import java.util.List;
+
+import interpreter.BadFormatException;
 import interpreter.Controller;
+import interpreter.MissingInformationException;
+import interpreter.TurtleNotFoundException;
+import interpreter.UnidentifiedCommandException;
 import javafx.scene.control.Tooltip;
 
 
@@ -43,8 +48,6 @@ public class SettingsPanel extends SpecificPanel  {
 //		codeTest = codeTest.substring(1, codeTest.length());
 //		int hexConvert = Integer.parseInt(codeTest,16);
 //		System.out.println(Integer.toHexString(hexConvert));
-		
-
 	}
 
 	@Override
@@ -131,7 +134,12 @@ public class SettingsPanel extends SpecificPanel  {
 		.addListener(( arg0, arg1, arg2) ->{
 			String selected = (String) dropDownMenu.getItems().get((Integer) arg2);
 			if (!selected.equals(selectionPrompt)) {
-				PROGRAM_CONTROLLER.changePenColor(colorsUntranslated.get(colorsTranslated.indexOf(selected))); //something like this
+				try {
+				    PROGRAM_CONTROLLER.changePenColor(colorsUntranslated.get(colorsTranslated.indexOf(selected)));
+				} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
+					| MissingInformationException e) {
+				    PROGRAM_CONTROLLER.loadErrorScreen(e.getMessage());
+				} 
 			}
 		});
 		return dropDownMenu;
