@@ -95,6 +95,8 @@
 /* The label displaying a command from the command history */ 
 /******************************************************************************************/
 #historyLabel {
+	-fx-alignment: center;
+	-fx-padding: 0 0 0 5;
 	-fx-pref-width: 100;
 	-fx-max-width: 100;
 	-fx-pref-height: 40;
@@ -110,7 +112,7 @@
 }
 #historyLabel .text {
 	-fx-stroke: #555555;
-	-fx-stroke-width: 0.3px;
+	-fx-stroke-width: 0.4px;
 }
 #historyLabel:hover {
 	-fx-background-color: linear-gradient(#ffffff, #f1ffff);
@@ -133,13 +135,41 @@
 }
 #helpLabel .text {
 	-fx-stroke: #555555;
-	-fx-stroke-width: 0.3px;
+	-fx-stroke-width: 0.4px;
 	-fx-wrap-text: true;
+}
+/******************************************************************************************/
+/* The label displaying command information from the appropriate file in the references folder */ 
+/******************************************************************************************/
+#variableLabel {
+	-fx-alignment: center;
+	-fx-padding: 0 0 0 5;
+	-fx-min-width: 75;
+	-fx-pref-width: 75;
+	-fx-pref-height: 40;
+	-fx-min-height: 40;
+	-fx-max-height: 40;
+	-fx-background-color: #ffffff;
+	-fx-border-style: solid inside;
+	-fx-border-width: 1;
+	-fx-border-insets: 0;
+	-fx-border-radius: 0;
+	-fx-border-color: rgba(192, 188, 182, 0.5);
+	-fx-text-alignment: center;
+	-fx-wrap-text: false;
+	-fx-font: 12px Dekko;
+}
+#variableLabel .text {
+	-fx-stroke: #555555;
+	-fx-stroke-width: 0.4px;
+	-fx-wrap-text: false;
 }
 /******************************************************************************************/
 /* The label displaying a single integer */ 
 /******************************************************************************************/
 #numberLabel {
+	-fx-alignment: center;
+	-fx-padding: 0 0 0 5;
 	-fx-pref-width: 50;
 	-fx-max-width: 50;
 	-fx-pref-height: 40;

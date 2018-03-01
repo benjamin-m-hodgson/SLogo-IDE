@@ -1,7 +1,6 @@
 package interpreter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -50,12 +49,10 @@ public class Controller {
     private String PROGRAM_TITLE;
     private double DEFAULT_HEIGHT;
     private double DEFAULT_WIDTH;
-    private TextFieldParser myTextFieldParser;
-    private List<String> myCommandHistory; 
+    private TextFieldParser myTextFieldParser; 
 
     public Controller(Stage primaryStage) {
-	myTextFieldParser = new TextFieldParser();
-	myCommandHistory = new ArrayList<String>(); 
+	myTextFieldParser = new TextFieldParser(); 
 	findSettings();
 	findResources(DEFAULT_LANGUAGE);
 	PROGRAM_STAGE = primaryStage;
@@ -131,6 +128,7 @@ public class Controller {
     
 
     /**
+     * TODO: optimize this to return an unmodifiable version of the map
      * Returns an UnmodifiableMap of variables to their values
      */
     public Map<String, Double> getVariables() {
@@ -366,7 +364,6 @@ public class Controller {
 			Locale.getDefault(), loader);
 	    }
 	    CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
-	    System.out.println(CURRENT_LANGUAGE.getString("Forward"));
 	    myTextFieldParser.changeLanguage(CURRENT_LANGUAGE);
 	}
 	catch (Exception e) {

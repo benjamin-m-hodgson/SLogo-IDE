@@ -15,6 +15,13 @@ import java.util.Scanner;
 
 import interpreter.Controller;
 
+/**
+ * 
+ * @author Ben Hodgson
+ *
+ * A class that extends the SpecificPanel to create the a panel that displays information
+ * about the commands and their uses to the user
+ */
 public class HelpPanel extends SpecificPanel  {
 
     private Parent PANEL;
@@ -68,6 +75,10 @@ public class HelpPanel extends SpecificPanel  {
 	return USER_SCREEN;
     }
 
+    /**
+     * Retrieves the command files from the build path and uses this to populate a 
+     * pane containing buttons for each command.
+     */
     private void populateHelp() {
 	String currentDir = System.getProperty("user.dir");
 	try {
@@ -86,9 +97,8 @@ public class HelpPanel extends SpecificPanel  {
 			getPane()
 			.setRight(commandInformation(helpFile, command));
 		    } catch (FileNotFoundException e) {
-			// TODO: make custom exception super class with sub classes for specifications
-			//String specification = "%nFailed to find color files";
-			//loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+			PROGRAM_CONTROLLER.loadErrorScreen(PROGRAM_CONTROLLER
+				.resourceErrorText("CommandFileError"));
 		    }
 		});
 		HELP_BOX.getChildren().add(commandButton);
@@ -96,12 +106,20 @@ public class HelpPanel extends SpecificPanel  {
 	    }
 	}
 	catch (Exception e) {
-	    // TODO: make custom exception super class with sub classes for specifications
-	    //String specification = "%nFailed to find color files";
-	    //loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+	    PROGRAM_CONTROLLER.loadErrorScreen(PROGRAM_CONTROLLER
+		    .resourceErrorText("CommandFileError"));
 	}
     }
 
+    /**
+     * Takes a command and it's corresponding informational file and generates an 
+     * informational pane explaining the commands details as described in the file. 
+     * 
+     * @param commandFile: The file containing the information pertaining to the given command 
+     * @param command: The given command to be described/explained in the informational panel
+     * @return VBox: The root of the command informational panel
+     * @throws FileNotFoundException: An exception thrown if the file can't be found in the path
+     */
     private VBox commandInformation(File commandFile, String command) throws FileNotFoundException {
 	Button commandButton = new Button(command);
 	commandButton.setId("commandButton");
@@ -123,6 +141,14 @@ public class HelpPanel extends SpecificPanel  {
 	return panelRoot;
     }
 
+    /**
+     * Loops through the text in the provided commandFile argument and places this text in
+     * @param infoBox so it can be attached to the pane root and displayed to the user.
+     * 
+     * @param commandFile: The file containing the information pertaining to the given command
+     * @param infoBox: The TextArea where the information about the command is stored
+     * @throws FileNotFoundException: An exception thrown if the file can't be found in the path
+     */
     private void populateInfoBox(File commandFile, TextArea infoBox) throws FileNotFoundException {
 	Scanner in = new Scanner(commandFile);
 	StringBuilder commandInfoBuilder = new StringBuilder();
