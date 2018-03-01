@@ -31,6 +31,7 @@ public class TurtlePanel implements Panel {
 	private ScrollPane SCROLL_PANE;
 	private Controller PROGRAM_CONTROLLER;
 	private String DEFAULT_COLOR_HEXCODE = "2d3436";
+	private HBox ErrorHolder;
 	private List<ImageView> TURTLE_LIST;
 
 	public TurtlePanel(Controller programController) {
@@ -94,16 +95,20 @@ public class TurtlePanel implements Panel {
 	public void displayErrorMessage(String error) {
 		Button errorButton = new Button(error);
 		errorButton.setId("errorButton");
-		HBox holder = new HBox(errorButton);
-		holder.setAlignment(Pos.CENTER);
+		ErrorHolder = new HBox(errorButton);
+		ErrorHolder.setAlignment(Pos.CENTER);
 		HBox.setHgrow(errorButton, Priority.ALWAYS);
-		errorButton.setOnMouseClicked((arg0)-> PANEL.getChildren().remove(holder));
+		errorButton.setOnMouseClicked((arg0)-> PANEL.getChildren().remove(ErrorHolder));
 		errorButton.setMaxWidth(PANEL.widthProperty().get());
 		errorButton.setMinWidth(PANEL.widthProperty().get());
-		PANEL.setBottom(holder);
+		PANEL.setBottom(ErrorHolder);
 	}
 
 	public void changeBackgroundColor(String colorCode) {
 		SCROLL_PANE.setStyle("-fx-background-color:" + colorCode + ";");
+	}
+	
+	public void removeErrorButton() {
+		PANEL.getChildren().remove(ErrorHolder);
 	}
 }
