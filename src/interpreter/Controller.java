@@ -67,6 +67,60 @@ public class Controller {
 	findSettings();
 	findResources(DEFAULT_LANGUAGE);
     }
+    
+    /**
+     * Loads the StartScreen where the user selects an initial language and launches the program.
+     */
+    public void loadStartScreen() {
+	try {
+	    StartScreen startScreen = new StartScreen(this);
+	    // test the ErrorScreen
+	    //ErrorScreen startScreen = new ErrorScreen(this, 
+	    //		resourceErrorText(SCREEN_ERROR_KEY));
+	    Parent programRoot = startScreen.getRoot();
+	    Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	    programScene.getStylesheets().add(DEFAULT_CSS);
+	    PROGRAM_STAGE.setScene(programScene);
+	    PROGRAM_STAGE.show();	
+	}
+	catch (Exception e) {
+	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
+	}
+    }
+
+    /**
+     * Load the UserScreen that houses the main panels required for program operation. 
+     * These include the input panel where the user can input commands, the info panel
+     * where the user can access and change certain properties about the program, and 
+     * the turtle panel where the turtle and drawings are displayed.
+     */
+    public void loadUserScreen() {
+	try {
+	    UserScreen programScreen = new UserScreen(this);
+	    Parent programRoot = programScreen.getRoot();
+	    Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);	
+	    programScene.getStylesheets().add(DEFAULT_CSS);
+	    PROGRAM_STAGE.setScene(programScene);
+	}
+	catch (Exception e) {
+	    // TODO: make screen error exception class to handle error specification
+	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
+	}
+    }
+
+    /**
+     * Creates an Error Screen to display to the user indicating an error type by the String
+     * @param errorMessage. 
+     * 
+     * @param errorMessage: The message to be displayed to the user on the Error Screen
+     */
+    public void loadErrorScreen(String errorMessage) {
+	ErrorScreen errorScreen = new ErrorScreen(this, errorMessage);
+	Parent errorScreenRoot = errorScreen.getRoot();
+	Scene errorScene = new Scene(errorScreenRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	errorScene.getStylesheets().add(DEFAULT_CSS);
+	PROGRAM_STAGE.setScene(errorScene);
+    }
 
     /**
      * Makes a new Turtle given a name, an ImageView (previously attached to the Stage), a penColor, and an empty Group
@@ -191,7 +245,27 @@ public class Controller {
 	    return "";
 	}
     }
-
+    
+    /**
+     * Looks in the CURRENT_ERROR_DISPLAY resourceBundle to determine the String
+     * that should be used to get the String used for error description.
+     * 
+     * @param key: the key used for look up in the .properties file
+     * @return The string value @param key is assigned to in the .properties file
+     */
+    public String resourceErrorText(String key) {
+	return CURRENT_ERROR_DISPLAY.getString(key);
+    }
+    
+    /**
+     * Change the Language. Changes the prompts displayed in the user interface as well as
+     * acceptable commands by changing the ResourceBundles used by the program.
+     * 
+     * @param language: the new language to be used in the program
+     */
+    public void changeLanguage(String language) {
+	findResources(language);
+    }
 
     /**
      * Parses input from a text field or button press by the user
@@ -203,92 +277,6 @@ public class Controller {
     public double parseInput(String userTextInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
 	return myTextFieldParser.parseText(userTextInput);
     }
-
-    public void loadStartScreen() {
-	try {
-	    StartScreen startScreen = new StartScreen(this);
-	    // test the ErrorScreen
-	    //ErrorScreen startScreen = new ErrorScreen(this, 
-	    //		resourceErrorText(SCREEN_ERROR_KEY));
-	    Parent programRoot = startScreen.getRoot();
-	    Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-	    programScene.getStylesheets().add(DEFAULT_CSS);
-	    PROGRAM_STAGE.setScene(programScene);
-	    PROGRAM_STAGE.show();	
-	}
-	catch (Exception e) {
-	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
-	}
-    }
-
-    /**
-     * Load the UserScreen that houses the main panels required for program operation. 
-     * These include the input panel where the user can input commands, the info panel
-     * where the user can access and change certain properties about the program, and 
-     * the turtle panel where the turtle and drawings are displayed.
-     */
-    public void loadUserScreen() {
-	try {
-	    UserScreen programScreen = new UserScreen(this);
-	    Parent programRoot = programScreen.getRoot();
-	    Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);	
-	    programScene.getStylesheets().add(DEFAULT_CSS);
-	    PROGRAM_STAGE.setScene(programScene);
-	}
-	catch (Exception e) {
-	    // TODO: make screen error exception class to handle error specification
-	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
-	}
-    }
-
-    /**
-     * Creates an Error Screen to display to the user indicating an error type by the String
-     * @param errorMessage. 
-     * 
-     * @param errorMessage: The message to be displayed to the user on the Error Screen
-     */
-    public void loadErrorScreen(String errorMessage) {
-	ErrorScreen errorScreen = new ErrorScreen(this, errorMessage);
-	Parent errorScreenRoot = errorScreen.getRoot();
-	Scene errorScene = new Scene(errorScreenRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-	errorScene.getStylesheets().add(DEFAULT_CSS);
-	PROGRAM_STAGE.setScene(errorScene);
-    }
-
-    /**
-     * Searches through the class path to find the appropriate resource files to use for 
-     * the program. If it can't locate the files, it displays an error screen to the user
-     * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
-     * 
-     * @param language: The language to define which .properties files to use in the Program
-     */
-    private void findResources(String language) {
-	String currentDir = System.getProperty("user.dir");
-	try {
-	    File file = new File(currentDir);
-	    URL[] urls = {file.toURI().toURL()};
-	    ClassLoader loader = new URLClassLoader(urls);
-	    try {
-		CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(language + "Prompts", 
-			Locale.getDefault(), loader);
-		CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(language + "Errors", 
-			Locale.getDefault(), loader);
-	    }
-	    // if .properties file doesn't exist for specified language, default to English
-	    catch (Exception e) {
-		CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Prompts", 
-			Locale.getDefault(), loader);
-		CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Errors", 
-			Locale.getDefault(), loader);
-	    }
-	    CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
-	    // TODO: fix -> myTextFieldParser.changeLanguage(CURRENT_LANGUAGE);
-	}
-	catch (MalformedURLException e) {
-	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
-	}
-    }
-
 
     /**
      * Takes a list of String color names and generates a new list of String hex values
@@ -328,21 +316,16 @@ public class Controller {
 	    }
 	}
     }
-
+    
     /**
+     * Updates the color of lines to be drawn by the turtle
      * 
-     * @param hexCodeUnParsed
+     * @param color: the new color to be used for drawing lines
      * @throws TurtleNotFoundException
      * @throws BadFormatException
      * @throws UnidentifiedCommandException
      * @throws MissingInformationException
      */
-    private void parseHexCodeandPass(String hexCodeUnParsed) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
-	String hexCode = hexCodeUnParsed.substring(1, hexCodeUnParsed.length());
-	int hexConvert = Integer.parseInt(hexCode,16);
-	parseInput("setpc " + hexConvert);
-    }
-
     public void changePenColor(String color) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
 	CURRENT_PEN_COLOR = findColorFile(color);
 	try {
@@ -360,7 +343,60 @@ public class Controller {
 	    }
 	}
     }
+    
+    /**
+     * Searches through the class path to find the appropriate resource files to use for 
+     * the program. If it can't locate the files, it displays an error screen to the user
+     * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
+     * 
+     * @param language: The language to define which .properties files to use in the Program
+     */
+    private void findResources(String language) {
+	String currentDir = System.getProperty("user.dir");
+	try {
+	    File file = new File(currentDir);
+	    URL[] urls = {file.toURI().toURL()};
+	    ClassLoader loader = new URLClassLoader(urls);
+	    try {
+		CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(language + "Prompts", 
+			Locale.getDefault(), loader);
+		CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(language + "Errors", 
+			Locale.getDefault(), loader);
+	    }
+	    // if .properties file doesn't exist for specified language, default to English
+	    catch (Exception e) {
+		CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Prompts", 
+			Locale.getDefault(), loader);
+		CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Errors", 
+			Locale.getDefault(), loader);
+	    }
+	    CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
+	    // TODO: fix -> myTextFieldParser.changeLanguage(CURRENT_LANGUAGE);
+	}
+	catch (MalformedURLException e) {
+	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+	}
+    }
 
+    /**
+     * 
+     * @param hexCodeUnParsed
+     * @throws TurtleNotFoundException
+     * @throws BadFormatException
+     * @throws UnidentifiedCommandException
+     * @throws MissingInformationException
+     */
+    private void parseHexCodeandPass(String hexCodeUnParsed) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	try {
+	    String hexCode = hexCodeUnParsed.substring(1, hexCodeUnParsed.length());
+	    int hexConvert = Integer.parseInt(hexCode,16);
+	    parseInput("setpc " + hexConvert);
+	}
+	catch (Exception e){
+	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY) + System.lineSeparator()
+	    + resourceErrorText("ColorErrorPrompt"));
+	}
+    }
 
     /**
      * Searches through the class path to find the appropriate resource files to use for 
@@ -417,23 +453,4 @@ public class Controller {
 	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 	}
     }
-    /**
-     * Change the Language. Changes the prompts displayed in the user interface as well as
-     * acceptable commands by changing the ResourceBundles used by the program.
-     * 
-     * @param language: the new language to be used in the program
-     */
-    public void changeLanguage(String language) {
-	findResources(language);
-    }
-
-    /**
-     * 
-     * @param key
-     * @return
-     */
-    public String resourceErrorText(String key) {
-	return CURRENT_ERROR_DISPLAY.getString(key);
-    }
 }
-
