@@ -49,12 +49,12 @@ public class TextPanel implements Panel {
    public void run() {
 		String inputText = INPUT_AREA.getText().replaceAll("\n", 
 				System.getProperty("line.separator"));
-		CONSOLE_AREA.setText(inputText);
 		if (inputText != null) {
 		    USER_SCREEN.addCommand(inputText);
 		}
 		try {
-			PROGRAM_CONTROLLER.parseInput(inputText);
+			Double consoleVal = PROGRAM_CONTROLLER.parseInput(inputText);
+			CONSOLE_AREA.setText(consoleVal.toString());
 		} 
 		catch (TurtleNotFoundException e) {
 			clearInputArea();
