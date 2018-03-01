@@ -14,9 +14,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import screen.UserScreen;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.Map.Entry;
 
