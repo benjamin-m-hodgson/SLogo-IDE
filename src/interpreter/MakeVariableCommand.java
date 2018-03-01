@@ -16,6 +16,7 @@ class MakeVariableCommand extends Command {
 
 	protected MakeVariableCommand(Command varName, Command varVal, Map<String, Double> variables) {
 		myVarName = varName; 
+		System.out.println(((StringCommand)myVarName).getString());
 		myVarVal = varVal;
 		myVariables = variables; 
 	}
