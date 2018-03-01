@@ -38,10 +38,12 @@ class CommandMaker {
 	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command"; //TODO allow this to be client-specified
 	public static final String[] DEFAULT_CONTROLFLOW_IDENTIFIERS = {"Repeat", "DoTimes", "For"};
 
+	private HashMap<String, Double> myVariables; 
+	private HashMap<String, String> myUserDefCommands; 
+	private HashMap<String, Integer> myUserCommandsNumArgs; 
 	private ArrayList<Turtle> myTurtles; 
 	private ResourceBundle myLanguage; 
 	private CommandTreeBuilder myCommandTreeBuilder; 
-	private HashMap<String, Double> myVariables; 
 
 	protected CommandMaker() {
 		this(DEFAULT_LANGUAGE, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
@@ -50,8 +52,10 @@ class CommandMaker {
 	protected CommandMaker(ResourceBundle languageBundle, String numArgsFileName) {
 		myTurtles = new ArrayList<Turtle>(); 
 		myLanguage = languageBundle;
-		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName); 
 		myVariables = new HashMap<String, Double>(); 
+		myUserDefCommands = new HashMap<String, String>(); 
+		myUserCommandsNumArgs = new HashMap<String, Integer>(); 
+		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, myVariables, myUserDefCommands, myUserCommandsNumArgs); 
 	}
 
 	protected double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
@@ -77,14 +81,19 @@ class CommandMaker {
 		}
 		for (int idx = startIdx; idx < userInput.length; idx++) {
 			if (typesOfInput[idx].equals(commandIdentifier)) {
-				commandTypes[idx] = getCommandType(userInput[idx]);
+				try{
+					commandTypes[idx] = getCommandType(userInput[idx]);
+				} 
+				catch (Exception e) {
+					commandTypes[idx] = "";
+				}
 			}
 			else {
 				commandTypes[idx] = "";
 			}
 		}
 
-		String[] userInputArrayToPass = userInput; 
+		String[] userInputArrayToPass = userInput;
 		String[] commandTypesToPass = commandTypes; 
 
 		if (turtleIdentified) {
@@ -129,7 +138,7 @@ class CommandMaker {
 //		}
 //	} 
 	
-	private String getCommandType(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private String getCommandType(String text) throws BadFormatException, MissingInformationException, UnidentifiedCommandException {
 		RegexMatcher regexMatcher = new RegexMatcher(myLanguage);
 		String commandType = regexMatcher.findMatchingKey(text);
 		return commandType;
@@ -146,6 +155,10 @@ class CommandMaker {
 	public void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
 		System.out.println(name);
 		myTurtles.add(new Turtle(name, turtleImage, penLines, penColor));
+	}
+
+	public Map<String, String> getUserDefined() {
+		return myUserDefCommands;
 	}
 	
 

@@ -162,11 +162,6 @@ class TextFieldParser {
 		myCommandMaker.addNewTurtle(name, turtleImage, penColor, penLines);
 	}
 
-
-
-
-
-
 	public static void main(String[] args) {
 		TextFieldParser testingParser = new TextFieldParser();
 		try {
@@ -178,7 +173,6 @@ class TextFieldParser {
 			Double test = testingParser.parseText("for [ :k fd 0 fd 5 fd 1 ] [ fd 1 ]");
 			System.out.println("returns: ");
 			System.out.println(test.toString());
-			
 //			testingParser.parseText("fd 1 rt / sin 20 2");
 //			testingParser.parseText("fd rt fd 50 bk 30");
 //			testingParser.parseText("fd rt bk 50");
@@ -193,10 +187,14 @@ class TextFieldParser {
 //					"fd 100\n" + 
 //					"rt 90");
 //			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
-//			testingParser.parseText("setxy fd fd fd fd bk 50 rt 90");
+			testingParser.parseText("to line [ :length ] [ fd :length ]");
 		} catch (Exception e) {
 
 		}
+	}
+
+	public Map<String, String> getUserDefined() {
+		return myCommandMaker.getUserDefined();
 	}
 
 }

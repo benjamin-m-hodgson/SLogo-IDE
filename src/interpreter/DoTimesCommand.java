@@ -1,23 +1,27 @@
 package interpreter;
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 
-public class DoTimesCommand implements Command{
-	String myToExecute;
-	String myTempVar;
-	Command myEndExpressionCommand;
-	CommandTreeBuilder myBuilder;
-	Turtle myTurtle;
-	protected DoTimesCommand(Command tempVarCommand, Command endExpression, Command toExecuteCommand, Turtle turtle) {
+class DoTimesCommand extends Command{
+	
+	private String toExecute;
+	private String myTempVar;
+	private Command endExpressionCommand;
+	private CommandTreeBuilder myBuilder;
+	private Turtle myTurtle;
+	
+	protected DoTimesCommand(Command tempVarCommand, Command endExpression, Command toExecuteCommand, Turtle turtle, 
+			Map<String, Double> variables, Map<String, String> userDefCommands) {
 		myTempVar = ((StringCommand)tempVarCommand).getString();
-		myToExecute = ((StringCommand)toExecuteCommand).getString();
-		myEndExpressionCommand = endExpression;
-		myBuilder = new CommandTreeBuilder();
+		toExecute = ((StringCommand)toExecuteCommand).getString();
+		endExpressionCommand = endExpression;
+		myBuilder = new CommandTreeBuilder(variables, userDefCommands);
 		myTurtle = turtle;
 	}
-	public double execute() throws UnidentifiedCommandException {
-		String[] executeArray = myToExecute.split(" ");
-		double ending = myEndExpressionCommand.execute();
+	protected double execute() throws UnidentifiedCommandException {
+		String[] executeArray = toExecute.split(" ");
+		double ending = endExpressionCommand.execute();
 		double returnVal = 0.0;
 		List<Integer> indices = getTempVarIndices(myTempVar, executeArray);
 		for(Double k = 1.0; k<=ending; k+=1) {

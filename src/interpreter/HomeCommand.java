@@ -6,22 +6,22 @@ package interpreter;
  * @author Sarahbland
  *
  */
-class HomeCommand implements Command{
-	Turtle myTurtle;
-	/**
-	 * Creates a new instance of the command to be executed at the proper time
-	 * @param turtle
-	 */
-	protected HomeCommand(Turtle turtle) {
-		myTurtle = turtle;
-	}
-	/**
-	 * Sets the turtle's position to the center of the screen
-	 * @return distance the turtle moved
-	 * @see interpreter.Command#execute()
-	 */
-	public double execute() {
-		myTurtle.setAngle(0);
-		return myTurtle.setXY(0, 0);
-	}
+HomeCommand extends Command{
+    Turtle myTurtle;
+    /**
+     * Creates a new instance of the command to be executed at the proper time
+     * @param turtle
+     */
+    protected HomeCommand(Turtle turtle) {
+	myTurtle = turtle;
+    }
+    /**
+     * Sets the turtle's position to the center of the screen
+     * @return distance the turtle moved
+     * @see interpreter.Command#execute()
+     */
+    protected double execute() {
+	return myTurtle.setXY(0, 0);
+    }
+>>>>>>> 5e323c37de74bada5cce9600a12cb66fe7c9c0bf
 }

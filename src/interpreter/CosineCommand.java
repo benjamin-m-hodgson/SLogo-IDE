@@ -1,24 +1,28 @@
 package interpreter;
 
+import java.util.Map;
+
 /**
  * returns cosine of degrees
  * 
  * @author Benjamin Hodgson
+ * @author Susie Choi 
  * @date 2/26/18
  *
  */
-public class CosineCommand implements Command{
+ class CosineCommand extends Command{
+	
+	private Command degreesCommand;
+	private Map<String, Double> myVariables; 
 
-    	Command degreesCommand;
-	protected CosineCommand(Command degrees) {
+	protected CosineCommand(Command degrees, Map<String, Double> variables) {
 		degreesCommand = degrees;
+		myVariables = variables; 
 	}
+	
 	@Override
-	public double execute() throws UnidentifiedCommandException {
-	    double DEGREES = degreesCommand.execute();
-		return Math.cos(Math.toRadians(DEGREES));
-	}
-	public int getNumArgs() {
-		return 1;
+	protected double execute() throws UnidentifiedCommandException {
+		double degrees = getCommandValue(degreesCommand, myVariables);
+	    	return Math.cos(Math.toRadians(degrees));
 	}
 }

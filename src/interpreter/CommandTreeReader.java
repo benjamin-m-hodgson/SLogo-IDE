@@ -1,5 +1,7 @@
 package interpreter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class to read the CommandNode tree created to deal with concatenated commands. Has the capacity to check if the tree
@@ -13,8 +15,9 @@ import java.util.ArrayList;
  */
 class CommandTreeReader {
 	CommandFactory myCommandFactory;
-	protected CommandTreeReader(){
-		myCommandFactory = new CommandFactory();
+	
+	protected CommandTreeReader(Map<String, Double> variables, Map<String, String> userDefCommands, Map<String, Integer> userDefCommandsNumArgs){
+		myCommandFactory = new CommandFactory(variables, userDefCommands, userDefCommandsNumArgs);
 	}
 	/**
 	 * Error checks to make sure that the tree that was constructed is complete (all commands, even concatenated commands,
@@ -42,9 +45,6 @@ class CommandTreeReader {
 	 * @return
 	 */
 	protected double readAndExecute(CommandNode root) throws UnidentifiedCommandException{
-		if(!treeIsComplete(root)) {
-			throw new IllegalArgumentException("One or more of your commands does not have the proper number of arguments");
-		}
 		Command compressedCommand = compressTree(root);
 		return compressedCommand.execute();	
 	}

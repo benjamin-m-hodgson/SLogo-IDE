@@ -7,20 +7,21 @@ package interpreter;
  * @author Susie Choi
  *
  */
-public class HeadingQueryCommand implements Command{
-	Turtle myTurtle;
-	/**
-	 * @param turtle is turtle whose angle is desired
-	 */
-	protected HeadingQueryCommand(Turtle turtle) {
-		myTurtle = turtle;
-	}
-	/**
-	 * @return angle of Turtle (absolute, between 0 and 360)
-	 * @see interpreter.Command#execute()
-	 */
-	@Override
-	public double execute() {
-		return myTurtle.getAngle() % 360;
-	}
+class HeadingQueryCommand extends Command{
+    private Turtle myTurtle;
+    /**
+     * @param turtle is turtle whose angle is desired
+     */
+    protected HeadingQueryCommand(Turtle turtle) {
+	myTurtle = turtle;
+    }
+    /**
+     * @return angle of Turtle
+     * @see interpreter.Command#execute()
+     */
+    @Override
+    protected double execute() {
+	return myTurtle.getAngle();
+    }
+>>>>>>> 5e323c37de74bada5cce9600a12cb66fe7c9c0bf
 }

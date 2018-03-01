@@ -10,13 +10,26 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import screen.UserScreen;
 import java.util.List;
+
+import interpreter.BadFormatException;
 import interpreter.Controller;
+import interpreter.MissingInformationException;
+import interpreter.TurtleNotFoundException;
+import interpreter.UnidentifiedCommandException;
 import javafx.scene.control.Tooltip;
 
 
+/**
+ * A class which extends Specific Panel and allows the user to dynamically change the settings. 
+ * @author Andrew Arnold
+ *
+ */
 public class SettingsPanel extends SpecificPanel  {
 
 	private final int VISIBLE_ROW_COUNT = 5;
+	private final String COLOR_FOLDER = "colors";
+	private final String TURTLE_IMAGE_FOLDER = "turtleimages";
+
 	private  Parent PANEL;
 	private final Controller PROGRAM_CONTROLLER;
 	private final BorderPane PANE;
@@ -30,21 +43,13 @@ public class SettingsPanel extends SpecificPanel  {
 
 	private UserScreen USER_SCREEN;
 
-
-
 	private final int DEFAULT_BUTTON_SPACEING = 10;
-	private final String[] DROPDOWN_IDS = {"languageChooser", "backgroundColorChooser", "penColorChooser", "turtleImageChooser"};
+	private final String[] DROPDOWN_IDS = {"languageSettingsChooser", "backgroundColorChooser", "penColorChooser", "turtleImageChooser"};
 
 	public SettingsPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
 		PROGRAM_CONTROLLER = programController;
 		PANE = pane;
 		USER_SCREEN = userScreen;
-//		String codeTest = "#2d3436";
-//		codeTest = codeTest.substring(1, codeTest.length());
-//		int hexConvert = Integer.parseInt(codeTest,16);
-//		System.out.println(Integer.toHexString(hexConvert));
-		
-
 	}
 
 	@Override
@@ -93,10 +98,9 @@ public class SettingsPanel extends SpecificPanel  {
 	private ComboBox<Object> makeBackgroundColorChooser(String itemID) {
 		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
 		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
-		//dropDownMenu.setTooltip(SELECTION_TIP);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
-		colorsUntranslated = PROGRAM_CONTROLLER.getColors();
+		colorsUntranslated = PROGRAM_CONTROLLER.getFileNames(COLOR_FOLDER);
 		colorsTranslated = PROGRAM_CONTROLLER.translateColors(colorsUntranslated);
 		simulationChoices.addAll(colorsTranslated);
 		dropDownMenu.setItems(simulationChoices);
@@ -119,10 +123,9 @@ public class SettingsPanel extends SpecificPanel  {
 	private ComboBox<Object> makePenColorChooser(String itemID) {
 		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
 		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
-		//dropDownMenu.setTooltip(SELECTION_TIP);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
-		colorsUntranslated = PROGRAM_CONTROLLER.getColors();
+		colorsUntranslated = PROGRAM_CONTROLLER.getFileNames(COLOR_FOLDER);
 		colorsTranslated = PROGRAM_CONTROLLER.translateColors(colorsUntranslated);
 		simulationChoices.addAll(colorsTranslated);
 		dropDownMenu.setItems(simulationChoices);
@@ -131,7 +134,12 @@ public class SettingsPanel extends SpecificPanel  {
 		.addListener(( arg0, arg1, arg2) ->{
 			String selected = (String) dropDownMenu.getItems().get((Integer) arg2);
 			if (!selected.equals(selectionPrompt)) {
-				PROGRAM_CONTROLLER.changePenColor(colorsUntranslated.get(colorsTranslated.indexOf(selected))); //something like this
+				try {
+				    PROGRAM_CONTROLLER.changePenColor(colorsUntranslated.get(colorsTranslated.indexOf(selected)));
+				} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
+					| MissingInformationException e) {
+				    PROGRAM_CONTROLLER.loadErrorScreen(e.getMessage());
+				} 
 			}
 		});
 		return dropDownMenu;
@@ -148,14 +156,14 @@ public class SettingsPanel extends SpecificPanel  {
 		//dropDownMenu.setTooltip(SELECTION_TIP);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
-		//simulationChoices.addAll(PROGRAM_CONTROLLER.getColors());
+		simulationChoices.addAll(PROGRAM_CONTROLLER.getFileNames(TURTLE_IMAGE_FOLDER));
 		dropDownMenu.setItems(simulationChoices);
 		dropDownMenu.setId(itemID);
 		dropDownMenu.getSelectionModel().selectedIndexProperty()
 		.addListener((arg0,arg1, arg2)-> {
 			String selected = (String) simulationChoices.get((Integer) arg2);
 			if (!selected.equals(selectionPrompt)) {
-				//controller.changeTurtleImage() //something like this
+				USER_SCREEN.changeTurtleImage(selected); //something like this
 			}
 		});
 		return dropDownMenu;

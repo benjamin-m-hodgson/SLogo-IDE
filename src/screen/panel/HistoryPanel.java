@@ -26,8 +26,7 @@ public class HistoryPanel extends SpecificPanel {
     private BorderPane PANE;
     private VBox HISTORY_BOX; 
     private UserScreen USER_SCREEN;
-
-
+    
     public HistoryPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
 	PROGRAM_CONTROLLER = programController;
 	PANE = pane;
@@ -79,13 +78,15 @@ public class HistoryPanel extends SpecificPanel {
     protected UserScreen getUserScreen() {
 	return USER_SCREEN;
     }
-
+    
     private void setHistory(double elapsedTime) {
 	HISTORY_BOX.getChildren().clear();
 	Iterator<String> commandHistory = USER_SCREEN.commandHistory();
+	Iterator<String> outputHistory = USER_SCREEN.outputHistory();
 	int currentRun = 1; 
-	while (commandHistory.hasNext()) {
+	while (commandHistory.hasNext() && outputHistory.hasNext()) {
 	    String command = commandHistory.next();
+	    String output = outputHistory.next();
 	    String commandNumber = Integer.toString(currentRun);
 	    Label numberLabel = new Label(commandNumber);
 	    numberLabel.setId("numberLabel");
@@ -95,14 +96,14 @@ public class HistoryPanel extends SpecificPanel {
 	    commandLabel.setOnMouseClicked((arg0)-> getPane()
 		    .setRight(verboseCommand(command,
 			    PROGRAM_CONTROLLER.resourceDisplayText("RunPrompt") 
-			    + " " + commandNumber)));
+			    + " " + commandNumber, output)));
 	    commandLabel.setId("historyLabel");
 	    HBox numberedCommand = new HBox(numberLabel, commandLabel);
 	    HISTORY_BOX.getChildren().add(numberedCommand);
 	    currentRun++;
 	}
     }
-    private VBox verboseCommand(String command, String commandNumberHeading) {
+    private VBox verboseCommand(String command, String commandNumberHeading, String output) {
 	Button commandButton = new Button(commandNumberHeading);
 	commandButton.setId("commandButton");
 	commandButton.setDisable(true);
@@ -114,14 +115,17 @@ public class HistoryPanel extends SpecificPanel {
 	ScrollPane commandInfoPane = new ScrollPane();
 	commandInfoPane.setId("historyField");
 	TextArea commandInfoArea = new TextArea();
-	commandInfoArea.setId("historyField");
 	commandInfoPane.setContent(commandInfoArea);
+	commandInfoArea.setId("historyField");
 	commandInfoArea.setText(command);
 	commandInfoArea.setEditable(false);
-	VBox panelRoot = new VBox(commandButton, commandInfoArea, backButton);
+	TextArea consoleInfoArea = new TextArea();
+	consoleInfoArea.setId("historyField");
+	consoleInfoArea.setText(output);
+	consoleInfoArea.setEditable(false);
+	VBox panelRoot = new VBox(commandButton, commandInfoArea, consoleInfoArea, backButton);
 	panelRoot.setId("infoPanel");
 	VBox.setVgrow(commandInfoArea, Priority.ALWAYS);
 	return panelRoot;
     }
-
 }
