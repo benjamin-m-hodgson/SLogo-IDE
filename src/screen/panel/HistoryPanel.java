@@ -26,8 +26,7 @@ public class HistoryPanel extends SpecificPanel {
     private BorderPane PANE;
     private VBox HISTORY_BOX; 
     private UserScreen USER_SCREEN;
-
-
+    
     public HistoryPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
 	PROGRAM_CONTROLLER = programController;
 	PANE = pane;
@@ -79,7 +78,7 @@ public class HistoryPanel extends SpecificPanel {
     protected UserScreen getUserScreen() {
 	return USER_SCREEN;
     }
-
+    
     private void setHistory(double elapsedTime) {
 	HISTORY_BOX.getChildren().clear();
 	Iterator<String> commandHistory = USER_SCREEN.commandHistory();

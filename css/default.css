@@ -111,7 +111,7 @@
 	-fx-stroke-width: 0.3px;
 }
 #historyLabel:hover {
-	-fx-background-color: linear-gradient(#ffffff, #e6e6e6);
+	-fx-background-color: linear-gradient(#ffffff, #f1ffff);
 }
 /******************************************************************************************/
 /* The label displaying command information from the appropriate file in the references folder */ 
