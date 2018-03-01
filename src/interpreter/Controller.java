@@ -359,7 +359,6 @@ public class Controller {
 			Locale.getDefault(), loader);
 	    }
 	    CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
-	    System.out.println(CURRENT_LANGUAGE.getString("Forward"));
 	    myTextFieldParser.changeLanguage(CURRENT_LANGUAGE);
 	}
 	catch (Exception e) {
