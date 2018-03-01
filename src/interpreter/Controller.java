@@ -108,7 +108,7 @@ public class Controller {
      * @param errorMessage: The message to be displayed to the user on the Error Screen
      */
     public void loadErrorScreen(String errorMessage) {
-	ErrorScreen errorScreen = new ErrorScreen(this, errorMessage);
+	ErrorScreen errorScreen = new ErrorScreen(errorMessage);
 	Parent errorScreenRoot = errorScreen.getRoot();
 	Scene errorScene = new Scene(errorScreenRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	errorScene.getStylesheets().add(DEFAULT_CSS);
