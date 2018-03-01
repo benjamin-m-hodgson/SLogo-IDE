@@ -100,8 +100,9 @@ class CommandTreeBuilder {
 				int startAfterTo = parseMakeUserCommand(turtle, userInput, startIdx);
 				return createCommandTree(turtle, userInput, startAfterTo);
 			}
-			if (myUserDefCommands.containsKey(currCommand)) {
+  			if (myUserDefCommands.containsKey(currCommand)) {
 				parseUserCommand(turtle, userInput, startIdx, myUserDefCommandsNumArgs.get(currCommand));
+				return null; // TODO FIX THIS 
 //				return createCommandTree(turtle, userInput, startAfterUserCommand);
 			}
 			if (currCommand.equals(DEFAULT_FOR_IDENTIFIER)) {
@@ -612,10 +613,11 @@ class CommandTreeBuilder {
 
 	private void parseUserCommand(Turtle turtle, String[] userInput, int startIdx, int numArgs) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String userCommandName = userInput[startIdx];
-		CommandNode userCommandNameNode = new CommandNode(userCommandName, numArgs, turtle); 
+		CommandNode userCommandNameNode = new CommandNode(userCommandName, numArgs, turtle, true); 
 		createAndSetChildren(turtle, userCommandNameNode, userInput, startIdx+1, false);
 		CommandNode userCommandNode = new CommandNode(DEFAULT_USERCOMMAND_NAME, 1, userCommandNameNode, turtle);
 		myCommandTrees.add(userCommandNode);
+		System.out.println(userCommandNode.toString());
 	}
 
 	private int getNumArgs(String commandType) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
