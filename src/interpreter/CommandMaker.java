@@ -143,7 +143,7 @@ class CommandMaker {
 		return Collections.unmodifiableMap(myVariables);
 	}
 
-	public void addNewTurtle(String name, ImageView turtleImage, Color penColor, Group penLines) {
+	public void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
 		System.out.println(name);
 		myTurtles.add(new Turtle(name, turtleImage, penLines, penColor));
 	}

@@ -48,6 +48,11 @@ public class SettingsPanel extends SpecificPanel  {
 		PROGRAM_CONTROLLER = programController;
 		PANE = pane;
 		USER_SCREEN = userScreen;
+//		String codeTest = "#2d3436";
+//		codeTest = codeTest.substring(1, codeTest.length());
+//		int hexConvert = Integer.parseInt(codeTest,16);
+//		System.out.println(Integer.toHexString(hexConvert));
+		
 
 	}
 
@@ -135,7 +140,7 @@ public class SettingsPanel extends SpecificPanel  {
 		.addListener(( arg0, arg1, arg2) ->{
 			String selected = (String) dropDownMenu.getItems().get((Integer) arg2);
 			if (!selected.equals(selectionPrompt)) {
-				//controller.changePenColor(colorsUntranslated.get(colorsTranslated.indexOf(selected)))) //something like this
+				PROGRAM_CONTROLLER.changePenColor(colorsUntranslated.get(colorsTranslated.indexOf(selected))); //something like this
 			}
 		});
 		return dropDownMenu;

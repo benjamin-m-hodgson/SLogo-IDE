@@ -30,6 +30,7 @@ public class TurtlePanel implements Panel {
 	private BorderPane PANEL;
 	private ScrollPane SCROLL_PANE;
 	private Controller PROGRAM_CONTROLLER;
+	private String DEFAULT_COLOR_HEXCODE = "2d3436";
 	private List<ImageView> TURTLE_LIST;
 
 	public TurtlePanel(Controller programController) {
@@ -81,7 +82,7 @@ public class TurtlePanel implements Panel {
 			penLines.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
 			panel.getChildren().add(penLines);
 			// TODO: possibly add turtles to list ?
-			PROGRAM_CONTROLLER.makeNewTurtleCommand("Turtle", turtleView, Color.BLACK, penLines);
+			PROGRAM_CONTROLLER.makeNewTurtleCommand("Turtle", turtleView,DEFAULT_COLOR_HEXCODE , penLines);
 		}
 		catch (Exception e) {
 			// TODO: make custom exception super class with sub classes for specifications
