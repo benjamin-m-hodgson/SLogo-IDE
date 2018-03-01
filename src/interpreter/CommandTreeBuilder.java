@@ -57,9 +57,9 @@ class CommandTreeBuilder {
 		createCommandTree(turtle, userInput, 0);
 		
 		System.out.println("command tree number bigger: " + myCommandTrees.size());
-//		for (CommandNode n : myCommandTrees) {
-//			System.out.println(n.toString());
-//		}
+		for (CommandNode n : myCommandTrees) {
+			System.out.println(n.toString());
+		}
 		
 	//	System.out.println("number of command trees" + myCommandTrees.size());
 		if(shouldExecute) {
@@ -67,7 +67,6 @@ class CommandTreeBuilder {
 				finalReturnVal = myCommandTreeReader.readAndExecute(commandTree);
 			}
 		}
-		System.out.println("here");
 		return finalReturnVal; 
 	}
 
@@ -96,6 +95,12 @@ class CommandTreeBuilder {
 				int startAfterDoTimes = createAndSetDoTimesChildren(turtle, tempParentNode, userInput, startIdx+1, true); 
 				return createCommandTree(turtle, userInput, startAfterDoTimes);
 			}
+			if (currCommand.equals(DEFAULT_REPEAT_IDENTIFIER)) {
+				CommandNode tempParentNode = new CommandNode(userInput[startIdx], 3, turtle);
+				int startAfterRepeat = createAndSetRepeatChildren(turtle, tempParentNode, userInput, startIdx+1, true); 
+				return createCommandTree(turtle, userInput, startAfterRepeat);
+			}
+				
 			if (currCommand.equals(DEFAULT_USERCOMMAND_IDENTIFIER)) {
 				int startAfterTo = parseMakeUserCommand(turtle, userInput, startIdx);
 				return createCommandTree(turtle, userInput, startAfterTo);
@@ -508,7 +513,9 @@ class CommandTreeBuilder {
 				if(userInput[currIdx].equals(DEFAULT_REPEAT_IDENTIFIER)){
 					repeatCount++;
 				}
-				repeatedCommand = String.join(" ", repeatedCommand, userInput[currIdx]);
+				if(endBracketCount!=repeatCount) {
+					repeatedCommand = String.join(" ", repeatedCommand, userInput[currIdx]);
+				}
 				currIdx++;
 			}
 			if(!(userInput[currIdx-1].equals(DEFAULT_BRACKET_END_IDENTIFIER))) {

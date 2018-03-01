@@ -170,7 +170,8 @@ class TextFieldParser {
 			//			testingParser.parseText("pd pd pd pd fd 50");
 //			testingParser.parseText("fd fd fd pd"); // CHECK AGAIN
 		
-			Double test = testingParser.parseText("for [ :k fd 0 fd 5 fd 1 ] [ fd 1 ]");
+			//Double test = testingParser.parseText("for [ :k fd 0 fd 5 fd 1 ] [ fd 1 ]");
+			Double test = testingParser.parseText("repeat 360 [ fd :repcount rt 90 ]");
 			System.out.println("returns: ");
 			System.out.println(test.toString());
 //			testingParser.parseText("fd 1 rt / sin 20 2");
@@ -187,7 +188,7 @@ class TextFieldParser {
 //					"fd 100\n" + 
 //					"rt 90");
 //			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
-			testingParser.parseText("to line [ :length ] [ fd :length ]");
+		//	testingParser.parseText("to line [ :length ] [ fd :length ]");
 		} catch (Exception e) {
 
 		}
