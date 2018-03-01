@@ -24,6 +24,7 @@ public class ClearScreenCommand implements Command{
 	public double execute() {
 		double returnVal = myTurtle.setXY(0, 0);
 		myTurtle.clearPen();
+		myTurtle.setAngle(0);
 		return returnVal;
 	}
 

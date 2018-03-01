@@ -21,6 +21,7 @@ class HomeCommand implements Command{
 	 * @see interpreter.Command#execute()
 	 */
 	public double execute() {
+		myTurtle.setAngle(0);
 		return myTurtle.setXY(0, 0);
 	}
 }
