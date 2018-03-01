@@ -97,10 +97,11 @@ public class CommandPanel extends SpecificPanel {
      */
     private void populateCommandBox(double elapsedTime) {
 	COMMAND_BOX.getChildren().clear();
-	Map<String, Double> programVariables = PROGRAM_CONTROLLER.getVariables();
-	for (Entry<String, Double> command : programVariables.entrySet()) {
+	Map<String, String> programCommands = PROGRAM_CONTROLLER.getUserDefined();
+	for (Entry<String, String> command : programCommands.entrySet()) {
+	    System.out.println("anything?");
 	    String commandName = command.getKey();
-	    String commandValue = command.getValue().toString();
+	    String commandValue = command.getValue();
 	    Label nameLabel = new Label(commandName);
 	    nameLabel.setId("commandLabel");
 	    Label valueLabel = new Label(commandValue);
