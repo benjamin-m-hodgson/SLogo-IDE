@@ -103,7 +103,7 @@ public class CommandPanel extends SpecificPanel {
 	    String commandName = command.getKey();
 	    String commandValue = command.getValue();
 	    Label nameLabel = new Label(commandName);
-	    nameLabel.setId("commandLabel");
+	    nameLabel.setId("variableLabel");
 	    Label valueLabel = new Label(commandValue);
 	    valueLabel.setId("commandLabel");
 	    valueLabel.setOnMouseClicked((arg0)-> getPane()
