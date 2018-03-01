@@ -23,5 +23,4 @@ HomeCommand extends Command{
     protected double execute() {
 	return myTurtle.setXY(0, 0);
     }
->>>>>>> 5e323c37de74bada5cce9600a12cb66fe7c9c0bf
 }

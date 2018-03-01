@@ -12,11 +12,12 @@ class DoTimesCommand extends Command{
 	private Turtle myTurtle;
 	
 	protected DoTimesCommand(Command tempVarCommand, Command endExpression, Command toExecuteCommand, Turtle turtle, 
-			Map<String, Double> variables, Map<String, String> userDefCommands) {
+			Map<String, Double> variables, Map<String, String> userDefCommands, 
+			Map<String, Integer> userDefCommandsNumArgs) {
 		myTempVar = ((StringCommand)tempVarCommand).getString();
 		toExecute = ((StringCommand)toExecuteCommand).getString();
 		endExpressionCommand = endExpression;
-		myBuilder = new CommandTreeBuilder(variables, userDefCommands);
+		myBuilder = new CommandTreeBuilder(variables, userDefCommands, userDefCommandsNumArgs);
 		myTurtle = turtle;
 	}
 	protected double execute() throws UnidentifiedCommandException {
