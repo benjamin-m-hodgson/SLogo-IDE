@@ -23,6 +23,7 @@ class ClearScreenCommand extends Command{
      */
     protected double execute() {
 	double returnVal = myTurtle.setXY(0, 0);
+	myTurtle.setAngle(0);
 	myTurtle.clearPen();
 	return returnVal;
     }

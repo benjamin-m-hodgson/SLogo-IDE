@@ -171,7 +171,7 @@ class TextFieldParser {
 //			testingParser.parseText("fd fd fd pd"); // CHECK AGAIN
 		
 			//Double test = testingParser.parseText("for [ :k fd 0 fd 5 fd 1 ] [ fd 1 ]");
-			Double test = testingParser.parseText("repeat 360 [ fd :repcount rt 90 ]");
+			Double test = testingParser.parseText("repeat 2 [ repeat 2 [ fd 50 rt 90 ] ]");
 			System.out.println("returns: ");
 			System.out.println(test.toString());
 //			testingParser.parseText("fd 1 rt / sin 20 2");

@@ -500,13 +500,18 @@ class CommandTreeBuilder {
 		//adding string info to children
 		System.out.println("current input " + userInput[currIdx]);
 		if(userInput[currIdx].equals(DEFAULT_BRACKET_START_IDENTIFIER)) {
-			currIdx++;
-			String repeatedCommand = userInput[currIdx];
-			currIdx++;
 			repeatCount = 1;
 			int endBracketCount = 0;
+			currIdx++;
+			String repeatedCommand = userInput[currIdx];
+			if(userInput[currIdx].equals(DEFAULT_REPEAT_IDENTIFIER)) {
+				repeatCount++;
+			}
+			currIdx++;
+			
 			//currIdx = searchForBracket(currIdx, userInput, DEFAULT_BRACKET_END_IDENTIFIER);
 			while( endBracketCount < repeatCount) {
+				System.out.println("checking" + userInput[currIdx]);
 				if(userInput[currIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)){
 					endBracketCount++;
 				}
@@ -516,6 +521,7 @@ class CommandTreeBuilder {
 				if(endBracketCount!=repeatCount) {
 					repeatedCommand = String.join(" ", repeatedCommand, userInput[currIdx]);
 				}
+				System.out.println("repeatcount: " + repeatCount);
 				currIdx++;
 			}
 			if(!(userInput[currIdx-1].equals(DEFAULT_BRACKET_END_IDENTIFIER))) {
