@@ -188,7 +188,7 @@ class TextFieldParser {
 //					"fd 100\n" + 
 //					"rt 90");
 //			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
-//			testingParser.parseText("setxy fd fd fd fd bk 50 rt 90");
+			testingParser.parseText("to line [ :length ] [ fd :length ]");
 		} catch (Exception e) {
 
 		}
