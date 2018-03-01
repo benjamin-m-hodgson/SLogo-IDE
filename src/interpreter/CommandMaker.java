@@ -38,10 +38,10 @@ class CommandMaker {
 	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command"; //TODO allow this to be client-specified
 	public static final String[] DEFAULT_CONTROLFLOW_IDENTIFIERS = {"Repeat", "DoTimes", "For"};
 
+	private HashMap<String, Double> myVariables; 
 	private ArrayList<Turtle> myTurtles; 
 	private ResourceBundle myLanguage; 
 	private CommandTreeBuilder myCommandTreeBuilder; 
-	private HashMap<String, Double> myVariables; 
 
 	protected CommandMaker() {
 		this(DEFAULT_LANGUAGE, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
@@ -50,8 +50,8 @@ class CommandMaker {
 	protected CommandMaker(ResourceBundle languageBundle, String numArgsFileName) {
 		myTurtles = new ArrayList<Turtle>(); 
 		myLanguage = languageBundle;
-		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName); 
 		myVariables = new HashMap<String, Double>(); 
+		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, myVariables); 
 	}
 
 	protected double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
@@ -96,7 +96,8 @@ class CommandMaker {
 				userInputArrayToPass[i] = commandTypesToPass[i];
 			}
 		}
- 		//		makeListForBuilder(myListForBuilder, userInput, commandTypes, 1, DEFAULT_CONTROLFLOW_IDENTIFIERS);
+
+		//		makeListForBuilder(myListForBuilder, userInput, commandTypes, 1, DEFAULT_CONTROLFLOW_IDENTIFIERS);
 		return myCommandTreeBuilder.buildAndExecute(identifiedTurtle, userInputArrayToPass); 
 	}
 

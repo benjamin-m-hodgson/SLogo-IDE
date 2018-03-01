@@ -1,5 +1,7 @@
 package interpreter;
 
+import java.util.Map;
+
 /**
  * returns tangent of degrees
  * 
@@ -7,18 +9,20 @@ package interpreter;
  * @date 2/26/18
  *
  */
-public class TangentCommand implements Command{
+class TangentCommand extends Command{
 
-    	Command degreesCommand;
-	protected TangentCommand(Command degrees) {
-		degreesCommand = degrees;
-	}
-	@Override
-	public double execute() throws UnidentifiedCommandException{
-		double DEGREES = degreesCommand.execute();
-	    	return Math.tan(Math.toRadians(DEGREES));
-	}
-	public int getNumArgs() {
-		return 1;
-	}
+    private Command degreesCommand;
+    private Map<String, Double> myVariables; 
+
+    protected TangentCommand(Command degrees ,Map<String, Double> variables) {
+	degreesCommand = degrees;
+	myVariables = variables;
+
+    }
+    @Override
+    protected double execute() throws UnidentifiedCommandException{
+	double DEGREES = getCommandValue(degreesCommand, myVariables);
+	return Math.tan(Math.toRadians(DEGREES));
+    }
+
 }

@@ -1,5 +1,7 @@
 package interpreter;
 
+import java.util.Map;
+
 /**
  * returns sine of degrees
  * 
@@ -7,18 +9,21 @@ package interpreter;
  * @date 2/26/18
  *
  */
-public class SineCommand implements Command{
+class SineCommand extends Command{
 
-    Command degreesCommand;
-	protected SineCommand(Command degrees) {
-		degreesCommand = degrees;
-	}
-	@Override
-	public double execute() throws UnidentifiedCommandException{
-		double DEGREES = degreesCommand.execute();
-	    	return Math.sin(Math.toRadians(DEGREES));
-	}
-	public int getNumArgs() {
-		return 1;
-	}
+    private Command degreesCommand;
+    private Map<String, Double> myVariables; 
+
+    protected SineCommand(Command degrees ,Map<String, Double> variables) {
+	degreesCommand = degrees;
+	myVariables = variables;
+    }
+    @Override
+    protected double execute() throws UnidentifiedCommandException{
+	double DEGREES = getCommandValue(degreesCommand, myVariables);
+	return Math.sin(Math.toRadians(DEGREES));
+    }
+    protected int getNumArgs() {
+	return 1;
+    }
 }

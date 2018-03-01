@@ -1,5 +1,6 @@
 package interpreter;
 
+import java.util.Map;
 
 /**
  * Command class that moves a Turtle back a specified number of pixels. Dependent on the CommandFactory class to create
@@ -7,30 +8,35 @@ package interpreter;
  * @author Sarahbland
  *
  */
-public class MoveTurtleBackwardCommand implements Command{
-	private Command myBackwardDistCommand;
-	private Turtle myTurtle;
-	/**
-	 * Creates a new instance of this Command that can be executed at the proper time
-	 * @param backwarddist is the distance the Turtle will move backward
-	 * @param turtle is the Turtle that should move
-	 */
-	protected MoveTurtleBackwardCommand(Command backwarddist, Turtle turtle){
-		myTurtle = turtle;
-		myBackwardDistCommand = backwarddist;
-	}
 
-	@Override
+class MoveTurtleBackwardCommand extends Command{
 
-	/** 
-	 * Moves the turtle's image a certain distance backward and draws a line (if the pen is down)
-	 * @return distance the turtle moved backward
-	 * @see interpreter.Command#execute()
-	 */
-	public double execute() throws UnidentifiedCommandException{
-		double dist = myBackwardDistCommand.execute();
-		double angle = Math.toRadians(myTurtle.getAngle());
-		myTurtle.setXY(myTurtle.getX()+dist*Math.sin(-angle), myTurtle.getY()+dist*Math.cos(-angle));
-		return dist;
-	}
+    private Command myBackwardDistCommand;
+    private Turtle myTurtle;
+    private Map<String, Double> myVariables; 
+
+    /**
+     * Creates a new instance of this Command that can be executed at the proper time
+     * @param backwarddist is the distance the Turtle will move backward
+     * @param turtle is the Turtle that should move
+     */
+    protected MoveTurtleBackwardCommand(Command backwarddist, Turtle turtle, Map<String, Double> variables){
+	myTurtle = turtle;
+	myBackwardDistCommand = backwarddist;
+	myVariables = variables; 
+    }
+
+    @Override
+
+    /** 
+     * Moves the turtle's image a certain distance backward and draws a line (if the pen is down)
+     * @return distance the turtle moved backward
+     * @see interpreter.Command#execute()
+     */
+    protected double execute() throws UnidentifiedCommandException{
+	double dist = getCommandValue(myBackwardDistCommand, myVariables); 
+	double angle = Math.toRadians(myTurtle.getAngle());
+	myTurtle.setXY(myTurtle.getX()+dist*Math.sin(-angle), myTurtle.getY()+dist*Math.cos(-angle));
+	return dist;
+    }
 }
