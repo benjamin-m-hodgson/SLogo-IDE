@@ -30,6 +30,10 @@ class CommandNode {
 		myChildren.add(child);
 	}
 
+	protected CommandNode(String info, int numArgs, Turtle turtle, boolean isString) {
+		this(info, numArgs, new ArrayList<CommandNode>(), turtle, isString); 
+	}
+	
 	protected CommandNode(String info, int numArgs, List<CommandNode> children, Turtle turtle, boolean isString) {	
 		myInfo = info; 
 		try {

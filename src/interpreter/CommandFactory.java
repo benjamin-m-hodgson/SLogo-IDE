@@ -141,13 +141,13 @@ public class CommandFactory {
 			return new NotCommand(commandArgs.get(0), myVariables);
 		}
 		else if(commandName.equals("DoTimes")) {
-			return new DoTimesCommand(commandArgs.get(0), commandArgs.get(1), commandArgs.get(2), turtle, myVariables, myUserDefCommands);
+			return new DoTimesCommand(commandArgs.get(0), commandArgs.get(1), commandArgs.get(2), turtle, myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
 		}
 		else if(commandName.equals("If")) {
-			return new IfCommand(commandArgs.get(1), commandArgs.get(0), turtle, myVariables, myUserDefCommands); 
+			return new IfCommand(commandArgs.get(1), commandArgs.get(0), turtle, myVariables, myUserDefCommands, myUserDefCommandsNumArgs); 
 		}
 		else if (commandName.equals("IfElse")) {
-			return new IfElseCommand(commandArgs.get(2), commandArgs.get(0), commandArgs.get(1), turtle, myVariables, myUserDefCommands); 
+			return new IfElseCommand(commandArgs.get(2), commandArgs.get(0), commandArgs.get(1), turtle, myVariables, myUserDefCommands, myUserDefCommandsNumArgs); 
 		}
 		else if (commandName.equals("MakeVariable")) {
 			return new MakeVariableCommand(commandArgs.get(0), commandArgs.get(1), myVariables); 
