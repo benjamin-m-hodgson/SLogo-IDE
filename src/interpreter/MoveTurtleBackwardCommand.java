@@ -42,7 +42,6 @@ class MoveTurtleBackwardCommand extends Command{
 		else {
 			dist = myBackwardDistCommand.execute();
 		}
-		
 		double angle = Math.toRadians(myTurtle.getAngle());
 		myTurtle.setXY(myTurtle.getX()+dist*Math.sin(-angle), myTurtle.getY()+dist*Math.cos(-angle));
 		return dist;

@@ -39,6 +39,8 @@ class CommandMaker {
 	public static final String[] DEFAULT_CONTROLFLOW_IDENTIFIERS = {"Repeat", "DoTimes", "For"};
 
 	private HashMap<String, Double> myVariables; 
+	private HashMap<String, String> myUserDefCommands; 
+	private HashMap<String, Integer> myUserCommandsNumArgs; 
 	private ArrayList<Turtle> myTurtles; 
 	private ResourceBundle myLanguage; 
 	private CommandTreeBuilder myCommandTreeBuilder; 
@@ -51,7 +53,9 @@ class CommandMaker {
 		myTurtles = new ArrayList<Turtle>(); 
 		myLanguage = languageBundle;
 		myVariables = new HashMap<String, Double>(); 
-		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, myVariables); 
+		myUserDefCommands = new HashMap<String, String>(); 
+		myUserCommandsNumArgs = new HashMap<String, Integer>(); 
+		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, myVariables, myUserDefCommands, myUserCommandsNumArgs); 
 	}
 
 	protected double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {

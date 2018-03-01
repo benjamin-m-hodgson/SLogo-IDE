@@ -176,7 +176,7 @@ class TextFieldParser {
 //			testingParser.parseText("fd 1 rt / sin 20 2");
 //			testingParser.parseText("fd rt fd 50 bk 30");
 //			testingParser.parseText("and :a 5");
-			testingParser.parseText("make :lol fd 50");
+//			testingParser.parseText("make :lol bk 50");
 			//			testingParser.parseText("fd 50\n\n\nbk 50");
 //			testingParser.parseText("fd rt 100");
 //			testingParser.parseText("fd 100\n" + 

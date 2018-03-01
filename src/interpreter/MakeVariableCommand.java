@@ -16,7 +16,6 @@ class MakeVariableCommand extends Command {
 
 	protected MakeVariableCommand(Command varName, Command varVal, Map<String, Double> variables) {
 		myVarName = varName; 
-		System.out.println(((StringCommand)myVarName).getString());
 		myVarVal = varVal;
 		myVariables = variables; 
 	}
@@ -25,6 +24,7 @@ class MakeVariableCommand extends Command {
 	protected double execute() throws UnidentifiedCommandException {
 		double exprEval = myVarVal.execute();
 		myVariables.put(((StringCommand)myVarName).getString(), exprEval);
+//		System.out.println("var successfully set "+exprEval);
 		return exprEval; 
 	}
 
