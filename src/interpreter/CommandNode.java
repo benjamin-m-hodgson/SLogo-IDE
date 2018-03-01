@@ -19,7 +19,7 @@ class CommandNode {
 		this(info, DEFAULT_NUM_ARGS, new ArrayList<CommandNode>(), new Turtle(), true);
 	}
 
-	public CommandNode(String info, Turtle turtle) {
+	protected CommandNode(String info, Turtle turtle) {
 		this(info, DEFAULT_NUM_ARGS, new ArrayList<CommandNode>(), turtle, true);
 	}
 
