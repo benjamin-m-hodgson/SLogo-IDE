@@ -51,8 +51,7 @@ public class Controller {
     private double DEFAULT_HEIGHT;
     private double DEFAULT_WIDTH;
     private TextFieldParser myTextFieldParser;
-    private Map<String, Double> myVariables; 
-    private List<String> myCommandHistory; 
+    private Map<String, Double> myVariables;  
 
     public Controller(Stage primaryStage) {
 	myTextFieldParser = new TextFieldParser();
@@ -60,8 +59,7 @@ public class Controller {
 	findResources(DEFAULT_LANGUAGE);
 	PROGRAM_STAGE = primaryStage;
 	PROGRAM_STAGE.setTitle(PROGRAM_TITLE);
-	myVariables = new HashMap<String, Double>();
-	myCommandHistory = new ArrayList<String>(); 
+	myVariables = new HashMap<String, Double>(); 
     }
     
     /**
