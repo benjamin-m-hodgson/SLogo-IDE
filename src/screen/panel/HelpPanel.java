@@ -76,7 +76,6 @@ public class HelpPanel extends SpecificPanel  {
 	System.out.println("Getting help");
 	String currentDir = System.getProperty("user.dir");
 	try {
-	    //TODO get current language from controller
 	    File file = new File(currentDir + File.separator + "reference" + File.separator 
 		    + "English");
 	    File[] helpFiles = file.listFiles();
