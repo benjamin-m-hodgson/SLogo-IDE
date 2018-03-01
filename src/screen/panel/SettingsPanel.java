@@ -1,26 +1,17 @@
 package screen.panel;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Screen;
 import screen.UserScreen;
-
 import java.util.List;
-
 import interpreter.Controller;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 
 
 public class SettingsPanel extends SpecificPanel  {

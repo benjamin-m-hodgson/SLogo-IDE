@@ -1,5 +1,9 @@
 package screen;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import interpreter.Controller;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
@@ -12,10 +16,13 @@ public class UserScreen implements Screen {
 	private Parent ROOT;
 	private TurtlePanel TURTLE_PANEL;
 	private Controller PROGRAM_CONTROLLER;
-
+	private List<String> INPUT_HISTORY;
+	
 	public UserScreen(Controller programController) {
 		PROGRAM_CONTROLLER = programController;
+		INPUT_HISTORY = new ArrayList<String>();
 	}
+
 
 	@Override
 	public void makeRoot() {
@@ -35,6 +42,16 @@ public class UserScreen implements Screen {
 		}
 		return ROOT;
 	}
+	
+	public void addCommand(String command) {
+	    INPUT_HISTORY.add(command);
+	}
+	
+	public Iterator<String> commandHistory() {
+	    List<String> retList = new ArrayList<String>(INPUT_HISTORY);
+	    return retList.iterator();
+	}
+
 	
 	public void displayErrorMessage(String errorMessage) {
 		TURTLE_PANEL.displayErrorMessage(errorMessage);

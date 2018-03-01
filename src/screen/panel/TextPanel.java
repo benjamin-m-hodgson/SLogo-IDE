@@ -50,6 +50,9 @@ public class TextPanel implements Panel {
 		String inputText = INPUT_AREA.getText().replaceAll("\n", 
 				System.getProperty("line.separator"));
 		CONSOLE_AREA.setText(inputText);
+		if (inputText != null) {
+		    USER_SCREEN.addCommand(inputText);
+		}
 		try {
 			PROGRAM_CONTROLLER.parseInput(inputText);
 		} 

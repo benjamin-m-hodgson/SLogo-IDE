@@ -1,0 +1,12 @@
+Turtle Commands:
+FORWARD pixels
+FD pixels
+
+Description:
+Moves turtle forward in its current heading by pixels distance
+
+Parameters:
+pixels - forward distance
+
+Returns:
+The value of pixels
