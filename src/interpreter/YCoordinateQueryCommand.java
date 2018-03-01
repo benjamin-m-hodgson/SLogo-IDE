@@ -7,20 +7,20 @@ package interpreter;
  * @author Sarahbland
  *
  */
-public class YCoordinateQueryCommand implements Command{
-	Turtle myTurtle;
-	/**
-	 * @param turtle is turtle whose x-coordinate is desired
-	 */
-	protected YCoordinateQueryCommand(Turtle turtle) {
-		myTurtle = turtle;
-	}
-	/**
-	 * @return x-coordinate of Turtle
-	 * @see interpreter.Command#execute()
-	 */
-	@Override
-	public double execute() {
-		return myTurtle.getY();
-	}
+class YCoordinateQueryCommand extends Command{
+    private Turtle myTurtle;
+    /**
+     * @param turtle is turtle whose x-coordinate is desired
+     */
+    protected YCoordinateQueryCommand(Turtle turtle) {
+	myTurtle = turtle;
+    }
+    /**
+     * @return x-coordinate of Turtle
+     * @see interpreter.Command#execute()
+     */
+    @Override
+    protected double execute() {
+	return myTurtle.getY();
+    }
 }

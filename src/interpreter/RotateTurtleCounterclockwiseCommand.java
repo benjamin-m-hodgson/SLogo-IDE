@@ -1,22 +1,27 @@
 package interpreter;
 
+import java.util.Map;
+
 /**
  * Command class that turns the turtle's heading a specified number of degrees counterclockwise. Dependent on CommandFactory 
  *  to create correctly. Also dependent on the Turtle class to relay/set angles correctly.
  * @author Sarahbland
  *
  */
-public class RotateTurtleCounterclockwiseCommand implements Command{
-	Command myDegreesCommand;
-	Turtle myTurtle;
+ class RotateTurtleCounterclockwiseCommand extends Command{
+	private Command myDegreesCommand;
+	private Turtle myTurtle;
+	private Map<String, Double> myVariables; 
+
 	/**
 	 * Creates a new instance of the command, which can be executed at the correct time
 	 * @param degrees is Command that, when executed, will return the number of degrees the turtle should move
 	 * @param turtle is Turtle whose heading should change
 	 */
-	protected RotateTurtleCounterclockwiseCommand(Command degrees, Turtle turtle) {
+	protected RotateTurtleCounterclockwiseCommand(Command degrees, Turtle turtle,Map<String, Double> variables) {
 		myDegreesCommand = degrees;
 		myTurtle = turtle;
+		myVariables = variables;
 	}
 
 
@@ -26,8 +31,8 @@ public class RotateTurtleCounterclockwiseCommand implements Command{
 	 * @return number of degrees moved
 	 * @see interpreter.Command#execute()
 	 */
-	public double execute() throws UnidentifiedCommandException{
-		double degrees = myDegreesCommand.execute();
+	protected double execute() throws UnidentifiedCommandException{
+		double degrees = getCommandValue(myDegreesCommand, myVariables);
 		myTurtle.setAngle(myTurtle.getAngle()-degrees);
 		return degrees;
 	}

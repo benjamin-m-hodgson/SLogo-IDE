@@ -10,10 +10,10 @@ import java.util.Map;
  * @date 2/26/18
  *
  */
-public class CosineCommand extends Command{
+ class CosineCommand extends Command{
 	
-	Command degreesCommand;
-	Map<String, Double> myVariables; 
+	private Command degreesCommand;
+	private Map<String, Double> myVariables; 
 
 	protected CosineCommand(Command degrees, Map<String, Double> variables) {
 		degreesCommand = degrees;
@@ -21,14 +21,8 @@ public class CosineCommand extends Command{
 	}
 	
 	@Override
-	public double execute() throws UnidentifiedCommandException {
-		double degrees;
-		if (degreesCommand instanceof StringCommand) {
-			degrees = getValueOfVar(((StringCommand)degreesCommand).getString(), myVariables); 
-		} 
-		else {
-			degrees = degreesCommand.execute();
-		}
+	protected double execute() throws UnidentifiedCommandException {
+		double degrees = getCommandValue(degreesCommand, myVariables);
 	    	return Math.cos(Math.toRadians(degrees));
 	}
 }

@@ -12,8 +12,8 @@ import java.util.Map;
  */
 class ArcTangentCommand extends Command{
 	
-	Command degreesCommand;
-	Map<String, Double> myVariables; 
+	private Command degreesCommand;
+	private Map<String, Double> myVariables; 
 
 	protected ArcTangentCommand(Command degrees, Map<String, Double> variables) {
 		degreesCommand = degrees;
@@ -22,13 +22,7 @@ class ArcTangentCommand extends Command{
 	
 	@Override
 	protected double execute() throws UnidentifiedCommandException {
-		double degrees;
-		if (degreesCommand instanceof StringCommand) {
-			degrees = getValueOfVar(((StringCommand)degreesCommand).getString(), myVariables); 
-		} 
-		else {
-			degrees = degreesCommand.execute();
-		}
+		double degrees = getCommandValue(degreesCommand, myVariables);
 	    	return Math.toDegrees(Math.atan(Math.toRadians(degrees)));
 	}
 }

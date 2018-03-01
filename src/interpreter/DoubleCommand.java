@@ -1,15 +1,15 @@
 package interpreter;
 
 class DoubleCommand extends Command {
-	double myDouble;
-	protected DoubleCommand(double val) {
-		myDouble = val;
-	}
-	@Override
-	public double execute() {
-		return myDouble;
-	}
-	public int getNumArgs() {
-		return 1;
-	}
+    private double myDouble;
+    protected DoubleCommand(double val) {
+	myDouble = val;
+    }
+    @Override
+    protected double execute() {
+	return myDouble;
+    }
+    protected int getNumArgs() {
+	return 1;
+    }
 }

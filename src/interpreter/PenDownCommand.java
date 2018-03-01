@@ -5,8 +5,8 @@ package interpreter;
  * @author Sarahbland
  *
  */
-public class PenDownCommand implements Command{
-	Turtle myTurtle;
+ class PenDownCommand extends Command{
+    private Turtle myTurtle;
 	/**
 	 * Creates new instance of command, which can be executed at the correct time
 	 * @param turtle is turtle whose pen should be put down
@@ -18,7 +18,7 @@ public class PenDownCommand implements Command{
 	 * Puts turtle's pen down, so that subsequent movements will leave a trail
 	 * @return 1 always
 	 */
-	public double execute() {
+	protected double execute() {
 		myTurtle.showPen();
 		return 1;
 	}
