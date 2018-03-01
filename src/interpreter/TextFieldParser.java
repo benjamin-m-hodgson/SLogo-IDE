@@ -160,11 +160,6 @@ class TextFieldParser {
 		myCommandMaker.addNewTurtle(name, turtleImage, penColor, penLines);
 	}
 
-
-
-
-
-
 	public static void main(String[] args) {
 		TextFieldParser testingParser = new TextFieldParser();
 		try {

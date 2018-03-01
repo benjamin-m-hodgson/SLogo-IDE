@@ -12,14 +12,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-
 import interpreter.TextFieldParser;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import screen.ErrorScreen;
 import screen.StartScreen;
@@ -40,9 +38,6 @@ public class Controller {
     private final String DEFAULT_LANGUAGE = "English";
     private final String DEFAULT_COLOR = "Grey";
     private final String DEFAULT_SETTINGS = "settings";
-    // TODO: Read this in from files rather than storing as instance variables
-    private final double DEFAULT_HEIGHT = 650;
-    private final double DEFAULT_WIDTH = 900;
     private String DEFAULT_CSS = Controller.class.getClassLoader().
 	    getResource("default.css").toExternalForm(); 
     private ResourceBundle CURRENT_TEXT_DISPLAY;
@@ -52,20 +47,21 @@ public class Controller {
     private ResourceBundle CURRENT_LANGUAGE;
     private ResourceBundle CURRENT_SETTINGS;
     private Stage PROGRAM_STAGE;
-    // TODO: add in program titles
     private String PROGRAM_TITLE;
-
+    private double DEFAULT_HEIGHT;
+    private double DEFAULT_WIDTH;
     private TextFieldParser myTextFieldParser;
     private Map<String, Double> myVariables; 
     private List<String> myCommandHistory; 
 
     public Controller(Stage primaryStage) {
-	PROGRAM_STAGE = primaryStage;
 	myTextFieldParser = new TextFieldParser();
-	myVariables = new HashMap<String, Double>();
-	myCommandHistory = new ArrayList<String>(); 
 	findSettings();
 	findResources(DEFAULT_LANGUAGE);
+	PROGRAM_STAGE = primaryStage;
+	PROGRAM_STAGE.setTitle(PROGRAM_TITLE);
+	myVariables = new HashMap<String, Double>();
+	myCommandHistory = new ArrayList<String>(); 
     }
     
     /**
@@ -103,7 +99,6 @@ public class Controller {
 	    PROGRAM_STAGE.setScene(programScene);
 	}
 	catch (Exception e) {
-	    // TODO: make screen error exception class to handle error specification
 	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
 	}
     }
@@ -190,9 +185,8 @@ public class Controller {
 	    return Collections.unmodifiableList(languages);
 	}
 	catch (Exception e) {
-	    // TODO: make custom exception super class with sub classes for specifications
-	    //String specification = "%nFailed to find language files";
-	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY) + System.lineSeparator()
+		    + resourceErrorText("LanguageFileError"));
 	}
 	return Collections.unmodifiableList(new ArrayList<String>());
 
@@ -371,9 +365,10 @@ public class Controller {
 			Locale.getDefault(), loader);
 	    }
 	    CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
-	    // TODO: fix -> myTextFieldParser.changeLanguage(CURRENT_LANGUAGE);
+	    System.out.println(CURRENT_LANGUAGE.getString("Forward"));
+	    myTextFieldParser.changeLanguage(CURRENT_LANGUAGE);
 	}
-	catch (MalformedURLException e) {
+	catch (Exception e) {
 	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 	}
     }
@@ -446,11 +441,23 @@ public class Controller {
 	    ClassLoader loader = new URLClassLoader(urls);
 	    CURRENT_SETTINGS = ResourceBundle.getBundle(DEFAULT_SETTINGS, 
 		    Locale.getDefault(), loader);
+	    PROGRAM_TITLE = resourceSettingsText("Title");
+	    DEFAULT_HEIGHT = Double.parseDouble(resourceSettingsText("ScreenHeight"));
+	    DEFAULT_WIDTH = Double.parseDouble(resourceSettingsText("ScreenWidth"));
 	}
 	catch (MalformedURLException e) {
-	    // TODO: make screen error exception class to handle error specification
-	    //String specification = "%nFailed to find settings files";
 	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 	}
+    }
+    
+    /**
+     * Looks in the CURRENT_SETTINGS resourceBundle to determine the String
+     * that should be used to get the String used to define some program setting.
+     * 
+     * @param key: the key used for look up in the .properties file
+     * @return The string value @param key is assigned to in the .properties file
+     */
+    private String resourceSettingsText(String key) {
+	return CURRENT_SETTINGS.getString(key);
     }
 }
