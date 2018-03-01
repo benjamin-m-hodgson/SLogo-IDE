@@ -10,11 +10,11 @@ import java.util.Map;
  * @date 2/26/18
  *
  */
-public class DifferenceCommand extends Command{
+ class DifferenceCommand extends Command{
 
-	Command expr1Command;
-    	Command expr2Command;
-    	Map<String, Double> myVariables; 
+	private Command expr1Command;
+    	private Command expr2Command;
+    	private Map<String, Double> myVariables; 
     	
 	protected DifferenceCommand(Command expr1, Command expr2, Map<String, Double> variables) {
 		expr1Command = expr1;
@@ -23,25 +23,11 @@ public class DifferenceCommand extends Command{
 	}
 	
 	@Override
-	public double execute() throws UnidentifiedCommandException{
-		double arg1Val; 
-		double arg2Val; 
-		if (expr1Command instanceof StringCommand) {
-			arg1Val = getValueOfVar(((StringCommand)expr1Command).getString(), myVariables);
-		}
-		else {
-			arg1Val = expr1Command.execute(); 
-		}
-		if (expr2Command instanceof StringCommand) {
-			arg2Val = getValueOfVar(((StringCommand)expr2Command).getString(), myVariables);
-		}
-		else {
-			arg2Val = expr2Command.execute();
-		}
+	protected double execute() throws UnidentifiedCommandException{
+		double arg1Val= getCommandValue(expr1Command, myVariables); 
+		double arg2Val= getCommandValue(expr2Command, myVariables); 
+	
 		return arg1Val - arg2Val;
 	}
-	
-	public int getNumArgs() {
-		return 2;
-	}
+
 }

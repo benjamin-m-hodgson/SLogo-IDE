@@ -27,7 +27,9 @@
 /******************************************************************************************/
 #errorScreenRoot {
 	-fx-alignment: center;
+	-fx-spacing: 10;
 	-fx-background-color: #f3f3f3;
+	-fx-background-radius: 2;
 }
 /******************************************************************************************/
 /* The root containing the informational panel displayed on the screen */
@@ -93,8 +95,10 @@
 /* The label displaying a command from the command history */ 
 /******************************************************************************************/
 #historyLabel {
-	-fx-min-width: 100;
 	-fx-pref-width: 100;
+	-fx-max-width: 100;
+	-fx-pref-height: 40;
+	-fx-max-height: 40;
 	-fx-background-color: #ffffff;
 	-fx-border-style: solid inside;
 	-fx-border-width: 1;
@@ -107,6 +111,9 @@
 #historyLabel .text {
 	-fx-stroke: #555555;
 	-fx-stroke-width: 0.3px;
+}
+#historyLabel:hover {
+	-fx-background-color: linear-gradient(#ffffff, #f1ffff);
 }
 /******************************************************************************************/
 /* The label displaying command information from the appropriate file in the references folder */ 
@@ -133,16 +140,21 @@
 /* The label displaying a single integer */ 
 /******************************************************************************************/
 #numberLabel {
-	-fx-min-width: 50;
 	-fx-pref-width: 50;
+	-fx-max-width: 50;
+	-fx-pref-height: 40;
+	-fx-max-height: 40;
 	-fx-background-color: #ffffff;
 	-fx-border-style: solid inside;
-	-fx-border-width: 0 1 0 0;
+	-fx-border-width: 0 0 1 0;
 	-fx-border-insets: 0;
 	-fx-border-radius: 0;
 	-fx-border-color: rgba(192, 188, 182, 0.5);
 	-fx-text-alignment: left;
 	-fx-font: 12px Dekko;
+}
+#numberLabel:disabled {
+	-fx-opacity: 1.0;
 }
 #numberLabel .text {
 	-fx-stroke: #555555;
@@ -241,6 +253,7 @@
 #settingsField {
 	-fx-alignment: center;
 	-fx-pref-width: 150px;
+	-fx-pref-height: 20px;
 	-fx-padding: 5 5 5 5;
 	-fx-background-color: transparent;
 	-fx-highlight-fill: #fbcbd7;
@@ -277,6 +290,52 @@
 #settingsField .scroll-bar:vertical .thumb:hover,
 #settingsField .scroll-bar:horizontal .thumb:pressed,
 #settingsField .scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: linear-gradient(to right, #c0bcb6, #aca9a3);
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+/******************************************************************************************/
+/* The history text areas for displaying past run commands */ 
+/******************************************************************************************/
+#historyField {
+	-fx-alignment: center;
+	-fx-pref-width: 150px;
+	-fx-pref-height: 20px;
+	-fx-padding: 5 5 5 5;
+	-fx-background-color: transparent;
+	-fx-highlight-fill: #fbcbd7;
+	-fx-highlight-text-fill: #555555;
+	-fx-text-fill: #555555;
+	-fx-prompt-text-fill: #c0bcb6;
+	-fx-font: 12px 'Nova Flat';
+}
+#historyField:focused {
+	-fx-faint-focus-color: rgba(192, 188, 182, 0.5);
+}
+#historyField .scroll-bar:horizontal ,
+#historyField  .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+#historyField .scroll-bar .increment-arrow ,
+#historyField .scroll-bar .decrement-arrow {
+	-fx-shape: " ";	
+	-fx-padding:0;
+}
+#historyField .increment-button ,
+#historyField .decrement-button {
+    -fx-background-color:transparent;
+	-fx-background-radius: 2em;
+}
+#historyField .scroll-bar:horizontal .thumb,
+#historyField .scroll-bar:vertical .thumb {
+    -fx-background-color: #c0bcb6;
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+#historyField .scroll-bar:horizontal .thumb:hover,
+#historyField .scroll-bar:vertical .thumb:hover,
+#historyField .scroll-bar:horizontal .thumb:pressed,
+#historyField .scroll-bar:vertical .thumb:pressed {
     -fx-background-color: linear-gradient(to right, #c0bcb6, #aca9a3);
 	-fx-background-insets: 2, 0, 0;
 	-fx-background-radius: 2em;
@@ -438,6 +497,8 @@
 }
 #commandButton:disabled, #commandButton:disabled > * {
 	-fx-opacity: 1.0;
+	-fx-font: 12px Dekko;
+	-fx-font-weight: bold;
 }
 #commandButton:hover {
 	-fx-background-color: linear-gradient(#a5bcd4, #83a2c4);

@@ -155,15 +155,10 @@ class TextFieldParser {
 		myCommandMaker.changeLanguage(languageBundle);
 	}
 	
-	public void addNewTurtle(String name, ImageView turtleImage, Color penColor, Group penLines) {
+	public void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
 		System.out.println("made it to textfieldparser");
 		myCommandMaker.addNewTurtle(name, turtleImage, penColor, penLines);
 	}
-
-
-
-
-
 
 	public static void main(String[] args) {
 		TextFieldParser testingParser = new TextFieldParser();
@@ -176,8 +171,13 @@ class TextFieldParser {
 //			testingParser.parseText("fd 1 rt / sin 20 2");
 //			testingParser.parseText("fd rt fd 50 bk 30");
 //			testingParser.parseText("and :a 5");
-//			testingParser.parseText("make :lol bk 50");
+			//testingParser.parseText("make :lol fd 50");
 			//			testingParser.parseText("fd 50\n\n\nbk 50");
+//			testingParser.parseText("repeat 360 [ fd :repcount rt 90 ]");
+//			testingParser.parseText("fd 1 rt / sin 20 2");
+//			testingParser.parseText("fd rt fd 50 bk 30");
+//			testingParser.parseText("fd rt bk 50");
+			//testingParser.parseText("fd 50\n\n\nbk 50");
 //			testingParser.parseText("fd rt 100");
 //			testingParser.parseText("fd 100\n" + 
 //					"rt 90\n" + 

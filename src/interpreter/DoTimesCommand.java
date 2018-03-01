@@ -3,14 +3,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 
-public class DoTimesCommand extends Command{
+class DoTimesCommand extends Command{
 	
-	String toExecute;
-	String tempVar;
-	Command endExpressionCommand;
-	CommandTreeBuilder myBuilder;
-	Turtle myTurtle;
-	Map<String, Double> myVariables; 
+	private String toExecute;
+	private String tempVar;
+	private Command endExpressionCommand;
+	private CommandTreeBuilder myBuilder;
+	private Turtle myTurtle;
+	private Map<String, Double> myVariables; 
 	
 	protected DoTimesCommand(Command tempVarCommand, Command endExpression, Command toExecuteCommand, Turtle turtle, Map<String, Double> variables) {
 		tempVar = ((StringCommand)tempVarCommand).getString();
@@ -20,12 +20,12 @@ public class DoTimesCommand extends Command{
 		myBuilder = new CommandTreeBuilder(myVariables);
 		myTurtle = turtle;
 	}
-	public double execute() throws UnidentifiedCommandException {
+	protected double execute() throws UnidentifiedCommandException {
 		String[] executeArray = toExecute.split(" ");
 		double ending = endExpressionCommand.execute();
 		double returnVal = 0.0;
 		List<Integer> indices = getTempVarIndices(tempVar, executeArray);
-		for(Double k = 1.0; k<ending; k+=1) {
+		for(Double k = 1.0; k<=ending; k+=1) {
 			findAndReplace(indices, k, executeArray);
 			for(int i = 0; i<executeArray.length; i+=1) {
 				System.out.println("executing " + executeArray[i]);

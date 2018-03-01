@@ -23,8 +23,6 @@ public class HelpPanel extends SpecificPanel  {
     private VBox HELP_BOX;
     private UserScreen USER_SCREEN;
 
-
-
     public HelpPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
 	PROGRAM_CONTROLLER = programController;
 	PANE = pane;
@@ -57,13 +55,11 @@ public class HelpPanel extends SpecificPanel  {
 
     @Override
     protected BorderPane getPane() {
-	// TODO Auto-generated method stub
 	return PANE;
     }
 
     @Override
     protected Controller getController() {
-	// TODO Auto-generated method stub
 	return PROGRAM_CONTROLLER;
     }
 
@@ -73,11 +69,10 @@ public class HelpPanel extends SpecificPanel  {
     }
 
     private void populateHelp() {
-	System.out.println("Getting help");
 	String currentDir = System.getProperty("user.dir");
 	try {
 	    File file = new File(currentDir + File.separator + "reference" + File.separator 
-		    + "English");
+		    + PROGRAM_CONTROLLER.resourceDisplayText("Name"));
 	    File[] helpFiles = file.listFiles();
 	    for (File helpFile : helpFiles) {
 		String commandName = helpFile.getName();
@@ -89,7 +84,7 @@ public class HelpPanel extends SpecificPanel  {
 		commandButton.setOnMouseClicked((arg0)-> {
 		    try {
 			getPane()
-				.setRight(commandInformation(helpFile, command));
+			.setRight(commandInformation(helpFile, command));
 		    } catch (FileNotFoundException e) {
 			// TODO: make custom exception super class with sub classes for specifications
 			//String specification = "%nFailed to find color files";
@@ -99,7 +94,6 @@ public class HelpPanel extends SpecificPanel  {
 		HELP_BOX.getChildren().add(commandButton);
 
 	    }
-	    System.out.println("Done");
 	}
 	catch (Exception e) {
 	    // TODO: make custom exception super class with sub classes for specifications
@@ -128,7 +122,7 @@ public class HelpPanel extends SpecificPanel  {
 	VBox.setVgrow(commandInfoArea, Priority.ALWAYS);
 	return panelRoot;
     }
-    
+
     private void populateInfoBox(File commandFile, TextArea infoBox) throws FileNotFoundException {
 	Scanner in = new Scanner(commandFile);
 	StringBuilder commandInfoBuilder = new StringBuilder();

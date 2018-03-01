@@ -6,21 +6,21 @@ package interpreter;
  * @author Susie Choi
  *
  */
-public class IsShowingQueryCommand extends Command{
-	Turtle myTurtle;
-	/**
-	 * @param turtle is turtle whose visibility is desired
-	 */
-	protected IsShowingQueryCommand(Turtle turtle) {
-		myTurtle = turtle;
-	}
-	/**
-	 * @return visibility of Turtle (0.0 for hidden, 1.0 for visible)
-	 * @see interpreter.Command#execute()
-	 */
-	@Override
-	public double execute() {
-		int retVal = myTurtle.getTurtleVisibility() ? 1 : 0; 
-		return retVal; 
-	}
+class IsShowingQueryCommand extends Command{
+    private Turtle myTurtle;
+    /**
+     * @param turtle is turtle whose visibility is desired
+     */
+    protected IsShowingQueryCommand(Turtle turtle) {
+	myTurtle = turtle;
+    }
+    /**
+     * @return visibility of Turtle (0.0 for hidden, 1.0 for visible)
+     * @see interpreter.Command#execute()
+     */
+    @Override
+    protected double execute() {
+	int retVal = myTurtle.getTurtleVisibility() ? 1 : 0; 
+	return retVal; 
+    }
 }

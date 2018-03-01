@@ -60,7 +60,7 @@ public class Turtle {
     	// TODO: put in setting.properties file
     	public static final double DEFAULT_TURTLE_SIZE = 20;
 	public static final String DEFAULT_NAME = "";
-	public static final Color DEFAULT_PEN_COLOR = Color.BLACK;
+	public static final String DEFAULT_PEN_COLORCODE = "#2d3436";
 	public static final double DEFAULT_PEN_WIDTH = 1.0;
 	public static final double DEFAULT_X_POS = 0.0; 
 	public static final double DEFAULT_Y_POS = 0.0; 
@@ -81,13 +81,13 @@ public class Turtle {
 	private double myAngle; 
 
 	public Turtle() {
-		this(DEFAULT_NAME, new ImageView(), new Group(), DEFAULT_PEN_COLOR);
+		this(DEFAULT_NAME, new ImageView(), new Group(), DEFAULT_PEN_COLORCODE);
 	}
 
-	protected Turtle(String name, ImageView image, Group penGroup, Color color) {
+	protected Turtle(String name, ImageView image, Group penGroup, String colorCode) {
 		myName = name; 
 		myImage = image;
-		myPen = new Pen(penGroup, color); 
+		myPen = new Pen(penGroup, colorCode); 
 		myVisibility = true; 
 		myOldX = DEFAULT_X_POS; 
 		myOldY = DEFAULT_Y_POS; 
@@ -214,8 +214,8 @@ public class Turtle {
 		myImage.setImage(newImg);
 	}
 
-	protected void setPenColor(Color color) {
-		myPen.setColor(color);
+	protected void setPenColor(String colorCode) {
+		myPen.setColor(colorCode);
 	}
 	
 	protected void setPenWidth(double width) {
@@ -254,7 +254,7 @@ public class Turtle {
 	 */
 	private class Pen {		
 		private Group myPenLines;
-		private Color myColor;
+		private String myColorCode;
 		private double myWidth;
 		private boolean myIsDown;
 
@@ -263,11 +263,11 @@ public class Turtle {
 		 * @param penlines is (already attached to stage) Group of lines drawn by the pen
 		 */
 		private Pen(Group penLines) {
-			this(penLines, true, DEFAULT_PEN_COLOR, DEFAULT_PEN_WIDTH);
+			this(penLines, true, DEFAULT_PEN_COLORCODE, DEFAULT_PEN_WIDTH);
 		}
 		
-		private Pen(Group penLines, Color color) {
-			this(penLines, true, color, DEFAULT_PEN_WIDTH);
+		private Pen(Group penLines, String colorCode) {
+			this(penLines, true, colorCode, DEFAULT_PEN_WIDTH);
 		}
 		
 		/**
@@ -276,8 +276,8 @@ public class Turtle {
 		 * @param color is initial color of Pen
 		 * @param width is initial width of Pen
 		 */
-		private Pen(Group penLines, Color color, double width) {
-			this(penLines, true, color, width);
+		private Pen(Group penLines, String colorCode, double width) {
+			this(penLines, true, colorCode, width);
 		}
 
 		/**
@@ -287,9 +287,9 @@ public class Turtle {
 		 * @param color is initial color of Pen
 		 * @param width is initial width of Pen
 		 */
-		private Pen(Group penlines, boolean down, Color color, double width) {
+		private Pen(Group penlines, boolean down, String colorCode, double width) {
 			myPenLines = penlines;
-			myColor = color;
+			myColorCode = colorCode;
 			myIsDown = down;
 			myWidth = width;
 		}
@@ -335,16 +335,16 @@ public class Turtle {
 		/**
 		 * @return pen Color
 		 */
-		private Color getColor() {
-			return myColor;
+		private String getColor() {
+			return myColorCode;
 		}
 
 		/**
 		 * Sets new pen color
 		 * @param newColor is new Color of pen
 		 */
-		private void setColor(Color newColor) {
-			myColor = newColor;
+		private void setColor(String newColorCode) {
+			myColorCode = newColorCode;
 		}
 
 		/**
@@ -357,7 +357,8 @@ public class Turtle {
 		private void drawLine(double oldX, double oldY, double newX, double newY) {
 			if(myIsDown) {
 				Line line = new Line(newX, newY, oldX, oldY);
-				line.setFill(myColor);
+				//line.setFill(myColor);
+				line.setStyle("-fx-stroke: #" + myColorCode + ";");
 				line.setStrokeWidth(myWidth);
 				myPenLines.getChildren().add(line);
 				System.out.println("number of lines" + myPenLines.getChildren().size());

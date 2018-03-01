@@ -69,6 +69,7 @@ public class InputPanel implements Panel {
 		runButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
+				USER_SCREEN.clearErrorDisplay();
 				INPUT_AREA.run();
 			}
 		});
@@ -83,6 +84,7 @@ public class InputPanel implements Panel {
 			@Override
 			public void handle(MouseEvent arg0) {
 				INPUT_AREA.clearInputArea();
+				USER_SCREEN.clearErrorDisplay();
 			}
 		});
 		clearButton.setId("clearButton");

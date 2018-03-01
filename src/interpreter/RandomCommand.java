@@ -1,5 +1,6 @@
 package interpreter;
 
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -9,19 +10,19 @@ import java.util.Random;
  * @date 2/26/18
  *
  */
-public class RandomCommand implements Command{
+class RandomCommand extends Command{
 
-    Command maxCommand;
-	protected RandomCommand(Command max) {
-		maxCommand = max;
-	}
-	@Override
-	public double execute() throws UnidentifiedCommandException{
-		double MAX = maxCommand.execute();
-	    	Random randGenerator = new Random();
-	    	return randGenerator.nextDouble() * MAX;
-	}
-	public int getNumArgs() {
-		return 1;
-	}
+    private Command maxCommand;
+    private Map<String, Double> myVariables; 
+
+    protected RandomCommand(Command max,Map<String, Double> variables) {
+	maxCommand = max;
+	myVariables = variables;
+    }
+    @Override
+    protected double execute() throws UnidentifiedCommandException{
+	double MAX = getCommandValue(maxCommand, myVariables);
+	Random randGenerator = new Random();
+	return randGenerator.nextDouble() * MAX;
+    }
 }

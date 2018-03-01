@@ -11,37 +11,21 @@ import java.util.Map;
  *
  */
 public class EqualCommand extends Command{
-	
-    	Command expr1Command;
-    Command expr2Command;
-    Map<String, Double> myVariables; 
-    
-	protected EqualCommand(Command expr1, Command expr2, Map<String, Double> variables) {
-		expr1Command = expr1;
-		expr2Command = expr2;
-		myVariables = variables; 
-	}
-	
-	@Override
-	public double execute() throws UnidentifiedCommandException{
-		double arg1Val; 
-		double arg2Val; 
-		if (expr1Command instanceof StringCommand) {
-			arg1Val = getValueOfVar(((StringCommand)expr1Command).getString(), myVariables);
-		}
-		else {
-			arg1Val = expr1Command.execute(); 
-		}
-		if (expr2Command instanceof StringCommand) {
-			arg2Val = getValueOfVar(((StringCommand)expr2Command).getString(), myVariables);
-		}
-		else {
-			arg2Val = expr2Command.execute();
-		}
-		return (arg1Val == arg2Val) ? 1.0 : 0.0; 
-	}
-	
-	public int getNumArgs() {
-		return 2;
-	}
+
+    private Command expr1Command;
+    private Command expr2Command;
+    private Map<String, Double> myVariables; 
+
+    protected EqualCommand(Command expr1, Command expr2, Map<String, Double> variables) {
+	expr1Command = expr1;
+	expr2Command = expr2;
+	myVariables = variables; 
+    }
+
+    @Override
+    protected double execute() throws UnidentifiedCommandException{
+	double arg1Val= getCommandValue(expr1Command, myVariables); 
+	double arg2Val= getCommandValue(expr2Command, myVariables); 
+	return (arg1Val == arg2Val) ? 1.0 : 0.0; 
+    }
 }

@@ -2,6 +2,12 @@ package screen;
 
 import javafx.scene.Parent;
 
+/**
+ * 
+ * @author Benjamin Hodgson
+ * 
+ * An interface used to create a Screen object to display an element of the program
+ */
 public interface Screen {
 
     /**
