@@ -155,7 +155,7 @@ class TextFieldParser {
 		myCommandMaker.changeLanguage(languageBundle);
 	}
 	
-	public void addNewTurtle(String name, ImageView turtleImage, Color penColor, Group penLines) {
+	public void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
 		System.out.println("made it to textfieldparser");
 		myCommandMaker.addNewTurtle(name, turtleImage, penColor, penLines);
 	}

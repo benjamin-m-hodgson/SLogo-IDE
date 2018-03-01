@@ -26,6 +26,7 @@ import screen.StartScreen;
 import screen.UserScreen;
 
 public class Controller {
+<<<<<<< src/interpreter/Controller.java
     private final String FILE_ERROR_KEY = "FileErrorPrompt";
     private final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
     private final String SYNTAX_FILE_NAME = "Syntax.properties";
@@ -40,6 +41,7 @@ public class Controller {
     private ResourceBundle CURRENT_TEXT_DISPLAY;
     private ResourceBundle CURRENT_ERROR_DISPLAY;
     private ResourceBundle CURRENT_BACKGROUND_COLOR;
+    private ResourceBundle CURRENT_PEN_COLOR;
     private ResourceBundle CURRENT_LANGUAGE;
     private ResourceBundle CURRENT_SETTINGS;
     private Stage PROGRAM_STAGE;
@@ -63,7 +65,7 @@ public class Controller {
      * Makes a new Turtle given a name, an ImageView (previously attached to the Stage), a penColor, and an empty Group
      * that has already been attached to the Stage to hold lines for the pen
      */
-    public double makeNewTurtleCommand(String name, ImageView turtleImage, Color penColor, Group penLines) {
+    public double makeNewTurtleCommand(String name, ImageView turtleImage, String penColor, Group penLines) {
 	System.out.println("is it null" + turtleImage==null);
 	myTextFieldParser.addNewTurtle(name, turtleImage, penColor, penLines);
 	return 1.0; 
@@ -124,13 +126,7 @@ public class Controller {
 	    }
 	    return Collections.unmodifiableList(languages);
 	}
-	catch (Exception e) {
-	    // TODO: make custom exception super class with sub classes for specifications
-	    //String specification = "%nFailed to find language files";
-	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
-	}
-	return Collections.unmodifiableList(new ArrayList<String>());
-    }
+
 
     /**
      * 
@@ -168,132 +164,86 @@ public class Controller {
     }
 
 
-    /**
-     * Parses input from a text field or button press by the user
-     * @throws MissingInformationException 
-     * @throws UnidentifiedCommandException 
-     * @throws BadFormatException 
-     * @throws TurtleNotFoundException 
-     */
-    public double parseInput(String userTextInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
-	return myTextFieldParser.parseText(userTextInput);
-    }
+	/**
+	 * Parses input from a text field or button press by the user
+	 * @throws MissingInformationException 
+	 * @throws UnidentifiedCommandException 
+	 * @throws BadFormatException 
+	 * @throws TurtleNotFoundException 
+	 */
+	public double parseInput(String userTextInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		return myTextFieldParser.parseText(userTextInput);
+	}
 
-    public void loadStartScreen() {
-	try {
-	    StartScreen startScreen = new StartScreen(this);
-	    // test the ErrorScreen
-	    //ErrorScreen startScreen = new ErrorScreen(this, START_ERROR_PROMPT);
-	    Parent programRoot = startScreen.getRoot();
-	    Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-	    programScene.getStylesheets().add(DEFAULT_CSS);
-	    PROGRAM_STAGE.setScene(programScene);
-	    PROGRAM_STAGE.show();	
+	public void loadStartScreen() {
+		try {
+			StartScreen startScreen = new StartScreen(this);
+			// test the ErrorScreen
+			//ErrorScreen startScreen = new ErrorScreen(this, START_ERROR_PROMPT);
+			Parent programRoot = startScreen.getRoot();
+			Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+			programScene.getStylesheets().add(DEFAULT_CSS);
+			PROGRAM_STAGE.setScene(programScene);
+			PROGRAM_STAGE.show();	
+		}
+		catch (Exception e) {
+			loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
+		}
 	}
-	catch (Exception e) {
-	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
-	}
-    }
 
-    public void loadUserScreen() {
-	try {
-	    UserScreen programScreen = new UserScreen(this);
-	    Parent programRoot = programScreen.getRoot();
-	    Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);	
-	    programScene.getStylesheets().add(DEFAULT_CSS);
-	    PROGRAM_STAGE.setScene(programScene);
+	public void loadUserScreen() {
+		try {
+			UserScreen programScreen = new UserScreen(this);
+			Parent programRoot = programScreen.getRoot();
+			Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);	
+			programScene.getStylesheets().add(DEFAULT_CSS);
+			PROGRAM_STAGE.setScene(programScene);
+		}
+		catch (Exception e) {
+			// TODO: make screen error exception class to handle error specification
+			e.printStackTrace();
+			loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
+		}
 	}
-	catch (Exception e) {
-	    // TODO: make screen error exception class to handle error specification
-	    e.printStackTrace();
-	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
-	}
-    }
 
-    //    public List<Turtle> onScreenTurtles() {
-    //	return null;
-    //    }
+	//    public List<Turtle> onScreenTurtles() {
+	//	return null;
+	//    }
 
-    /**
-     * Searches through the class path to find the appropriate resource files to use for 
-     * the program. If it can't locate the files, it displays an error screen to the user
-     * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
-     * 
-     * @param language: The language to define which .properties files to use in the Program
-     */
-    private void findResources(String language) {
-	String currentDir = System.getProperty("user.dir");
-	try {
-	    File file = new File(currentDir);
-	    URL[] urls = {file.toURI().toURL()};
-	    ClassLoader loader = new URLClassLoader(urls);
-	    try {
-		CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(language + "Prompts", 
-			Locale.getDefault(), loader);
-		CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(language + "Errors", 
-			Locale.getDefault(), loader);
-	    }
-	    // if .properties file doesn't exist for specified language, default to English
-	    catch (Exception e) {
-		CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Prompts", 
-			Locale.getDefault(), loader);
-		CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Errors", 
-			Locale.getDefault(), loader);
-	    }
-	    CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
-	    // TODO: fix -> myTextFieldParser.changeLanguage(CURRENT_LANGUAGE);
+	/**
+	 * Searches through the class path to find the appropriate resource files to use for 
+	 * the program. If it can't locate the files, it displays an error screen to the user
+	 * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
+	 * 
+	 * @param language: The language to define which .properties files to use in the Program
+	 */
+	private void findResources(String language) {
+		String currentDir = System.getProperty("user.dir");
+		try {
+			File file = new File(currentDir);
+			URL[] urls = {file.toURI().toURL()};
+			ClassLoader loader = new URLClassLoader(urls);
+			try {
+				CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(language + "Prompts", 
+						Locale.getDefault(), loader);
+				CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(language + "Errors", 
+						Locale.getDefault(), loader);
+			}
+			// if .properties file doesn't exist for specified language, default to English
+			catch (Exception e) {
+				CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Prompts", 
+						Locale.getDefault(), loader);
+				CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Errors", 
+						Locale.getDefault(), loader);
+			}
+			CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
+			// TODO: fix -> myTextFieldParser.changeLanguage(CURRENT_LANGUAGE);
+		}
+		catch (MalformedURLException e) {
+			loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+		}
 	}
-	catch (MalformedURLException e) {
-	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
-	}
-    }
 
-    public String changeBackgroundColor(String color) {
-	findColorFile(color);
-	try {
-	    return CURRENT_BACKGROUND_COLOR.getString(color+"Code");
-	}
-	catch(MissingResourceException e){
-	    try {
-		findColorFile(DEFAULT_COLOR);
-		return CURRENT_BACKGROUND_COLOR.getString(color+"Code");
-	    }
-	    catch(MissingResourceException e1) {
-		loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
-		return null;
-	    }
-	}
-    }
-
-
-    /**
-     * Searches through the class path to find the appropriate resource files to use for 
-     * the program. If it can't locate the files, it displays an error screen to the user
-     * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
-     * 
-     * @param language: The language to define which .properties files to use in the Program
-     */
-    private void findColorFile(String color) {
-	String currentDir = System.getProperty("user.dir");
-	try {
-	    File file = new File(currentDir);
-	    URL[] urls = {file.toURI().toURL()};
-	    ClassLoader loader = new URLClassLoader(urls);
-	    try {
-		CURRENT_BACKGROUND_COLOR = ResourceBundle.getBundle(color, 
-			Locale.getDefault(), loader);
-
-	    }
-	    // if .properties file doesn't exist for specified language, default to English
-	    catch (Exception e) {
-		CURRENT_BACKGROUND_COLOR = ResourceBundle.getBundle(DEFAULT_COLOR, 
-			Locale.getDefault(), loader);
-	    }
-	}
-	catch (MalformedURLException e) {
-	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
-	}
-    }
 
     public List<String> translateColors(List<String> colors){
 	List<String> translatedColors = new ArrayList<String>();
@@ -302,6 +252,97 @@ public class Controller {
 	}
 	return translatedColors;
     }
+
+	public String changeBackgroundColor(String color) {
+		CURRENT_BACKGROUND_COLOR = findColorFile(color);
+		try {
+			return CURRENT_BACKGROUND_COLOR.getString(color+"Code");
+		}
+		catch(MissingResourceException e){
+			try {
+				CURRENT_BACKGROUND_COLOR = findColorFile(DEFAULT_COLOR );
+				return CURRENT_BACKGROUND_COLOR.getString(color+"Code");
+			}
+			catch(MissingResourceException e1) {
+				loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+				return null;
+			}
+		}
+	}
+	
+	private void parseHexCodeandPass(String hexCodeUnParsed) {
+		String hexCode = hexCodeUnParsed.substring(1, hexCodeUnParsed.length());
+		int hexConvert = Integer.parseInt(hexCode,16);
+		try {
+			parseInput("setpc " + hexConvert);
+		} catch (TurtleNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BadFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnidentifiedCommandException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MissingInformationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void changePenColor(String color) {
+		CURRENT_PEN_COLOR = findColorFile(color);
+		try {
+			String hexCodeUnParsed = CURRENT_PEN_COLOR.getString(color+"Code");
+			parseHexCodeandPass(hexCodeUnParsed);
+		}
+		catch(MissingResourceException e){
+			try {
+				CURRENT_PEN_COLOR = findColorFile(DEFAULT_COLOR);
+				String hexCodeUnParsed = CURRENT_PEN_COLOR.getString(color+"Code");
+				parseHexCodeandPass(hexCodeUnParsed);
+			}
+			catch(MissingResourceException e1) {
+				loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+			}
+		}
+	}
+
+
+	/**
+	 * Searches through the class path to find the appropriate resource files to use for 
+	 * the program. If it can't locate the files, it displays an error screen to the user
+	 * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
+	 * 
+	 * @param language: The language to define which .properties files to use in the Program
+	 */
+	private ResourceBundle findColorFile(String color) {
+		String currentDir = System.getProperty("user.dir");
+		ResourceBundle bundle;
+		try {
+			File file = new File(currentDir);
+			URL[] urls = {file.toURI().toURL()};
+			ClassLoader loader = new URLClassLoader(urls);
+			try {
+				bundle = ResourceBundle.getBundle(color, 
+						Locale.getDefault(), loader);
+				return bundle;
+
+			}
+			// if .properties file doesn't exist for specified language, default to English
+			catch (Exception e) {
+				bundle = ResourceBundle.getBundle(DEFAULT_COLOR, 
+						Locale.getDefault(), loader);
+				return bundle;
+			}
+		}
+		catch (MalformedURLException e) {
+			loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+			return null; //if this is reached the return value will not matter
+		}
+	}
+
+
 
     /**
      * Searches through the class path to find the appropriate settings resource file to use for 
