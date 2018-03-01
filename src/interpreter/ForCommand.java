@@ -2,8 +2,9 @@ package interpreter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class ForCommand implements Command{
+public class ForCommand extends Command{
 		private String myTempVar;
 		private Command myStartCommand;
 		private Command myEndCommand;
@@ -11,16 +12,18 @@ public class ForCommand implements Command{
 		private String myToExecute;
 		private Turtle myTurtle;
 		CommandTreeBuilder myBuilder;
-		protected ForCommand(Command variable, Command start, Command end, Command increment, Command repeated, Turtle turtle) {
-			
+		Map<String, Double> myVars;
+		Map<String, String> myUserDefComs;
+		Map<String, Integer> myUserDefComsNumArgs;
+		
+		protected ForCommand(Command variable, Command start, Command end, Command increment, Command repeated, Turtle turtle,
+				Map<String, Double> vars, Map<String, String> userDefComs, Map<String, Integer> userDefComsNumArgs) {
 			myTempVar = ((StringCommand)variable).getString();
-			
 			myToExecute = ((StringCommand)repeated).getString();
-			
 			myStartCommand = start;
 			myEndCommand = end;
 			myIncrement = increment;
-			myBuilder = new CommandTreeBuilder();
+			myBuilder = new CommandTreeBuilder(vars, userDefComs, userDefComsNumArgs);
 			myTurtle = turtle;
 		}
 		public double execute() throws UnidentifiedCommandException {
