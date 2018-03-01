@@ -1,6 +1,7 @@
 package screen.panel;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import interpreter.Controller;
@@ -20,16 +21,17 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.paint.Color;
 
 
 public class TurtlePanel implements Panel {
 	// TODO: put in setting.properties file
 	private final double DEFAULT_TURTLE_SIZE = 20;
-	private final String DEFAULT_TURTLE = "TurtleDefault.png";
+	private final String DEFAULT_TURTLE = "Colored Turtle.png";
 	private BorderPane PANEL;
 	private ScrollPane SCROLL_PANE;
 	private Controller PROGRAM_CONTROLLER;
+	private String DEFAULT_COLOR_HEXCODE = "2d3436";
+	private HBox ErrorHolder;
 	private List<ImageView> TURTLE_LIST;
 
 	public TurtlePanel(Controller programController) {
@@ -67,6 +69,7 @@ public class TurtlePanel implements Panel {
 					+ File.separator + DEFAULT_TURTLE);
 			Image turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
 			ImageView turtleView = new ImageView(turtleImage);
+			TURTLE_LIST.add(turtleView);
 			turtleView.setId("turtleView");
 			turtleView.setFitHeight(DEFAULT_TURTLE_SIZE);
 			turtleView.setFitWidth(DEFAULT_TURTLE_SIZE);
@@ -81,7 +84,7 @@ public class TurtlePanel implements Panel {
 			penLines.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
 			panel.getChildren().add(penLines);
 			// TODO: possibly add turtles to list ?
-			PROGRAM_CONTROLLER.makeNewTurtleCommand("Turtle", turtleView, Color.BLACK, penLines);
+			PROGRAM_CONTROLLER.makeNewTurtleCommand("Turtle", turtleView,DEFAULT_COLOR_HEXCODE , penLines);
 		}
 		catch (Exception e) {
 			// TODO: make custom exception super class with sub classes for specifications
@@ -93,16 +96,49 @@ public class TurtlePanel implements Panel {
 	public void displayErrorMessage(String error) {
 		Button errorButton = new Button(error);
 		errorButton.setId("errorButton");
-		HBox holder = new HBox(errorButton);
-		holder.setAlignment(Pos.CENTER);
+		ErrorHolder = new HBox(errorButton);
+		ErrorHolder.setAlignment(Pos.CENTER);
 		HBox.setHgrow(errorButton, Priority.ALWAYS);
-		errorButton.setOnMouseClicked((arg0)-> PANEL.getChildren().remove(holder));
+		errorButton.setOnMouseClicked((arg0)-> PANEL.getChildren().remove(ErrorHolder));
 		errorButton.setMaxWidth(PANEL.widthProperty().get());
 		errorButton.setMinWidth(PANEL.widthProperty().get());
-		PANEL.setBottom(holder);
+		PANEL.setBottom(ErrorHolder);
+	}
+
+	public void changeTurtlesImages(String selected) {
+		Image turtleImage = getTurtleImage(selected);
+		if(turtleImage != null) {
+			for(ImageView view :TURTLE_LIST) {
+				view.setImage(turtleImage);
+			}
+		}
+	}
+
+	private Image getTurtleImage(String selected) {
+		String currentDir = System.getProperty("user.dir");
+		File turtleFile = new File(currentDir + File.separator + "turtleimages" 
+				+ File.separator + selected + ".png");
+		Image turtleImage = null;
+		try {
+			turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
+		} 
+		catch (MalformedURLException e) {
+			turtleFile = new File(currentDir + File.separator + "turtleimages" + File.separator + DEFAULT_TURTLE);
+			try {
+				turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
+			} 
+			catch (MalformedURLException e1) {
+				System.out.println("FAILED TO LOAD TURTLE IMG");
+			}
+		}
+		return turtleImage;
 	}
 
 	public void changeBackgroundColor(String colorCode) {
 		SCROLL_PANE.setStyle("-fx-background-color:" + colorCode + ";");
+	}
+
+	public void removeErrorButton() {
+		PANEL.getChildren().remove(ErrorHolder);
 	}
 }

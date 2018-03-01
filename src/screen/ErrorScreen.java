@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class ErrorScreen implements Screen {
-    private final String LANGUAGE_CHOOSER_TEXT = "Select a Language";
     private Parent ROOT;
     private Controller PROGRAM_CONTROLLER;
     private String ERROR_MESSAGE;
@@ -19,8 +18,8 @@ public class ErrorScreen implements Screen {
     @Override
     public void makeRoot() {
 	Label errorLabel = errorLabel(ERROR_MESSAGE);
-	VBox rootBox = new VBox(5, errorLabel);
-	rootBox.setId("startScreenRoot");
+	VBox rootBox = new VBox(errorLabel);
+	rootBox.setId("errorScreenRoot");
 	ROOT = rootBox;
     }
 

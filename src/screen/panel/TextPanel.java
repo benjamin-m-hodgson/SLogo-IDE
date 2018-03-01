@@ -12,24 +12,24 @@ import javafx.scene.layout.VBox;
 import screen.UserScreen;
 
 public class TextPanel implements Panel {
-	private Parent PANEL;
-	private final Controller PROGRAM_CONTROLLER;
-	private final UserScreen USER_SCREEN;
-	private TextArea INPUT_AREA;
-	private TextArea CONSOLE_AREA;
+    private Parent PANEL;
+    private final Controller PROGRAM_CONTROLLER;
+    private final UserScreen USER_SCREEN;
+    private TextArea INPUT_AREA;
+    private TextArea CONSOLE_AREA;
 
-	public TextPanel(Controller programController, UserScreen userScreen) {
-		PROGRAM_CONTROLLER = programController;
-		USER_SCREEN = userScreen;
-	}
+    public TextPanel(Controller programController, UserScreen userScreen) {
+	PROGRAM_CONTROLLER = programController;
+	USER_SCREEN = userScreen;
+    }
 
-	@Override
-	public Parent getPanel() {
-		if (PANEL == null) {
-			makePanel();
-		}
-		return PANEL;
+    @Override
+    public Parent getPanel() {
+	if (PANEL == null) {
+	    makePanel();
 	}
+	return PANEL;
+    }
 
     @Override
     public void makePanel() {
@@ -40,56 +40,54 @@ public class TextPanel implements Panel {
 	textPanel.setId("centerTextPanel");
 	PANEL = textPanel;
     }
-    
+
     public void clearInputArea() {
 	INPUT_AREA.clear();
 	CONSOLE_AREA.clear();
     }
-    
-   public void run() {
-		String inputText = INPUT_AREA.getText().replaceAll("\n", 
-				System.getProperty("line.separator"));
-		CONSOLE_AREA.setText(inputText);
-		if (inputText != null) {
-		    USER_SCREEN.addCommand(inputText);
-		}
-		try {
-			PROGRAM_CONTROLLER.parseInput(inputText);
-		} 
-		catch (TurtleNotFoundException e) {
-			clearInputArea();
-			USER_SCREEN.displayErrorMessage(e.getMessage());
-		} 
-		catch (BadFormatException e) {
-			clearInputArea();
-			USER_SCREEN.displayErrorMessage(e.getMessage());
 
-		} 
-		catch (UnidentifiedCommandException e) {
-			clearInputArea();
-			USER_SCREEN.displayErrorMessage(e.getMessage());
+    public void run() {
+	try {
+	    String inputText = INPUT_AREA.getText().replaceAll("\n", 
+		    System.getProperty("line.separator"));
+	    Double consoleVal = PROGRAM_CONTROLLER.parseInput(inputText);
+	    String outputText = consoleVal.toString();
+	    CONSOLE_AREA.setText(outputText);
+	    USER_SCREEN.addCommand(inputText, outputText);
+	} 
+	catch (TurtleNotFoundException e) {
+	    clearInputArea();
+	    USER_SCREEN.displayErrorMessage(e.getMessage());
+	} 
+	catch (BadFormatException e) {
+	    clearInputArea();
+	    USER_SCREEN.displayErrorMessage(e.getMessage());
 
-		} 
-		catch (MissingInformationException e) {
-			clearInputArea();
-			USER_SCREEN.displayErrorMessage(e.getMessage());
+	} 
+	catch (UnidentifiedCommandException e) {
+	    clearInputArea();
+	    USER_SCREEN.displayErrorMessage(e.getMessage());
 
-		}
-		catch (NullPointerException e) {
-			clearInputArea();
-			USER_SCREEN.displayErrorMessage("Invalid Format");
-
-		}
+	} 
+	catch (MissingInformationException e) {
+	    clearInputArea();
+	    USER_SCREEN.displayErrorMessage(e.getMessage());
 
 	}
-    
+	catch (Exception e) {
+	    clearInputArea();
+	    USER_SCREEN.displayErrorMessage(PROGRAM_CONTROLLER.resourceErrorText("GeneralError"));
+	}
+
+    }
+
     private TextArea makeInputArea() {
 	TextArea inputArea = new TextArea();
 	inputArea.setId("inputField");
 	inputArea.setPromptText(PROGRAM_CONTROLLER.resourceDisplayText("InputPrompt"));
 	return inputArea;
     }
-    
+
     private TextArea makeConsoleArea() {
 	TextArea consoleArea = new TextArea();
 	consoleArea.setId("consoleField");

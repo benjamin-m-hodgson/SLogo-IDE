@@ -3,7 +3,6 @@ package screen;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import interpreter.Controller;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
@@ -17,10 +16,12 @@ public class UserScreen implements Screen {
 	private TurtlePanel TURTLE_PANEL;
 	private Controller PROGRAM_CONTROLLER;
 	private List<String> INPUT_HISTORY;
+	private List<String> OUTPUT_HISTORY;
 	
 	public UserScreen(Controller programController) {
 		PROGRAM_CONTROLLER = programController;
 		INPUT_HISTORY = new ArrayList<String>();
+		OUTPUT_HISTORY = new ArrayList<String>();
 	}
 
 
@@ -43,18 +44,27 @@ public class UserScreen implements Screen {
 		return ROOT;
 	}
 	
-	public void addCommand(String command) {
+	public void addCommand(String command, String output) {
 	    INPUT_HISTORY.add(command);
+	    OUTPUT_HISTORY.add(output);
 	}
 	
 	public Iterator<String> commandHistory() {
 	    List<String> retList = new ArrayList<String>(INPUT_HISTORY);
 	    return retList.iterator();
 	}
-
+	
+	public Iterator<String> outputHistory() {
+	    List<String> retList = new ArrayList<String>(OUTPUT_HISTORY);
+	    return retList.iterator();
+	}
 	
 	public void displayErrorMessage(String errorMessage) {
 		TURTLE_PANEL.displayErrorMessage(errorMessage);
+	}
+	
+	public void changeTurtleImage(String selected) {
+		TURTLE_PANEL.changeTurtlesImages(selected);
 	}
 
 	@Override
@@ -66,5 +76,9 @@ public class UserScreen implements Screen {
 	@Override
 	public void changeRightPanel(Parent panelRoot) {
 		// TODO Auto-generated method stub
+	}
+	
+	public void clearErrorDisplay() {
+		TURTLE_PANEL.removeErrorButton();
 	}
 }
