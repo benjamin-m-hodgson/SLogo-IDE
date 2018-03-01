@@ -26,5 +26,4 @@ class ClearScreenCommand extends Command{
 	myTurtle.clearPen();
 	return returnVal;
     }
-
 }

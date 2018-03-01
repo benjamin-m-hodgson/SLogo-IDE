@@ -12,7 +12,6 @@ class IfCommand extends Command{
     private String myIfBody; 
     private Map<String, Double> myVariables; 
     private Map<String, String> myUserDefCommands;
-
     protected IfCommand(Command ifExprCommand, Command ifBody, Turtle turtle, 
     		Map<String, Double> variables, Map<String, String> userDefCommands) {
 	myTurtle = turtle;
@@ -35,7 +34,7 @@ class IfCommand extends Command{
 	    CommandTreeBuilder buildIfBody = new CommandTreeBuilder(myVariables, myUserDefCommands); 
 	    String[] userInput = myIfBody.split("\\s+");
 	    try {
-		ifBodyRetVal = buildIfBody.buildAndExecute(myTurtle, userInput);
+		ifBodyRetVal = buildIfBody.buildAndExecute(myTurtle, userInput, true);
 	    } catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
 		return ifBodyRetVal; 
 	    }

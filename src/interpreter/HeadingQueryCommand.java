@@ -23,4 +23,5 @@ class HeadingQueryCommand extends Command{
     protected double execute() {
 	return myTurtle.getAngle();
     }
+>>>>>>> 5e323c37de74bada5cce9600a12cb66fe7c9c0bf
 }

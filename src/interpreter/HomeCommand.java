@@ -6,7 +6,7 @@ package interpreter;
  * @author Sarahbland
  *
  */
-class HomeCommand extends Command{
+HomeCommand extends Command{
     Turtle myTurtle;
     /**
      * Creates a new instance of the command to be executed at the proper time
@@ -23,4 +23,5 @@ class HomeCommand extends Command{
     protected double execute() {
 	return myTurtle.setXY(0, 0);
     }
+>>>>>>> 5e323c37de74bada5cce9600a12cb66fe7c9c0bf
 }
