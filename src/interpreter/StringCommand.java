@@ -11,4 +11,8 @@ package interpreter;
 	public double execute() throws UnidentifiedCommandException{
 		throw new UnidentifiedCommandException("You entered an unrecognized word in the command field.");
 	}
+	
+	public String toString() {
+	    return getString();
+	}
 }
