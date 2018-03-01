@@ -89,7 +89,7 @@ public class HelpPanel extends SpecificPanel  {
 		commandButton.setOnMouseClicked((arg0)-> {
 		    try {
 			getPane()
-				.setRight(commandInformation(helpFile, command));
+			.setRight(commandInformation(helpFile, command));
 		    } catch (FileNotFoundException e) {
 			// TODO: make custom exception super class with sub classes for specifications
 			//String specification = "%nFailed to find color files";
@@ -128,7 +128,7 @@ public class HelpPanel extends SpecificPanel  {
 	VBox.setVgrow(commandInfoArea, Priority.ALWAYS);
 	return panelRoot;
     }
-    
+
     private void populateInfoBox(File commandFile, TextArea infoBox) throws FileNotFoundException {
 	Scanner in = new Scanner(commandFile);
 	StringBuilder commandInfoBuilder = new StringBuilder();
