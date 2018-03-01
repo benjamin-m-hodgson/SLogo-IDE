@@ -26,142 +26,150 @@ import screen.StartScreen;
 import screen.UserScreen;
 
 public class Controller {
-<<<<<<< src/interpreter/Controller.java
-    private final String FILE_ERROR_KEY = "FileErrorPrompt";
-    private final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
-    private final String SYNTAX_FILE_NAME = "Syntax.properties";
-    private final String DEFAULT_LANGUAGE = "English";
-    private final String DEFAULT_COLOR = "Grey";
-    private final String DEFAULT_SETTINGS = "settings";
-    // TODO: Read this in from files rather than storing as instance variables
-    private final double DEFAULT_HEIGHT = 650;
-    private final double DEFAULT_WIDTH = 900;
-    private String DEFAULT_CSS = Controller.class.getClassLoader().
-	    getResource("default.css").toExternalForm(); 
-    private ResourceBundle CURRENT_TEXT_DISPLAY;
-    private ResourceBundle CURRENT_ERROR_DISPLAY;
-    private ResourceBundle CURRENT_BACKGROUND_COLOR;
-    private ResourceBundle CURRENT_PEN_COLOR;
-    private ResourceBundle CURRENT_LANGUAGE;
-    private ResourceBundle CURRENT_SETTINGS;
-    private Stage PROGRAM_STAGE;
-    // TODO: add in program titles
-    private String PROGRAM_TITLE;
 
-    private TextFieldParser myTextFieldParser;
-    private Map<String, Double> myVariables; 
-    private List<String> myCommandHistory; 
+	private final String FILE_ERROR_KEY = "FileErrorPrompt";
+	private final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
+	private final String SYNTAX_FILE_NAME = "Syntax.properties";
+	private final String DEFAULT_LANGUAGE = "English";
+	private final String DEFAULT_COLOR = "Grey";
+	private final String DEFAULT_SETTINGS = "settings";
+	// TODO: Read this in from files rather than storing as instance variables
+	private final double DEFAULT_HEIGHT = 650;
+	private final double DEFAULT_WIDTH = 900;
+	private String DEFAULT_CSS = Controller.class.getClassLoader().
+			getResource("default.css").toExternalForm(); 
+	private ResourceBundle CURRENT_TEXT_DISPLAY;
+	private ResourceBundle CURRENT_ERROR_DISPLAY;
+	private ResourceBundle CURRENT_BACKGROUND_COLOR;
+	private ResourceBundle CURRENT_PEN_COLOR;
+	private ResourceBundle CURRENT_LANGUAGE;
+	private ResourceBundle CURRENT_SETTINGS;
+	private Stage PROGRAM_STAGE;
+	// TODO: add in program titles
+	private String PROGRAM_TITLE;
 
-    public Controller(Stage primaryStage) {
-	PROGRAM_STAGE = primaryStage;
-	myTextFieldParser = new TextFieldParser();
-	myVariables = new HashMap<String, Double>();
-	myCommandHistory = new ArrayList<String>(); 
-	findSettings();
-	findResources(DEFAULT_LANGUAGE);
-    }
+	private TextFieldParser myTextFieldParser;
+	private Map<String, Double> myVariables; 
+	private List<String> myCommandHistory; 
 
-    /**
-     * Makes a new Turtle given a name, an ImageView (previously attached to the Stage), a penColor, and an empty Group
-     * that has already been attached to the Stage to hold lines for the pen
-     */
-    public double makeNewTurtleCommand(String name, ImageView turtleImage, String penColor, Group penLines) {
-	System.out.println("is it null" + turtleImage==null);
-	myTextFieldParser.addNewTurtle(name, turtleImage, penColor, penLines);
-	return 1.0; 
-    }
+	public Controller(Stage primaryStage) {
+		PROGRAM_STAGE = primaryStage;
+		myTextFieldParser = new TextFieldParser();
+		myVariables = new HashMap<String, Double>();
+		myCommandHistory = new ArrayList<String>(); 
+		findSettings();
+		findResources(DEFAULT_LANGUAGE);
+	}
+
+	/**
+	 * Makes a new Turtle given a name, an ImageView (previously attached to the Stage), a penColor, and an empty Group
+	 * that has already been attached to the Stage to hold lines for the pen
+	 */
+	public double makeNewTurtleCommand(String name, ImageView turtleImage, String penColor, Group penLines) {
+		System.out.println("is it null" + turtleImage==null);
+		myTextFieldParser.addNewTurtle(name, turtleImage, penColor, penLines);
+		return 1.0; 
+	}
 
 
 
-    /**
-     * Returns an UnmodifiableMap of variables to their values
-     */
-    public Map<String, Double> getVariables() {
-	return null;
-    }
+	/**
+	 * Returns an UnmodifiableMap of variables to their values
+	 */
+	public Map<String, Double> getVariables() {
+		return null;
+	}
 
-    /**
-     * 
-     * @return ReadOnlyDoubleProperty: the height property of the application
-     */
-    public ReadOnlyDoubleProperty getHeightProperty() {
-	return PROGRAM_STAGE.heightProperty();
-    }
+	/**
+	 * 
+	 * @return ReadOnlyDoubleProperty: the height property of the application
+	 */
+	public ReadOnlyDoubleProperty getHeightProperty() {
+		return PROGRAM_STAGE.heightProperty();
+	}
 
-    /**
-     * 
-     * @return ReadOnlyDoubleProperty: the height property of the application
-     */
-    public ReadOnlyDoubleProperty getWidthProperty() {
-	return PROGRAM_STAGE.widthProperty();
-    }
+	/**
+	 * 
+	 * @return ReadOnlyDoubleProperty: the height property of the application
+	 */
+	public ReadOnlyDoubleProperty getWidthProperty() {
+		return PROGRAM_STAGE.widthProperty();
+	}
 
-    /**
-     * Returns an ImmutableList of available User Commands
-     */
-    public List<String> getUserCommands() {
-	return null;
-    }
+	/**
+	 * Returns an ImmutableList of available User Commands
+	 */
+	public List<String> getUserCommands() {
+		return null;
+	}
 
-    /**
-     * 
-     * @return an ImmutableList of all of the language options
-     */
-    public List<String> getLanguages() {
-	String currentDir = System.getProperty("user.dir");
-	try {
-	    File file = new File(currentDir + File.separator + "languages");
-	    File syntaxFile = new File(currentDir + File.separator + "languages" + File.separator
-		    + SYNTAX_FILE_NAME);
-	    File[] languageFiles = file.listFiles();
-	    List<String> languages = new ArrayList<String>();
-	    for (File languageFile : languageFiles) {
-		// ignore the syntax file used for input parsing
-		if (!languageFile.equals(syntaxFile)) { 
-		    String languageName = languageFile.getName();
-		    String[] nameSplit = languageName.split("\\.");
-		    String language = nameSplit[0];
-		    languages.add(language);
+	/**
+	 * 
+	 * @return an ImmutableList of all of the language options
+	 */
+	public List<String> getLanguages() {
+		String currentDir = System.getProperty("user.dir");
+		try {
+			File file = new File(currentDir + File.separator + "languages");
+			File syntaxFile = new File(currentDir + File.separator + "languages" + File.separator
+					+ SYNTAX_FILE_NAME);
+			File[] languageFiles = file.listFiles();
+			List<String> languages = new ArrayList<String>();
+			for (File languageFile : languageFiles) {
+				// ignore the syntax file used for input parsing
+				if (!languageFile.equals(syntaxFile)) { 
+					String languageName = languageFile.getName();
+					String[] nameSplit = languageName.split("\\.");
+					String language = nameSplit[0];
+					languages.add(language);
+				}
+			}
+			return Collections.unmodifiableList(languages);
 		}
-	    }
-	    return Collections.unmodifiableList(languages);
+		catch (Exception e) {
+		    // TODO: make custom exception super class with sub classes for specifications
+		    //String specification = "%nFailed to find language files";
+		    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+		}
+		return Collections.unmodifiableList(new ArrayList<String>());
+
 	}
 
 
-    /**
-     * 
-     * @return an ImmutableList of all of the color options
-     */
-    public List<String> getColors() {
-	String currentDir = System.getProperty("user.dir");
-	try {
-	    File file = new File(currentDir + File.separator + "colors");
-	    File[] colorFiles = file.listFiles();
-	    List<String> colors = new ArrayList<String>();
-	    for (File colorFile : colorFiles) {
-		String colorName = colorFile.getName();
-		String[] nameSplit = colorName.split("\\.");
-		String color = nameSplit[0];
-		colors.add(color);
-	    }
-	    return Collections.unmodifiableList(colors);
+	/**
+	 * 
+	 * @return an ImmutableList of all of the color options
+	 */
+	public List<String> getColors() {
+		String currentDir = System.getProperty("user.dir");
+		try {
+			File file = new File(currentDir + File.separator + "colors");
+			File[] colorFiles = file.listFiles();
+			List<String> colors = new ArrayList<String>();
+			for (File colorFile : colorFiles) {
+				String colorName = colorFile.getName();
+				String[] nameSplit = colorName.split("\\.");
+				String color = nameSplit[0];
+				colors.add(color);
+			}
+			return Collections.unmodifiableList(colors);
+		}
+		catch (Exception e) {
+			// TODO: make custom exception super class with sub classes for specifications
+			//String specification = "%nFailed to find color files";
+			loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+		}
+		return Collections.unmodifiableList(new ArrayList<String>());
 	}
-	catch (Exception e) {
-	    // TODO: make custom exception super class with sub classes for specifications
-	    //String specification = "%nFailed to find color files";
-	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
-	}
-	return Collections.unmodifiableList(new ArrayList<String>());
-    }
 
-    /**
-     * 
-     * @param key
-     * @return
-     */
-    public String resourceDisplayText(String key) {
-	return CURRENT_TEXT_DISPLAY.getString(key);
-    }
+	/**
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public String resourceDisplayText(String key) {
+		return CURRENT_TEXT_DISPLAY.getString(key);
+	}
 
 
 	/**
@@ -245,13 +253,13 @@ public class Controller {
 	}
 
 
-    public List<String> translateColors(List<String> colors){
-	List<String> translatedColors = new ArrayList<String>();
-	for(int i =0; i<colors.size(); i++) {
-	    translatedColors.add(resourceDisplayText(colors.get(i)));
+	public List<String> translateColors(List<String> colors){
+		List<String> translatedColors = new ArrayList<String>();
+		for(int i =0; i<colors.size(); i++) {
+			translatedColors.add(resourceDisplayText(colors.get(i)));
+		}
+		return translatedColors;
 	}
-	return translatedColors;
-    }
 
 	public String changeBackgroundColor(String color) {
 		CURRENT_BACKGROUND_COLOR = findColorFile(color);
@@ -269,7 +277,7 @@ public class Controller {
 			}
 		}
 	}
-	
+
 	private void parseHexCodeandPass(String hexCodeUnParsed) {
 		String hexCode = hexCodeUnParsed.substring(1, hexCodeUnParsed.length());
 		int hexConvert = Integer.parseInt(hexCode,16);
@@ -344,58 +352,58 @@ public class Controller {
 
 
 
-    /**
-     * Searches through the class path to find the appropriate settings resource file to use for 
-     * the program. If it can't locate the file, it displays an error screen to the user
-     * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
-     */
-    private void findSettings() {
-	String currentDir = System.getProperty("user.dir");
-	try {
-	    File file = new File(currentDir);
-	    URL[] urls = {file.toURI().toURL()};
-	    ClassLoader loader = new URLClassLoader(urls);
-	    CURRENT_SETTINGS = ResourceBundle.getBundle(DEFAULT_SETTINGS, 
-		    Locale.getDefault(), loader);
+	/**
+	 * Searches through the class path to find the appropriate settings resource file to use for 
+	 * the program. If it can't locate the file, it displays an error screen to the user
+	 * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
+	 */
+	private void findSettings() {
+		String currentDir = System.getProperty("user.dir");
+		try {
+			File file = new File(currentDir);
+			URL[] urls = {file.toURI().toURL()};
+			ClassLoader loader = new URLClassLoader(urls);
+			CURRENT_SETTINGS = ResourceBundle.getBundle(DEFAULT_SETTINGS, 
+					Locale.getDefault(), loader);
+		}
+		catch (MalformedURLException e) {
+			// TODO: make screen error exception class to handle error specification
+			//String specification = "%nFailed to find settings files";
+			loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+		}
 	}
-	catch (MalformedURLException e) {
-	    // TODO: make screen error exception class to handle error specification
-	    //String specification = "%nFailed to find settings files";
-	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+	/**
+	 * Change the Language. Changes the prompts displayed in the user interface as well as
+	 * acceptable commands by changing the ResourceBundles used by the program.
+	 * 
+	 * @param language: the new language to be used in the program
+	 */
+	public void changeLanguage(String language) {
+		findResources(language);
 	}
-    }
-    /**
-     * Change the Language. Changes the prompts displayed in the user interface as well as
-     * acceptable commands by changing the ResourceBundles used by the program.
-     * 
-     * @param language: the new language to be used in the program
-     */
-    public void changeLanguage(String language) {
-	findResources(language);
-    }
 
 
-    /**
-     * Creates an Error Screen to display to the user indicating an error type by the String
-     * @param errorMessage. 
-     * 
-     * @param errorMessage: The message to be displayed to the user on the Error Screen
-     */
-    private void loadErrorScreen(String errorMessage) {
-	ErrorScreen errorScreen = new ErrorScreen(this, errorMessage);
-	Parent errorScreenRoot = errorScreen.getRoot();
-	Scene errorScene = new Scene(errorScreenRoot);
-	errorScene.getStylesheets().add(DEFAULT_CSS);
-	PROGRAM_STAGE.setScene(errorScene);
-    }
+	/**
+	 * Creates an Error Screen to display to the user indicating an error type by the String
+	 * @param errorMessage. 
+	 * 
+	 * @param errorMessage: The message to be displayed to the user on the Error Screen
+	 */
+	private void loadErrorScreen(String errorMessage) {
+		ErrorScreen errorScreen = new ErrorScreen(this, errorMessage);
+		Parent errorScreenRoot = errorScreen.getRoot();
+		Scene errorScene = new Scene(errorScreenRoot);
+		errorScene.getStylesheets().add(DEFAULT_CSS);
+		PROGRAM_STAGE.setScene(errorScene);
+	}
 
-    /**
-     * 
-     * @param key
-     * @return
-     */
-    private String resourceErrorText(String key) {
-	return CURRENT_ERROR_DISPLAY.getString(key);
-    }
+	/**
+	 * 
+	 * @param key
+	 * @return
+	 */
+	private String resourceErrorText(String key) {
+		return CURRENT_ERROR_DISPLAY.getString(key);
+	}
 }
 
