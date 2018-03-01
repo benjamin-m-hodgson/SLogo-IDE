@@ -90,6 +90,12 @@ public class VariablesPanel extends SpecificPanel {
 	return USER_SCREEN;
     }
 
+    /**
+     * Populates the child Nodes in VARIABLE_BOX to represent the variables available in the 
+     * program and their associated values.
+     * 
+     * @param elapsedTime: time since last animation update
+     */
     private void populateVariableBox(double elapsedTime) {
 	VARIABLE_BOX.getChildren().clear();
 	Map<String, Double> programVariables = PROGRAM_CONTROLLER.getVariables();
