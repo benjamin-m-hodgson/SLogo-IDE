@@ -17,10 +17,12 @@ public class UserScreen implements Screen {
 	private TurtlePanel TURTLE_PANEL;
 	private Controller PROGRAM_CONTROLLER;
 	private List<String> INPUT_HISTORY;
+	private List<String> OUTPUT_HISTORY;
 	
 	public UserScreen(Controller programController) {
 		PROGRAM_CONTROLLER = programController;
 		INPUT_HISTORY = new ArrayList<String>();
+		OUTPUT_HISTORY = new ArrayList<String>();
 	}
 
 
@@ -43,15 +45,20 @@ public class UserScreen implements Screen {
 		return ROOT;
 	}
 	
-	public void addCommand(String command) {
+	public void addCommand(String command, String output) {
 	    INPUT_HISTORY.add(command);
+	    OUTPUT_HISTORY.add(output);
 	}
 	
 	public Iterator<String> commandHistory() {
 	    List<String> retList = new ArrayList<String>(INPUT_HISTORY);
 	    return retList.iterator();
 	}
-
+	
+	public Iterator<String> outputHistory() {
+	    List<String> retList = new ArrayList<String>(OUTPUT_HISTORY);
+	    return retList.iterator();
+	}
 	
 	public void displayErrorMessage(String errorMessage) {
 		TURTLE_PANEL.displayErrorMessage(errorMessage);
