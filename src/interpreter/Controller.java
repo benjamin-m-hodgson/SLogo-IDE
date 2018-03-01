@@ -56,7 +56,7 @@ public class Controller {
 	findSettings();
 	findResources(DEFAULT_LANGUAGE);
 	PROGRAM_STAGE = primaryStage;
-	PROGRAM_STAGE.setTitle(PROGRAM_TITLE); 
+	PROGRAM_STAGE.setTitle(PROGRAM_TITLE);
     }
     
     /**

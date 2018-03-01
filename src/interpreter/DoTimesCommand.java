@@ -10,14 +10,13 @@ class DoTimesCommand extends Command{
 	private Command endExpressionCommand;
 	private CommandTreeBuilder myBuilder;
 	private Turtle myTurtle;
-	private Map<String, Double> myVariables; 
 	
-	protected DoTimesCommand(Command tempVarCommand, Command endExpression, Command toExecuteCommand, Turtle turtle, Map<String, Double> variables) {
+	protected DoTimesCommand(Command tempVarCommand, Command endExpression, Command toExecuteCommand, Turtle turtle, 
+			Map<String, Double> variables, Map<String, String> userDefCommands) {
 		tempVar = ((StringCommand)tempVarCommand).getString();
 		toExecute = ((StringCommand)toExecuteCommand).getString();
 		endExpressionCommand = endExpression;
-		myVariables = variables; 
-		myBuilder = new CommandTreeBuilder(myVariables);
+		myBuilder = new CommandTreeBuilder(variables, userDefCommands);
 		myTurtle = turtle;
 	}
 	protected double execute() throws UnidentifiedCommandException {

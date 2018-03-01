@@ -11,12 +11,15 @@ class IfCommand extends Command{
     private Command myIfExprCommand; 
     private String myIfBody; 
     private Map<String, Double> myVariables; 
+    private Map<String, String> myUserDefCommands;
 
-    protected IfCommand(Command ifExprCommand, Command ifBody, Turtle turtle, Map<String, Double> variables) {
+    protected IfCommand(Command ifExprCommand, Command ifBody, Turtle turtle, 
+    		Map<String, Double> variables, Map<String, String> userDefCommands) {
 	myTurtle = turtle;
 	myIfExprCommand = ifExprCommand;
 	myIfBody = ((StringCommand)ifBody).getString(); 
 	myVariables = variables; 
+	myUserDefCommands = userDefCommands; 
     }
 
     protected double execute() { // TODO discuss throwing of exceptions 
@@ -29,7 +32,7 @@ class IfCommand extends Command{
 	} 
 	if (ifExprRetVal > 0) {
 	    System.out.println("if executed");
-	    CommandTreeBuilder buildIfBody = new CommandTreeBuilder(myVariables); 
+	    CommandTreeBuilder buildIfBody = new CommandTreeBuilder(myVariables, myUserDefCommands); 
 	    String[] userInput = myIfBody.split("\\s+");
 	    try {
 		ifBodyRetVal = buildIfBody.buildAndExecute(myTurtle, userInput);

@@ -34,18 +34,16 @@ class CommandTreeBuilder {
 	private ArrayList<CommandNode> myCommandTrees; 
 	private CommandTreeReader myCommandTreeReader;
 	private HashMap<String, String> myUserDefCommands; 
-	private HashMap<String, Integer> myUserCommandsNumArgs; 
 
-	protected CommandTreeBuilder(Map<String, Double> variables, Map<String, String> userDefCommands, Map<String, Integer> userCommandsNumArgs) {
-		this(DEFAULT_NUM_ARGS_FNAME, variables, userDefCommands, userCommandsNumArgs);
+	protected CommandTreeBuilder(Map<String, Double> variables, Map<String, String> userDefCommands) {
+		this(DEFAULT_NUM_ARGS_FNAME, variables, userDefCommands);
 	}
 
-	protected CommandTreeBuilder(String numArgsFileName, Map<String, Double> variables, Map<String, String> userDefCommands, Map<String, Integer> userCommandsNumArgs) {
+	protected CommandTreeBuilder(String numArgsFileName, Map<String, Double> variables, Map<String, String> userDefCommands) {
 		myNumArgsFileName = numArgsFileName; 
 		myCommandTrees = new ArrayList<CommandNode>();  
-		myCommandTreeReader = new CommandTreeReader(variables, userDefCommands, userCommandsNumArgs);
+		myCommandTreeReader = new CommandTreeReader(variables, userDefCommands);
 		myUserDefCommands = (HashMap<String, String>)userDefCommands; 
-		myUserCommandsNumArgs = (HashMap<String, Integer>)userCommandsNumArgs;
 	}
 
 	protected double buildAndExecute(Turtle turtle, String[] userInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
@@ -91,8 +89,7 @@ class CommandTreeBuilder {
 				return createCommandTree(turtle, userInput, startAfterTo);
 			}
 			if (myUserDefCommands.containsKey(currCommand)) {
-				int numArgs = myUserCommandsNumArgs.get(currCommand);
-				int startAfterUserCommand = parseUserCommand(turtle, userInput, startIdx, numArgs);
+				int startAfterUserCommand = parseUserCommand(turtle, userInput, startIdx);
 				return createCommandTree(turtle, userInput, startAfterUserCommand);
 			}
 			int numArgs = getNumArgs(currCommand);
@@ -509,7 +506,7 @@ class CommandTreeBuilder {
 		return endToIdx;
 	}
 
-	private int parseUserCommand(Turtle turtle, String[] userInput, int startIdx, int numArgs) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private int parseUserCommand(Turtle turtle, String[] userInput, int startIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 //		String userCommandName = userInput[startIdx];
 //		CommandNode userCommandNameNode = new CommandNode(userCommandName); 
 //		CommandNode userCommandNode = new CommandNode(DEFAULT_USERCOMMAND_NAME, numArgs, userCommandNameNode, turtle);
