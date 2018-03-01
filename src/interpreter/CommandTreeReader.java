@@ -24,14 +24,19 @@ class CommandTreeReader {
 	 */
 	private boolean treeIsComplete(CommandNode root) {
 		if(root.getIsDouble()||root.getIsString()) {
+			//System.out.println("seeing a string");
 			return true;
 		}
 		int completedChildren = 0;
+		System.out.println(root.getChildren().size());
+		for(CommandNode n: root.getChildren()) {
+		}
 		for (CommandNode n: root.getChildren()) {
 			if(treeIsComplete(n)) {
 				completedChildren++;
 			}
 		}
+		//System.out.println(completedChildren);
 		return completedChildren==root.getNumArgs();
 	}
 	/**

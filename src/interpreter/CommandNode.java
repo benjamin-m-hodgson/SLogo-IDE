@@ -19,7 +19,7 @@ class CommandNode {
 		this(info, DEFAULT_NUM_ARGS, new ArrayList<CommandNode>(), new Turtle(), true);
 	}
 	public CommandNode(String info, Turtle turtle) {
-		this(info, DEFAULT_NUM_ARGS, turtle);
+		this(info, DEFAULT_NUM_ARGS, new ArrayList<CommandNode>(), turtle, true);
 	}
 
 	public CommandNode(String info, int numArgs, Turtle turtle) { 
@@ -30,7 +30,7 @@ class CommandNode {
 		myChildren.add(child);
 	}
 
-	public CommandNode(String info, int numArgs, List<CommandNode> children, Turtle turtle, boolean isString) {	
+	public CommandNode(String info, int numArgs, List<CommandNode> children, Turtle turtle, boolean isStringID) {	
 		myInfo = info; 
 		try {
 			Double.parseDouble(info);
@@ -43,6 +43,7 @@ class CommandNode {
 		myChildren = new ArrayList<CommandNode>(); 
 		myChildren.addAll(children); 
 		myTurtle = turtle;
+		isString = isStringID;
 	}
 
 	public CommandNode(String info, int numArgs, List<CommandNode> children) {
