@@ -172,11 +172,11 @@ class TextFieldParser {
 //			testingParser.parseText("if less? 1 5 [ fd 50 ] rt 90");
 			//			testingParser.parseText("pd pd pd pd fd 50");
 //			testingParser.parseText("fd fd fd pd"); // CHECK AGAIN
-			testingParser.parseText("dotimes [ :k 360 ] [ fd :k rt 90 ]");
+			testingParser.parseText("repeat 360 [ fd :repcount rt 90 ]");
 //			testingParser.parseText("fd 1 rt / sin 20 2");
 //			testingParser.parseText("fd rt fd 50 bk 30");
 //			testingParser.parseText("fd rt bk 50");
-			testingParser.parseText("fd 50\n\n\nbk 50");
+			//testingParser.parseText("fd 50\n\n\nbk 50");
 //			testingParser.parseText("fd rt 100");
 //			testingParser.parseText("fd 100\n" + 
 //					"rt 90\n" + 
