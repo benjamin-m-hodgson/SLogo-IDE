@@ -18,13 +18,8 @@ class CommandNode {
 	protected CommandNode(String info) {
 		this(info, DEFAULT_NUM_ARGS, new ArrayList<CommandNode>(), new Turtle(), true);
 	}
-<<<<<<< HEAD
-	public CommandNode(String info, Turtle turtle) {
-		this(info, DEFAULT_NUM_ARGS, new ArrayList<CommandNode>(), turtle, true);
-=======
 	protected CommandNode(String info, Turtle turtle) {
 		this(info, DEFAULT_NUM_ARGS, turtle);
->>>>>>> 5e323c37de74bada5cce9600a12cb66fe7c9c0bf
 	}
 
 	protected CommandNode(String info, int numArgs, Turtle turtle) { 
