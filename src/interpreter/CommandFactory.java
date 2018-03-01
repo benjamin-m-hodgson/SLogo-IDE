@@ -147,8 +147,11 @@ public class CommandFactory {
 		else if (commandName.equals("IfElse")) {
 			return new IfElseCommand(commandArgs.get(2), commandArgs.get(0), commandArgs.get(1), turtle, myVariables, myUserDefCommands); 
 		}
-		if (commandName.equals("MakeVariable")) {
+		else if (commandName.equals("MakeVariable")) {
 			return new MakeVariableCommand(commandArgs.get(0), commandArgs.get(1), myVariables); 
+		}
+		else if (commandName.equals("MakeUserInstruction")) {
+			return new MakeUserInstructionCommand(commandArgs.get(0), commandArgs.get(1), commandArgs.get(2), myVariables, myUserDefCommands);
 		}
 		else if(commandName.equals("SetPenColor")) {
 			return new SetPenColorCommand(commandArgs.get(0), turtle, myVariables);

@@ -80,14 +80,19 @@ class CommandMaker {
 		}
 		for (int idx = startIdx; idx < userInput.length; idx++) {
 			if (typesOfInput[idx].equals(commandIdentifier)) {
-				commandTypes[idx] = getCommandType(userInput[idx]);
+				try{
+					commandTypes[idx] = getCommandType(userInput[idx]);
+				} 
+				catch (Exception e) {
+					commandTypes[idx] = "";
+				}
 			}
 			else {
 				commandTypes[idx] = "";
 			}
 		}
 
-		String[] userInputArrayToPass = userInput; 
+		String[] userInputArrayToPass = userInput;
 		String[] commandTypesToPass = commandTypes; 
 
 		if (turtleIdentified) {
@@ -133,7 +138,7 @@ class CommandMaker {
 //		}
 //	} 
 	
-	private String getCommandType(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private String getCommandType(String text) throws BadFormatException, MissingInformationException, UnidentifiedCommandException {
 		RegexMatcher regexMatcher = new RegexMatcher(myLanguage);
 		String commandType = regexMatcher.findMatchingKey(text);
 		return commandType;
