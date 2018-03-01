@@ -60,7 +60,6 @@ public class Controller {
 	findResources(DEFAULT_LANGUAGE);
 	PROGRAM_STAGE = primaryStage;
 	PROGRAM_STAGE.setTitle(PROGRAM_TITLE);
-	myVariables = new HashMap<String, Double>(); 
     }
     
     /**

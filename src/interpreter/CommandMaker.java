@@ -54,8 +54,7 @@ class CommandMaker {
 		myLanguage = languageBundle;
 		myVariables = new HashMap<String, Double>(); 
 		myUserDefCommands = new HashMap<String, String>(); 
-		myUserCommandsNumArgs = new HashMap<String, Integer>(); 
-		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, myVariables, myUserDefCommands, myUserCommandsNumArgs); 
+		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, myVariables, myUserDefCommands); 
 	}
 
 	protected double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
