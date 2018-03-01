@@ -27,7 +27,9 @@
 /******************************************************************************************/
 #errorScreenRoot {
 	-fx-alignment: center;
+	-fx-spacing: 10;
 	-fx-background-color: #f3f3f3;
+	-fx-background-radius: 2;
 }
 /******************************************************************************************/
 /* The root containing the informational panel displayed on the screen */
