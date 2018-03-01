@@ -36,7 +36,7 @@ public class SettingsPanel extends SpecificPanel  {
 
 
 	private final int DEFAULT_BUTTON_SPACEING = 10;
-	private final String[] DROPDOWN_IDS = {"languageChooser", "backgroundColorChooser", "penColorChooser", "turtleImageChooser"};
+	private final String[] DROPDOWN_IDS = {"languageSettingsChooser", "backgroundColorChooser", "penColorChooser", "turtleImageChooser"};
 
 	public SettingsPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
 		PROGRAM_CONTROLLER = programController;

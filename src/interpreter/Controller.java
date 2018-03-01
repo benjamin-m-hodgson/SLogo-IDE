@@ -127,13 +127,85 @@ public class Controller {
 			return Collections.unmodifiableList(languages);
 		}
 		catch (Exception e) {
-		    // TODO: make custom exception super class with sub classes for specifications
-		    //String specification = "%nFailed to find language files";
-		    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+			// TODO: make custom exception super class with sub classes for specifications
+			//String specification = "%nFailed to find language files";
+			loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 		}
 		return Collections.unmodifiableList(new ArrayList<String>());
 
 	}
+
+
+	/**
+	 * 
+	 * @return an ImmutableList of all of the color options
+	 */
+	public List<String> getColors() {
+		String currentDir = System.getProperty("user.dir");
+		try {
+			File file = new File(currentDir + File.separator + "colors");
+			File[] colorFiles = file.listFiles();
+			List<String> colors = new ArrayList<String>();
+			for (File colorFile : colorFiles) {
+				String colorName = colorFile.getName();
+				String[] nameSplit = colorName.split("\\.");
+				String color = nameSplit[0];
+				colors.add(color);
+			}
+			return Collections.unmodifiableList(colors);
+		}
+		catch (Exception e) {
+			// TODO: make custom exception super class with sub classes for specifications
+			//String specification = "%nFailed to find color files";
+			loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+		}
+		return Collections.unmodifiableList(new ArrayList<String>());
+	}
+
+	/**
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public String resourceDisplayText(String key) {
+		try {
+			return CURRENT_TEXT_DISPLAY.getString(key);
+		}
+		catch (Exception e) {
+
+			return "";
+		}
+	}
+
+
+	/**
+	 * Parses input from a text field or button press by the user
+	 * @throws MissingInformationException 
+	 * @throws UnidentifiedCommandException 
+	 * @throws BadFormatException 
+	 * @throws TurtleNotFoundException 
+	 */
+	public double parseInput(String userTextInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		return myTextFieldParser.parseText(userTextInput);
+	}
+
+	public void loadStartScreen() {
+		try {
+			StartScreen startScreen = new StartScreen(this);
+			// test the ErrorScreen
+			//ErrorScreen startScreen = new ErrorScreen(this, 
+			//		resourceErrorText(SCREEN_ERROR_KEY));
+			Parent programRoot = startScreen.getRoot();
+			Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+			programScene.getStylesheets().add(DEFAULT_CSS);
+			PROGRAM_STAGE.setScene(programScene);
+			PROGRAM_STAGE.show();	
+		}
+		catch (Exception e) {
+			loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
+		}
+	}
+
 
 
 	/**
@@ -162,43 +234,6 @@ public class Controller {
 		return Collections.unmodifiableList(new ArrayList<String>());
 	}
 
-	/**
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public String resourceDisplayText(String key) {
-		return CURRENT_TEXT_DISPLAY.getString(key);
-	}
-
-
-	/**
-	 * Parses input from a text field or button press by the user
-	 * @throws MissingInformationException 
-	 * @throws UnidentifiedCommandException 
-	 * @throws BadFormatException 
-	 * @throws TurtleNotFoundException 
-	 */
-	public double parseInput(String userTextInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		return myTextFieldParser.parseText(userTextInput);
-	}
-
-	public void loadStartScreen() {
-		try {
-			StartScreen startScreen = new StartScreen(this);
-			// test the ErrorScreen
-			//ErrorScreen startScreen = new ErrorScreen(this, START_ERROR_PROMPT);
-			Parent programRoot = startScreen.getRoot();
-			Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-			programScene.getStylesheets().add(DEFAULT_CSS);
-			PROGRAM_STAGE.setScene(programScene);
-			PROGRAM_STAGE.show();	
-		}
-		catch (Exception e) {
-			loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
-		}
-	}
-
 	public void loadUserScreen() {
 		try {
 			UserScreen programScreen = new UserScreen(this);
@@ -209,7 +244,6 @@ public class Controller {
 		}
 		catch (Exception e) {
 			// TODO: make screen error exception class to handle error specification
-			e.printStackTrace();
 			loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
 		}
 	}
@@ -298,7 +332,7 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+
 
 
 	public void changePenColor(String color) {
@@ -318,6 +352,8 @@ public class Controller {
 			}
 		}
 	}
+
+
 
 
 	/**
@@ -405,7 +441,7 @@ public class Controller {
 	 * @param key
 	 * @return
 	 */
-	private String resourceErrorText(String key) {
+	public String resourceErrorText(String key) {
 		return CURRENT_ERROR_DISPLAY.getString(key);
 	}
 }
