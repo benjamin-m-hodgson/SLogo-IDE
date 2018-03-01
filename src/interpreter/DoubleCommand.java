@@ -1,6 +1,6 @@
 package interpreter;
 
-class DoubleCommand implements Command {
+class DoubleCommand extends Command {
 	double myDouble;
 	protected DoubleCommand(double val) {
 		myDouble = val;

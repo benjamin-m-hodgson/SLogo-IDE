@@ -1,26 +1,46 @@
 package interpreter;
 
+import java.util.Map;
+
 /**
  * returns difference of the values of expr1 and expr2, expr1 - expr2
  * 
  * @author Benjamin Hodgson
+ * @author Susie Choi 
  * @date 2/26/18
  *
  */
-public class DifferenceCommand implements Command{
+public class DifferenceCommand extends Command{
 
 	Command expr1Command;
     	Command expr2Command;
-	protected DifferenceCommand(Command expr1, Command expr2) {
+    	Map<String, Double> myVariables; 
+    	
+	protected DifferenceCommand(Command expr1, Command expr2, Map<String, Double> variables) {
 		expr1Command = expr1;
 		expr2Command = expr2;
+		myVariables = variables; 
 	}
+	
 	@Override
 	public double execute() throws UnidentifiedCommandException{
-		double EXPR1 = expr1Command.execute();
-		double EXPR2 = expr2Command.execute();
-		return EXPR1 - EXPR2;
+		double arg1Val; 
+		double arg2Val; 
+		if (expr1Command instanceof StringCommand) {
+			arg1Val = getValueOfVar(((StringCommand)expr1Command).getString(), myVariables);
+		}
+		else {
+			arg1Val = expr1Command.execute(); 
+		}
+		if (expr2Command instanceof StringCommand) {
+			arg2Val = getValueOfVar(((StringCommand)expr2Command).getString(), myVariables);
+		}
+		else {
+			arg2Val = expr2Command.execute();
+		}
+		return arg1Val - arg2Val;
 	}
+	
 	public int getNumArgs() {
 		return 2;
 	}

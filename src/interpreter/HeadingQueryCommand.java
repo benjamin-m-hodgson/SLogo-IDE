@@ -7,7 +7,7 @@ package interpreter;
  * @author Susie Choi
  *
  */
-public class HeadingQueryCommand implements Command{
+public class HeadingQueryCommand extends Command{
 	Turtle myTurtle;
 	/**
 	 * @param turtle is turtle whose angle is desired

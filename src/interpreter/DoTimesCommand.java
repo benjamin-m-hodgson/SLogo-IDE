@@ -1,18 +1,23 @@
 package interpreter;
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 
-public class DoTimesCommand implements Command{
+public class DoTimesCommand extends Command{
+	
 	String toExecute;
 	String tempVar;
 	Command endExpressionCommand;
 	CommandTreeBuilder myBuilder;
 	Turtle myTurtle;
-	protected DoTimesCommand(Command tempVarCommand, Command endExpression, Command toExecuteCommand, Turtle turtle) {
+	Map<String, Double> myVariables; 
+	
+	protected DoTimesCommand(Command tempVarCommand, Command endExpression, Command toExecuteCommand, Turtle turtle, Map<String, Double> variables) {
 		tempVar = ((StringCommand)tempVarCommand).getString();
 		toExecute = ((StringCommand)toExecuteCommand).getString();
 		endExpressionCommand = endExpression;
-		myBuilder = new CommandTreeBuilder();
+		myVariables = variables; 
+		myBuilder = new CommandTreeBuilder(myVariables);
 		myTurtle = turtle;
 	}
 	public double execute() throws UnidentifiedCommandException {

@@ -7,7 +7,7 @@ package interpreter;
  * @author Sarahbland
  *
  */
-public class ClearScreenCommand implements Command{
+public class ClearScreenCommand extends Command{
 	Turtle myTurtle;
 	/**
 	 * Creates new instance of command to be executed at the proper time

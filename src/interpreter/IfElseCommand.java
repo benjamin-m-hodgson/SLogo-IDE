@@ -1,16 +1,20 @@
 package interpreter;
 
-public class IfElseCommand implements Command {
+import java.util.Map;
+
+public class IfElseCommand extends Command {
 	Turtle myTurtle;
 	private Command myIfExprCommand; 
 	private String myIfBody; 
 	private String myElseBody;
+	Map<String, Double> myVariables; 
 	
-	protected IfElseCommand(Command ifExprCommand, Command ifBody, Command elseBody, Turtle turtle) {
+	protected IfElseCommand(Command ifExprCommand, Command ifBody, Command elseBody, Turtle turtle, Map<String, Double> variables) {
 		myTurtle = turtle;
 		myIfExprCommand = ifExprCommand;
 		myIfBody = ((StringCommand)ifBody).getString(); ;
 		myElseBody = ((StringCommand)elseBody).getString(); ; 
+		myVariables = variables; 
 	}
 	
 	@Override
@@ -25,7 +29,7 @@ public class IfElseCommand implements Command {
 		String[] userInput;
 		if (ifExprRetVal > 0) {
 			System.out.println("if executed");
-			CommandTreeBuilder buildIfBody = new CommandTreeBuilder(); 
+			CommandTreeBuilder buildIfBody = new CommandTreeBuilder(myVariables); 
 			userInput = myIfBody.split("\\s+");
 			try {
 				ifElseRetVal = buildIfBody.buildAndExecute(myTurtle, userInput);
@@ -35,7 +39,7 @@ public class IfElseCommand implements Command {
 		}
 		else {
 			System.out.println("else executed");
-			CommandTreeBuilder buildElseBody = new CommandTreeBuilder(); 
+			CommandTreeBuilder buildElseBody = new CommandTreeBuilder(myVariables); 
 			userInput = myElseBody.split("\\s+");
 			try {
 				ifElseRetVal = buildElseBody.buildAndExecute(myTurtle, userInput);

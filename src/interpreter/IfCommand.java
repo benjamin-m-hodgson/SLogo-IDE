@@ -1,18 +1,22 @@
 package interpreter;
 
+import java.util.Map;
+
 /**
  * @author Susie Choi
  *
  */
-class IfCommand implements Command{
+class IfCommand extends Command{
 	Turtle myTurtle;
 	private Command myIfExprCommand; 
 	private String myIfBody; 
+	Map<String, Double> myVariables; 
 	
-	protected IfCommand(Command ifExprCommand, Command ifBody, Turtle turtle) {
+	protected IfCommand(Command ifExprCommand, Command ifBody, Turtle turtle, Map<String, Double> variables) {
 		myTurtle = turtle;
 		myIfExprCommand = ifExprCommand;
 		myIfBody = ((StringCommand)ifBody).getString(); 
+		myVariables = variables; 
 	}
 
 	public double execute() { // TODO discuss throwing of exceptions 
@@ -25,7 +29,7 @@ class IfCommand implements Command{
 		} 
 		if (ifExprRetVal > 0) {
 			System.out.println("if executed");
-			CommandTreeBuilder buildIfBody = new CommandTreeBuilder(); 
+			CommandTreeBuilder buildIfBody = new CommandTreeBuilder(myVariables); 
 			String[] userInput = myIfBody.split("\\s+");
 			try {
 				ifBodyRetVal = buildIfBody.buildAndExecute(myTurtle, userInput);

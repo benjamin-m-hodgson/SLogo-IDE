@@ -6,7 +6,7 @@ package interpreter;
  * @author Sarahbland
  *
  */
-class HomeCommand implements Command{
+class HomeCommand extends Command{
 	Turtle myTurtle;
 	/**
 	 * Creates a new instance of the command to be executed at the proper time

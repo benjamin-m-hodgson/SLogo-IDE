@@ -2,6 +2,8 @@ package interpreter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /** 
  * @author Susie Choi
@@ -21,6 +23,7 @@ class CommandTreeBuilder {
 	public static final String DEFAULT_ELSEBODY_END = "]";
 	public static final String DEFAULT_BRACKET_START_IDENTIFIER = "[";
 	public static final String DEFAULT_BRACKET_END_IDENTIFIER = "]";
+	public static final String DEFAULT_VAR_IDENTIFIER = ":";
 	public static final String[] DEFAULT_DOUBLE_SUBSTITUTES = {"PenDown","PenUp","ShowTurtle","HideTurtle","Home","ClearScreen",
 			"XCoordinate","YCoordinate","Heading","IsPenDown","IsShowing","Pi"};
 	//	private CommandTreeReader myCommandTreeReader; 
@@ -28,14 +31,14 @@ class CommandTreeBuilder {
 	private ArrayList<CommandNode> myCommandTrees; 
 	private CommandTreeReader myCommandTreeReader;
 
-	protected CommandTreeBuilder() {
-		this(DEFAULT_NUM_ARGS_FNAME);
+	protected CommandTreeBuilder(Map<String, Double> variables) {
+		this(DEFAULT_NUM_ARGS_FNAME, variables);
 	}
 
-	protected CommandTreeBuilder(String numArgsFileName) {
+	protected CommandTreeBuilder(String numArgsFileName, Map<String, Double> variables) {
 		myNumArgsFileName = numArgsFileName; 
 		myCommandTrees = new ArrayList<CommandNode>(); 
-		myCommandTreeReader = new CommandTreeReader();
+		myCommandTreeReader = new CommandTreeReader(variables);
 	}
 
 	protected double buildAndExecute(Turtle turtle, String[] userInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
@@ -45,7 +48,7 @@ class CommandTreeBuilder {
 			System.out.println(n.toString());
 		}
 		double finalReturnVal = -1; 
-		System.out.println("number of command trees" + myCommandTrees.size());
+//		System.out.println("number of command trees" + myCommandTrees.size());
 		for (CommandNode commandTree : myCommandTrees) {
 			finalReturnVal = myCommandTreeReader.readAndExecute(commandTree);
 		}
@@ -57,12 +60,12 @@ class CommandTreeBuilder {
 			return null; // TODO make this more detailed
 		}
 		Double checkIfDouble; 
+		String currCommand = userInput[startIdx]; 
 		try {
-			checkIfDouble = Double.parseDouble(userInput[startIdx]);
-			return new CommandNode(userInput[startIdx], 0, turtle); 
+			checkIfDouble = Double.parseDouble(currCommand);
+			return new CommandNode(currCommand, 0, turtle); 
 		}
-		catch (NumberFormatException e) {			
-			String currCommand = userInput[startIdx]; 
+		catch (NumberFormatException e) {
 			if (currCommand.equals(DEFAULT_IF_IDENTIFIER)) { // TODO deal with if "if" is not first 
 				int startAfterIf = parseIf(turtle, userInput, startIdx); 
 				return createCommandTree(turtle, userInput, startAfterIf);
@@ -211,7 +214,7 @@ class CommandTreeBuilder {
 			if (addToTrees) {
 				myCommandTrees.add(parent);
 			}
- 			return;
+			return;
 		}
 		//		System.out.println(userInput[currIdx]);
 		Double firstIsDouble; 
@@ -237,6 +240,21 @@ class CommandTreeBuilder {
 			//			System.out.println("returning");
 			//			return; 
 			//		}
+			if (String.valueOf(userInput[currIdx].charAt(0)).equals(DEFAULT_VAR_IDENTIFIER)) {
+				CommandNode newChildNode = new CommandNode(userInput[currIdx]);
+				parent.addChild(newChildNode);
+				if (parent.getNumChildren() < parent.getNumArgs()) { 
+					createAndSetChildren(turtle, parent, userInput, currIdx+1, addToTrees);
+				} 
+				else {
+					if (addToTrees) {
+						myCommandTrees.add(parent);
+					}
+					createCommandTree(turtle, userInput, currIdx+1);
+				}
+				return; 
+			}
+			
 			for (int idx = currIdx+1; idx < userInput.length; idx++) { 
 				Double currDouble; 
 				try {
@@ -268,7 +286,23 @@ class CommandTreeBuilder {
 					return; 
 				} 
 				catch (NumberFormatException e1) {
-					continue;
+					if (String.valueOf(userInput[idx].charAt(0)).equals(DEFAULT_VAR_IDENTIFIER)) {
+						CommandNode newChildNode = new CommandNode(userInput[idx]);
+						parent.addChild(newChildNode);
+						if (parent.getNumChildren() < parent.getNumArgs()) { 
+							createAndSetChildren(turtle, parent, userInput, idx+1, addToTrees);
+						} 
+						else {
+							if (addToTrees) {
+								myCommandTrees.add(parent);
+							}
+							createCommandTree(turtle, userInput, idx+1);
+						}
+						return; 
+					}
+					else {
+						continue;
+					}
 				}
 			}
 		}
@@ -349,9 +383,9 @@ class CommandTreeBuilder {
 		//	throw new UnidentifiedCommandException("Dotimes syntax incorrect");
 		//}
 		int currIdxCopy = currIdx;  
-//		for(int k = 0; k<userInput.length; k+=1) {
-//			System.out.println(userInput[k]);
-//		}
+		//		for(int k = 0; k<userInput.length; k+=1) {
+		//			System.out.println(userInput[k]);
+		//		}
 		while(!(userInput[currIdxCopy].equals(DEFAULT_BRACKET_END_IDENTIFIER))) {
 			currIdxCopy++;
 		}

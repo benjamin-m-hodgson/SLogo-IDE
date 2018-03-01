@@ -5,7 +5,7 @@ package interpreter;
  * @author Sarahbland
  *
  */
-public class HideTurtleCommand implements Command{
+public class HideTurtleCommand extends Command{
 	Turtle myTurtle;
 	/**
 	 * Creates new instance of command, which can be executed at the correct time

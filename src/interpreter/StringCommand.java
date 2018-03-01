@@ -1,6 +1,6 @@
 package interpreter;
 
-public class StringCommand implements Command{
+public class StringCommand extends Command{
 	String myString;
 	protected StringCommand(String argument) {
 		myString = argument;
