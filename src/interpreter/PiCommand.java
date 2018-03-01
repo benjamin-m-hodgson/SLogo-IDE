@@ -7,10 +7,10 @@ package interpreter;
  * @date 2/26/18
  *
  */
-public class PiCommand implements Command{
+class PiCommand extends Command{
 
-	@Override
-	public double execute() {
-		return Math.PI;
-	}
+    @Override
+    protected double execute() {
+	return Math.PI;
+    }
 }

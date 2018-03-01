@@ -1,7 +1,7 @@
 package interpreter;
 
-public class StringCommand implements Command{
-	String myString;
+ class StringCommand extends Command{
+	private String myString;
 	protected StringCommand(String argument) {
 		myString = argument;
 	}
@@ -10,5 +10,9 @@ public class StringCommand implements Command{
 	}
 	public double execute() throws UnidentifiedCommandException{
 		throw new UnidentifiedCommandException("You entered an unrecognized word in the command field.");
+	}
+	
+	public String toString() {
+	    return getString();
 	}
 }

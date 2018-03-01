@@ -15,22 +15,22 @@ class CommandNode {
 	private Turtle myTurtle;
 	private boolean isString;
 
-	public CommandNode(String info) {
+	protected CommandNode(String info) {
 		this(info, DEFAULT_NUM_ARGS, new ArrayList<CommandNode>(), new Turtle(), true);
 	}
-	public CommandNode(String info, Turtle turtle) {
+	protected CommandNode(String info, Turtle turtle) {
 		this(info, DEFAULT_NUM_ARGS, turtle);
 	}
 
-	public CommandNode(String info, int numArgs, Turtle turtle) { 
+	protected CommandNode(String info, int numArgs, Turtle turtle) { 
 		this(info, numArgs, new ArrayList<CommandNode>(), turtle, false);
 	}
-	public CommandNode(String info, int numArgs, CommandNode child, Turtle turtle) {
+	protected CommandNode(String info, int numArgs, CommandNode child, Turtle turtle) {
 		this(info, numArgs, new ArrayList<CommandNode>(), turtle, false);
 		myChildren.add(child);
 	}
 
-	public CommandNode(String info, int numArgs, List<CommandNode> children, Turtle turtle, boolean isString) {	
+	protected CommandNode(String info, int numArgs, List<CommandNode> children, Turtle turtle, boolean isString) {	
 		myInfo = info; 
 		try {
 			Double.parseDouble(info);
@@ -45,7 +45,7 @@ class CommandNode {
 		myTurtle = turtle;
 	}
 
-	public CommandNode(String info, int numArgs, List<CommandNode> children) {
+	protected CommandNode(String info, int numArgs, List<CommandNode> children) {
 		myInfo = info; 
 		try {
 			Integer.parseInt(info);
@@ -73,30 +73,30 @@ class CommandNode {
 		return s; 
 	}
 
-	public void addChild(CommandNode child) {
+	protected void addChild(CommandNode child) {
 		myChildren.add(child); 
 	}
 
-	public int getNumArgs() {
+	protected int getNumArgs() {
 		return myNumArgs; 
 	}
 
-	public int getNumChildren() {
+	protected int getNumChildren() {
 		return myChildren.size();
 	}
-	public boolean getIsDouble() {
+	protected boolean getIsDouble() {
 		return isDouble;
 	}
-	public boolean getIsString() {
+	protected boolean getIsString() {
 		return isString;
 	}
-	public List<CommandNode> getChildren() {
+	protected List<CommandNode> getChildren() {
 		return myChildren;
 	}
-	public String getInfo() {
+	protected String getInfo() {
 		return myInfo;
 	}
-	public Turtle getTurtle() {
+	protected Turtle getTurtle() {
 		return myTurtle;
 	}
 

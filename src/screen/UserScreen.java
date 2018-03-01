@@ -10,6 +10,13 @@ import screen.panel.InfoPanel;
 import screen.panel.InputPanel;
 import screen.panel.TurtlePanel;
 
+/**
+ * 
+ * @author Benjamin Hodgson
+ *
+ * A class that implements the Screen interface to generate the UserScreen displayed to the user
+ * to animate inputted commands and change some program properties.
+ */
 public class UserScreen implements Screen {
 
 	private Parent ROOT;
@@ -44,25 +51,49 @@ public class UserScreen implements Screen {
 		return ROOT;
 	}
 	
+	/**
+	 * Receives @param command and @param output from the user and stores them in 
+	 * the List<String> objects INPUT_HISTORY and OUTPUT_HISTORY.
+	 * 
+	 * @param command: String representing the user inputted command to save in history
+	 * @param output: String representing the output generated from the user inputted command
+	 */
 	public void addCommand(String command, String output) {
 	    INPUT_HISTORY.add(command);
 	    OUTPUT_HISTORY.add(output);
 	}
 	
+	/**
+	 * @return Iterator<String>: an iterator to iterate over the items in the INPUT_HISTORY
+	 */
 	public Iterator<String> commandHistory() {
 	    List<String> retList = new ArrayList<String>(INPUT_HISTORY);
 	    return retList.iterator();
 	}
 	
+	/**
+	 * @return Iterator<String>: an iterator to iterate over the items in the OUTPUT_HISTORY
+	 */
 	public Iterator<String> outputHistory() {
 	    List<String> retList = new ArrayList<String>(OUTPUT_HISTORY);
 	    return retList.iterator();
 	}
 	
+	/**
+	 * Creates a pop-up error message at the bottom of the UserScreen to describe a 
+	 * 'minor' error related to user input.
+	 * 
+	 * @param errorMessage: The message describing the error to display to the user
+	 */
 	public void displayErrorMessage(String errorMessage) {
 		TURTLE_PANEL.displayErrorMessage(errorMessage);
 	}
 	
+	/**
+	 * Changes the image displayed on the screen to represent the Turtle
+	 * 
+	 * @param selected: The selected image to change the turtle display to
+	 */
 	public void changeTurtleImage(String selected) {
 		TURTLE_PANEL.changeTurtlesImages(selected);
 	}
@@ -78,6 +109,9 @@ public class UserScreen implements Screen {
 		// TODO Auto-generated method stub
 	}
 	
+	/**
+	 * Removes the error pop-up from the screen
+	 */
 	public void clearErrorDisplay() {
 		TURTLE_PANEL.removeErrorButton();
 	}

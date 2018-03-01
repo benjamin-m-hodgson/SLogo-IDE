@@ -1,21 +1,28 @@
 package interpreter;
 
+import java.util.Map;
+
 /**
  * returns arctangent of degrees
  * 
  * @author Benjamin Hodgson
+ * @author Susie Choi 
  * @date 2/26/18
  *
  */
-public class ArcTangentCommand implements Command{
+class ArcTangentCommand extends Command{
+	
+	private Command degreesCommand;
+	private Map<String, Double> myVariables; 
 
-	Command degreesCommand;
-	protected ArcTangentCommand(Command degrees) {
+	protected ArcTangentCommand(Command degrees, Map<String, Double> variables) {
 		degreesCommand = degrees;
+		myVariables = variables; 
 	}
+	
 	@Override
-	public double execute() throws UnidentifiedCommandException{
-		double DEGREES = degreesCommand.execute();
-	    	return Math.toDegrees(Math.atan(Math.toRadians(DEGREES)));
+	protected double execute() throws UnidentifiedCommandException {
+		double degrees = getCommandValue(degreesCommand, myVariables);
+	    	return Math.toDegrees(Math.atan(Math.toRadians(degrees)));
 	}
 }

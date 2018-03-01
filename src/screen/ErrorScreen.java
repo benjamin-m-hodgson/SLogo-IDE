@@ -1,17 +1,21 @@
 package screen;
 
-import interpreter.Controller;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+/**
+ * 
+ * @author Ben Hodgson
+ *
+ * A class that implements the Screen interface to generate an ErrorScreen to display to the 
+ * user. The screen contains text describing the error.
+ */
 public class ErrorScreen implements Screen {
     private Parent ROOT;
-    private Controller PROGRAM_CONTROLLER;
     private String ERROR_MESSAGE;
     
-    public ErrorScreen(Controller programController, String errorMessage) {
-	PROGRAM_CONTROLLER = programController;
+    public ErrorScreen(String errorMessage) {
 	ERROR_MESSAGE = errorMessage;
     }
 
