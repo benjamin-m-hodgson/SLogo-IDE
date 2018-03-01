@@ -25,7 +25,7 @@ class CommandTreeBuilder {
 	public static final String DEFAULT_BRACKET_START_IDENTIFIER = "[";
 	public static final String DEFAULT_BRACKET_END_IDENTIFIER = "]";
 	public static final String DEFAULT_VAR_IDENTIFIER = ":";
-	public static final String DEFAULT_USERCOMMAND_IDENTIFIER = "To";
+	public static final String DEFAULT_USERCOMMAND_IDENTIFIER = "MakeUserInstruction";
 	public static final String DEFAULT_USERCOMMAND_NAME = "UserInstruction";
 	public static final String[] DEFAULT_DOUBLE_SUBSTITUTES = {"PenDown","PenUp","ShowTurtle","HideTurtle","Home","ClearScreen",
 			"XCoordinate","YCoordinate","Heading","IsPenDown","IsShowing","Pi"};
@@ -229,7 +229,7 @@ class CommandTreeBuilder {
 			}
 			return;
 		}
-		//		System.out.println(userInput[currIdx]);
+//				System.out.println(userInput[currIdx]);
 		Double firstIsDouble; 
 		try {
 			firstIsDouble = Double.parseDouble(userInput[currIdx]);
@@ -501,9 +501,9 @@ class CommandTreeBuilder {
 		CommandNode userCommandNode = new CommandNode(userInput[startIdx], getNumArgs(userInput[startIdx]), userCommandNameNode, turtle);
 		userCommandNode.addChild(varsNode);
 		userCommandNode.addChild(userCommandContent);
-
+//		System.out.println(userCommandNode.toString());
 		myCommandTrees.add(userCommandNode);
-		return endToIdx;
+		return finalEndToIdx+1;
 	}
 
 	private int parseUserCommand(Turtle turtle, String[] userInput, int startIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
