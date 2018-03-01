@@ -508,6 +508,7 @@ class CommandTreeBuilder {
 			if(!(userInput[currIdx-1].equals(DEFAULT_BRACKET_END_IDENTIFIER))) {
 				throw new BadFormatException("Brackets are messed up in Repeat");
 			}
+		//add repeated command string last
 			parent.addChild(new CommandNode(repeatedCommand, turtle));
 		}
 		else {

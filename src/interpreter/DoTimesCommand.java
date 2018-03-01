@@ -3,23 +3,23 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class DoTimesCommand implements Command{
-	String toExecute;
-	String tempVar;
-	Command endExpressionCommand;
+	String myToExecute;
+	String myTempVar;
+	Command myEndExpressionCommand;
 	CommandTreeBuilder myBuilder;
 	Turtle myTurtle;
 	protected DoTimesCommand(Command tempVarCommand, Command endExpression, Command toExecuteCommand, Turtle turtle) {
-		tempVar = ((StringCommand)tempVarCommand).getString();
-		toExecute = ((StringCommand)toExecuteCommand).getString();
-		endExpressionCommand = endExpression;
+		myTempVar = ((StringCommand)tempVarCommand).getString();
+		myToExecute = ((StringCommand)toExecuteCommand).getString();
+		myEndExpressionCommand = endExpression;
 		myBuilder = new CommandTreeBuilder();
 		myTurtle = turtle;
 	}
 	public double execute() throws UnidentifiedCommandException {
-		String[] executeArray = toExecute.split(" ");
-		double ending = endExpressionCommand.execute();
+		String[] executeArray = myToExecute.split(" ");
+		double ending = myEndExpressionCommand.execute();
 		double returnVal = 0.0;
-		List<Integer> indices = getTempVarIndices(tempVar, executeArray);
+		List<Integer> indices = getTempVarIndices(myTempVar, executeArray);
 		for(Double k = 1.0; k<=ending; k+=1) {
 			findAndReplace(indices, k, executeArray);
 			for(int i = 0; i<executeArray.length; i+=1) {
@@ -30,7 +30,7 @@ public class DoTimesCommand implements Command{
 			}
 			catch(Exception e){
 				//TODO fix this! Don't just throw another exception
-				throw new UnidentifiedCommandException("Something went amiss");
+				throw new UnidentifiedCommandException("There was a problem within one of your loops.");
 			}
 
 		}
