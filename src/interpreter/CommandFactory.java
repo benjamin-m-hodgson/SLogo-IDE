@@ -131,7 +131,7 @@ public class CommandFactory {
 		else if(commandName.equals("Not")) {
 			return new NotCommand(commandArgs.get(0));
 		}
-		else if(commandName.equals("DoTimes")) {
+		else if(commandName.equals("DoTimes")||commandName.equals("Repeat")) {
 			return new DoTimesCommand(commandArgs.get(0), commandArgs.get(1), commandArgs.get(2), turtle);
 		}
 		else if(commandName.equals("If")) {
