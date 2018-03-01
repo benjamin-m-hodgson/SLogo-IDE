@@ -73,4 +73,8 @@ public class UserScreen implements Screen {
 	public void changeRightPanel(Parent panelRoot) {
 		// TODO Auto-generated method stub
 	}
+	
+	public void clearErrorDisplay() {
+		TURTLE_PANEL.removeErrorButton();
+	}
 }
