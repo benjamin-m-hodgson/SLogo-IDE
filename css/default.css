@@ -497,6 +497,8 @@
 }
 #commandButton:disabled, #commandButton:disabled > * {
 	-fx-opacity: 1.0;
+	-fx-font: 12px Dekko;
+	-fx-font-weight: bold;
 }
 #commandButton:hover {
 	-fx-background-color: linear-gradient(#a5bcd4, #83a2c4);
