@@ -4,23 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ForCommand implements Command{
-		String myTempVar;
-		Command myStartCommand;
-		Command myEndCommand;
-		Command myIncrement;
-		String myToExecute;
-		Turtle myTurtle;
+		private String myTempVar;
+		private Command myStartCommand;
+		private Command myEndCommand;
+		private Command myIncrement;
+		private String myToExecute;
+		private Turtle myTurtle;
 		CommandTreeBuilder myBuilder;
 		protected ForCommand(Command variable, Command start, Command end, Command increment, Command repeated, Turtle turtle) {
+			
 			myTempVar = ((StringCommand)variable).getString();
+			
 			myToExecute = ((StringCommand)repeated).getString();
+			
 			myStartCommand = start;
 			myEndCommand = end;
 			myIncrement = increment;
+			myBuilder = new CommandTreeBuilder();
+			myTurtle = turtle;
 		}
 		public double execute() throws UnidentifiedCommandException {
 			String[] executeArray = myToExecute.split(" ");
-			double start = myStartCommand.execute();
+			double start = 0;
+			try {
+				start = myStartCommand.execute();
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			
 			double ending = myEndCommand.execute();
 			double increment = myIncrement.execute();
 			double returnVal = 0.0;
@@ -35,6 +47,7 @@ public class ForCommand implements Command{
 				}
 				catch(Exception e){
 					//TODO fix this! Don't just throw another exception
+					e.printStackTrace();
 					throw new UnidentifiedCommandException("There was a problem within one of your loops.");
 				}
 

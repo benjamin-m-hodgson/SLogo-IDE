@@ -28,9 +28,6 @@ class CommandTreeReader {
 			return true;
 		}
 		int completedChildren = 0;
-		System.out.println(root.getChildren().size());
-		for(CommandNode n: root.getChildren()) {
-		}
 		for (CommandNode n: root.getChildren()) {
 			if(treeIsComplete(n)) {
 				completedChildren++;
