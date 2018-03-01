@@ -22,8 +22,19 @@ public class DoTimesCommand implements Command{
 		List<Integer> indices = getTempVarIndices(tempVar, executeArray);
 		for(Double k = 1.0; k<ending; k+=1) {
 			findAndReplace(indices, k, executeArray);
-			myBuilder.buildAndExecute(myTurtle, executeArray);
+			for(int i = 0; i<executeArray.length; i+=1) {
+				System.out.println("executing " + executeArray[i]);
+			}
+			try {
+				returnVal = myBuilder.buildAndExecute(myTurtle, executeArray);
+			}
+			catch(Exception e){
+				//TODO fix this! Don't just throw another exception
+				throw new UnidentifiedCommandException("Something went amiss");
+			}
+
 		}
+		return returnVal;
 	}
 	private List<Integer> getTempVarIndices(String tempVar, String[] toExecute){
 		ArrayList<Integer> indices = new ArrayList<>();
