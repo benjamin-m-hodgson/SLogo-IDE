@@ -365,16 +365,19 @@ class CommandTreeBuilder {
 			currIdx++;
 			String repeatedCommand = userInput[currIdx];
 			currIdx++;
-			while(!userInput[currIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
+			while(currIdx < userInput.length-1) {
 				repeatedCommand = String.join(" ", repeatedCommand, userInput[currIdx]);
 				currIdx++;
 			}
+			if(!userInput[currIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
+				throw new BadFormatException("Brackets are messed up in DoTimes");
+			}
 			parent.addChild(new CommandNode(repeatedCommand));
-			currIdx++;
 		}
 		else {
 			throw new UnidentifiedCommandException("Dotimes syntax incorrect");
 		}
+		currIdx++;
 		return currIdx;
 	}
 
