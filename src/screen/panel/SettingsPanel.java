@@ -19,6 +19,11 @@ import interpreter.UnidentifiedCommandException;
 import javafx.scene.control.Tooltip;
 
 
+/**
+ * A class which extends Specific Panel and allows the user to dynamically change the settings. 
+ * @author Andrew Arnold
+ *
+ */
 public class SettingsPanel extends SpecificPanel  {
 
 	private final int VISIBLE_ROW_COUNT = 5;
@@ -38,8 +43,6 @@ public class SettingsPanel extends SpecificPanel  {
 
 	private UserScreen USER_SCREEN;
 
-
-
 	private final int DEFAULT_BUTTON_SPACEING = 10;
 	private final String[] DROPDOWN_IDS = {"languageSettingsChooser", "backgroundColorChooser", "penColorChooser", "turtleImageChooser"};
 
@@ -47,10 +50,6 @@ public class SettingsPanel extends SpecificPanel  {
 		PROGRAM_CONTROLLER = programController;
 		PANE = pane;
 		USER_SCREEN = userScreen;
-//		String codeTest = "#2d3436";
-//		codeTest = codeTest.substring(1, codeTest.length());
-//		int hexConvert = Integer.parseInt(codeTest,16);
-//		System.out.println(Integer.toHexString(hexConvert));
 	}
 
 	@Override
@@ -99,7 +98,6 @@ public class SettingsPanel extends SpecificPanel  {
 	private ComboBox<Object> makeBackgroundColorChooser(String itemID) {
 		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
 		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
-		//dropDownMenu.setTooltip(SELECTION_TIP);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
 		colorsUntranslated = PROGRAM_CONTROLLER.getFileNames(COLOR_FOLDER);
@@ -125,7 +123,6 @@ public class SettingsPanel extends SpecificPanel  {
 	private ComboBox<Object> makePenColorChooser(String itemID) {
 		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
 		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
-		//dropDownMenu.setTooltip(SELECTION_TIP);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
 		colorsUntranslated = PROGRAM_CONTROLLER.getFileNames(COLOR_FOLDER);

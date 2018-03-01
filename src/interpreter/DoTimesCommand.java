@@ -6,7 +6,7 @@ import java.util.ArrayList;
 class DoTimesCommand extends Command{
 	
 	private String toExecute;
-	private String tempVar;
+	private String myTempVar;
 	private Command endExpressionCommand;
 	private CommandTreeBuilder myBuilder;
 	private Turtle myTurtle;
@@ -14,7 +14,7 @@ class DoTimesCommand extends Command{
 	protected DoTimesCommand(Command tempVarCommand, Command endExpression, Command toExecuteCommand, Turtle turtle, 
 			Map<String, Double> variables, Map<String, String> userDefCommands, 
 			Map<String, Integer> userDefCommandsNumArgs) {
-		tempVar = ((StringCommand)tempVarCommand).getString();
+		myTempVar = ((StringCommand)tempVarCommand).getString();
 		toExecute = ((StringCommand)toExecuteCommand).getString();
 		endExpressionCommand = endExpression;
 		myBuilder = new CommandTreeBuilder(variables, userDefCommands, userDefCommandsNumArgs);
@@ -24,18 +24,18 @@ class DoTimesCommand extends Command{
 		String[] executeArray = toExecute.split(" ");
 		double ending = endExpressionCommand.execute();
 		double returnVal = 0.0;
-		List<Integer> indices = getTempVarIndices(tempVar, executeArray);
+		List<Integer> indices = getTempVarIndices(myTempVar, executeArray);
 		for(Double k = 1.0; k<=ending; k+=1) {
 			findAndReplace(indices, k, executeArray);
 			for(int i = 0; i<executeArray.length; i+=1) {
 				System.out.println("executing " + executeArray[i]);
 			}
 			try {
-				returnVal = myBuilder.buildAndExecute(myTurtle, executeArray);
+				returnVal = myBuilder.buildAndExecute(myTurtle, executeArray, true);
 			}
 			catch(Exception e){
 				//TODO fix this! Don't just throw another exception
-				throw new UnidentifiedCommandException("Something went amiss");
+				throw new UnidentifiedCommandException("There was a problem within one of your loops.");
 			}
 
 		}

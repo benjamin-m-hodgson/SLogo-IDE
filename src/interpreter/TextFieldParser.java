@@ -120,12 +120,14 @@ class TextFieldParser {
 	private double parseTextArray(String[] userInputArray) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String[] listOfTypes = new String[userInputArray.length];
 		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
+		
 		for (int idx = 0; idx < userInputArray.length; idx++) {
 			listOfTypes[idx] = regexMatcher.findMatchingKey(userInputArray[idx]);
 //			System.out.println(listOfTypes[idx]+" "+userInputArray[idx]);
 		}
 //		for (String s : userInputArray) System.out.println(s);
 		double finalReturnVal = myCommandMaker.parseValidTextArray(userInputArray[0], userInputArray, listOfTypes); // TODO consider special case in which turtle name is command name; 
+		
 		return finalReturnVal; 
 	}
 
@@ -167,13 +169,10 @@ class TextFieldParser {
 //			testingParser.parseText("if less? 1 5 [ fd 50 ] rt 90");
 			//			testingParser.parseText("pd pd pd pd fd 50");
 //			testingParser.parseText("fd fd fd pd"); // CHECK AGAIN
-//			testingParser.parseText("dotimes [ :k 360 ] [ fd :k rt 90 ]");
-//			testingParser.parseText("fd 1 rt / sin 20 2");
-//			testingParser.parseText("fd rt fd 50 bk 30");
-//			testingParser.parseText("and :a 5");
-			//testingParser.parseText("make :lol fd 50");
-			//			testingParser.parseText("fd 50\n\n\nbk 50");
-//			testingParser.parseText("repeat 360 [ fd :repcount rt 90 ]");
+		
+			Double test = testingParser.parseText("for [ :k fd 0 fd 5 fd 1 ] [ fd 1 ]");
+			System.out.println("returns: ");
+			System.out.println(test.toString());
 //			testingParser.parseText("fd 1 rt / sin 20 2");
 //			testingParser.parseText("fd rt fd 50 bk 30");
 //			testingParser.parseText("fd rt bk 50");

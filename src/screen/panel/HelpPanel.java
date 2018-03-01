@@ -17,7 +17,7 @@ import interpreter.Controller;
 
 /**
  * 
- * @author Ben Hodgson
+ * @author Ben Hodgson and Andrew Arnold
  *
  * A class that extends the SpecificPanel to create the a panel that displays information
  * about the commands and their uses to the user

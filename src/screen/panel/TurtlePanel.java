@@ -134,6 +134,7 @@ public class TurtlePanel implements Panel {
 		return turtleImage;
 	}
 
+	
 	public void changeBackgroundColor(String colorCode) {
 		SCROLL_PANE.setStyle("-fx-background-color:" + colorCode + ";");
 	}

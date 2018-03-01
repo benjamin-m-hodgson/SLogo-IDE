@@ -27,6 +27,7 @@ class CommandTreeReader {
 	 */
 	private boolean treeIsComplete(CommandNode root) {
 		if(root.getIsDouble()||root.getIsString()) {
+			//System.out.println("seeing a string");
 			return true;
 		}
 		int completedChildren = 0;
@@ -35,6 +36,7 @@ class CommandTreeReader {
 				completedChildren++;
 			}
 		}
+		//System.out.println(completedChildren);
 		return completedChildren==root.getNumArgs();
 	}
 	/**

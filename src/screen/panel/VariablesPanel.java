@@ -111,5 +111,4 @@ public class VariablesPanel extends SpecificPanel {
 	    VARIABLE_BOX.getChildren().add(infoRow);
 	}
     }
-
 }
