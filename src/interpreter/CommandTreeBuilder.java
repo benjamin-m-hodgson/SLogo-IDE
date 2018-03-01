@@ -11,6 +11,7 @@ import java.util.List;
 class CommandTreeBuilder {
 
 	public static final String DEFAULT_NUM_ARGS_FNAME = "interpreter/NumArgsForCommands"; 
+	public static final String DEFAULT_NUM_BRACKETS_FNAME = "interpreter/NumBracketsControlFlow";
 	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command";
 	public static final String DEFAULT_CONSTANT_IDENTIFIER = "Constant";
 	public static final String DEFAULT_BRACKET_IDENTIFIER = "Bracket";
@@ -26,6 +27,7 @@ class CommandTreeBuilder {
 			"XCoordinate","YCoordinate","Heading","IsPenDown","IsShowing","Pi"};
 	//	private CommandTreeReader myCommandTreeReader; 
 	private String myNumArgsFileName; 
+	private String myNumBracketsFileName;
 	private ArrayList<CommandNode> myCommandTrees; 
 	private CommandTreeReader myCommandTreeReader;
 
@@ -34,9 +36,12 @@ class CommandTreeBuilder {
 	}
 
 	protected CommandTreeBuilder(String numArgsFileName) {
-		System.out.println("I am making the builder");
-		myNumArgsFileName = numArgsFileName; 
-		myCommandTrees = new ArrayList<CommandNode>(); 
+		this(numArgsFileName, DEFAULT_NUM_BRACKETS_FNAME);
+	}
+	protected CommandTreeBuilder(String numArgsFileName, String numBracketsFileName) {
+		myNumArgsFileName = numArgsFileName;
+		myNumBracketsFileName = numBracketsFileName;
+		myCommandTrees = new ArrayList<CommandNode>();
 		myCommandTreeReader = new CommandTreeReader();
 	}
 
@@ -371,6 +376,7 @@ class CommandTreeBuilder {
 //		for(int k = 0; k<userInput.length; k+=1) {
 //			System.out.println(userInput[k]);
 //		}
+		
 		while(!(userInput[currIdxCopy].equals(DEFAULT_BRACKET_END_IDENTIFIER))) {
 			currIdxCopy++;
 		}
@@ -419,12 +425,14 @@ class CommandTreeBuilder {
 		myCommandTrees.add(parent);
 		//System.out.println("command tree number: " + myCommandTrees.size());
 		parent.addChild(new CommandNode(":repcount", turtle));
-		//adding temporary variable name to children
+//		//adding temporary variable name to children
 			int repeatCount = 1;
 			int startBracketCount = 0;
+			//currIdx++;
 			int currIdxCopy = currIdx;
 			currIdxCopy++;
 			try {
+				//currIdxCopy = searchForBracket(currIdxCopy, userInput, DEFAULT_BRACKET_START_IDENTIFIER);
 				while( startBracketCount!= repeatCount) {
 					if(userInput[currIdxCopy].equals(DEFAULT_BRACKET_START_IDENTIFIER)) {
 						startBracketCount++;
@@ -451,6 +459,7 @@ class CommandTreeBuilder {
 			currIdx++;
 			repeatCount = 1;
 			int endBracketCount = 0;
+			//currIdx = searchForBracket(currIdx, userInput, DEFAULT_BRACKET_END_IDENTIFIER);
 			while( endBracketCount < repeatCount) {
 				if(userInput[currIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)){
 					endBracketCount++;
@@ -491,7 +500,7 @@ class CommandTreeBuilder {
 		tempBuilder.buildAndExecute(turtle, Arrays.copyOfRange(userInput, currIdx, currIdxCopy), false);
 		List<CommandNode> discreteCommands = tempBuilder.getCommandTrees();
 		for(CommandNode n: discreteCommands) {
-			System.out.println("angle" + n.getTurtle());
+			//System.out.println("angle" + n.getTurtle());
 			parent.addChild(n);
 		}
 		
@@ -542,11 +551,28 @@ class CommandTreeBuilder {
 		catch(NumberFormatException e) {
 			RegexMatcher regexMatcher = new RegexMatcher(myNumArgsFileName);
 			String numArgsAsString = regexMatcher.findMatchingVal(commandType);
-			System.out.println(commandType);
 			int numArgs = Integer.parseInt(numArgsAsString);
 			return numArgs;
 		}
 
+	}
+	private int getNumBrackets(String commandType) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		 	RegexMatcher regexMatcher = new RegexMatcher(myNumBracketsFileName);
+		 	String numBracketsAsString = new String();
+		 	int numArgs = 0;
+		 	try {
+		 		numBracketsAsString = regexMatcher.findMatchingVal(commandType);
+		 	}
+		 	catch(Exception e) {
+		 		return 0;
+		 	}
+		 	try {
+		 		numArgs = Integer.parseInt(numBracketsAsString);
+		 	}
+		 	catch(Exception e) {
+		 		return 0;
+		 	}
+			return numArgs;
 	}
 
 	private boolean isDoubleSubstitute(String inputToken) {
@@ -557,5 +583,18 @@ class CommandTreeBuilder {
 		}
 		return false; 
 	}
+//	private int searchForBracket(int currIdxCopy, String[] userInput, String bracketIdentifier) throws BadFormatException, UnidentifiedCommandException, MissingInformationException{
+//		int bracketNeededCount = 1;
+//		int bracketSeenCount = 0;
+//		while(bracketSeenCount < bracketNeededCount) {
+//			System.out.println(userInput[currIdxCopy]);
+//			if(userInput[currIdxCopy].equals(bracketIdentifier)) {
+//				bracketSeenCount++;
+//			}
+//			bracketNeededCount = bracketNeededCount + getNumBrackets(userInput[currIdxCopy]);
+//			currIdxCopy++;
+//		}
+//		return currIdxCopy;
+//	}
 
 }
