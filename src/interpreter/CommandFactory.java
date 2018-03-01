@@ -140,6 +140,9 @@ public class CommandFactory {
 		else if (commandName.equals("IfElse")) {
 			return new IfElseCommand(commandArgs.get(2), commandArgs.get(0), commandArgs.get(1), turtle); 
 		}
+		else if(commandName.equals("SetPenColor")) {
+			return new SetPenColorCommand(commandArgs.get(0), turtle);
+		}
 		else {
 			return new StringCommand(commandName);
 		}
