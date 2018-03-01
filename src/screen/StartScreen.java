@@ -105,13 +105,10 @@ public class StartScreen implements Screen {
 	applyButton.setId("applyButton");
 	applyButton.setTooltip(APPLY_TIP);
 	// handle click event
-	applyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-	    @Override
-	    public void handle(MouseEvent arg0) {
-		PROGRAM_CONTROLLER.changeLanguage(LANGUAGE);
-		updatePrompt();
-		START.setDisable(false);
-	    }
+	applyButton.setOnMouseClicked((arg0)-> {
+	    PROGRAM_CONTROLLER.changeLanguage(LANGUAGE);
+	    updatePrompt();
+	    START.setDisable(false);
 	});
 	applyButton.setDisable(true);
 	return applyButton;
@@ -133,19 +130,15 @@ public class StartScreen implements Screen {
 	dropDownMenu.setItems(simulationChoices);
 	dropDownMenu.setId("languageChooser");
 	dropDownMenu.getSelectionModel().selectedIndexProperty()
-	.addListener(new ChangeListener<Number>() {
-	    @Override
-	    public void changed(ObservableValue<? extends Number> arg0, 
-		    Number arg1, Number arg2) {
-		String selected = (String) simulationChoices.get((Integer) arg2);
-		if (!selected.equals(DEFAULT_SELECTION_PROMPT)) {
-		    APPLY.setDisable(false);
-		    LANGUAGE = selected;
-		} 
-		else {
-		    APPLY.setDisable(true);
-		    START.setDisable(true);
-		}
+	.addListener((arg0, arg1,  arg2) -> {
+	    String selected = (String) simulationChoices.get((Integer) arg2);
+	    if (!selected.equals(DEFAULT_SELECTION_PROMPT)) {
+		APPLY.setDisable(false);
+		LANGUAGE = selected;
+	    } 
+	    else {
+		APPLY.setDisable(true);
+		START.setDisable(true);
 	    }
 	});
 	return dropDownMenu;
