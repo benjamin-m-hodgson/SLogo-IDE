@@ -1,5 +1,7 @@
 package interpreter;
 
+import java.util.Map;
+
 /**
  * returns natural log of expr
  * 
@@ -7,18 +9,20 @@ package interpreter;
  * @date 2/26/18
  *
  */
-public class NaturalLogCommand implements Command{
+ class NaturalLogCommand extends Command{
 
-    	Command exprCommand;
-	protected NaturalLogCommand(Command expr) {
-		exprCommand = expr;
-	}
-	@Override
-	public double execute() throws UnidentifiedCommandException{
-		Double EXPR = exprCommand.execute();
-	    	return Math.log(EXPR);
-	}
-	public int getNumArgs() {
-		return 1;
-	}
+    private Command exprCommand;
+    private Map<String, Double> myVariables; 
+
+    protected NaturalLogCommand(Command expr,Map<String, Double> variables) {
+	exprCommand = expr;
+	myVariables = variables;
+    }
+
+    @Override
+    protected double execute() throws UnidentifiedCommandException{
+	Double EXPR = getCommandValue(exprCommand, myVariables);
+	return Math.log(EXPR);
+    }
+
 }

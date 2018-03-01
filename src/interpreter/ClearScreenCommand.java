@@ -7,24 +7,24 @@ package interpreter;
  * @author Sarahbland
  *
  */
-public class ClearScreenCommand implements Command{
-	Turtle myTurtle;
-	/**
-	 * Creates new instance of command to be executed at the proper time
-	 * @param turtle is turtle who needs to be returned to home
-	 */
-	protected ClearScreenCommand(Turtle turtle) {
-		myTurtle = turtle;
-	}
-	/**
-	 * Moves the turtle to the center of the screen, then clears all of the pen lines on the screen
-	 * @return distance turtle moved
-	 * @see interpreter.Command#execute()
-	 */
-	public double execute() {
-		double returnVal = myTurtle.setXY(0, 0);
-		myTurtle.clearPen();
-		return returnVal;
-	}
+class ClearScreenCommand extends Command{
+    private Turtle myTurtle;
+    /**
+     * Creates new instance of command to be executed at the proper time
+     * @param turtle is turtle who needs to be returned to home
+     */
+    protected ClearScreenCommand(Turtle turtle) {
+	myTurtle = turtle;
+    }
+    /**
+     * Moves the turtle to the center of the screen, then clears all of the pen lines on the screen
+     * @return distance turtle moved
+     * @see interpreter.Command#execute()
+     */
+    protected double execute() {
+	double returnVal = myTurtle.setXY(0, 0);
+	myTurtle.clearPen();
+	return returnVal;
+    }
 
 }

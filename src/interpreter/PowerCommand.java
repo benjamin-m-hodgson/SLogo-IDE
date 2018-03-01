@@ -1,5 +1,7 @@
 package interpreter;
 
+import java.util.Map;
+
 /**
  * returns base raised to the power of the exponent
  * 
@@ -7,21 +9,21 @@ package interpreter;
  * @date 2/26/18
  *
  */
-public class PowerCommand implements Command{
+class PowerCommand extends Command{
 
-    	Command baseCommand;
-    	Command powerCommand;
-	protected PowerCommand(Command base, Command power) {
-		baseCommand = base;
-		powerCommand = power;
-	}
-	@Override
-	public double execute() throws UnidentifiedCommandException{
-		double BASE = baseCommand.execute();
-		double POWER = powerCommand.execute();
-		return Math.pow(BASE, POWER);
-	}
-	public int getNumArgs() {
-		return 2;
-	}
+    private Command baseCommand;
+    private Command powerCommand;
+    private Map<String, Double> myVariables; 
+
+    protected PowerCommand(Command base, Command power, Map<String, Double> variables) {
+	baseCommand = base;
+	powerCommand = power;
+	myVariables = variables;
+    }
+    @Override
+    protected double execute() throws UnidentifiedCommandException{
+	double BASE = getCommandValue(baseCommand, myVariables);
+	double POWER = getCommandValue(powerCommand, myVariables);
+	return Math.pow(BASE, POWER);
+    }
 }
