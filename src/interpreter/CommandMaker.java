@@ -97,7 +97,7 @@ class CommandMaker {
 			}
 		}
  		//		makeListForBuilder(myListForBuilder, userInput, commandTypes, 1, DEFAULT_CONTROLFLOW_IDENTIFIERS);
-		return myCommandTreeBuilder.buildAndExecute(identifiedTurtle, userInputArrayToPass); 
+		return myCommandTreeBuilder.buildAndExecute(identifiedTurtle, userInputArrayToPass, true); 
 	}
 
 	//	private void makeListForBuilder(ArrayList<String> currCommandList, String[] inputArray, String[] commandTypes, int numTimesToAdd, String[] controlFlowIdentifiers) {

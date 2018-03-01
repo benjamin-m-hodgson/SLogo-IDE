@@ -28,7 +28,7 @@ class IfCommand implements Command{
 			CommandTreeBuilder buildIfBody = new CommandTreeBuilder(); 
 			String[] userInput = myIfBody.split("\\s+");
 			try {
-				ifBodyRetVal = buildIfBody.buildAndExecute(myTurtle, userInput);
+				ifBodyRetVal = buildIfBody.buildAndExecute(myTurtle, userInput, true);
 			} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
 				return ifBodyRetVal; 
 			}

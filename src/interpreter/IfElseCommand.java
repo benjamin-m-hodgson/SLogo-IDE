@@ -28,7 +28,7 @@ public class IfElseCommand implements Command {
 			CommandTreeBuilder buildIfBody = new CommandTreeBuilder(); 
 			userInput = myIfBody.split("\\s+");
 			try {
-				ifElseRetVal = buildIfBody.buildAndExecute(myTurtle, userInput);
+				ifElseRetVal = buildIfBody.buildAndExecute(myTurtle, userInput, true);
 			} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
 				return ifElseRetVal; 
 			}
@@ -38,7 +38,7 @@ public class IfElseCommand implements Command {
 			CommandTreeBuilder buildElseBody = new CommandTreeBuilder(); 
 			userInput = myElseBody.split("\\s+");
 			try {
-				ifElseRetVal = buildElseBody.buildAndExecute(myTurtle, userInput);
+				ifElseRetVal = buildElseBody.buildAndExecute(myTurtle, userInput, true);
 			} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
 				return ifElseRetVal; 
 			}

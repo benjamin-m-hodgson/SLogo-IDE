@@ -26,7 +26,7 @@ public class DoTimesCommand implements Command{
 				System.out.println("executing " + executeArray[i]);
 			}
 			try {
-				returnVal = myBuilder.buildAndExecute(myTurtle, executeArray);
+				returnVal = myBuilder.buildAndExecute(myTurtle, executeArray, true);
 			}
 			catch(Exception e){
 				//TODO fix this! Don't just throw another exception
