@@ -16,11 +16,11 @@ public class HeadingQueryCommand implements Command{
 		myTurtle = turtle;
 	}
 	/**
-	 * @return angle of Turtle
+	 * @return angle of Turtle (absolute, between 0 and 360)
 	 * @see interpreter.Command#execute()
 	 */
 	@Override
 	public double execute() {
-		return myTurtle.getAngle();
+		return myTurtle.getAngle() % 360;
 	}
 }

@@ -66,6 +66,7 @@ public class TextPanel implements Panel {
 
 		} 
 		catch (UnidentifiedCommandException e) {
+			e.printStackTrace();
 			clearInputArea();
 			USER_SCREEN.displayErrorMessage(e.getMessage());
 

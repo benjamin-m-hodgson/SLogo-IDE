@@ -2,6 +2,7 @@ package interpreter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /** 
  * @author Susie Choi
@@ -371,14 +372,28 @@ class CommandTreeBuilder {
 		if(userInput[currIdx].equals(DEFAULT_BRACKET_START_IDENTIFIER)) {
 			currIdx++;
 			String repeatedCommand = userInput[currIdx];
-			currIdx++;
-			while(currIdx < userInput.length-1) {
+			int repeatCount = 1;
+			int endBracketCount = 0;
+			while( endBracketCount < repeatCount) {
+				if(userInput[currIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)){
+					endBracketCount++;
+				}
+				if(userInput[currIdx].equals(DEFAULT_REPEAT_IDENTIFIER)){
+					repeatCount++;
+				}
 				repeatedCommand = String.join(" ", repeatedCommand, userInput[currIdx]);
 				currIdx++;
 			}
-			if(!userInput[currIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
-				throw new BadFormatException("Brackets are messed up in DoTimes");
-			}
+//			currIdx++;
+//			String repeatedCommand = userInput[currIdx];
+//			currIdx++;
+//			while(currIdx < userInput.length-1) {
+//				repeatedCommand = String.join(" ", repeatedCommand, userInput[currIdx]);
+//				currIdx++;
+//			}
+//			if(!userInput[currIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
+//				throw new BadFormatException("Brackets are messed up in DoTimes");
+//			}
 			parent.addChild(new CommandNode(repeatedCommand));
 		}
 		else {
@@ -421,11 +436,19 @@ class CommandTreeBuilder {
 			currIdx++;
 			String repeatedCommand = userInput[currIdx];
 			currIdx++;
-			while(currIdx < userInput.length-1) {
+			repeatCount = 1;
+			int endBracketCount = 0;
+			while( endBracketCount < repeatCount) {
+				if(userInput[currIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)){
+					endBracketCount++;
+				}
+				if(userInput[currIdx].equals(DEFAULT_REPEAT_IDENTIFIER)){
+					repeatCount++;
+				}
 				repeatedCommand = String.join(" ", repeatedCommand, userInput[currIdx]);
 				currIdx++;
 			}
-			if(!(userInput[currIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER))) {
+			if(!(userInput[currIdx-1].equals(DEFAULT_BRACKET_END_IDENTIFIER))) {
 				throw new BadFormatException("Brackets are messed up in Repeat");
 			}
 			parent.addChild(new CommandNode(repeatedCommand, turtle));
@@ -445,8 +468,13 @@ class CommandTreeBuilder {
 		//adding variable child
 		currIdx++;
 		parent.addChild(new CommandNode(userInput[currIdx], turtle));
+		currIdx++;
+		while();
 		
 		
+	}
+	protected List<CommandNode> getCommandTrees(){
+		return myCommandTrees;
 	}
 
 	private int getNumArgs(String commandType) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
@@ -464,7 +492,6 @@ class CommandTreeBuilder {
 		}
 
 	}
-
 
 	private boolean isDoubleSubstitute(String inputToken) {
 		for (int j = 0; j < DEFAULT_DOUBLE_SUBSTITUTES.length; j ++) {
