@@ -140,19 +140,19 @@ public class Controller {
 	 * 
 	 * @return an ImmutableList of all of the color options
 	 */
-	public List<String> getColors() {
+	public List<String> getFileNames(String folderName) {
 		String currentDir = System.getProperty("user.dir");
 		try {
-			File file = new File(currentDir + File.separator + "colors");
-			File[] colorFiles = file.listFiles();
-			List<String> colors = new ArrayList<String>();
-			for (File colorFile : colorFiles) {
-				String colorName = colorFile.getName();
+			File file = new File(currentDir + File.separator + folderName);
+			File[] fileArray = file.listFiles();
+			List<String> fileNames = new ArrayList<String>();
+			for (File aFile : fileArray) {
+				String colorName = aFile.getName();
 				String[] nameSplit = colorName.split("\\.");
-				String color = nameSplit[0];
-				colors.add(color);
+				String fileName = nameSplit[0];
+				fileNames.add(fileName);
 			}
-			return Collections.unmodifiableList(colors);
+			return Collections.unmodifiableList(fileNames);
 		}
 		catch (Exception e) {
 			// TODO: make custom exception super class with sub classes for specifications
@@ -278,6 +278,7 @@ public class Controller {
 		}
 	}
 
+	//needs to be cleaned
 	private void parseHexCodeandPass(String hexCodeUnParsed) {
 		String hexCode = hexCodeUnParsed.substring(1, hexCodeUnParsed.length());
 		int hexConvert = Integer.parseInt(hexCode,16);
@@ -297,6 +298,8 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
+	
+
 
 	public void changePenColor(String color) {
 		CURRENT_PEN_COLOR = findColorFile(color);

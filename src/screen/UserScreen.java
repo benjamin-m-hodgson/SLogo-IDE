@@ -56,6 +56,10 @@ public class UserScreen implements Screen {
 	public void displayErrorMessage(String errorMessage) {
 		TURTLE_PANEL.displayErrorMessage(errorMessage);
 	}
+	
+	public void changeTurtleImage(String selected) {
+		TURTLE_PANEL.changeTurtlesImages(selected);
+	}
 
 	@Override
 	public void changeBackgroundColor(String color) {

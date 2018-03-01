@@ -17,6 +17,9 @@ import javafx.scene.control.Tooltip;
 public class SettingsPanel extends SpecificPanel  {
 
 	private final int VISIBLE_ROW_COUNT = 5;
+	private final String COLOR_FOLDER = "colors";
+	private final String TURTLE_IMAGE_FOLDER = "turtleimages";
+
 	private  Parent PANEL;
 	private final Controller PROGRAM_CONTROLLER;
 	private final BorderPane PANE;
@@ -96,7 +99,7 @@ public class SettingsPanel extends SpecificPanel  {
 		//dropDownMenu.setTooltip(SELECTION_TIP);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
-		colorsUntranslated = PROGRAM_CONTROLLER.getColors();
+		colorsUntranslated = PROGRAM_CONTROLLER.getFileNames(COLOR_FOLDER);
 		colorsTranslated = PROGRAM_CONTROLLER.translateColors(colorsUntranslated);
 		simulationChoices.addAll(colorsTranslated);
 		dropDownMenu.setItems(simulationChoices);
@@ -122,7 +125,7 @@ public class SettingsPanel extends SpecificPanel  {
 		//dropDownMenu.setTooltip(SELECTION_TIP);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
-		colorsUntranslated = PROGRAM_CONTROLLER.getColors();
+		colorsUntranslated = PROGRAM_CONTROLLER.getFileNames(COLOR_FOLDER);
 		colorsTranslated = PROGRAM_CONTROLLER.translateColors(colorsUntranslated);
 		simulationChoices.addAll(colorsTranslated);
 		dropDownMenu.setItems(simulationChoices);
@@ -148,14 +151,14 @@ public class SettingsPanel extends SpecificPanel  {
 		//dropDownMenu.setTooltip(SELECTION_TIP);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
-		//simulationChoices.addAll(PROGRAM_CONTROLLER.getColors());
+		simulationChoices.addAll(PROGRAM_CONTROLLER.getFileNames(TURTLE_IMAGE_FOLDER));
 		dropDownMenu.setItems(simulationChoices);
 		dropDownMenu.setId(itemID);
 		dropDownMenu.getSelectionModel().selectedIndexProperty()
 		.addListener((arg0,arg1, arg2)-> {
 			String selected = (String) simulationChoices.get((Integer) arg2);
 			if (!selected.equals(selectionPrompt)) {
-				//controller.changeTurtleImage() //something like this
+				USER_SCREEN.changeTurtleImage(selected); //something like this
 			}
 		});
 		return dropDownMenu;
