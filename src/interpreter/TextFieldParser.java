@@ -194,4 +194,8 @@ class TextFieldParser {
 		}
 	}
 
+	public Map<String, String> getUserDefined() {
+		return myCommandMaker.getUserDefined();
+	}
+
 }

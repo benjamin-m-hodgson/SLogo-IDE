@@ -16,8 +16,8 @@ import java.util.Map;
 class CommandTreeReader {
 	CommandFactory myCommandFactory;
 	
-	protected CommandTreeReader(Map<String, Double> variables, Map<String, String> userDefCommands){
-		myCommandFactory = new CommandFactory(variables, userDefCommands);
+	protected CommandTreeReader(Map<String, Double> variables, Map<String, String> userDefCommands, Map<String, Integer> userDefCommandsNumArgs){
+		myCommandFactory = new CommandFactory(variables, userDefCommands, userDefCommandsNumArgs);
 	}
 	/**
 	 * Error checks to make sure that the tree that was constructed is complete (all commands, even concatenated commands,
