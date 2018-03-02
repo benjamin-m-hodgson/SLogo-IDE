@@ -621,7 +621,7 @@ class CommandTreeBuilder {
 			finalEndToIdx++; 
 		} // finalEndToIdx is at FINAL ']'
 		
-		String[] commandContent = Arrays.copyOfRange(userInput, endToIdx+2, finalEndToIdx);
+		String[] commandContent = Arrays.copyOfRange(userInput, startIdx+2, finalEndToIdx+1);
 		String userCommandString = String.join(" ", commandContent);
 		CommandNode userCommandContent = new CommandNode(userCommandString);
 
@@ -639,10 +639,13 @@ class CommandTreeBuilder {
 	private void parseUserCommand(Turtle turtle, String[] userInput, int startIdx, int numArgs) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String userCommandName = userInput[startIdx];
 		CommandNode userCommandNameNode = new CommandNode(userCommandName, numArgs, turtle, true); 
-		createAndSetChildren(turtle, userCommandNameNode, userInput, startIdx+1, false);
+		createAndSetChildren(turtle, userCommandNameNode, userInput, startIdx+1, false); // verifying correct # children
+		
+		CommandNode userCommandArgsNode = new CommandNode("a"+userCommandNameNode.childrenToString()); 
+		
 		CommandNode userCommandNode = new CommandNode(DEFAULT_USERCOMMAND_NAME, 1, userCommandNameNode, turtle);
+		userCommandNode.addChild(userCommandArgsNode);
 		myCommandTrees.add(userCommandNode);
-		System.out.println(userCommandNode.toString());
 	}
 
 	private int getNumArgs(String commandType) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
