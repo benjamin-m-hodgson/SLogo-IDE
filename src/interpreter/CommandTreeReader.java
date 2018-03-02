@@ -27,7 +27,6 @@ class CommandTreeReader {
 	 */
 	private boolean treeIsComplete(CommandNode root) {
 		if(root.getIsDouble()||root.getIsString()) {
-			//System.out.println("seeing a string");
 			return true;
 		}
 		int completedChildren = 0;
@@ -46,8 +45,10 @@ class CommandTreeReader {
 	 */
 	protected double readAndExecute(CommandNode root) throws UnidentifiedCommandException{
 		Command compressedCommand = compressTree(root);
+		System.out.println(compressedCommand.toString());
 		return compressedCommand.execute();	
 	}
+	
 	/**
 	 * Compressed the CommandNodeTree into a single Command with Command arguments (which, in turn, may have Command
 	 * arguments, etc.) that can be executed as part of the Command Queue
@@ -65,6 +66,7 @@ class CommandTreeReader {
 		}
 		return myCommandFactory.makeCommand(root.getInfo(), args, root.getTurtle());
 	}
+	
 //	public static void main(String[] args) {
 //		Turtle turtle = new Turtle();
 //		CommandNode forty = new CommandNode("40", turtle);
