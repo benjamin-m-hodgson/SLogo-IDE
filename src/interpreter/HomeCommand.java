@@ -22,6 +22,7 @@ class HomeCommand extends Command{
      * @see interpreter.Command#execute()
      */
     protected double execute() {
+    	myTurtle.setAngle(0);
 	return myTurtle.setXY(0, 0);
     }
 }
