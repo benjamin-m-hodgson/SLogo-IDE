@@ -78,6 +78,7 @@ class TextFieldParser {
 	 */
 	protected double parseText(String userInputString) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String[] userInputByLine = userInputString.split("\\r?\\n");
+		//userInputByLine = userInputByLine.split("\\s+")
 		ArrayList<String> userInputList = new ArrayList<String>();
 		for (int i = 0; i < userInputByLine.length; i++) {
 			if (userInputByLine[i] != null && userInputByLine[i].length() > 0) {
@@ -103,7 +104,9 @@ class TextFieldParser {
 		for (int idx = 0; idx < nonCommentInputByLine.size(); idx ++) {
 			String[] whiteSpaceSplitLine = nonCommentInputByLine.get(idx).split("\\s+");
 			for (String token : whiteSpaceSplitLine) {
-				tokenizedInput.add(token);
+				if(token.length()>0 && !token.equals("")) {
+					tokenizedInput.add(token);
+				}	
 			}
 		}
 
@@ -158,7 +161,6 @@ class TextFieldParser {
 	}
 	
 	public void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
-		System.out.println("made it to textfieldparser");
 		myCommandMaker.addNewTurtle(name, turtleImage, penColor, penLines);
 	}
 
@@ -171,7 +173,7 @@ class TextFieldParser {
 //			testingParser.parseText("fd fd fd pd"); // CHECK AGAIN
 		
 			//Double test = testingParser.parseText("for [ :k fd 0 fd 5 fd 1 ] [ fd 1 ]");
-			Double test = testingParser.parseText("repeat 2 [ repeat 2 [ fd 50 rt 90 ] ]");
+			Double test = testingParser.parseText("repeat 2 [ repeat 2 \n [ fd 50 rt 90 ] ]");
 			System.out.println("returns: ");
 			System.out.println(test.toString());
 //			testingParser.parseText("fd 1 rt / sin 20 2");
@@ -190,7 +192,7 @@ class TextFieldParser {
 //			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
 		//	testingParser.parseText("to line [ :length ] [ fd :length ]");
 		} catch (Exception e) {
-
+			System.out.println("FAIL");
 		}
 	}
 

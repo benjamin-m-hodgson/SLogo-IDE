@@ -46,6 +46,9 @@ public class RegexMatcher {
             if (match(text, e.getValue())) {
                 return e.getKey();
             }
+            else if(text.equals(" ")||text.equals("")) {
+            		return "";
+            }
         }
 		myExceptionFactory.getException(myFileName, text);
 		return ""; 
