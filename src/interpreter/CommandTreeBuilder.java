@@ -271,6 +271,22 @@ class CommandTreeBuilder {
 			//			System.out.println("returning");
 			//			return; 
 			//		}
+			for (String substitute : DEFAULT_DOUBLE_SUBSTITUTES) {
+				if (userInput[currIdx].equals(substitute)) {
+					CommandNode newChildNode = new CommandNode(userInput[currIdx], turtle);
+					parent.addChild(newChildNode);
+					if (parent.getNumChildren() < parent.getNumArgs()) { 
+						createAndSetChildren(turtle, parent, userInput, currIdx+1, addToTrees);
+					} 
+					else {
+						if (addToTrees) {
+							myCommandTrees.add(parent);
+						}
+						createCommandTree(turtle, userInput, currIdx+1);
+					}
+					return; 
+				}
+			}
 			if (String.valueOf(userInput[currIdx].charAt(0)).equals(DEFAULT_VAR_IDENTIFIER)) {
 				CommandNode newChildNode = new CommandNode(userInput[currIdx]);
 				parent.addChild(newChildNode);
