@@ -239,6 +239,7 @@ class CommandTreeBuilder {
 	//		}
 	//	}
 
+	// THIS IS THE RIGHT ONE
 	// TODO account for when no-arg commands are used as children (instead of double)
 	private void createAndSetChildren(Turtle turtle, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		if (currIdx >= userInput.length) { //base case if out of bounds
@@ -247,7 +248,6 @@ class CommandTreeBuilder {
 			}
 			return;
 		}
-//				System.out.println(userInput[currIdx]);
 		Double firstIsDouble; 
 		try {
 			firstIsDouble = Double.parseDouble(userInput[currIdx]);
@@ -301,7 +301,6 @@ class CommandTreeBuilder {
 				}
 				return; 
 			}
-
 			for (int idx = currIdx+1; idx < userInput.length; idx++) { 
 				Double currDouble; 
 				try {
@@ -354,7 +353,7 @@ class CommandTreeBuilder {
 			}
 		}
 	}
-
+	
 	private int parseIf(Turtle turtle, String[] userInput, int ifIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		int ifExprEndSearch = ifIdx; 
 		while (! userInput[ifExprEndSearch].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {

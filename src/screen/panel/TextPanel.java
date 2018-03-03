@@ -56,20 +56,24 @@ public class TextPanel implements Panel {
 	    USER_SCREEN.addCommand(inputText, outputText);
 	} 
 	catch (TurtleNotFoundException e) {
+		e.printStackTrace();
 	    clearInputArea();
 	    USER_SCREEN.displayErrorMessage(e.getMessage());
 	} 
 	catch (BadFormatException e) {
+		e.printStackTrace();
 	    clearInputArea();
 	    USER_SCREEN.displayErrorMessage(e.getMessage());
 
 	} 
 	catch (UnidentifiedCommandException e) {
+		e.printStackTrace();
 	    clearInputArea();
 	    USER_SCREEN.displayErrorMessage(e.getMessage());
 
 	} 
 	catch (MissingInformationException e) {
+		e.printStackTrace();
 	    clearInputArea();
 	    USER_SCREEN.displayErrorMessage(e.getMessage());
 

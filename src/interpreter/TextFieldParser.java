@@ -103,7 +103,7 @@ class TextFieldParser {
 		for (int idx = 0; idx < nonCommentInputByLine.size(); idx ++) {
 			String[] whiteSpaceSplitLine = nonCommentInputByLine.get(idx).split("\\s+");
 			for (String token : whiteSpaceSplitLine) {
-				if (token.length() > 0 ) {
+				if (token.length() > 0 && !token.equals("")) {
 					tokenizedInput.add(token);
 				}
 			}
