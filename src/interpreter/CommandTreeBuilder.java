@@ -481,24 +481,25 @@ class CommandTreeBuilder {
 			}
 			currIdx++;
 			currIdxCopy = searchForBracket(currIdx, userInput, DEFAULT_BRACKET_END_IDENTIFIER, repeatCount);
-			while( endBracketCount < repeatCount) {
-				System.out.println("checking" + userInput[currIdx]);
-				if(userInput[currIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)){
-					endBracketCount++;
-				}
-				if(userInput[currIdx].equals(DEFAULT_REPEAT_IDENTIFIER)){
-					repeatCount++;
-				}
-				if(endBracketCount!=repeatCount) {
-					repeatedCommand = String.join(" ", repeatedCommand, userInput[currIdx]);
-				}
-				System.out.println("repeatcount: " + repeatCount);
-				currIdx++;
-			}
-//			for(int k = 0; k < currIdxCopy; k+=1) {
-//				repeatedCommand = String.join(" ", repeatedCommand, userInput[currIdx]);
+//			while( endBracketCount < repeatCount) {
+//				System.out.println("checking" + userInput[currIdx]);
+//				if(userInput[currIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)){
+//					endBracketCount++;
+//				}
+//				if(userInput[currIdx].equals(DEFAULT_REPEAT_IDENTIFIER)){
+//					repeatCount++;
+//				}
+//				if(endBracketCount!=repeatCount) {
+//					repeatedCommand = String.join(" ", repeatedCommand, userInput[currIdx]);
+//				}
+//				System.out.println("repeatcount: " + repeatCount);
+//				currIdx++;
 //			}
-			//currIdx = currIdxCopy;
+			for(int k = currIdx; k < currIdxCopy; k+=1) {
+				repeatedCommand = String.join(" ", repeatedCommand, userInput[k]);
+			}
+			currIdx = currIdxCopy;
+			System.out.println("should be bracket" + userInput[currIdx-1]);
 			if(!(userInput[currIdx-1].equals(DEFAULT_BRACKET_END_IDENTIFIER))) {
 				throw new BadFormatException("Brackets are messed up in Repeat");
 			}
@@ -625,7 +626,7 @@ class CommandTreeBuilder {
 	}
 	private int getNumBrackets(String commandType) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 			RegexMatcher regexMatcher = new RegexMatcher(myNumBracketsFileName);
-			System.out.println("didn't made the regex matcher");
+			//System.out.println("didn't made the regex matcher");
 		 	String numBracketsAsString = new String();
 		 	int numArgs = 0;
 		 	try {
