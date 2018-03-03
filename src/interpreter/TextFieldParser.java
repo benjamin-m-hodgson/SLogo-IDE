@@ -88,7 +88,7 @@ class TextFieldParser {
 		ArrayList<String> userInputList = new ArrayList<String>();
 		for (int i = 0; i < userInputByLine.length; i++) {
 			if (userInputByLine[i] != null && userInputByLine[i].length() > 0) {
-				userInputList.add(userInputByLine[i].replace("\t", ""));
+				userInputList.add(userInputByLine[i].trim());
 			}
 		}
 		userInputByLine = userInputList.toArray(new String[userInputList.size()]);
@@ -111,7 +111,7 @@ class TextFieldParser {
 			String[] whiteSpaceSplitLine = nonCommentInputByLine.get(idx).split("\\s+");
 			for (String token : whiteSpaceSplitLine) {
 				if (token.length() > 0 && !token.equals("")) {
-					tokenizedInput.add(token.replace(" ", ""));
+					tokenizedInput.add(token);
 				}
 			}
 		}
