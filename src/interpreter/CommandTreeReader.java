@@ -38,6 +38,7 @@ class CommandTreeReader {
 		System.out.println("completed children: " + completedChildren);
 		return completedChildren==root.getNumArgs();
 	}
+	
 	/**
 	 * Reads a CommandTree (passed in the form of its root node)
 	 * @param root

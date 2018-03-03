@@ -671,16 +671,14 @@ class CommandTreeBuilder {
 		String userCommandName = userInput[startIdx];
 		CommandNode userCommandNameNode = new CommandNode(userCommandName, numArgs, turtle, true); 
 		createAndSetChildren(turtle, userCommandNameNode, userInput, startIdx+1, false); // verifying correct # children
-		
 		CommandNode userCommandArgsNode = new CommandNode(("a"+userCommandNameNode.childrenToString()), turtle); 
 		
-		CommandNode userCommandNode = new CommandNode(DEFAULT_USERCOMMAND_NAME, 1, userCommandNameNode, turtle);
+		CommandNode userCommandNode = new CommandNode(DEFAULT_USERCOMMAND_NAME, getNumArgs(DEFAULT_USERCOMMAND_NAME), userCommandNameNode, turtle);
 		userCommandNode.addChild(userCommandArgsNode);
 		myCommandTrees.add(userCommandNode);
 	}
 
 	private int getNumArgs(String commandType) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-//		System.out.println(commandType);
 		try {
 			Double.parseDouble(commandType);
 			return 0;
