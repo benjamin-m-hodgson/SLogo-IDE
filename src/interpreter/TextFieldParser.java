@@ -88,7 +88,7 @@ class TextFieldParser {
 		ArrayList<String> userInputList = new ArrayList<String>();
 		for (int i = 0; i < userInputByLine.length; i++) {
 			if (userInputByLine[i] != null && userInputByLine[i].length() > 0) {
-				userInputList.add(userInputByLine[i]);
+				userInputList.add(userInputByLine[i].replace("\t", ""));
 			}
 		}
 		userInputByLine = userInputList.toArray(new String[userInputList.size()]);
@@ -96,7 +96,6 @@ class TextFieldParser {
 
 		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
 		for (int idx = 0; idx < userInputByLine.length; idx++) { 
-//			System.out.println("regex!"+regexMatcher.findMatchingKey(userInputByLine[idx]));
 			userInputTypes[idx] = regexMatcher.findMatchingKey(userInputByLine[idx].substring(0, 1));
 		}
 
@@ -112,7 +111,7 @@ class TextFieldParser {
 			String[] whiteSpaceSplitLine = nonCommentInputByLine.get(idx).split("\\s+");
 			for (String token : whiteSpaceSplitLine) {
 				if (token.length() > 0 && !token.equals("")) {
-					tokenizedInput.add(token);
+					tokenizedInput.add(token.replace(" ", ""));
 				}
 			}
 		}
