@@ -72,9 +72,10 @@ class CommandTreeBuilder {
 		
 		
 		//System.out.println("command tree number bigger: " + myCommandTrees.size());
-//		for (CommandNode n : myCommandTrees) {
-//			System.out.println(n.toString());
-//		}
+		System.out.println("printing out comm trees");
+		for (CommandNode n : myCommandTrees) {
+			System.out.println(n.toString());
+		}
 		
 	//	System.out.println("number of command trees" + myCommandTrees.size());
 		if(shouldExecute) {
@@ -336,11 +337,11 @@ class CommandTreeBuilder {
 					CommandNode newChildNode = new CommandNode(userInput[idx], turtle);
 					int numArgs = getNumArgs(userInput[idx-1]);
 					CommandNode newCommandNode = new CommandNode(userInput[idx-1], numArgs, newChildNode, turtle);
+//					System.out.println("new command ndoe..." +newCommandNode.toString());
 					if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
 						createAndSetChildren(turtle, newCommandNode, userInput, idx+1, false);
-						
 					}
-					for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) { // TODO re-evaluate back-track for when do times comes into the picture....
+					for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) { 
 						int backTrackNumArgs = getNumArgs(userInput[backtrack]);
 						CommandNode backtrackCommandNode = new CommandNode(userInput[backtrack], backTrackNumArgs, newCommandNode, turtle);
 						newCommandNode = backtrackCommandNode; 
@@ -363,15 +364,30 @@ class CommandTreeBuilder {
 				catch (NumberFormatException e1) {
 					if (String.valueOf(userInput[idx].charAt(0)).equals(DEFAULT_VAR_IDENTIFIER)) {
 						CommandNode newChildNode = new CommandNode(userInput[idx], turtle);
-						parent.addChild(newChildNode);
+						int numArgs = getNumArgs(userInput[idx-1]);
+//						System.out.println("parent to string"+parent.toString());
+						if (numArgs == 0) {
+							if (parent.getNumChildren() == parent.getNumArgs() && addToTrees && !myCommandTrees.contains(parent)) { // TODO check this logic
+								myCommandTrees.add(parent);
+							} 
+							return;
+						}
+						CommandNode newCommandNode = new CommandNode(userInput[idx-1], numArgs, newChildNode, turtle);
+						if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
+							createAndSetChildren(turtle, newCommandNode, userInput, idx+1, false);
+						}
+						parent.addChild(newCommandNode);
+						if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
+							createAndSetChildren(turtle, newCommandNode, userInput, idx+1, false);
+						}
 						if (parent.getNumChildren() < parent.getNumArgs()) { 
 							createAndSetChildren(turtle, parent, userInput, idx+1, addToTrees);
-						} 
+						}
 						else {
-							if (addToTrees) {
-								myCommandTrees.add(parent);
-							}
 							createCommandTree(turtle, userInput, idx+1);
+						}
+						if (parent.getNumChildren() == parent.getNumArgs() && addToTrees && !myCommandTrees.contains(parent)) {
+							myCommandTrees.add(parent);
 						}
 						return; 
 					}

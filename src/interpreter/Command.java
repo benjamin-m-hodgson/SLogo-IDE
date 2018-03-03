@@ -22,6 +22,7 @@ abstract class Command {
 		if (varsMap.containsKey(variable)) {
 			varVal = varsMap.get(variable);
 		} 
+		System.out.println("returning "+varVal);
 		return varVal; 
 	}
 }

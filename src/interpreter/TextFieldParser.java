@@ -197,7 +197,7 @@ class TextFieldParser {
 			//					"fd 100\n" + 
 			//					"rt 90");
 			//			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
-			//			testingParser.parseText("fd\n #234\n50");
+						testingParser.parseText("fd sum 100 :a");
 			//			testingParser.parseText("to corner [ :length :width ] [ fd :length rt 90 bk :width ]");
 		} catch (Exception e) {
 			System.out.println("FAIL");
