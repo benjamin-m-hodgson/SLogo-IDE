@@ -24,6 +24,7 @@ public class CommandFactory {
 
 	public Command makeCommand(String commandName, List<Command> commandArgs, Turtle turtle) {
 		if(commandName.equals("Forward")) {
+			System.out.println("making a forward command");
 			return new MoveTurtleForwardCommand(commandArgs.get(0), turtle, myVariables);
 		}
 		else if(commandName.equals("Backward")) {
@@ -140,7 +141,7 @@ public class CommandFactory {
 		else if(commandName.equals("Not")) {
 			return new NotCommand(commandArgs.get(0), myVariables);
 		}
-		else if(commandName.equals("DoTimes")) {
+		else if(commandName.equals("DoTimes")||commandName.equals("Repeat")) {
 			return new DoTimesCommand(commandArgs.get(0), commandArgs.get(1), commandArgs.get(2), turtle, myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
 		}
 		else if(commandName.equals("If")) {

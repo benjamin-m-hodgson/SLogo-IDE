@@ -1,5 +1,10 @@
 package screen.panel;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+import interpreter.Controller;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -9,11 +14,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import screen.UserScreen;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
-import interpreter.Controller;
 
 /**
  * 

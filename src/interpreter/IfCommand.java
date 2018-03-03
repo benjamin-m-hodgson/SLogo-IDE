@@ -24,6 +24,7 @@ class IfCommand extends Command{
 	myUserDefComNumArgs = userDefCommNumArgs; 
     }
 
+    @Override
     protected double execute() { // TODO discuss throwing of exceptions 
 	double ifExprRetVal = 0;
 	double ifBodyRetVal = 0; 

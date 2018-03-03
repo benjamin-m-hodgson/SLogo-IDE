@@ -79,6 +79,7 @@ public class TextPanel implements Panel {
 
 	}
 	catch (Exception e) {
+		e.printStackTrace();
 	    clearInputArea();
 	    USER_SCREEN.displayErrorMessage(PROGRAM_CONTROLLER.resourceErrorText("GeneralError"));
 	}

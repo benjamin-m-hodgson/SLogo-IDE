@@ -15,11 +15,7 @@ class CommandNode {
 	private Turtle myTurtle;
 	private boolean isString;
 
-	protected CommandNode(String info) {
-		this(info, DEFAULT_NUM_ARGS, new ArrayList<CommandNode>(), new Turtle(), true);
-	}
-
-	public CommandNode(String info, Turtle turtle) {
+	protected CommandNode(String info, Turtle turtle) {
 		this(info, DEFAULT_NUM_ARGS, new ArrayList<CommandNode>(), turtle, true);
 	}
 
@@ -44,11 +40,12 @@ class CommandNode {
 		catch (NumberFormatException e) {
 			isDouble = false; 
 		}
+		isString = isStringID;
 		myNumArgs = numArgs;
 		myChildren = new ArrayList<CommandNode>(); 
 		myChildren.addAll(children); 
 		myTurtle = turtle;
-		isString = isStringID;
+		
 	}
 
 	protected CommandNode(String info, int numArgs, List<CommandNode> children) {
@@ -61,7 +58,8 @@ class CommandNode {
 			isDouble = false; 
 		}
 		myNumArgs = numArgs;
-		myChildren = children; 
+		myChildren = children;
+		isString = false;
 	}
 
 	@Override

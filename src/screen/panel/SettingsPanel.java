@@ -1,14 +1,5 @@
 package screen.panel;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import screen.UserScreen;
 import java.util.List;
 
 import interpreter.BadFormatException;
@@ -16,7 +7,16 @@ import interpreter.Controller;
 import interpreter.MissingInformationException;
 import interpreter.TurtleNotFoundException;
 import interpreter.UnidentifiedCommandException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import screen.UserScreen;
 
 
 /**
@@ -73,7 +73,9 @@ public class SettingsPanel extends SpecificPanel  {
 	private ComboBox<Object> makeLanguageChooser(String itemID) {
 		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
 		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
-		//dropDownMenu.setTooltip(SELECTION_TIP);
+		Tooltip languageTip = new Tooltip();
+		languageTip.setText(selectionPrompt);
+		dropDownMenu.setTooltip(languageTip);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
 		simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());

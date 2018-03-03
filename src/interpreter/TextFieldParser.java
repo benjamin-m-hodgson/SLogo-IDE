@@ -31,7 +31,6 @@ import java.util.ResourceBundle;
 
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 /** 
  * @author Susie Choi
@@ -78,13 +77,14 @@ class TextFieldParser {
 	 */
 	protected double parseText(String userInputString) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String[] userInputByLine = userInputString.split("\\r?\\n");
+		//userInputByLine = userInputByLine.split("\\s+")
 		ArrayList<String> userInputList = new ArrayList<String>();
 		for (int i = 0; i < userInputByLine.length; i++) {
 			if (userInputByLine[i] != null && userInputByLine[i].length() > 0 && !userInputByLine[i].equals("")) {
 				userInputList.add(userInputByLine[i]);
 			}
 		}
-		
+
 		userInputByLine = userInputList.toArray(new String[userInputList.size()]);
 		String[] userInputTypes = new String[userInputByLine.length];
 
@@ -163,7 +163,6 @@ class TextFieldParser {
 	}
 
 	public void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
-		System.out.println("made it to textfieldparser");
 		myCommandMaker.addNewTurtle(name, turtleImage, penColor, penLines);
 	}
 
@@ -192,9 +191,10 @@ class TextFieldParser {
 			//					"fd 100\n" + 
 			//					"rt 90");
 			//			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
-			testingParser.parseText("fd\n #234\n50");
+			//			testingParser.parseText("fd\n #234\n50");
+			//			testingParser.parseText("to corner [ :length :width ] [ fd :length rt 90 bk :width ]");
 		} catch (Exception e) {
-
+			System.out.println("FAIL");
 		}
 	}
 

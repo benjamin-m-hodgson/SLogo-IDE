@@ -1,17 +1,17 @@
 package interpreter;
 
-import java.util.ArrayList;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import interpreter.TextFieldParser;
+
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -30,7 +30,7 @@ import screen.UserScreen;
  * to the front end. Also acts as a mediator and handles front end to back end communication.
  */
 public class Controller {
-
+    private final String RESOURCE_ERROR = "Could not find resource bundle";
     private final String FILE_ERROR_KEY = "FileErrorPrompt";
     private final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
     private final String SYNTAX_FILE_NAME = "Syntax.properties";
@@ -52,13 +52,13 @@ public class Controller {
     private TextFieldParser myTextFieldParser; 
 
     public Controller(Stage primaryStage) {
+	PROGRAM_STAGE = primaryStage;
 	myTextFieldParser = new TextFieldParser(); 
 	findSettings();
 	findResources(DEFAULT_LANGUAGE);
-	PROGRAM_STAGE = primaryStage;
 	PROGRAM_STAGE.setTitle(PROGRAM_TITLE);
     }
-    
+
     /**
      * Loads the StartScreen where the user selects an initial language and launches the program.
      */
@@ -72,7 +72,7 @@ public class Controller {
 	    Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	    programScene.getStylesheets().add(DEFAULT_CSS);
 	    PROGRAM_STAGE.setScene(programScene);
-	    PROGRAM_STAGE.show();	
+	    PROGRAM_STAGE.show();
 	}
 	catch (Exception e) {
 	    loadErrorScreen(resourceErrorText(SCREEN_ERROR_KEY));
@@ -123,9 +123,9 @@ public class Controller {
     }
 
     public Map<String, String> getUserDefined() {
-    	return myTextFieldParser.getUserDefined(); 
+	return myTextFieldParser.getUserDefined(); 
     }
-    
+
 
     /**
      * TODO: optimize this to return an unmodifiable version of the map
@@ -185,7 +185,7 @@ public class Controller {
 	}
 	catch (Exception e) {
 	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY) + System.lineSeparator()
-		    + resourceErrorText("LanguageFileError"));
+	    + resourceErrorText("LanguageFileError"));
 	}
 	return Collections.unmodifiableList(new ArrayList<String>());
 
@@ -238,7 +238,7 @@ public class Controller {
 	    return "";
 	}
     }
-    
+
     /**
      * Looks in the CURRENT_ERROR_DISPLAY resourceBundle to determine the String
      * that should be used to get the String used for error description.
@@ -247,9 +247,15 @@ public class Controller {
      * @return The string value @param key is assigned to in the .properties file
      */
     public String resourceErrorText(String key) {
-	return CURRENT_ERROR_DISPLAY.getString(key);
+	try {
+	    return CURRENT_ERROR_DISPLAY.getString(key);
+	}
+	catch (Exception e) {
+	    loadErrorScreen(RESOURCE_ERROR);
+	    return "";
+	}
     }
-    
+
     /**
      * Change the Language. Changes the prompts displayed in the user interface as well as
      * acceptable commands by changing the ResourceBundles used by the program.
@@ -309,7 +315,7 @@ public class Controller {
 	    }
 	}
     }
-    
+
     /**
      * Updates the color of lines to be drawn by the turtle
      * 
@@ -336,7 +342,7 @@ public class Controller {
 	    }
 	}
     }
-    
+
     /**
      * Searches through the class path to find the appropriate resource files to use for 
      * the program. If it can't locate the files, it displays an error screen to the user
@@ -363,11 +369,15 @@ public class Controller {
 		CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Errors", 
 			Locale.getDefault(), loader);
 	    }
+	    System.out.println(language);
 	    CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
 	    myTextFieldParser.changeLanguage(CURRENT_LANGUAGE);
 	}
-	catch (Exception e) {
+	catch (MalformedURLException e) {
 	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+	}
+	catch (Exception e) {
+	    loadErrorScreen(RESOURCE_ERROR);
 	}
     }
 
@@ -446,8 +456,12 @@ public class Controller {
 	catch (MalformedURLException e) {
 	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 	}
+	catch (Exception e) {
+	    e.printStackTrace();
+	    loadErrorScreen(RESOURCE_ERROR);
+	}
     }
-    
+
     /**
      * Looks in the CURRENT_SETTINGS resourceBundle to determine the String
      * that should be used to get the String used to define some program setting.

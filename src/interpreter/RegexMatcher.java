@@ -1,12 +1,12 @@
 package interpreter;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 public class RegexMatcher {
@@ -45,6 +45,9 @@ public class RegexMatcher {
 		for (Entry<String, Pattern> e : mySymbols) {
             if (match(text, e.getValue())) {
                 return e.getKey();
+            }
+            else if(text.equals(" ")||text.equals("")) {
+            		return "";
             }
         }
 		myExceptionFactory.getException(myFileName, text);
