@@ -25,6 +25,7 @@ class CommandTreeReader {
 	 * @return true if the tree is complete
 	 */
 	private boolean treeIsComplete(CommandNode root) {
+		System.out.println("reading a node");
 		if(root.getIsDouble()||root.getIsString()) {
 			return true;
 		}
@@ -43,9 +44,13 @@ class CommandTreeReader {
 	 * @return
 	 */
 	protected double readAndExecute(CommandNode root) throws UnidentifiedCommandException{
-		Command compressedCommand = compressTree(root);
-		System.out.println(compressedCommand.toString());
-		return compressedCommand.execute();	
+		if(treeIsComplete(root)) {
+			Command compressedCommand = compressTree(root);
+			return compressedCommand.execute();	
+		}
+		else {
+			throw new UnidentifiedCommandException("At least one command does not have the proper number of arguments");
+		}
 	}
 	
 	/**
@@ -56,13 +61,19 @@ class CommandTreeReader {
 	 */
 	private Command compressTree(CommandNode root) {
 		ArrayList<Command> args = new ArrayList<>();
+		System.out.println("root info" + root.getInfo());
+		System.out.println("children number" + root.getNumChildren());
 		if(root.getIsDouble()) {
 			return myCommandFactory.makeDoubleCommand(root.getInfo());
 		}
-		//TODO: StringCommand
+		if(root.getIsString()) {
+			return myCommandFactory.makeCommand(root.getInfo(), args, root.getTurtle());
+		}
 		for(CommandNode k: root.getChildren()) {
+			System.out.println("child info" + k.getInfo());
 			args.add(compressTree(k));
 		}
+		System.out.println("Making a command");
 		return myCommandFactory.makeCommand(root.getInfo(), args, root.getTurtle());
 	}
 	
