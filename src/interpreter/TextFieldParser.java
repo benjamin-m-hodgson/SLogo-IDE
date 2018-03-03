@@ -75,24 +75,28 @@ class TextFieldParser {
 	 * @throws UnidentifiedCommandException 
 	 * @throws BadFormatException 
 	 */
+	/**
+	 * Returns a Queue of commands given a String of concatenated commands (chops up the commands 
+	 * and sends them individually to CommandMaker)
+	 * @throws TurtleNotFoundException 
+	 * @throws MissingInformationException 
+	 * @throws UnidentifiedCommandException 
+	 * @throws BadFormatException 
+	 */
 	protected double parseText(String userInputString) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String[] userInputByLine = userInputString.split("\\r?\\n");
-		//userInputByLine = userInputByLine.split("\\s+")
 		ArrayList<String> userInputList = new ArrayList<String>();
 		for (int i = 0; i < userInputByLine.length; i++) {
-			if (userInputByLine[i] != null && userInputByLine[i].length() > 0 && !userInputByLine[i].equals("")) {
+			if (userInputByLine[i] != null && userInputByLine[i].length() > 0) {
 				userInputList.add(userInputByLine[i]);
 			}
 		}
-
 		userInputByLine = userInputList.toArray(new String[userInputList.size()]);
 		String[] userInputTypes = new String[userInputByLine.length];
 
 		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
 		for (int idx = 0; idx < userInputByLine.length; idx++) { 
-			userInputByLine[idx] = userInputByLine[idx].replace(" ","");
-			userInputTypes[idx] = regexMatcher.findMatchingKey(userInputByLine[idx]);
-			System.out.println(userInputTypes[idx]);
+			userInputTypes[idx] = regexMatcher.findMatchingKey(userInputByLine[idx].substring(0, 1));
 		}
 
 		ArrayList<String> nonCommentInputByLine = new ArrayList<String>();
@@ -121,6 +125,8 @@ class TextFieldParser {
 		//		}
 		return parseTextArray(tokenizedInputArray);
 	}
+
+	
 
 	private double parseTextArray(String[] userInputArray) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String[] listOfTypes = new String[userInputArray.length];
