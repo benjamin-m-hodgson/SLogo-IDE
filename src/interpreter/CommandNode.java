@@ -44,11 +44,15 @@ class CommandNode {
 		catch (NumberFormatException e) {
 			isDouble = false; 
 		}
+		isString = isStringID;
+		if(isString) {
+			isDouble = false;
+		}
 		myNumArgs = numArgs;
 		myChildren = new ArrayList<CommandNode>(); 
 		myChildren.addAll(children); 
 		myTurtle = turtle;
-		isString = isStringID;
+		
 	}
 
 	protected CommandNode(String info, int numArgs, List<CommandNode> children) {
