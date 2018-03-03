@@ -679,6 +679,7 @@ class CommandTreeBuilder {
 		}
 		return false; 
 	}
+	
 //	private int searchForBracket(int currIdxCopy, String[] userInput, String bracketIdentifier) throws BadFormatException, UnidentifiedCommandException, MissingInformationException{
 //		int bracketNeededCount = 1;
 //		int bracketSeenCount = 0;
