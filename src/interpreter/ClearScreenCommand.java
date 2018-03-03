@@ -21,6 +21,7 @@ class ClearScreenCommand extends Command{
      * @return distance turtle moved
      * @see interpreter.Command#execute()
      */
+    @Override
     protected double execute() {
 	double returnVal = myTurtle.setXY(0, 0);
 	myTurtle.setAngle(0);

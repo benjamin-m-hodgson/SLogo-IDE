@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
 
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 /** 
  * @author Susie Choi

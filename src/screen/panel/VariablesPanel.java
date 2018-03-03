@@ -1,5 +1,10 @@
 package screen.panel;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
+import interpreter.Controller;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
@@ -13,11 +18,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import screen.UserScreen;
-
-import java.util.Map;
-import java.util.Map.Entry;
-
-import interpreter.Controller;
 
 /**
  * 
@@ -45,7 +45,7 @@ public class VariablesPanel extends SpecificPanel {
 	KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
 		e -> populateVariableBox(SECOND_DELAY));
 	Timeline animation = new Timeline();
-	animation.setCycleCount(Timeline.INDEFINITE);
+	animation.setCycleCount(Animation.INDEFINITE);
 	animation.getKeyFrames().add(frame);
 	animation.play();
     }

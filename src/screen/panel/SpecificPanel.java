@@ -1,9 +1,9 @@
 package screen.panel;
 
+import interpreter.Controller;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import screen.UserScreen;
-import interpreter.Controller;
 
 /**
  * The abstract class, which implements panel, for the specific sub-panels in the right sidebar. 
