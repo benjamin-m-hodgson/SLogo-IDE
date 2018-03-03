@@ -35,6 +35,7 @@ class DoTimesCommand extends Command{
 			}
 			catch(Exception e){
 				//TODO fix this! Don't just throw another exception
+				e.printStackTrace();
 				throw new UnidentifiedCommandException("There was a problem within one of your loops.");
 			}
 
