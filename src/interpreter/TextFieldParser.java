@@ -96,6 +96,7 @@ class TextFieldParser {
 
 		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
 		for (int idx = 0; idx < userInputByLine.length; idx++) { 
+//			System.out.println("regex!"+regexMatcher.findMatchingKey(userInputByLine[idx]));
 			userInputTypes[idx] = regexMatcher.findMatchingKey(userInputByLine[idx].substring(0, 1));
 		}
 
@@ -197,7 +198,7 @@ class TextFieldParser {
 			//					"fd 100\n" + 
 			//					"rt 90");
 			//			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
-						testingParser.parseText("fd sum 100 :a");
+//						testingParser.parseText("fd sum 100 :a");
 			//			testingParser.parseText("to corner [ :length :width ] [ fd :length rt 90 bk :width ]");
 		} catch (Exception e) {
 			System.out.println("FAIL");
