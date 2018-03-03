@@ -197,7 +197,7 @@ class CommandTreeBuilder {
 	//			}
 	//			//		if (commandTypes[currIdx].equals("DEFAULT_IF_IDENTIFIER")) { 
 	//			//			// currIdx = 
-	//			//			parseIf(turtle, userInput, commandTypes, allInputTypes, currIdx); // TODO consider if's parent 
+	//			//			parseIf(turtle, userInput, commandTypes, allInputTypes, currIdx);
 	//			//			System.out.println("returning");
 	//			//			return; 
 	//			//		}
@@ -212,7 +212,7 @@ class CommandTreeBuilder {
 	//					if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
 	//						createAndSetChildren(turtle, newCommandNode, userInput, idx+1, false);
 	//					}
-	//					for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) { // TODO re-evaluate back-track for when do times comes into the picture....
+	//					for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) { 
 	//						int backTrackNumArgs = getNumArgs(userInput[backtrack]);
 	//						CommandNode backtrackCommandNode = new CommandNode(userInput[backtrack], backTrackNumArgs, newCommandNode, turtle);
 	//						newCommandNode = backtrackCommandNode; 
@@ -237,7 +237,7 @@ class CommandTreeBuilder {
 	//						if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
 	//							createAndSetChildren(turtle, newCommandNode, userInput, idx+1, false);
 	//						}
-	//						for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) { // TODO re-evaluate back-track for when do times comes into the picture....
+	//						for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) {
 	//							int backTrackNumArgs = getNumArgs(userInput[backtrack]);
 	//							CommandNode backtrackCommandNode = new CommandNode(userInput[backtrack], backTrackNumArgs, newCommandNode, turtle);
 	//							newCommandNode = backtrackCommandNode; 
@@ -261,7 +261,6 @@ class CommandTreeBuilder {
 	//	}
 
 	// THIS IS THE RIGHT ONE
-	// TODO account for when no-arg commands are used as children (instead of double)
 	private void createAndSetChildren(Turtle turtle, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		//int currIdxNonRepeat = currIdx + 1; CHANGED THIS
 		if ((currIdx) >= userInput.length) { //base case if out of bounds
@@ -296,7 +295,7 @@ class CommandTreeBuilder {
 		catch (NumberFormatException e) {
 			//		if (commandTypes[currIdx].equals("DEFAULT_IF_IDENTIFIER")) { 
 			//			// currIdx = 
-			//			parseIf(turtle, userInput, commandTypes, allInputTypes, currIdx); // TODO consider if's parent 
+			//			parseIf(turtle, userInput, commandTypes, allInputTypes, currIdx);
 			//			System.out.println("returning");
 			//			return; 
 			//		}
