@@ -54,8 +54,22 @@ class CommandTreeBuilder {
 	protected double buildAndExecute(Turtle turtle, String[] userInput, boolean shouldExecute) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		double finalReturnVal = -1; 
 		myCommandTrees.clear(); 
-		createCommandTree(turtle, userInput, 0);
-		System.out.println("command tree number: " + myCommandTrees.size());
+		int currIdx = 0;
+		while(currIdx<userInput.length) {
+			try {
+				Double doubleArg = Double.parseDouble(userInput[currIdx]);
+				myCommandTrees.add(new CommandNode(userInput[currIdx], 0, turtle));
+				currIdx++;
+			}
+			catch(NumberFormatException e) {
+				break;
+			}
+		}
+		if(!(currIdx>=userInput.length)) {
+			createCommandTree(turtle, userInput, currIdx);
+			System.out.println("command tree number: " + myCommandTrees.size());
+		}
+		
 		
 		//System.out.println("command tree number bigger: " + myCommandTrees.size());
 //		for (CommandNode n : myCommandTrees) {
@@ -562,11 +576,12 @@ class CommandTreeBuilder {
 		while(!userInput[currIdxCopy].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
 			currIdxCopy++;
 		}
+		System.out.println("currIdx " + currIdx + "currIdxCopy" + currIdxCopy);
 		CommandTreeBuilder tempBuilder = new CommandTreeBuilder(myNumArgsFileName, myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
 		tempBuilder.buildAndExecute(turtle, Arrays.copyOfRange(userInput, currIdx, currIdxCopy), false);
 		List<CommandNode> discreteCommands = tempBuilder.getCommandTrees();
+		System.out.println("discreteCommands" + discreteCommands.size());
 		for(CommandNode n: discreteCommands) {
-			//System.out.println("angle" + n.getTurtle());
 			parent.addChild(n);
 		}
 		
@@ -641,7 +656,7 @@ class CommandTreeBuilder {
 		CommandNode userCommandNameNode = new CommandNode(userCommandName, numArgs, turtle, true); 
 		createAndSetChildren(turtle, userCommandNameNode, userInput, startIdx+1, false); // verifying correct # children
 		
-		CommandNode userCommandArgsNode = new CommandNode("a"+userCommandNameNode.childrenToString()); 
+		CommandNode userCommandArgsNode = new CommandNode(("a"+userCommandNameNode.childrenToString()), turtle); 
 		
 		CommandNode userCommandNode = new CommandNode(DEFAULT_USERCOMMAND_NAME, 1, userCommandNameNode, turtle);
 		userCommandNode.addChild(userCommandArgsNode);

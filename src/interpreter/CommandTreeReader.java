@@ -25,7 +25,7 @@ class CommandTreeReader {
 	 * @return true if the tree is complete
 	 */
 	private boolean treeIsComplete(CommandNode root) {
-		System.out.println("reading a node");
+		//System.out.println("reading a node");
 		if(root.getIsDouble()||root.getIsString()) {
 			return true;
 		}
@@ -35,7 +35,7 @@ class CommandTreeReader {
 				completedChildren++;
 			}
 		}
-		//System.out.println(completedChildren);
+		System.out.println("completed children: " + completedChildren);
 		return completedChildren==root.getNumArgs();
 	}
 	/**
@@ -61,8 +61,8 @@ class CommandTreeReader {
 	 */
 	private Command compressTree(CommandNode root) {
 		ArrayList<Command> args = new ArrayList<>();
-		System.out.println("root info" + root.getInfo());
-		System.out.println("children number" + root.getNumChildren());
+		//System.out.println("root info" + root.getInfo());
+		//System.out.println("children number" + root.getNumChildren());
 		if(root.getIsDouble()) {
 			return myCommandFactory.makeDoubleCommand(root.getInfo());
 		}
@@ -73,7 +73,7 @@ class CommandTreeReader {
 			System.out.println("child info" + k.getInfo());
 			args.add(compressTree(k));
 		}
-		System.out.println("Making a command");
+		//System.out.println("Making a command");
 		return myCommandFactory.makeCommand(root.getInfo(), args, root.getTurtle());
 	}
 	
