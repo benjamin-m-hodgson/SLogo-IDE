@@ -224,7 +224,7 @@ public class Turtle {
 	
 	protected void setAngle(double angle) {
 		myAngle = angle;
-		System.out.println("angle is: "  + angle);
+		System.out.println("angle" + myAngle);
 		myImage.setRotate(angle);
 	}
 

@@ -24,6 +24,7 @@ public class CommandFactory {
 
 	public Command makeCommand(String commandName, List<Command> commandArgs, Turtle turtle) {
 		if(commandName.equals("Forward")) {
+			System.out.println("making a forward command");
 			return new MoveTurtleForwardCommand(commandArgs.get(0), turtle, myVariables);
 		}
 		else if(commandName.equals("Backward")) {
