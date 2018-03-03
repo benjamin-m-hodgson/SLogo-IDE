@@ -109,11 +109,11 @@ class CommandTreeBuilder {
 				int startAfterIfElse = parseIfElse(turtle, userInput, startIdx); 
 				return createCommandTree(turtle, userInput, startAfterIfElse);
 			}
-			if (currCommand.equals(DEFAULT_DOTIMES_IDENTIFIER)) { 
-				CommandNode tempParentNode = new CommandNode(userInput[startIdx], 3, turtle);
-				int startAfterDoTimes = createAndSetDoTimesChildren(turtle, tempParentNode, userInput, startIdx+1, true); 
-				return createCommandTree(turtle, userInput, startAfterDoTimes);
-			}
+//			if (currCommand.equals(DEFAULT_DOTIMES_IDENTIFIER)) { 
+//				CommandNode tempParentNode = new CommandNode(userInput[startIdx], 3, turtle);
+//				int startAfterDoTimes = createAndSetDoTimesChildren(turtle, tempParentNode, userInput, startIdx+1, true); 
+//				return createCommandTree(turtle, userInput, startAfterDoTimes);
+//			}
 //			if (currCommand.equals(DEFAULT_REPEAT_IDENTIFIER)) {
 //				CommandNode tempParentNode = new CommandNode(userInput[startIdx], 3, turtle);
 //				int startAfterRepeat = createAndSetRepeatChildren(turtle, tempParentNode, userInput, startIdx+1, true); 
@@ -129,11 +129,11 @@ class CommandTreeBuilder {
 				return null; // TODO FIX THIS 
 //				return createCommandTree(turtle, userInput, startAfterUserCommand);
 			}
-			if (currCommand.equals(DEFAULT_FOR_IDENTIFIER)) {
-				CommandNode tempParentNode = new CommandNode(userInput[startIdx], 5, turtle);
-				int startAfterFor = createAndSetForChildren(turtle, tempParentNode, userInput, startIdx+1, true); 
-				return createCommandTree(turtle, userInput, startAfterFor);
-			}
+//			if (currCommand.equals(DEFAULT_FOR_IDENTIFIER)) {
+//				CommandNode tempParentNode = new CommandNode(userInput[startIdx], 5, turtle);
+//				int startAfterFor = createAndSetForChildren(turtle, tempParentNode, userInput, startIdx+1, true); 
+//				return createCommandTree(turtle, userInput, startAfterFor);
+//			}
 			int numArgs = getNumArgs(currCommand);
 			CommandNode newParentNode = new CommandNode(currCommand, numArgs, turtle);
 			while (newParentNode.getNumArgs() == 0 ) { // accounts for multiple 1-arg arguments before args that need child nodes 
@@ -280,6 +280,11 @@ class CommandTreeBuilder {
 		if(userInput[currIdx-1].equals(DEFAULT_DOTIMES_IDENTIFIER)) { //CHANGED CURRIDX-1
 			int afterDoTimes = createAndSetDoTimesChildren(turtle, parent, userInput, currIdx, addToTrees);
 			createCommandTree(turtle, userInput, afterDoTimes);
+			return;
+		}
+		if(userInput[currIdx-1].equals(DEFAULT_FOR_IDENTIFIER)) { //CHANGED CURRIDX-1
+			int afterFor = createAndSetForChildren(turtle, parent, userInput, currIdx, addToTrees);
+			createCommandTree(turtle, userInput, afterFor);
 			return;
 		}
 		
@@ -627,7 +632,7 @@ class CommandTreeBuilder {
 		else {
 			throw new UnidentifiedCommandException("Repeat syntax incorrect");
 		}
-		currIdx++;
+		//currIdx++;
 		return currIdx;
 		
 	}
