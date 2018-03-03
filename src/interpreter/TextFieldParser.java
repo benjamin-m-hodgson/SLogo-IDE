@@ -80,16 +80,19 @@ class TextFieldParser {
 		//userInputByLine = userInputByLine.split("\\s+")
 		ArrayList<String> userInputList = new ArrayList<String>();
 		for (int i = 0; i < userInputByLine.length; i++) {
-			if (userInputByLine[i] != null && userInputByLine[i].length() > 0) {
+			if (userInputByLine[i] != null && userInputByLine[i].length() > 0 && !userInputByLine[i].equals("")) {
 				userInputList.add(userInputByLine[i]);
 			}
 		}
+
 		userInputByLine = userInputList.toArray(new String[userInputList.size()]);
 		String[] userInputTypes = new String[userInputByLine.length];
 
 		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
 		for (int idx = 0; idx < userInputByLine.length; idx++) { 
-			userInputTypes[idx] = regexMatcher.findMatchingKey(userInputByLine[idx].substring(0, 1));
+			userInputByLine[idx] = userInputByLine[idx].replace(" ","");
+			userInputTypes[idx] = regexMatcher.findMatchingKey(userInputByLine[idx]);
+			System.out.println(userInputTypes[idx]);
 		}
 
 		ArrayList<String> nonCommentInputByLine = new ArrayList<String>();
@@ -103,7 +106,7 @@ class TextFieldParser {
 		for (int idx = 0; idx < nonCommentInputByLine.size(); idx ++) {
 			String[] whiteSpaceSplitLine = nonCommentInputByLine.get(idx).split("\\s+");
 			for (String token : whiteSpaceSplitLine) {
-				if (token.length() > 0 ) {
+				if (token.length() > 0 && !token.equals("")) {
 					tokenizedInput.add(token);
 				}
 			}
@@ -188,28 +191,8 @@ class TextFieldParser {
 			//					"fd 100\n" + 
 			//					"rt 90");
 			//			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
-			testingParser.parseText("to corner [ :length :width ] [ fd :length rt 90 bk :width ]");
-			//			testingParser.parseText("fd fd fd pd"); // CHECK AGAIN
-
-			//Double test = testingParser.parseText("for [ :k fd 0 fd 5 fd 1 ] [ fd 1 ]");
-			//			Double test = testingParser.parseText("repeat 2 [ repeat 2 \n [ fd 50 rt 90 ] ]");
-			//			System.out.println("returns: ");
-			//			System.out.println(test.toString());
-			//			testingParser.parseText("fd 1 rt / sin 20 2");
-			//			testingParser.parseText("fd rt fd 50 bk 30");
-			//			testingParser.parseText("fd rt bk 50");
-			//testingParser.parseText("fd 50\n\n\nbk 50");
-			//			testingParser.parseText("fd rt 100");
-			//			testingParser.parseText("fd 100\n" + 
-			//					"rt 90\n" + 
-			//					"fd 100\n" + 
-			//					"rt 90\n" + 
-			//					"fd 100\n" + 
-			//					"rt 90\n" + 
-			//					"fd 100\n" + 
-			//					"rt 90");
-			//			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
-			//	testingParser.parseText("to line [ :length ] [ fd :length ]");
+			//			testingParser.parseText("fd\n #234\n50");
+			//			testingParser.parseText("to corner [ :length :width ] [ fd :length rt 90 bk :width ]");
 		} catch (Exception e) {
 			System.out.println("FAIL");
 		}

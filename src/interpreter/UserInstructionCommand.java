@@ -23,6 +23,7 @@ class UserInstructionCommand extends Command {
 		Matcher m = r.matcher(unparsedCommContent);
 		int count = 0;
 		while (m.find() && count < 2) {
+			System.out.println(count+" "+unparsedCommContent.substring(m.start()+2, m.end()-2));
 			parsedCommContent.add(unparsedCommContent.substring(m.start()+2, m.end()-2));
 			count++; 
 		}		
@@ -53,11 +54,11 @@ class UserInstructionCommand extends Command {
 		try {
 			retVal = myBuilder.buildAndExecute(myTurtle, myUserCommContent, true);
 		} catch (BadFormatException e) {
-			// TODO ELABORATE
+			e.printStackTrace();
 		} catch (MissingInformationException e) {
-			// TODO ELABORATE
+			e.printStackTrace();
 		} catch (UnidentifiedCommandException e) {
-			// TODO ELABORATE
+			e.printStackTrace();
 		}
 		return retVal; 
 	}
