@@ -548,13 +548,13 @@ class CommandTreeBuilder {
 		}
 		parent.addChild(new CommandNode(":repcount", turtle));
 //		//adding temporary variable name to children
-			int repeatCount = 1;
-			int startBracketCount = 0;
+		//	int repeatCount = 1;
+		//	int startBracketCount = 0;
 			//currIdx++;
 			int currIdxCopy = currIdx;
 			currIdxCopy++;
 			try {
-				currIdxCopy = searchForBracket(currIdxCopy, userInput, DEFAULT_BRACKET_START_IDENTIFIER);
+				currIdxCopy = searchForBracket(currIdxCopy, userInput, DEFAULT_BRACKET_START_IDENTIFIER, 1);
 //				while( startBracketCount!= repeatCount) {
 //					if(userInput[currIdxCopy].equals(DEFAULT_BRACKET_START_IDENTIFIER)) {
 //						startBracketCount++;
@@ -576,7 +576,7 @@ class CommandTreeBuilder {
 		//adding string info to children
 		System.out.println("current input " + userInput[currIdx]);
 		if(userInput[currIdx].equals(DEFAULT_BRACKET_START_IDENTIFIER)) {
-			repeatCount = 1;
+			int repeatCount = 1;
 			int endBracketCount = 0;
 			currIdx++;
 			String repeatedCommand = userInput[currIdx];
@@ -584,8 +584,7 @@ class CommandTreeBuilder {
 				repeatCount++;
 			}
 			currIdx++;
-			
-			//currIdx = searchForBracket(currIdx, userInput, DEFAULT_BRACKET_END_IDENTIFIER);
+			currIdxCopy = searchForBracket(currIdx, userInput, DEFAULT_BRACKET_END_IDENTIFIER, repeatCount);
 			while( endBracketCount < repeatCount) {
 				System.out.println("checking" + userInput[currIdx]);
 				if(userInput[currIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)){
@@ -600,6 +599,10 @@ class CommandTreeBuilder {
 				System.out.println("repeatcount: " + repeatCount);
 				currIdx++;
 			}
+//			for(int k = 0; k < currIdxCopy; k+=1) {
+//				repeatedCommand = String.join(" ", repeatedCommand, userInput[currIdx]);
+//			}
+			//currIdx = currIdxCopy;
 			if(!(userInput[currIdx-1].equals(DEFAULT_BRACKET_END_IDENTIFIER))) {
 				throw new BadFormatException("Brackets are messed up in Repeat");
 			}
@@ -753,28 +756,18 @@ class CommandTreeBuilder {
 		return false; 
 	}
 	
-	private int searchForBracket(int currIdxCopy, String[] userInput, String bracketIdentifier) throws BadFormatException, UnidentifiedCommandException, MissingInformationException{
-		int bracketNeededCount = 1;
+	private int searchForBracket(int currIdxCopy, String[] userInput, String bracketIdentifier, int initialNeeded) throws BadFormatException, UnidentifiedCommandException, MissingInformationException{
+		int bracketNeededCount = initialNeeded;
 		int bracketSeenCount = 0;
 		while(bracketSeenCount != bracketNeededCount) {
-			System.out.println(userInput[currIdxCopy]);
+			//System.out.println(userInput[currIdxCopy]);
 			if(userInput[currIdxCopy].equals(bracketIdentifier)) {
 				bracketSeenCount++;
 			}
-			System.out.println("bracket userInput" + userInput[currIdxCopy] + "bracketNum " + getNumBrackets(userInput[currIdxCopy]));
+			//System.out.println("bracket userInput" + userInput[currIdxCopy] + "bracketNum " + getNumBrackets(userInput[currIdxCopy]));
 			bracketNeededCount = bracketNeededCount + getNumBrackets(userInput[currIdxCopy]);
 			currIdxCopy++;
 		}
 		return currIdxCopy;
 	}
-//	while( startBracketCount!= repeatCount) {
-//		if(userInput[currIdxCopy].equals(DEFAULT_BRACKET_START_IDENTIFIER)) {
-//			startBracketCount++;
-//		}
-//		if(userInput[currIdxCopy].equals(DEFAULT_REPEAT_IDENTIFIER)){
-//			repeatCount++;
-//		}
-//		currIdxCopy++;
-//	}
-
 }
