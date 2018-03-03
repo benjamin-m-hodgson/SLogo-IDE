@@ -33,7 +33,6 @@ class MoveTurtleForwardCommand extends Command {
 	 * @see interpreter.Command#execute()
 	 */
 	protected double execute() throws UnidentifiedCommandException{
-		System.out.println("executing fd");
 		double forwardDist = getCommandValue(myForwardDistCommand, myVariables);
 		double angle = Math.toRadians(myTurtle.getAngle());
 		myTurtle.setXY(myTurtle.getX()-forwardDist*Math.sin(-angle), myTurtle.getY()-forwardDist*Math.cos(-angle));
