@@ -55,6 +55,10 @@ class CommandTreeBuilder {
 		double finalReturnVal = -1; 
 		myCommandTrees.clear(); 
 		int currIdx = 0;
+		System.out.println("current user input: " + userInput[currIdx]);
+		if(myVariables.containsKey(userInput[currIdx])) {
+			userInput[currIdx] = myVariables.get(userInput[currIdx]).toString();
+		}
 		while(currIdx<userInput.length) {
 			try {
 				Double doubleArg = Double.parseDouble(userInput[currIdx]);
@@ -106,11 +110,11 @@ class CommandTreeBuilder {
 				int startAfterIfElse = parseIfElse(turtle, userInput, startIdx); 
 				return createCommandTree(turtle, userInput, startAfterIfElse);
 			}
-			if (currCommand.equals(DEFAULT_DOTIMES_IDENTIFIER)) { 
-				CommandNode tempParentNode = new CommandNode(userInput[startIdx], 3, turtle);
-				int startAfterDoTimes = createAndSetDoTimesChildren(turtle, tempParentNode, userInput, startIdx+1, true); 
-				return createCommandTree(turtle, userInput, startAfterDoTimes);
-			}
+//			if (currCommand.equals(DEFAULT_DOTIMES_IDENTIFIER)) { 
+//				CommandNode tempParentNode = new CommandNode(userInput[startIdx], 3, turtle);
+//				int startAfterDoTimes = createAndSetDoTimesChildren(turtle, tempParentNode, userInput, startIdx+1, true); 
+//				return createCommandTree(turtle, userInput, startAfterDoTimes);
+//			}
 //			if (currCommand.equals(DEFAULT_REPEAT_IDENTIFIER)) {
 //				CommandNode tempParentNode = new CommandNode(userInput[startIdx], 3, turtle);
 //				int startAfterRepeat = createAndSetRepeatChildren(turtle, tempParentNode, userInput, startIdx+1, true); 
@@ -126,11 +130,11 @@ class CommandTreeBuilder {
 				return null; // TODO FIX THIS 
 //				return createCommandTree(turtle, userInput, startAfterUserCommand);
 			}
-			if (currCommand.equals(DEFAULT_FOR_IDENTIFIER)) {
-				CommandNode tempParentNode = new CommandNode(userInput[startIdx], 5, turtle);
-				int startAfterFor = createAndSetForChildren(turtle, tempParentNode, userInput, startIdx+1, true); 
-				return createCommandTree(turtle, userInput, startAfterFor);
-			}
+//			if (currCommand.equals(DEFAULT_FOR_IDENTIFIER)) {
+//				CommandNode tempParentNode = new CommandNode(userInput[startIdx], 5, turtle);
+//				int startAfterFor = createAndSetForChildren(turtle, tempParentNode, userInput, startIdx+1, true); 
+//				return createCommandTree(turtle, userInput, startAfterFor);
+//			}
 			int numArgs = getNumArgs(currCommand);
 			CommandNode newParentNode = new CommandNode(currCommand, numArgs, turtle);
 			while (newParentNode.getNumArgs() == 0 ) { // accounts for multiple 1-arg arguments before args that need child nodes 
@@ -275,6 +279,17 @@ class CommandTreeBuilder {
 			createCommandTree(turtle, userInput, afterRepeat);
 			return;
 		}
+		if(userInput[currIdx-1].equals(DEFAULT_DOTIMES_IDENTIFIER)) { //CHANGED CURRIDX-1
+			int afterDoTimes = createAndSetDoTimesChildren(turtle, parent, userInput, currIdx, addToTrees);
+			createCommandTree(turtle, userInput, afterDoTimes);
+			return;
+		}
+		if(userInput[currIdx-1].equals(DEFAULT_FOR_IDENTIFIER)) { //CHANGED CURRIDX-1
+			int afterFor = createAndSetForChildren(turtle, parent, userInput, currIdx, addToTrees);
+			createCommandTree(turtle, userInput, afterFor);
+			return;
+		}
+		
 //		currIdx++;
 //				System.out.println(userInput[currIdx]);
 		Double firstIsDouble; 
@@ -462,7 +477,9 @@ class CommandTreeBuilder {
 	}
 
 	private int createAndSetDoTimesChildren(Turtle turtle, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		myCommandTrees.add(parent);
+		if (addToTrees) {
+			myCommandTrees.add(parent);
+		}
 		//System.out.println("command trees size within create and set dotimes children: " + myCommandTrees.size());
 		//adding temporary variable name to children
 		if(userInput[currIdx].equals(DEFAULT_BRACKET_START_IDENTIFIER)) {
@@ -519,7 +536,7 @@ class CommandTreeBuilder {
 		else {
 			throw new UnidentifiedCommandException("Dotimes syntax incorrect");
 		}
-		currIdx++;
+		//currIdx++;
 		return currIdx;
 	}
 	private int createAndSetRepeatChildren(Turtle turtle, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
@@ -647,7 +664,7 @@ class CommandTreeBuilder {
 		else {
 			throw new UnidentifiedCommandException("Repeat syntax incorrect");
 		}
-		currIdx++;
+		//currIdx++;
 		return currIdx;
 		
 	}
