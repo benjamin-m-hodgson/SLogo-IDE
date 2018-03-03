@@ -1,6 +1,5 @@
 package interpreter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -53,6 +52,7 @@ class CommandTreeReader {
 			throw new UnidentifiedCommandException("At least one command does not have the proper number of arguments");
 		}
 	}
+	
 	/**
 	 * Compressed the CommandNodeTree into a single Command with Command arguments (which, in turn, may have Command
 	 * arguments, etc.) that can be executed as part of the Command Queue
@@ -76,6 +76,7 @@ class CommandTreeReader {
 		System.out.println("Making a command");
 		return myCommandFactory.makeCommand(root.getInfo(), args, root.getTurtle());
 	}
+	
 //	public static void main(String[] args) {
 //		Turtle turtle = new Turtle();
 //		CommandNode forty = new CommandNode("40", turtle);

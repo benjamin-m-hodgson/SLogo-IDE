@@ -1,5 +1,9 @@
 package interpreter;
 
+import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 //public interface Turtle {
 //
 ///**
@@ -44,11 +48,7 @@ package interpreter;
 //
 //}
 
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * @author Sarahbland - Pen inner class

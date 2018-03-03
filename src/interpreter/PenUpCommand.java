@@ -18,6 +18,7 @@ class PenUpCommand extends Command{
      * Puts turtle's pen up, so that subsequent movements will not leave a trail
      * @return 0 always
      */
+    @Override
     protected double execute() {
 	myTurtle.hidePen();
 	return 0;

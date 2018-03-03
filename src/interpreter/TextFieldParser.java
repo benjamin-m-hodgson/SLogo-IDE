@@ -31,7 +31,6 @@ import java.util.ResourceBundle;
 
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 /** 
  * @author Susie Choi
@@ -89,7 +88,7 @@ class TextFieldParser {
 		String[] userInputTypes = new String[userInputByLine.length];
 
 		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
-		for (int idx = 0; idx < userInputByLine.length; idx++) {
+		for (int idx = 0; idx < userInputByLine.length; idx++) { 
 			userInputTypes[idx] = regexMatcher.findMatchingKey(userInputByLine[idx].substring(0, 1));
 		}
 
@@ -104,33 +103,33 @@ class TextFieldParser {
 		for (int idx = 0; idx < nonCommentInputByLine.size(); idx ++) {
 			String[] whiteSpaceSplitLine = nonCommentInputByLine.get(idx).split("\\s+");
 			for (String token : whiteSpaceSplitLine) {
-				if(token.length()>0 && !token.equals("")) {
+				if (token.length() > 0 ) {
 					tokenizedInput.add(token);
-				}	
+				}
 			}
 		}
 
 		String[] tokenizedInputArray = tokenizedInput.toArray(new String[tokenizedInput.size()]);
-//		for (String s : tokenizedInputArray) {
-//			System.out.println(s);
-//		}
-//		for (String s : tokenizedInputArray) {
-//			System.out.println(s);
-//		}
+		//		for (String s : tokenizedInputArray) {
+		//			System.out.println(s);
+		//		}
+		//		for (String s : tokenizedInputArray) {
+		//			System.out.println(s);
+		//		}
 		return parseTextArray(tokenizedInputArray);
 	}
 
 	private double parseTextArray(String[] userInputArray) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String[] listOfTypes = new String[userInputArray.length];
 		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
-		
+
 		for (int idx = 0; idx < userInputArray.length; idx++) {
 			listOfTypes[idx] = regexMatcher.findMatchingKey(userInputArray[idx]);
-//			System.out.println(listOfTypes[idx]+" "+userInputArray[idx]);
+			//			System.out.println(listOfTypes[idx]+" "+userInputArray[idx]);
 		}
-//		for (String s : userInputArray) System.out.println(s);
+		//		for (String s : userInputArray) System.out.println(s);
 		double finalReturnVal = myCommandMaker.parseValidTextArray(userInputArray[0], userInputArray, listOfTypes); // TODO consider special case in which turtle name is command name; 
-		
+
 		return finalReturnVal; 
 	}
 
@@ -159,7 +158,7 @@ class TextFieldParser {
 	protected void changeLanguage(ResourceBundle languageBundle) {
 		myCommandMaker.changeLanguage(languageBundle);
 	}
-	
+
 	public void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
 		myCommandMaker.addNewTurtle(name, turtleImage, penColor, penLines);
 	}
@@ -167,30 +166,50 @@ class TextFieldParser {
 	public static void main(String[] args) {
 		TextFieldParser testingParser = new TextFieldParser();
 		try {
-//			testingParser.parseText("ifelse less? 5 5 [ fd 50 ] [ bk 30 ] rt 90");
-//			testingParser.parseText("if less? 1 5 [ fd 50 ] rt 90");
+			//			testingParser.parseText("ifelse less? 5 5 [ fd 50 ] [ bk 30 ] rt 90");
+			//			testingParser.parseText("if less? 1 5 [ fd 50 ] rt 90");
 			//			testingParser.parseText("pd pd pd pd fd 50");
-//			testingParser.parseText("fd fd fd pd"); // CHECK AGAIN
-		
-			//Double test = testingParser.parseText("for [ :k fd 0 fd 5 fd 1 ] [ fd 1 ]");
-			Double test = testingParser.parseText("repeat 2 [ repeat 2 \n [ fd 50 rt 90 ] ]");
-			System.out.println("returns: ");
-			System.out.println(test.toString());
-//			testingParser.parseText("fd 1 rt / sin 20 2");
-//			testingParser.parseText("fd rt fd 50 bk 30");
-//			testingParser.parseText("fd rt bk 50");
+			//			testingParser.parseText("fd fd fd pd"); // CHECK AGAIN
+
+			//			Double test = testingParser.parseText("for [ :k fd 0 fd 5 fd 1 ] [ fd 1 ]");
+			//			System.out.println("returns: ");
+			//			System.out.println(test.toString());
+			//			testingParser.parseText("fd 1 rt / sin 20 2");
+			//			testingParser.parseText("fd rt fd 50 bk 30");
+			//			testingParser.parseText("fd rt bk 50");
 			//testingParser.parseText("fd 50\n\n\nbk 50");
-//			testingParser.parseText("fd rt 100");
-//			testingParser.parseText("fd 100\n" + 
-//					"rt 90\n" + 
-//					"fd 100\n" + 
-//					"rt 90\n" + 
-//					"fd 100\n" + 
-//					"rt 90\n" + 
-//					"fd 100\n" + 
-//					"rt 90");
-//			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
-		//	testingParser.parseText("to line [ :length ] [ fd :length ]");
+			//			testingParser.parseText("fd rt 100");
+			//			testingParser.parseText("fd 100\n" + 
+			//					"rt 90\n" + 
+			//					"fd 100\n" + 
+			//					"rt 90\n" + 
+			//					"fd 100\n" + 
+			//					"rt 90\n" + 
+			//					"fd 100\n" + 
+			//					"rt 90");
+			//			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
+			testingParser.parseText("to corner [ :length :width ] [ fd :length rt 90 bk :width ]");
+			//			testingParser.parseText("fd fd fd pd"); // CHECK AGAIN
+
+			//Double test = testingParser.parseText("for [ :k fd 0 fd 5 fd 1 ] [ fd 1 ]");
+			//			Double test = testingParser.parseText("repeat 2 [ repeat 2 \n [ fd 50 rt 90 ] ]");
+			//			System.out.println("returns: ");
+			//			System.out.println(test.toString());
+			//			testingParser.parseText("fd 1 rt / sin 20 2");
+			//			testingParser.parseText("fd rt fd 50 bk 30");
+			//			testingParser.parseText("fd rt bk 50");
+			//testingParser.parseText("fd 50\n\n\nbk 50");
+			//			testingParser.parseText("fd rt 100");
+			//			testingParser.parseText("fd 100\n" + 
+			//					"rt 90\n" + 
+			//					"fd 100\n" + 
+			//					"rt 90\n" + 
+			//					"fd 100\n" + 
+			//					"rt 90\n" + 
+			//					"fd 100\n" + 
+			//					"rt 90");
+			//			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
+			//	testingParser.parseText("to line [ :length ] [ fd :length ]");
 		} catch (Exception e) {
 			System.out.println("FAIL");
 		}

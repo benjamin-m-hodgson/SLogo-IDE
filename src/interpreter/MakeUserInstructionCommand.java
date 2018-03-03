@@ -23,6 +23,7 @@ class MakeUserInstructionCommand extends Command {
 	@Override
 	double execute() throws UnidentifiedCommandException {
 		myUserCommands.put(myCommandName, myCommandContent);
+		System.out.println(myUserCommands.get(myCommandName));
 		myUserCommandsNumArgs.put(myCommandName, myCommandVars.split("\\s+").length);
 		return 1.0;
 	}

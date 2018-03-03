@@ -21,6 +21,7 @@ class HomeCommand extends Command{
      * @return distance the turtle moved
      * @see interpreter.Command#execute()
      */
+    @Override
     protected double execute() {
     	myTurtle.setAngle(0);
 	return myTurtle.setXY(0, 0);

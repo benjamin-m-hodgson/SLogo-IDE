@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -23,19 +22,17 @@ import javafx.scene.layout.VBox;
  */
 public class StartScreen implements Screen {
     private final int VISIBLE_ROW_COUNT = 5;
-    private String DEFAULT_SELECTION_PROMPT;
+    private String SELECTION_PROMPT;
     private Parent ROOT;
     private Controller PROGRAM_CONTROLLER;
     private Button START;
-    private Button APPLY;
     private String LANGUAGE;
     private Tooltip START_TIP;
-    private Tooltip APPLY_TIP;
     private Tooltip SELECTION_TIP;
 
     public StartScreen(Controller programController) {
 	PROGRAM_CONTROLLER = programController;
-	DEFAULT_SELECTION_PROMPT = PROGRAM_CONTROLLER.resourceDisplayText("languageChooser");
+	SELECTION_PROMPT = PROGRAM_CONTROLLER.resourceDisplayText("languageChooser");
     }
 
     @Override
@@ -43,13 +40,10 @@ public class StartScreen implements Screen {
 	makeTips();
 	// make control objects, must be done after making their tips
 	START = makeStartButton();
-	APPLY = makeApplyButton();
 	ComboBox<Object> languageChooser = makeLanguageChooser();
 	// write to object tips, must be done after control objects created
 	writeTipText();
-	HBox centerBox = new HBox(languageChooser, APPLY);
-	centerBox.setId("centerBox");
-	VBox rootBox = new VBox(START, centerBox);
+	VBox rootBox = new VBox(START, languageChooser);
 	rootBox.setId("startScreenRoot");
 	ROOT = rootBox;
     }
@@ -93,26 +87,6 @@ public class StartScreen implements Screen {
     }
 
     /**
-     * Upon button click, applies the language changes to the program resourceBundles 
-     * and updates the display text on the control Nodes in the display.
-     * 
-     * @return Button: Button to apply a language change
-     */
-    private Button makeApplyButton() {
-	Button applyButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText("ApplyPrompt"));
-	applyButton.setId("applyButton");
-	applyButton.setTooltip(APPLY_TIP);
-	// handle click event
-	applyButton.setOnMouseClicked((arg0)-> {
-	    PROGRAM_CONTROLLER.changeLanguage(LANGUAGE);
-	    updatePrompt();
-	    START.setDisable(false);
-	});
-	applyButton.setDisable(true);
-	return applyButton;
-    }
-
-    /**
      * Creates a drop down menu with language options for changing the language used 
      * in the program.
      * 
@@ -120,26 +94,35 @@ public class StartScreen implements Screen {
      * language for the simulation
      */
     private ComboBox<Object> makeLanguageChooser() {
-	ComboBox<Object> dropDownMenu = makeComboBox(DEFAULT_SELECTION_PROMPT);
-	//dropDownMenu.setTooltip(SELECTION_TIP);
-	ObservableList<Object> simulationChoices = 
-		FXCollections.observableArrayList(DEFAULT_SELECTION_PROMPT);
-	simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());
-	dropDownMenu.setItems(simulationChoices);
+	ComboBox<Object> dropDownMenu = makeComboBox(SELECTION_PROMPT);
+	dropDownMenu.setTooltip(SELECTION_TIP);
+	dropDownMenu.setItems(simulationChoices());
 	dropDownMenu.setId("languageChooser");
 	dropDownMenu.getSelectionModel().selectedIndexProperty()
 	.addListener((arg0, arg1,  arg2) -> {
-	    String selected = (String) simulationChoices.get((Integer) arg2);
-	    if (!selected.equals(DEFAULT_SELECTION_PROMPT)) {
-		APPLY.setDisable(false);
+	    String selected = (String) simulationChoices().get((Integer) arg2);
+	    if (!selected.equals(SELECTION_PROMPT)) { 
+		START.setDisable(false);
 		LANGUAGE = selected;
+		PROGRAM_CONTROLLER.changeLanguage(LANGUAGE);
+		updatePrompt();
+		dropDownMenu.setItems(simulationChoices());
 	    } 
 	    else {
-		APPLY.setDisable(true);
 		START.setDisable(true);
 	    }
 	});
 	return dropDownMenu;
+    }
+    
+    /**
+     * @return ObservableList<Object>: a list of selections to place in the combo box
+     */
+    private ObservableList<Object> simulationChoices() {
+	ObservableList<Object> simulationChoices = 
+		FXCollections.observableArrayList(SELECTION_PROMPT);
+	simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());
+	return simulationChoices;
     }
 
     /**
@@ -158,7 +141,6 @@ public class StartScreen implements Screen {
      */
     private void makeTips() {
 	START_TIP = new Tooltip();
-	APPLY_TIP = new Tooltip();
 	SELECTION_TIP = new Tooltip();
     }
 
@@ -167,16 +149,15 @@ public class StartScreen implements Screen {
      */
     private void writeTipText() {
 	START_TIP.setText(START.getText());
-	APPLY_TIP.setText(APPLY.getText());
-	SELECTION_TIP.setText(SELECTION_TIP.getText());
+	SELECTION_TIP.setText(SELECTION_PROMPT);
     }
 
     /**
      * Updates the text displayed to the user to match the current language
      */
     private void updatePrompt() {
-	APPLY.setText(PROGRAM_CONTROLLER.resourceDisplayText("ApplyPrompt"));
 	START.setText(PROGRAM_CONTROLLER.resourceDisplayText("StartPrompt"));
+	SELECTION_PROMPT = PROGRAM_CONTROLLER.resourceDisplayText("languageChooser");
 	writeTipText();
     }
 }

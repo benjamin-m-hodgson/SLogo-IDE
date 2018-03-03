@@ -76,6 +76,16 @@ class CommandNode {
 		}
 		return s; 
 	}
+	
+	public String childrenToString() {
+		String s = "";
+		for (int i = 0; i < myChildren.size(); i++) {
+			s += myChildren.get(i).getInfo();
+			s += myChildren.get(i).childrenToString(); 
+			s += " ";
+		}
+		return s; 
+	}
 
 	protected void addChild(CommandNode child) {
 		myChildren.add(child); 

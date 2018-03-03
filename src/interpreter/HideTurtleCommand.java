@@ -18,6 +18,7 @@ class HideTurtleCommand extends Command{
      * Shows turtle's image to the user
      * @return 0 always
      */
+    @Override
     protected double execute() {
 	myTurtle.hideTurtle();
 	return 0;
