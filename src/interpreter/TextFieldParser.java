@@ -80,16 +80,19 @@ class TextFieldParser {
 		String[] userInputByLine = userInputString.split("\\r?\\n");
 		ArrayList<String> userInputList = new ArrayList<String>();
 		for (int i = 0; i < userInputByLine.length; i++) {
-			if (userInputByLine[i] != null && userInputByLine[i].length() > 0) {
+			if (userInputByLine[i] != null && userInputByLine[i].length() > 0 && !userInputByLine[i].equals("")) {
 				userInputList.add(userInputByLine[i]);
 			}
 		}
+		
 		userInputByLine = userInputList.toArray(new String[userInputList.size()]);
 		String[] userInputTypes = new String[userInputByLine.length];
 
 		RegexMatcher regexMatcher = new RegexMatcher(mySyntaxFileName);
 		for (int idx = 0; idx < userInputByLine.length; idx++) { 
-			userInputTypes[idx] = regexMatcher.findMatchingKey(userInputByLine[idx].substring(0, 1));
+			userInputByLine[idx] = userInputByLine[idx].replace(" ","");
+			userInputTypes[idx] = regexMatcher.findMatchingKey(userInputByLine[idx]);
+			System.out.println(userInputTypes[idx]);
 		}
 
 		ArrayList<String> nonCommentInputByLine = new ArrayList<String>();
@@ -189,7 +192,7 @@ class TextFieldParser {
 			//					"fd 100\n" + 
 			//					"rt 90");
 			//			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
-			testingParser.parseText("to corner [ :length :width ] [ fd :length rt 90 bk :width ]");
+			testingParser.parseText("fd\n #234\n50");
 		} catch (Exception e) {
 
 		}
