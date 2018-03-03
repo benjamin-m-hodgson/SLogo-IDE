@@ -24,7 +24,7 @@ class CommandTreeReader {
 	 * @param root is root of CommandNode tree
 	 * @return true if the tree is complete
 	 */
-	private boolean treeIsComplete(CommandNode root) {
+	private boolean treeIsComplete(CommandNode root) throws UnidentifiedCommandException{
 		//System.out.println("reading a node");
 		if(root.getIsDouble()||root.getIsString()) {
 			return true;
@@ -35,8 +35,14 @@ class CommandTreeReader {
 				completedChildren++;
 			}
 		}
-		System.out.println("completed children: " + completedChildren);
-		return completedChildren==root.getNumArgs();
+		//System.out.println("completed children: " + completedChildren);
+		if(completedChildren==root.getNumArgs()) {
+			return true;
+		}
+		else {
+			throw new UnidentifiedCommandException("The command: " + root.getInfo() + " does not have the proper number of arguemts.");
+		}
+		
 	}
 	
 	/**
@@ -49,9 +55,7 @@ class CommandTreeReader {
 			Command compressedCommand = compressTree(root);
 			return compressedCommand.execute();	
 		}
-		else {
-			throw new UnidentifiedCommandException("At least one command does not have the proper number of arguments");
-		}
+		return -1;
 	}
 	
 	/**
