@@ -53,6 +53,10 @@ class CommandTreeBuilder {
 	}
 
 	protected double buildAndExecute(Turtle turtle, String[] userInput, boolean shouldExecute) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		System.out.println("printing out sent-in input!!!!!!!!!!!!!!");
+		for (String s : userInput) System.out.println(s);
+		System.out.println("end of sent-in input!!!!!!!!!!!!!!!!!!");
+		
 		double finalReturnVal = -1; 
 		myCommandTrees.clear(); 
 		int currIdx = 0;
@@ -555,7 +559,15 @@ class CommandTreeBuilder {
 			finalEndToIdx++; 
 		} // finalEndToIdx is at FINAL ']'
 		
-		String[] commandContent = Arrays.copyOfRange(userInput, startIdx+2, finalEndToIdx+1);
+		int endCommandContent = finalEndToIdx;
+		if (finalEndToIdx == userInput.length-1 || !userInput[finalEndToIdx+1].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
+			endCommandContent = finalEndToIdx+1; 
+		}
+		else {
+			endCommandContent = finalEndToIdx+2;
+		}
+		
+		String[] commandContent = Arrays.copyOfRange(userInput, startIdx+2, endCommandContent);
 		String userCommandString = String.join(" ", commandContent);
 		CommandNode userCommandContent = new CommandNode(userCommandString, turtle);
 
@@ -567,13 +579,8 @@ class CommandTreeBuilder {
 		userCommandNode.addChild(userCommandContent);
 		myCommandTrees.add(userCommandNode);
 		System.out.println("user command node to string : "+userCommandNode.toString());
-		if (finalEndToIdx == userInput.length-1) {
-			return finalEndToIdx+1; 
-		}
-		else if (userInput[finalEndToIdx+1].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
-			return finalEndToIdx+2;
-		}
-		return finalEndToIdx+1;
+		
+		return endCommandContent; 
 	}
 
 	private void parseUserCommand(Turtle turtle, String[] userInput, int startIdx, int numArgs) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
