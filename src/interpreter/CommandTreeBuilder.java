@@ -577,6 +577,7 @@ class CommandTreeBuilder {
 		userCommandNode.addChild(varsNode);
 		userCommandNode.addChild(userCommandContent);
 		myCommandTreeReader.readAndExecute(userCommandNode);
+		myCommandTrees.add(userCommandNode);
 		
 		return endCommandContent; 
 	}
