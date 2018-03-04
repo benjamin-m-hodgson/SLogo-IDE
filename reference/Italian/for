@@ -1,0 +1,18 @@
+Variables, Control Structures, and User-Defined Commands:
+FOR [ variable start end increment ]
+[ command(s) ]
+
+Description:
+Runs command(s) for each value specified in the range, i.e., from (start - end), going by increment;
+variable is assigned to each succeeding value so that it can be accessed by the command(s)
+
+Parameters:
+variable - variable name
+start - any integer
+end - any integer
+increment - any integer
+command(s) - any command
+
+Returns:
+The value of the final command executed;
+0 if no commands are executed

@@ -369,7 +369,6 @@ public class Controller {
 		CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Errors", 
 			Locale.getDefault(), loader);
 	    }
-	    System.out.println(language);
 	    CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
 	    myTextFieldParser.changeLanguage(CURRENT_LANGUAGE);
 	}

@@ -1,0 +1,14 @@
+Boolean Operations:
+LESS? expr1 expr2
+LESSP expr1 expr2
+
+Description:
+N/A
+
+Parameters:
+expr1 - any value
+expr2 - any value
+
+Returns:
+1 if the value of expr1 is strictly less than the value of expr2;
+Otherwise 0

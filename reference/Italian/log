@@ -1,0 +1,11 @@
+Math Operations:
+LOG expr
+
+Description:
+N/A
+
+Parameters:
+expr - any value
+
+Returns:
+Natural log of expr

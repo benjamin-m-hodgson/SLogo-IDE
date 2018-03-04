@@ -1,0 +1,12 @@
+Math Operations:
+MINUS expr1 expr2
+~ expr1 expr2
+
+Description:
+N/A
+
+Parameters:
+expr - any value
+
+Returns:
+Negative of the values of expr
