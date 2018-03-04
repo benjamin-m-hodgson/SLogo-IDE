@@ -26,9 +26,9 @@ public class RegexMatcher {
 	
 	public RegexMatcher(String fileName) {
 		myFileName = fileName;
-		System.out.println("file: " + fileName);
+		//System.out.println("file: " + fileName);
 		myResources = ResourceBundle.getBundle(fileName);
-		System.out.println("made regex well");
+		//System.out.println("made regex well");
 		mySymbols = new ArrayList<Entry<String, Pattern>>();
 		myExceptionFactory = new ExceptionFactory();
 		populateWithSymbols(mySymbols, myResources);
