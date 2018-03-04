@@ -1,5 +1,9 @@
 package interpreter;
 
+import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 //public interface Turtle {
 //
 ///**
@@ -44,11 +48,7 @@ package interpreter;
 //
 //}
 
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * @author Sarahbland - Pen inner class
@@ -191,8 +191,8 @@ public class Turtle {
 	 * @return distance traveled
 	 */
 	protected double calcDistance(double oldX, double oldY, double x, double y) {
-		System.out.println("old x: " + oldX + " new x: "+ x);
-		System.out.println("old y" + oldY + " new y: "+ y);
+//		System.out.println("old x: " + oldX + " new x: "+ x);
+//		System.out.println("old y" + oldY + " new y: "+ y);
 		double xSquared = Math.pow((oldX-x), 2);
 		double ySquared = Math.pow((oldY-y), 2);
 		return Math.sqrt(xSquared+ySquared);
@@ -224,7 +224,7 @@ public class Turtle {
 	
 	protected void setAngle(double angle) {
 		myAngle = angle;
-		System.out.println("angle is: "  + angle);
+		System.out.println("angle" + myAngle);
 		myImage.setRotate(angle);
 	}
 

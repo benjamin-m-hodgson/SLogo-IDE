@@ -1,0 +1,13 @@
+Variables, Control Structures, and User-Defined Commands:
+IF expr [ command(s) ]
+
+Description:
+If expr is not 0, runs the command(s) given in the list
+
+Parameters:
+expr - any value
+command(s) - any command
+
+Returns:
+The value of the final command executed;
+0 if no commands are executed

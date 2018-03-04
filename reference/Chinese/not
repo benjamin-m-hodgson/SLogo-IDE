@@ -1,0 +1,12 @@
+Boolean Operations:
+NOT test
+
+Description:
+N/A
+
+Parameters:
+test - any value
+
+Returns:
+1 if test is 0;
+0 if test is non-zero

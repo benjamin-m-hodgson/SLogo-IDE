@@ -4,17 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import interpreter.Controller;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
 import screen.UserScreen;
 
+/**
+ * A class which implements panel and is the default/navigation panel for the right side bar. This panel allows 
+ * movement to the specific panels
+ * @author Andrew Arnold
+ *
+ */
 public class InfoPanel implements Panel {
 
 	private Parent PANEL;

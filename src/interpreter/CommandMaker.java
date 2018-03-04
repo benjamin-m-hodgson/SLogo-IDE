@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
 
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 /** 
  * @author Susie Choi
@@ -39,6 +38,8 @@ class CommandMaker {
 	public static final String[] DEFAULT_CONTROLFLOW_IDENTIFIERS = {"Repeat", "DoTimes", "For"};
 
 	private HashMap<String, Double> myVariables; 
+	private HashMap<String, String> myUserDefCommands; 
+	private HashMap<String, Integer> myUserCommandsNumArgs; 
 	private ArrayList<Turtle> myTurtles; 
 	private ResourceBundle myLanguage; 
 	private CommandTreeBuilder myCommandTreeBuilder; 
@@ -51,7 +52,9 @@ class CommandMaker {
 		myTurtles = new ArrayList<Turtle>(); 
 		myLanguage = languageBundle;
 		myVariables = new HashMap<String, Double>(); 
-		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, myVariables); 
+		myUserDefCommands = new HashMap<String, String>(); 
+		myUserCommandsNumArgs = new HashMap<String, Integer>(); 
+		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, myVariables, myUserDefCommands, myUserCommandsNumArgs); 
 	}
 
 	protected double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
@@ -77,14 +80,19 @@ class CommandMaker {
 		}
 		for (int idx = startIdx; idx < userInput.length; idx++) {
 			if (typesOfInput[idx].equals(commandIdentifier)) {
-				commandTypes[idx] = getCommandType(userInput[idx]);
+				try{
+					commandTypes[idx] = getCommandType(userInput[idx]);
+				} 
+				catch (Exception e) {
+					commandTypes[idx] = "";
+				}
 			}
 			else {
 				commandTypes[idx] = "";
 			}
 		}
 
-		String[] userInputArrayToPass = userInput; 
+		String[] userInputArrayToPass = userInput;
 		String[] commandTypesToPass = commandTypes; 
 
 		if (turtleIdentified) {
@@ -96,9 +104,8 @@ class CommandMaker {
 				userInputArrayToPass[i] = commandTypesToPass[i];
 			}
 		}
-
-		//		makeListForBuilder(myListForBuilder, userInput, commandTypes, 1, DEFAULT_CONTROLFLOW_IDENTIFIERS);
-		return myCommandTreeBuilder.buildAndExecute(identifiedTurtle, userInputArrayToPass); 
+ 		//		makeListForBuilder(myListForBuilder, userInput, commandTypes, 1, DEFAULT_CONTROLFLOW_IDENTIFIERS);
+		return myCommandTreeBuilder.buildAndExecute(identifiedTurtle, userInputArrayToPass, true); 
 	}
 
 	//	private void makeListForBuilder(ArrayList<String> currCommandList, String[] inputArray, String[] commandTypes, int numTimesToAdd, String[] controlFlowIdentifiers) {
@@ -130,7 +137,7 @@ class CommandMaker {
 //		}
 //	} 
 	
-	private String getCommandType(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private String getCommandType(String text) throws BadFormatException, MissingInformationException, UnidentifiedCommandException {
 		RegexMatcher regexMatcher = new RegexMatcher(myLanguage);
 		String commandType = regexMatcher.findMatchingKey(text);
 		return commandType;
@@ -147,6 +154,10 @@ class CommandMaker {
 	public void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
 		System.out.println(name);
 		myTurtles.add(new Turtle(name, turtleImage, penLines, penColor));
+	}
+
+	public Map<String, String> getUserDefined() {
+		return myUserDefCommands;
 	}
 	
 

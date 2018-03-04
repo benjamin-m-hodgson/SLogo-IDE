@@ -15,11 +15,8 @@ class CommandNode {
 	private Turtle myTurtle;
 	private boolean isString;
 
-	protected CommandNode(String info) {
-		this(info, DEFAULT_NUM_ARGS, new ArrayList<CommandNode>(), new Turtle(), true);
-	}
 	protected CommandNode(String info, Turtle turtle) {
-		this(info, DEFAULT_NUM_ARGS, turtle);
+		this(info, DEFAULT_NUM_ARGS, new ArrayList<CommandNode>(), turtle, true);
 	}
 
 	protected CommandNode(String info, int numArgs, Turtle turtle) { 
@@ -29,8 +26,12 @@ class CommandNode {
 		this(info, numArgs, new ArrayList<CommandNode>(), turtle, false);
 		myChildren.add(child);
 	}
+	protected CommandNode(String info, int numArgs, Turtle turtle, boolean isString) {
+		this(info, numArgs, new ArrayList<CommandNode>(), turtle, isString); 
+	}
+	
 
-	protected CommandNode(String info, int numArgs, List<CommandNode> children, Turtle turtle, boolean isString) {	
+	protected CommandNode(String info, int numArgs, List<CommandNode> children, Turtle turtle, boolean isStringID) {	
 		myInfo = info; 
 		try {
 			Double.parseDouble(info);
@@ -39,10 +40,12 @@ class CommandNode {
 		catch (NumberFormatException e) {
 			isDouble = false; 
 		}
+		isString = isStringID;
 		myNumArgs = numArgs;
 		myChildren = new ArrayList<CommandNode>(); 
 		myChildren.addAll(children); 
 		myTurtle = turtle;
+		
 	}
 
 	protected CommandNode(String info, int numArgs, List<CommandNode> children) {
@@ -55,7 +58,8 @@ class CommandNode {
 			isDouble = false; 
 		}
 		myNumArgs = numArgs;
-		myChildren = children; 
+		myChildren = children;
+		isString = false;
 	}
 
 	@Override
@@ -69,6 +73,16 @@ class CommandNode {
 		}
 		else {
 			s+= " has no children.";
+		}
+		return s; 
+	}
+	
+	public String childrenToString() {
+		String s = "";
+		for (int i = 0; i < myChildren.size(); i++) {
+			s += myChildren.get(i).getInfo();
+			s += myChildren.get(i).childrenToString(); 
+			s += " ";
 		}
 		return s; 
 	}
