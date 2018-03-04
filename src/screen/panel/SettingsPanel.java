@@ -34,7 +34,6 @@ public class SettingsPanel extends SpecificPanel  {
     private final int VISIBLE_ROW_COUNT = 5;
     private final String COLOR_FOLDER = "colors";
     private final String TURTLE_IMAGE_FOLDER = "turtleimages";
-
     private  Parent PANEL;
     private final Controller PROGRAM_CONTROLLER;
     private final BorderPane PANE;
@@ -46,8 +45,60 @@ public class SettingsPanel extends SpecificPanel  {
     private ComboBox<Object> TURTLE_IMAGE_CHOOSER;
     private List<String> colorsUntranslated;
     private List<String> colorsTranslated;
-
     private UserScreen USER_SCREEN;
+    private final int DEFAULT_BUTTON_SPACEING = 10;
+    private final String[] DROPDOWN_IDS = {"languageSettingsChooser", "backgroundColorChooser", "penColorChooser", "turtleImageChooser"};
+
+    public SettingsPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
+	PROGRAM_CONTROLLER = programController;
+	PANE = pane;
+	USER_SCREEN = userScreen;
+	//		String codeTest = "#2d3436";
+	//		codeTest = codeTest.substring(1, codeTest.length());
+	//		int hexConvert = Integer.parseInt(codeTest,16);
+	//		System.out.println(Integer.toHexString(hexConvert));
+    }
+
+    @Override
+    public void makePanel() {
+	BACK = makeBackButton(PROGRAM_CONTROLLER);
+	NEW_WORKSPACE =  makeNewWorkspaceButton("newworkspaceButton");
+	LANGUAGE_CHOOSER = makeLanguageChooser(DROPDOWN_IDS[0]);
+	BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[1]);
+	PEN_COLOR_CHOOSER = makePenColorChooser(DROPDOWN_IDS[2]);
+	TURTLE_IMAGE_CHOOSER= makeTurtleImageChooser(DROPDOWN_IDS[3]);
+	VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACEING, LANGUAGE_CHOOSER,BACKGROUND_COLOR_CHOOSER,PEN_COLOR_CHOOSER,TURTLE_IMAGE_CHOOSER,NEW_WORKSPACE,BACK);
+	panelRoot.setId("infoPanel");
+	panelRoot.setAlignment(Pos.BASELINE_CENTER);
+	PANEL = panelRoot;
+    } 
+    
+    /**
+     * 
+     * @return dropDownMenu: a drop down menu that lets the user choose the
+     * language for the simulation
+     */
+    private ComboBox<Object> makeLanguageChooser(String itemID) {
+	String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
+	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
+	Tooltip languageTip = new Tooltip();
+	languageTip.setText(selectionPrompt);
+	dropDownMenu.setTooltip(languageTip);
+	ObservableList<Object> simulationChoices = 
+		FXCollections.observableArrayList(selectionPrompt);
+	simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());
+	dropDownMenu.setItems(simulationChoices);
+	dropDownMenu.setId(itemID);
+	dropDownMenu.getSelectionModel().selectedIndexProperty()
+	.addListener(( arg0, arg1,  arg2) ->{
+	    String selected = (String) simulationChoices.get((Integer) arg2);
+	    if (!selected.equals(selectionPrompt)) {
+		PROGRAM_CONTROLLER.changeLanguage(selected);
+		updatePrompt();
+	    }
+	});
+	return dropDownMenu;
+    }
     
     /**
      * 
@@ -134,62 +185,7 @@ public class SettingsPanel extends SpecificPanel  {
 	    }
 	});
 	return dropDownMenu;
-    }
-    
-    private final int DEFAULT_BUTTON_SPACEING = 10;
-    private final String[] DROPDOWN_IDS = {"languageSettingsChooser", "backgroundColorChooser", "penColorChooser", "turtleImageChooser"};
-
-    public SettingsPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
-	PROGRAM_CONTROLLER = programController;
-	PANE = pane;
-	USER_SCREEN = userScreen;
-	//		String codeTest = "#2d3436";
-	//		codeTest = codeTest.substring(1, codeTest.length());
-	//		int hexConvert = Integer.parseInt(codeTest,16);
-	//		System.out.println(Integer.toHexString(hexConvert));
-    }
-
-
-    @Override
-    public void makePanel() {
-	BACK = makeBackButton(PROGRAM_CONTROLLER);
-	NEW_WORKSPACE =  makeNewWorkspaceButton("newworkspaceButton");
-	LANGUAGE_CHOOSER = makeLanguageChooser(DROPDOWN_IDS[0]);
-	BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[1]);
-	PEN_COLOR_CHOOSER = makePenColorChooser(DROPDOWN_IDS[2]);
-	TURTLE_IMAGE_CHOOSER= makeTurtleImageChooser(DROPDOWN_IDS[3]);
-	VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACEING, LANGUAGE_CHOOSER,BACKGROUND_COLOR_CHOOSER,PEN_COLOR_CHOOSER,TURTLE_IMAGE_CHOOSER,NEW_WORKSPACE,BACK);
-	panelRoot.setId("infoPanel");
-	panelRoot.setAlignment(Pos.BASELINE_CENTER);
-	PANEL = panelRoot;
-    }   
-    
-    /**
-     * 
-     * @return dropDownMenu: a drop down menu that lets the user choose the
-     * language for the simulation
-     */
-    private ComboBox<Object> makeLanguageChooser(String itemID) {
-	String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
-	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
-	Tooltip languageTip = new Tooltip();
-	languageTip.setText(selectionPrompt);
-	dropDownMenu.setTooltip(languageTip);
-	ObservableList<Object> simulationChoices = 
-		FXCollections.observableArrayList(selectionPrompt);
-	simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());
-	dropDownMenu.setItems(simulationChoices);
-	dropDownMenu.setId(itemID);
-	dropDownMenu.getSelectionModel().selectedIndexProperty()
-	.addListener(( arg0, arg1,  arg2) ->{
-	    String selected = (String) simulationChoices.get((Integer) arg2);
-	    if (!selected.equals(selectionPrompt)) {
-		PROGRAM_CONTROLLER.changeLanguage(selected);
-		updatePrompt();
-	    }
-	});
-	return dropDownMenu;
-    }
+    }  
 
     private Button makeNewWorkspaceButton(String itemId) {
 	Button workspaceButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText(itemId));
