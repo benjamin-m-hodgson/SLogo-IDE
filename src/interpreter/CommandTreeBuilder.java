@@ -589,7 +589,6 @@ class CommandTreeBuilder {
 		String userCommandString = String.join(" ", commandContent);
 		CommandNode userCommandContent = new CommandNode(userCommandString, turtle);
 
-		
 		String userCommandName = userInput[startIdx+1];
 		CommandNode userCommandNameNode = new CommandNode(userCommandName, turtle);
 		
@@ -597,6 +596,13 @@ class CommandTreeBuilder {
 		userCommandNode.addChild(varsNode);
 		userCommandNode.addChild(userCommandContent);
 		myCommandTrees.add(userCommandNode);
+		System.out.println("user command node to string : "+userCommandNode.toString());
+		if (finalEndToIdx == userInput.length-1) {
+			return finalEndToIdx+1; 
+		}
+		else if (userInput[finalEndToIdx+1].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
+			return finalEndToIdx+2;
+		}
 		return finalEndToIdx+1;
 	}
 
@@ -612,6 +618,9 @@ class CommandTreeBuilder {
 	}
 
 	private int getNumArgs(String commandType) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		if (myUserDefCommandsNumArgs.containsKey(commandType)) {
+			return myUserDefCommandsNumArgs.get(commandType);
+		}
 		try {
 			Double.parseDouble(commandType);
 			return 0;
