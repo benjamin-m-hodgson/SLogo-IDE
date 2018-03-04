@@ -22,6 +22,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 
@@ -43,6 +53,8 @@ class CommandMaker {
 	private ArrayList<Turtle> myTurtles; 
 	private ResourceBundle myLanguage; 
 	private CommandTreeBuilder myCommandTreeBuilder; 
+	private IntegerProperty myBackColor; 
+	private BooleanProperty myBackColorChangeHeard; 
 
 	protected CommandMaker() {
 		this(DEFAULT_LANGUAGE, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
@@ -55,8 +67,21 @@ class CommandMaker {
 		myUserDefCommands = new HashMap<String, String>(); 
 		myUserCommandsNumArgs = new HashMap<String, Integer>(); 
 		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, myVariables, myUserDefCommands, myUserCommandsNumArgs); 
+		myBackColor = new SimpleIntegerProperty(0);
+		myBackColorChangeHeard = new SimpleBooleanProperty(false);
+		setUpBackColorListener();
 	}
 
+	protected void setUpBackColorListener() {
+		myCommandTreeBuilder.getBackColor().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number t1, Number t2) {
+				myBackColor = myCommandTreeBuilder.getBackColor();
+				myBackColorChangeHeard.set(true);
+			}
+		});
+	}
+	
 	protected double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		return parseValidTextArray(turtleName, userInput, typesOfInput, DEFAULT_COMMAND_IDENTIFIER);
 	}
@@ -151,13 +176,21 @@ class CommandMaker {
 		return Collections.unmodifiableMap(myVariables);
 	}
 
-	public void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
+	protected void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
 		System.out.println(name);
 		myTurtles.add(new Turtle(name, turtleImage, penLines, penColor));
 	}
 
-	public Map<String, String> getUserDefined() {
+	protected Map<String, String> getUserDefined() {
 		return myUserDefCommands;
+	}
+	
+	protected IntegerProperty getBackColor()  {
+		return myBackColor;
+	}
+	
+	protected BooleanProperty getBackColorChangeHeard() {
+		return myBackColorChangeHeard;
 	}
 	
 
