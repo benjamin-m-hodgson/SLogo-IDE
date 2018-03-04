@@ -100,6 +100,9 @@ public class SettingsPanel extends SpecificPanel  {
 	private ComboBox<Object> makeBackgroundColorChooser(String itemID) {
 		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
 		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
+		Tooltip backgroundTip = new Tooltip();
+		backgroundTip.setText(selectionPrompt);
+		dropDownMenu.setTooltip(backgroundTip);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
 		colorsUntranslated = PROGRAM_CONTROLLER.getFileNames(COLOR_FOLDER);
@@ -125,6 +128,9 @@ public class SettingsPanel extends SpecificPanel  {
 	private ComboBox<Object> makePenColorChooser(String itemID) {
 		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
 		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
+		Tooltip penTip = new Tooltip();
+		penTip.setText(selectionPrompt);
+		dropDownMenu.setTooltip(penTip);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
 		colorsUntranslated = PROGRAM_CONTROLLER.getFileNames(COLOR_FOLDER);
@@ -155,7 +161,9 @@ public class SettingsPanel extends SpecificPanel  {
 	private ComboBox<Object> makeTurtleImageChooser(String itemID) {
 		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
 		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
-		//dropDownMenu.setTooltip(SELECTION_TIP);
+		Tooltip turtleTip = new Tooltip();
+		turtleTip.setText(selectionPrompt);
+		dropDownMenu.setTooltip(turtleTip);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
 		simulationChoices.addAll(PROGRAM_CONTROLLER.getFileNames(TURTLE_IMAGE_FOLDER));
