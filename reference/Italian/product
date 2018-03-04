@@ -1,0 +1,13 @@
+Math Operations:
+PRODUCT expr1 expr2
+* expr1 expr2
+
+Description:
+N/A
+
+Parameters:
+expr1 - any value
+expr2 - any value
+
+Returns:
+Product of the values of expr1 and expr2

@@ -1,0 +1,13 @@
+Multiple Turtle Commands:
+TELL [ turtle(s) ]
+
+Description:
+Sets turtles that will follow commands hereafter;
+If turtle has not previously existed, it is created and placed at the home location;
+If more than one turtle is active, commands run return value associated with the last active turtle
+
+Parameters:
+turtle(s) - any turtle index
+
+Returns:
+Last value in turtles list

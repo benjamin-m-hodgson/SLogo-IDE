@@ -1,0 +1,13 @@
+Boolean Operations:
+OR test1 test2
+
+Description:
+N/A
+
+Parameters:
+test1 - any value
+test2 - any value
+
+Returns:
+1 if test1 or test2 are non-zero;
+Otherwise 0

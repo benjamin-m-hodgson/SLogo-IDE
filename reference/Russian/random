@@ -1,0 +1,11 @@
+Math Operations:
+RANDOM max
+
+Description:
+N/A
+
+Parameters:
+max - any value
+
+Returns:
+Random non-negative number strictly less than max

@@ -1,0 +1,15 @@
+Multiple Turtle Commands:
+ASK [ turtle(s) ] 
+[  command(s) ]
+
+Description:
+Only the turtles given in first list all run commands given in the second list;
+After commands are run, currently active list of turtles returns to that set by the last TELL command (or default active turtle if TELL never given);
+If more than one turtle is active, commands run return value associated with the last active turtle
+
+Parameters:
+turtle(s) - any turtle index
+command(s) - any command 
+
+Returns:
+Result of last command run by the last turtle

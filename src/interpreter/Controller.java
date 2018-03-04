@@ -66,21 +66,21 @@ public class Controller {
 
 	private void setUpBackColorListener() {
 		myTextFieldParser.getBackColorChangeHeard().addListener(new ChangeListener<Boolean>() {
-				@Override
-				public void changed(ObservableValue<? extends Boolean> observable, Boolean t1, Boolean t2) {
-					RegexMatcher backColorRegex = new RegexMatcher(DEFAULT_COLORPALETTE_FILE);
-					String matchingCol = ""; 
-					try {
-						matchingCol = backColorRegex.findMatchingVal(myTextFieldParser.getBackColor().getValue().toString());
-						String matchingHex = changeBackgroundColor(matchingCol);
-//						changeBackgroundColorHex(matchingHex);
-					} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
-						System.out.println("error locating that backgorund color"); // TODO make this more elaborate
-						e.printStackTrace();
-					}
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean t1, Boolean t2) {
+				RegexMatcher backColorRegex = new RegexMatcher(DEFAULT_COLORPALETTE_FILE);
+				String matchingCol = ""; 
+				try {
+					matchingCol = backColorRegex.findMatchingVal(myTextFieldParser.getBackColor().getValue().toString());
+					String matchingHex = changeBackgroundColor(matchingCol);
+					//						changeBackgroundColorHex(matchingHex);
+				} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
+					System.out.println("error locating that backgorund color"); // TODO make this more elaborate
+					e.printStackTrace();
 				}
-			});
-		}
+			}
+		});
+	}
 
 	/**
 	 * Loads the StartScreen where the user selects an initial language and launches the program.
@@ -392,7 +392,6 @@ public class Controller {
 				CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Errors", 
 						Locale.getDefault(), loader);
 			}
-			System.out.println(language);
 			CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
 			myTextFieldParser.changeLanguage(CURRENT_LANGUAGE);
 		}

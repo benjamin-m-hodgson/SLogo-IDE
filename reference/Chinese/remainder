@@ -1,0 +1,13 @@
+Math Operations:
+REMAINDER expr1 expr2
+% expr1 expr2
+
+Description:
+N/A
+
+Parameters:
+expr1 - any value
+expr2 - any value
+
+Returns:
+Remainder on dividing the values of expr1 by expr2

@@ -1,0 +1,13 @@
+Variables, Control Structures, and User-Defined Commands:
+MAKE variable expr
+SET variable expr
+
+Description:
+Assigns the value of expr to variable, creating the variable if necessary
+
+Parameters:
+variable - name of variable
+expr - any value
+
+Returns:
+Expr
