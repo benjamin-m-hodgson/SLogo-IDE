@@ -1476,6 +1476,34 @@
 	-fx-font-weight: bold;
 } 
 /******************************************************************************************/
+/* The new workspace button to create a new instance of the environment in a new window */
+/******************************************************************************************/
+#newworkspaceButton {
+	-fx-alignment: center;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-max-height: 40px;
+	-fx-min-height: 40px;
+	-fx-background-radius: 6;
+	-fx-background-color: #f6e58d;
+	-fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-border-color: #fdcb6e;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+    -fx-font: 10px Dekko;
+    -fx-font-weight: bold;
+    -fx-underline: false;
+}
+#newworkspaceButton:hover {
+	-fx-background-color: linear-gradient(#f6e58d, #fdcb6e);
+	-fx-font: 12px Dekko;
+	-fx-font-weight: bold;
+} 
+/******************************************************************************************/
 /* Centers a VBox or HBox used for aligning control object locations */
 /******************************************************************************************/
 #centerBox {
