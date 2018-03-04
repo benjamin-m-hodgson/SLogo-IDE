@@ -235,7 +235,11 @@ class CommandTreeBuilder {
 					CommandNode newChildNode = new CommandNode(userInput[idx], turtle);
 					int numArgs = getNumArgs(userInput[idx-1]);
 					CommandNode newCommandNode = new CommandNode(userInput[idx-1], numArgs, newChildNode, turtle);
-//					System.out.println("new command ndoe..." +newCommandNode.toString());
+					for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) { 
+						int backTrackNumArgs = getNumArgs(userInput[backtrack]);
+						CommandNode backtrackCommandNode = new CommandNode(userInput[backtrack], backTrackNumArgs, newCommandNode, turtle);
+						newCommandNode = backtrackCommandNode; 
+					}
 					parent.addChild(newCommandNode);
 					if (parent.getNumChildren() == parent.getNumArgs() && addToTrees && !myCommandTrees.contains(parent)) {
 						myCommandTrees.add(parent);
@@ -243,11 +247,11 @@ class CommandTreeBuilder {
 					if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
 						createAndSetChildren(turtle, newCommandNode, userInput, idx+1, false);
 					}
-					for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) { 
-						int backTrackNumArgs = getNumArgs(userInput[backtrack]);
-						CommandNode backtrackCommandNode = new CommandNode(userInput[backtrack], backTrackNumArgs, newCommandNode, turtle);
-						newCommandNode = backtrackCommandNode; 
-					}
+//					for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) { 
+//						int backTrackNumArgs = getNumArgs(userInput[backtrack]);
+//						CommandNode backtrackCommandNode = new CommandNode(userInput[backtrack], backTrackNumArgs, newCommandNode, turtle);
+//						newCommandNode = backtrackCommandNode; 
+//					}
 					if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
 						createAndSetChildren(turtle, newCommandNode, userInput, idx+1, false);
 					}
