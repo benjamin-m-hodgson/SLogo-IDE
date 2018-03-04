@@ -763,32 +763,36 @@ class CommandTreeBuilder {
 	private void parseUserCommand(Turtle turtle, String[] userInput, int startIdx, int numArgs) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String userCommandName = userInput[startIdx];
 		CommandNode userCommandNameNode = new CommandNode(userCommandName, numArgs, turtle, true); 
+		int treesStartSize = myCommandTrees.size(); 
 		createAndSetChildren(turtle, userCommandNameNode, userInput, startIdx+1, false); // verifying correct # children
+		int treesEndSize = myCommandTrees.size();
 		CommandNode userCommandArgsNode = new CommandNode(("a"+userCommandNameNode.childrenToString()), turtle); 
 
 		CommandNode userCommandNode = new CommandNode(DEFAULT_USERCOMMAND_NAME, getNumArgs(DEFAULT_USERCOMMAND_NAME), userCommandNameNode, turtle);
 		userCommandNode.addChild(userCommandArgsNode);
-		if (startIdx == 0 || startIdx == 1) { // TODO make less ambiguous -- this is because the user command may be first or follow a 0-arg
+//		if (startIdx == 0 || startIdx == 1) { // TODO make less ambiguous -- this is because the user command may be first or follow a 0-arg
+//			ArrayList<CommandNode> tempTrees = new ArrayList<CommandNode>();
+//			tempTrees.add(userCommandNode);
+//			tempTrees.addAll(myCommandTrees);
+//			myCommandTrees = tempTrees;
+//		} 
+//		else {
+//			myCommandTrees.add(userCommandNode);
+//
+//		}
+		if (treesEndSize > treesStartSize) {
 			ArrayList<CommandNode> tempTrees = new ArrayList<CommandNode>();
-			tempTrees.add(userCommandNode);
-			tempTrees.addAll(myCommandTrees);
-			myCommandTrees = tempTrees;
-		} 
-		else {
-//			int zeroArgCount = 0; 
-//			for (int i = 0 ; i < startIdx ; i ++) {
-//				if (getNumArgs(userInput[i]) == 0) {
-//					zeroArgCount++; 
-//				}
-//			}
-//			if (zeroArgCount == startIdx) {
-//				ArrayList<CommandNode> tempTrees = new ArrayList<CommandNode>();
-//				tempTrees.add(userCommandNode);
-//				tempTrees.addAll(myCommandTrees);
-//				myCommandTrees = tempTrees;
-//			}
+			for (int i = treesStartSize ; i < treesEndSize ; i ++) {
+				tempTrees.add(myCommandTrees.get(i));
+			}
+			for (int i = treesEndSize-1 ; i >= treesStartSize ; i --) {
+				myCommandTrees.remove(i);
+			}
 			myCommandTrees.add(userCommandNode);
-
+			myCommandTrees.addAll(tempTrees);
+		}
+		else {
+			myCommandTrees.add(userCommandNode);
 		}
 		return; 
 	}
