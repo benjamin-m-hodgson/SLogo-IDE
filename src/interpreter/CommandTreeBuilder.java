@@ -61,9 +61,6 @@ class CommandTreeBuilder {
 		myCommandTrees.clear(); 
 		int currIdx = 0;
 		//System.out.println("current user input: " + userInput[currIdx]);
-		if(myVariables.containsKey(userInput[currIdx])) {
-			userInput[currIdx] = myVariables.get(userInput[currIdx]).toString();
-		}
 		while(currIdx<userInput.length) {
 			try {
 				Double doubleArg = Double.parseDouble(userInput[currIdx]);
@@ -100,6 +97,9 @@ class CommandTreeBuilder {
 		if (startIdx >= userInput.length) { // || commandTypes[startIdx] == null
 			return null; // TODO make this more detailed
 		}
+		if(myVariables.containsKey(userInput[startIdx])) {
+			userInput[startIdx] = myVariables.get(userInput[startIdx]).toString();
+		}
 		Double checkIfDouble; 
 		String currCommand = userInput[startIdx]; 
 		try {
@@ -107,18 +107,7 @@ class CommandTreeBuilder {
 			return new CommandNode(currCommand, 0, turtle); 
 		}
 		catch (NumberFormatException e) {
-			if (currCommand.equals(DEFAULT_IF_IDENTIFIER)) { // TODO deal with if "if" is not first 
-				int startAfterIf = parseIf(turtle, userInput, startIdx); 
-				return createCommandTree(turtle, userInput, startAfterIf);
-			}
-			if (currCommand.equals(DEFAULT_IFELSE_IDENTIFIER)) {
-				int startAfterIfElse = parseIfElse(turtle, userInput, startIdx); 
-				return createCommandTree(turtle, userInput, startAfterIfElse);
-			}
-			if (currCommand.equals(DEFAULT_USERCOMMAND_IDENTIFIER)) {
-				int startAfterTo = parseMakeUserCommand(turtle, userInput, startIdx);
-				return createCommandTree(turtle, userInput, startAfterTo);
-			}
+
   			if (myUserDefCommands.containsKey(currCommand)) {
 				parseUserCommand(turtle, userInput, startIdx, myUserDefCommandsNumArgs.get(currCommand));
 				return null; // TODO FIX THIS 
@@ -155,7 +144,7 @@ class CommandTreeBuilder {
 			}
 			return;
 		}
-		System.out.println("curr is "+userInput[currIdx] + " and addToTrees is: " + addToTrees);
+		//System.out.println("curr is "+userInput[currIdx] + " and addToTrees is: " + addToTrees);
 		if(userInput[currIdx-1].equals(DEFAULT_REPEAT_IDENTIFIER)) { //CHANGED CURRIDX-1
 			int afterRepeat = createAndSetRepeatChildren(turtle, parent, userInput, currIdx, addToTrees);
 			createCommandTree(turtle, userInput, afterRepeat);
@@ -169,6 +158,30 @@ class CommandTreeBuilder {
 		if(userInput[currIdx-1].equals(DEFAULT_FOR_IDENTIFIER)) { //CHANGED CURRIDX-1
 			int afterFor = createAndSetForChildren(turtle, parent, userInput, currIdx, addToTrees);
 			createCommandTree(turtle, userInput, afterFor);
+			return;
+		}
+		if (userInput[currIdx-1].equals(DEFAULT_IF_IDENTIFIER)) { // TODO deal with if "if" is not first 
+			int startAfterIf = parseIf(turtle, userInput, currIdx); 
+			CommandNode temp = createCommandTree(turtle, userInput, startAfterIf);
+			if(addToTrees) {
+				myCommandTrees.add(temp);
+			}
+			return;
+		}
+		if (userInput[currIdx-1].equals(DEFAULT_IFELSE_IDENTIFIER)) {
+			int startAfterIfElse = parseIfElse(turtle, userInput, currIdx); 
+			CommandNode temp = createCommandTree(turtle, userInput, startAfterIfElse);
+			if(addToTrees) {
+				myCommandTrees.add(temp);
+			}
+			return;
+		}
+		if (userInput[currIdx-1].equals(DEFAULT_USERCOMMAND_IDENTIFIER)) {
+			int startAfterTo = parseMakeUserCommand(turtle, userInput, currIdx);
+			CommandNode temp = createCommandTree(turtle, userInput, startAfterTo);
+			if(addToTrees) {
+				myCommandTrees.add(temp);
+			}
 			return;
 		}
 		
@@ -442,34 +455,20 @@ class CommandTreeBuilder {
 			myCommandTrees.add(parent);
 		}
 		parent.addChild(new CommandNode(":repcount", turtle));
-//		//adding temporary variable name to children
-		//	int repeatCount = 1;
-		//	int startBracketCount = 0;
-			//currIdx++;
+		//adding temporary variable name to children
 			int currIdxCopy = currIdx;
 			currIdxCopy++;
 			try {
 				currIdxCopy = searchForBracket(currIdxCopy, userInput, DEFAULT_BRACKET_START_IDENTIFIER, 1);
-//				while( startBracketCount!= repeatCount) {
-//					if(userInput[currIdxCopy].equals(DEFAULT_BRACKET_START_IDENTIFIER)) {
-//						startBracketCount++;
-//					}
-//					if(userInput[currIdxCopy].equals(DEFAULT_REPEAT_IDENTIFIER)){
-//						repeatCount++;
-//					}
-//					currIdxCopy++;
-//				}
 			}
 			catch(NullPointerException e) {
 				throw new UnidentifiedCommandException("Repeat syntax is not correct.");
 			}
 			//adding command info to children
-			//System.out.println("currIdx" + currIdx + "currIdxCopy" + currIdxCopy);
 			parent.addChild(createCommandTree(turtle, Arrays.copyOfRange(userInput, currIdx, currIdxCopy-1), 0));
 		
 		currIdx = currIdxCopy - 1;
 		//adding string info to children
-		//System.out.println("current input " + userInput[currIdx]);
 		if(userInput[currIdx].equals(DEFAULT_BRACKET_START_IDENTIFIER)) {
 			int repeatCount = 1;
 			int endBracketCount = 0;
@@ -505,10 +504,6 @@ class CommandTreeBuilder {
 		currIdx++;
 		int currIdxCopy = currIdx;
 		//adding command children for start/end/increment
-		
-//		while(!userInput[currIdxCopy].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
-//			currIdxCopy++;
-//		}
 		currIdxCopy = searchForBracket(currIdx, userInput, DEFAULT_BRACKET_END_IDENTIFIER, 1)-1;
 		System.out.println("currIdx " + currIdx + "currIdxCopy" + currIdxCopy);
 		CommandTreeBuilder tempBuilder = new CommandTreeBuilder(myNumArgsFileName, myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
