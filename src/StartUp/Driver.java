@@ -1,3 +1,4 @@
+package StartUp;
 import interpreter.Controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
