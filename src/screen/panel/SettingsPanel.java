@@ -190,7 +190,9 @@ public class SettingsPanel extends SpecificPanel  {
     private Button makeNewWorkspaceButton(String itemId) {
 	Button workspaceButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText(itemId));
 	workspaceButton.setId(itemId);
-	// handle click event
+	Tooltip workspaceTip = new Tooltip();
+	workspaceTip.setText(PROGRAM_CONTROLLER.resourceDisplayText(itemId));
+	workspaceButton.setTooltip(workspaceTip);
 	workspaceButton.setOnAction(click ->{Driver d = new Driver();try {
 	    d.start(new Stage());
 	} catch (Exception e) {
