@@ -577,8 +577,7 @@ class CommandTreeBuilder {
 		CommandNode userCommandNode = new CommandNode(userInput[startIdx], getNumArgs(userInput[startIdx]), userCommandNameNode, turtle);
 		userCommandNode.addChild(varsNode);
 		userCommandNode.addChild(userCommandContent);
-		myCommandTrees.add(userCommandNode);
-		System.out.println("user command node to string : "+userCommandNode.toString());
+		myCommandTreeReader.readAndExecute(userCommandNode);
 		
 		return endCommandContent; 
 	}
