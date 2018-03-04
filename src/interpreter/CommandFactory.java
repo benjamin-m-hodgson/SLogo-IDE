@@ -158,6 +158,9 @@ public class CommandFactory {
 		else if (commandName.equals("UserInstruction")) {
 			return new UserInstructionCommand(turtle, commandArgs.get(0), commandArgs.get(1), myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
 		}
+		else if(commandName.equals("SetBackground")) {
+			return new SetBackgroundColorCommand(commandArgs.get(0), myVariables);
+		}
 		else if(commandName.equals("SetPenColor")) {
 			return new SetPenColorCommand(commandArgs.get(0), turtle, myVariables);
 		}

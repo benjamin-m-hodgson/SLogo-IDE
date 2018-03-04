@@ -59,7 +59,9 @@ public class RegexMatcher {
 	public String findMatchingVal(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String val = ""; 
 		try {
+			System.out.println("the match for "+text+" is: ");
 			val = myResources.getString(text);
+			System.out.println(val);
 		}
 		catch (MissingResourceException e) {
 			myExceptionFactory.getException(myFileName, text);

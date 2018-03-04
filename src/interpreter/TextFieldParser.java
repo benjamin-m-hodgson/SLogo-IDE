@@ -29,6 +29,14 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 
@@ -47,6 +55,8 @@ class TextFieldParser {
 	private String mySyntaxFileName; 
 	private CommandMaker myCommandMaker; 
 	private Queue<Command> myCommandQueue;
+	private IntegerProperty myBackColor;
+	private BooleanProperty myBackColorChangeHeard;
 
 	protected TextFieldParser() {
 		this(DEFAULT_FILEPATH+DEFAULT_SYNTAX_FILENAME, DEFAULT_LANGUAGE, DEFAULT_FILEPATH+DEFAULT_NUM_ARGS_FILE);
@@ -60,12 +70,20 @@ class TextFieldParser {
 		mySyntaxFileName = syntaxFileName;
 		myCommandMaker = new CommandMaker(languageBundle, numArgsFileName); 
 		myCommandQueue = new LinkedList<Command>(); 
+		myBackColor = new SimpleIntegerProperty(0);
+		myBackColorChangeHeard = new SimpleBooleanProperty(false);
+		setUpBackColorChangeListener();
 	}
 
-
-
-
-
+		private void setUpBackColorChangeListener() {
+			myCommandMaker.getBackColorChangeHeard().addListener(new ChangeListener<Boolean>() {
+				@Override
+				public void changed(ObservableValue<? extends Boolean> observable, Boolean t1, Boolean t2) {
+					myBackColor = myCommandMaker.getBackColor();
+					myBackColorChangeHeard.set(true);
+				}
+			});
+		}
 
 	/**
 	 * Returns a Queue of commands given a String of concatenated commands (chops up the commands 
@@ -168,11 +186,11 @@ class TextFieldParser {
 		myCommandMaker.changeLanguage(languageBundle);
 	}
 
-	public void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
+	protected void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
 		myCommandMaker.addNewTurtle(name, turtleImage, penColor, penLines);
 	}
 
-	public static void main(String[] args) {
+	protected static void main(String[] args) {
 		TextFieldParser testingParser = new TextFieldParser();
 		try {
 			//			testingParser.parseText("ifelse less? 5 5 [ fd 50 ] [ bk 30 ] rt 90");
@@ -204,8 +222,16 @@ class TextFieldParser {
 		}
 	}
 
-	public Map<String, String> getUserDefined() {
+	protected Map<String, String> getUserDefined() {
 		return myCommandMaker.getUserDefined();
 	}
+	
+	protected IntegerProperty getBackColor()  {
+		return myBackColor;
+	}
 
+	protected BooleanProperty getBackColorChangeHeard()  {
+		return myBackColorChangeHeard;
+	}
+	
 }
