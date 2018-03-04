@@ -24,7 +24,8 @@ class CommandTreeReader {
 	 * @param root is root of CommandNode tree
 	 * @return true if the tree is complete
 	 */
-	private boolean treeIsComplete(CommandNode root) {
+	private boolean treeIsComplete(CommandNode root) throws UnidentifiedCommandException{
+		//System.out.println("reading a node");
 		if(root.getIsDouble()||root.getIsString()) {
 			return true;
 		}
@@ -34,18 +35,27 @@ class CommandTreeReader {
 				completedChildren++;
 			}
 		}
-		//System.out.println(completedChildren);
-		return completedChildren==root.getNumArgs();
+		//System.out.println("completed children: " + completedChildren);
+		if(completedChildren==root.getNumArgs()) {
+			return true;
+		}
+		else {
+			throw new UnidentifiedCommandException("The command: " + root.getInfo() + " does not have the proper number of arguemts.");
+		}
+		
 	}
+	
 	/**
 	 * Reads a CommandTree (passed in the form of its root node)
 	 * @param root
 	 * @return
 	 */
 	protected double readAndExecute(CommandNode root) throws UnidentifiedCommandException{
-		Command compressedCommand = compressTree(root);
-		System.out.println(compressedCommand.toString());
-		return compressedCommand.execute();	
+		if(treeIsComplete(root)) {
+			Command compressedCommand = compressTree(root);
+			return compressedCommand.execute();	
+		}
+		return -1;
 	}
 	
 	/**
@@ -56,13 +66,19 @@ class CommandTreeReader {
 	 */
 	private Command compressTree(CommandNode root) {
 		ArrayList<Command> args = new ArrayList<>();
+		//System.out.println("root info" + root.getInfo());
+		//System.out.println("children number" + root.getNumChildren());
 		if(root.getIsDouble()) {
 			return myCommandFactory.makeDoubleCommand(root.getInfo());
 		}
-		//TODO: StringCommand
+		if(root.getIsString()) {
+			return myCommandFactory.makeCommand(root.getInfo(), args, root.getTurtle());
+		}
 		for(CommandNode k: root.getChildren()) {
+//			System.out.println("child info" + k.getInfo());
 			args.add(compressTree(k));
 		}
+		//System.out.println("Making a command");
 		return myCommandFactory.makeCommand(root.getInfo(), args, root.getTurtle());
 	}
 	

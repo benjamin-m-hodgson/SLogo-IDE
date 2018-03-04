@@ -61,7 +61,7 @@ public class TextPanel implements Panel {
 	    USER_SCREEN.displayErrorMessage(e.getMessage());
 	} 
 	catch (BadFormatException e) {
-		e.printStackTrace();;
+		e.printStackTrace();
 	    clearInputArea();
 	    USER_SCREEN.displayErrorMessage(e.getMessage());
 
