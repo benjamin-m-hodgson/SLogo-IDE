@@ -17,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import screen.UserScreen;
@@ -48,6 +49,7 @@ public class SettingsPanel extends SpecificPanel  {
     private final BorderPane PANE;
     private  Button BACK;
     private Button NEW_WORKSPACE;
+    private Button SAVE_PREFERENCES;
     private ComboBox<Object> LANGUAGE_CHOOSER;
     private ComboBox<Object> BACKGROUND_COLOR_CHOOSER;
     private ComboBox<Object> PEN_COLOR_CHOOSER;
@@ -60,6 +62,7 @@ public class SettingsPanel extends SpecificPanel  {
 
     private final int DEFAULT_BUTTON_SPACEING = 10;
     private final String[] DROPDOWN_IDS = {"languageSettingsChooser", "backgroundColorChooser", "penColorChooser", "turtleImageChooser", "preferencesChooser"};
+    private final String[] BUTTON_IDS = {"newworkspaceButton", "saveprefButton"};
 
     public SettingsPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
 	PROGRAM_CONTROLLER = programController;
@@ -75,13 +78,13 @@ public class SettingsPanel extends SpecificPanel  {
     @Override
     public void makePanel() {
 	BACK = makeBackButton(PROGRAM_CONTROLLER);
-	NEW_WORKSPACE =  makeNewWorkspaceButton("newworkspaceButton");
+	NEW_WORKSPACE =  makeNewWorkspaceButton(BUTTON_IDS[0]);
 	LANGUAGE_CHOOSER = makeLanguageChooser(DROPDOWN_IDS[0]);
 	BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[1]);
 	PEN_COLOR_CHOOSER = makePenColorChooser(DROPDOWN_IDS[2]);
 	TURTLE_IMAGE_CHOOSER= makeTurtleImageChooser(DROPDOWN_IDS[3]);
-	PREFERENCES_CHOOSER = makeWorkspacePrefChooser(DROPDOWN_IDS[4]);
-	VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACEING, LANGUAGE_CHOOSER,BACKGROUND_COLOR_CHOOSER,PEN_COLOR_CHOOSER,TURTLE_IMAGE_CHOOSER,PREFERENCES_CHOOSER,NEW_WORKSPACE,BACK);
+	HBox prefHolder = makeWorkspacePrefChooser(DROPDOWN_IDS[4],BUTTON_IDS[1]);
+	VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACEING, LANGUAGE_CHOOSER,BACKGROUND_COLOR_CHOOSER,PEN_COLOR_CHOOSER,TURTLE_IMAGE_CHOOSER,prefHolder,NEW_WORKSPACE,BACK);
 	panelRoot.setId("infoPanel");
 	panelRoot.setAlignment(Pos.BASELINE_CENTER);
 	PANEL = panelRoot;
@@ -169,13 +172,24 @@ public class SettingsPanel extends SpecificPanel  {
 	});
 	return dropDownMenu;
     }
+    
+    private HBox makeWorkspacePrefChooser(String dropId, String buttonId) {
+	PREFERENCES_CHOOSER = makeWorkspacePrefDropDown(dropId);
+	SAVE_PREFERENCES = new Button(PROGRAM_CONTROLLER.resourceDisplayText(buttonId));
+	SAVE_PREFERENCES.setId(buttonId);
+	HBox holder = new HBox(PREFERENCES_CHOOSER,SAVE_PREFERENCES);
+
+	
+	return holder;
+	
+    }
 
     /**
      * 
      * @return dropDownMenu: a drop down menu that lets the user choose the
      * language for the simulation
      */
-    private ComboBox<Object> makeWorkspacePrefChooser(String itemID) {
+    private ComboBox<Object> makeWorkspacePrefDropDown(String itemID) {
 	String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
 	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
 	ObservableList<Object> simulationChoices = 
@@ -239,12 +253,12 @@ public class SettingsPanel extends SpecificPanel  {
     private void updatePrompt() {
 	BACK.setText(PROGRAM_CONTROLLER.resourceDisplayText("backButton"));
 	LANGUAGE_CHOOSER = makeLanguageChooser(DROPDOWN_IDS[0]);
-	NEW_WORKSPACE =  makeNewWorkspaceButton("newworkspaceButton");
+	NEW_WORKSPACE =  makeNewWorkspaceButton(BUTTON_IDS[0]);
 	BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[1]);
 	PEN_COLOR_CHOOSER = makePenColorChooser(DROPDOWN_IDS[2]);
 	TURTLE_IMAGE_CHOOSER= makeTurtleImageChooser(DROPDOWN_IDS[3]);
-	PREFERENCES_CHOOSER = makeWorkspacePrefChooser(DROPDOWN_IDS[4]);
-	((VBox)PANEL).getChildren().setAll(LANGUAGE_CHOOSER,BACKGROUND_COLOR_CHOOSER,PEN_COLOR_CHOOSER,TURTLE_IMAGE_CHOOSER,PREFERENCES_CHOOSER,NEW_WORKSPACE,BACK);
+	HBox prefHolder = makeWorkspacePrefChooser(DROPDOWN_IDS[4], BUTTON_IDS[1]);
+	((VBox)PANEL).getChildren().setAll(LANGUAGE_CHOOSER,BACKGROUND_COLOR_CHOOSER,PEN_COLOR_CHOOSER,TURTLE_IMAGE_CHOOSER,prefHolder,NEW_WORKSPACE,BACK);
     }
 
 

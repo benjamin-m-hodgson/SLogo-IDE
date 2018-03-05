@@ -1605,7 +1605,34 @@
 	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;
 } 
-
+/******************************************************************************************/
+/* The save button to save current state as a preference */
+/******************************************************************************************/
+#saveprefButton {
+	-fx-alignment: center;
+	-fx-pref-width: 70px;
+	-fx-max-width: 70px;
+	-fx-min-width: 70px;
+	-fx-pref-height: 40px;
+	-fx-max-height: 40px;
+	-fx-min-height: 40px;
+	-fx-background-radius: 6;
+	-fx-background-color: #3ea3f8;
+	-fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-border-color: #0c8bf6;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+    -fx-font: 12px Dekko;
+    -fx-font-weight: bold;
+    -fx-underline: false;
+}
+#saveprefButton:hover {
+	-fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
+	-fx-font: 14px Dekko;
+	-fx-font-weight: bold;
+}
 /******************************************************************************************/
 /* The help button to switch to the help panel */
 /******************************************************************************************/

@@ -128,10 +128,8 @@ public class UserScreen implements Screen {
 
 
     public void applyPreferences(String selected) {
-
 	Map<String, String> preferences = PROGRAM_CONTROLLER.getWorkspacePreferences(selected);
 	TURTLE_PANEL.changeBackgroundColor(preferences.get("backgroundColor"));
-	
 	String penColor = preferences.get("penColor");
 	penColor = penColor.substring(1, penColor.length());
 	System.out.println(penColor);
