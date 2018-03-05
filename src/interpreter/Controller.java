@@ -69,10 +69,9 @@ public class Controller {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean t1, Boolean t2) {
 				RegexMatcher backColorRegex = new RegexMatcher(DEFAULT_COLORPALETTE_FILE);
-				String matchingCol = ""; 
+				String matchingHex = ""; 
 				try {
-					matchingCol = backColorRegex.findMatchingVal(myTextFieldParser.getBackColor().getValue().toString());
-					String matchingHex = changeBackgroundColor(matchingCol);
+					matchingHex = backColorRegex.findMatchingVal(myTextFieldParser.getBackColor().getValue().toString());
 					//						changeBackgroundColorHex(matchingHex);
 				} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
 					System.out.println("error locating that backgorund color"); // TODO make this more elaborate
