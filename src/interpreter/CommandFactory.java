@@ -173,6 +173,9 @@ public class CommandFactory {
 		else if(commandName.equals("For")) {
 			return new ForCommand(commandArgs.get(0), commandArgs.get(1), commandArgs.get(2), commandArgs.get(3), commandArgs.get(4), turtle, myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
 		}
+		else if(commandName.equals("ID")) {
+			return new IDQueryCommand(turtle);
+		}
 		else {
 			return new StringCommand(commandName);
 		}
