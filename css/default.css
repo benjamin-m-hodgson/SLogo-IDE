@@ -435,6 +435,52 @@
 	-fx-background-radius: 2em;
 }
 /******************************************************************************************/
+/* The history text areas for displaying past run commands */ 
+/******************************************************************************************/
+#parametersField {
+	-fx-alignment: center;
+	-fx-pref-width: 150px;
+	-fx-pref-height: 20px;
+	-fx-padding: 5 5 5 5;
+	-fx-background-color: transparent;
+	-fx-highlight-fill: #fbcbd7;
+	-fx-highlight-text-fill: #555555;
+	-fx-text-fill: #555555;
+	-fx-prompt-text-fill: #c0bcb6;
+	-fx-font: 12px 'Nova Flat';
+}
+#parametersField:focused {
+	-fx-faint-focus-color: rgba(192, 188, 182, 0.5);
+}
+#parametersField .scroll-bar:horizontal ,
+#parametersField  .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+#parametersField .scroll-bar .increment-arrow ,
+#parametersField .scroll-bar .decrement-arrow {
+	-fx-shape: " ";	
+	-fx-padding:0;
+}
+#parametersField .increment-button ,
+#parametersField .decrement-button {
+    -fx-background-color:transparent;
+	-fx-background-radius: 2em;
+}
+#parametersField .scroll-bar:horizontal .thumb,
+#parametersField .scroll-bar:vertical .thumb {
+    -fx-background-color: #c0bcb6;
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+#parametersField .scroll-bar:horizontal .thumb:hover,
+#parametersField .scroll-bar:vertical .thumb:hover,
+#parametersField .scroll-bar:horizontal .thumb:pressed,
+#parametersField .scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: linear-gradient(to right, #c0bcb6, #aca9a3);
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+/******************************************************************************************/
 /* The apply button to apply some visualization property changes */
 /******************************************************************************************/
 #applyButton {
@@ -1770,6 +1816,34 @@
     -fx-underline: false;
 }
 #saveVariableButton:hover {
+	-fx-background-color: linear-gradient(#8f8fd3, #6f6fc7);
+	-fx-font: 14px Dekko;
+	-fx-font-weight: bold;
+} 
+/******************************************************************************************/
+/* The run user command button executes a user command based on entered values in the command panel */
+/******************************************************************************************/
+#runUserCommButton {
+	-fx-alignment: center;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-max-height: 40px;
+	-fx-min-height: 40px;
+	-fx-background-radius: 6;
+	-fx-background-color: #8f8fd3;
+	-fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-border-color: #6f6fc7;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+    -fx-font: 12px Dekko;
+    -fx-font-weight: bold;
+    -fx-underline: false;
+}
+#runUserCommButton:hover {
 	-fx-background-color: linear-gradient(#8f8fd3, #6f6fc7);
 	-fx-font: 14px Dekko;
 	-fx-font-weight: bold;

@@ -100,7 +100,7 @@ public class CommandPanel extends SpecificPanel {
 	COMMAND_BOX.getChildren().clear();
 	Map<String, String> programCommands = PROGRAM_CONTROLLER.getUserDefined();
 	for (Entry<String, String> command : programCommands.entrySet()) {
-	    System.out.println("anything?");
+	 //   System.out.println("anything?");
 	    String commandName = command.getKey();
 	    String commandValue = command.getValue();
 	    Label nameLabel = new Label(commandName);
@@ -138,7 +138,19 @@ public class CommandPanel extends SpecificPanel {
 	commandInfoArea.setId("settingsField");
 	commandInfoPane.setContent(commandInfoArea);
 	commandInfoArea.setText(commandValue);
-	VBox panelRoot = new VBox(commandButton, commandInfoArea, backButton);
+	Button runFunction = new Button(PROGRAM_CONTROLLER.resourceDisplayText("runUserCommButton"));
+	runFunction.setId("runUserCommButton");
+	runFunction.setDisable(true);
+	TextArea parameterInput = new TextArea();
+	parameterInput.setId("parametersField"); 
+	parameterInput.setPromptText(PROGRAM_CONTROLLER.resourceDisplayText("parameters"));
+	parameterInput.setEditable(true);
+	parameterInput.setOnKeyTyped((arg0) -> runFunction.setDisable(false));
+	runFunction.setOnMouseClicked((arg0) -> USER_SCREEN.commandRunFromHistory(commandName + " " + parameterInput.getText()));
+
+	
+	
+	VBox panelRoot = new VBox(commandButton, commandInfoArea,parameterInput, runFunction,backButton);
 	panelRoot.setId("infoPanel");
 	VBox.setVgrow(commandInfoArea, Priority.ALWAYS);
 	return panelRoot;
