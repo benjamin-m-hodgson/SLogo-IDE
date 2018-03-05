@@ -7,7 +7,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import interpreter.BadFormatException;
 import interpreter.Controller;
+import interpreter.MissingInformationException;
+import interpreter.TurtleNotFoundException;
+import interpreter.UnidentifiedCommandException;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import screen.panel.InfoPanel;
@@ -93,6 +97,18 @@ public class UserScreen implements Screen {
      */
     public void displayErrorMessage(String errorMessage) {
 	TURTLE_PANEL.displayErrorMessage(errorMessage);
+    }
+    
+    public void commandRunFromHistory(String command) {
+	try {
+	    Double commandVal = PROGRAM_CONTROLLER.parseInput(command);
+	    addCommand(command, commandVal.toString());
+	} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
+		| MissingInformationException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+	
     }
 
     /**

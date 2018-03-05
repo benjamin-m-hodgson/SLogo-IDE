@@ -2,7 +2,11 @@ package screen.panel;
 
 import java.util.Iterator;
 
+import interpreter.BadFormatException;
 import interpreter.Controller;
+import interpreter.MissingInformationException;
+import interpreter.TurtleNotFoundException;
+import interpreter.UnidentifiedCommandException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -108,7 +112,7 @@ public class HistoryPanel extends SpecificPanel {
     private VBox verboseCommand(String command, String commandNumberHeading, String output) {
 	Button commandButton = new Button(commandNumberHeading);
 	commandButton.setId("commandButton");
-	commandButton.setDisable(true);
+	commandButton.setOnMouseClicked((arg0)-> USER_SCREEN.commandRunFromHistory(command));
 	Button backButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText("backButton"));
 	backButton.setId("backButton");
 	// override click event
@@ -121,6 +125,7 @@ public class HistoryPanel extends SpecificPanel {
 	commandInfoArea.setId("historyField");
 	commandInfoArea.setText(command);
 	commandInfoArea.setEditable(false);
+	
 	TextArea consoleInfoArea = new TextArea();
 	consoleInfoArea.setId("historyField");
 	consoleInfoArea.setText(output);
