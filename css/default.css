@@ -1369,6 +1369,156 @@
     -fx-opacity: .4;
 }
 /******************************************************************************************/
+/* The drop down choice box the user uses to pick a pen color of the turtle  */
+/******************************************************************************************/
+#preferencesChooser {
+	-fx-alignment: center;
+    -fx-background-color: #fa9873;
+    -fx-background-radius: 6;
+    -fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-border-color: #f97f51;
+    -fx-padding: 0;
+}
+#preferencesChooser .list-cell {
+	-fx-pref-width: 120px;
+	-fx-max-width: 120px;
+	-fx-min-width: 120px;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
+    -fx-background: #fa9873;
+    -fx-background-color: #fa9873;
+	-fx-background-radius: 6;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+    -fx-font: 12px Dekko;
+    -fx-font-weight: bold;
+}
+#preferencesChooser .list-view {
+    -fx-background-color: transparent;
+}    
+#preferencesChooser .list-view .list-cell {
+	-fx-background-color: #fa9873;
+    -fx-background-radius: 6;
+    -fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-border-color: #f97f51;
+    -fx-text-fill: #ffffff;
+    -fx-wrap-text: true;
+    -fx-font: 12px Dekko;
+    -fx-font-weight: bold;
+}
+#preferencesChooser .arrow-button {
+	-fx-background-color: transparent;
+}
+#preferencesChooser .arrow {
+	-fx-background-color: #ffffff;
+	-fx-font: 12px Dekko;
+}
+#preferencesChooser:hover .list-cell {
+	-fx-background-color: linear-gradient(#fa9873, #f97f51);
+    -fx-text-fill: #ffffff;
+    -fx-font: 14px Dekko;
+    -fx-font-weight: bold;
+}
+#preferencesChooser:hover .arrow-button {
+	-fx-background-color: linear-gradient(#fa9873, #f97f51);
+}
+#preferencesChooser:hover .arrow {
+	-fx-background-color: #ffffff;
+	-fx-font: 14px Dekko;
+}
+#preferencesChooser:showing {
+    -fx-text-fill: #ffffff;
+    -fx-wrap-text: true;
+    -fx-font: 12px Dekko;
+    -fx-font-weight: bold;
+}
+#preferencesChooser:showing .list-cell {
+	-fx-pref-width: 100px;
+	-fx-max-width: 100px;
+	-fx-min-width: 100px;
+	-fx-pref-height: 40px;
+	-fx-min-height: 40px;
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+	-fx-background-radius: 6;
+    -fx-text-fill: #ffffff;
+    -fx-font: 12px Dekko;
+    -fx-font-weight: bold;
+}
+#preferencesChooser:showing .arrow {
+	-fx-background-color: #ffffff;
+	-fx-font: 12px Dekko;
+}
+#preferencesChooser:showing .arrow-button {
+	-fx-background-color: transparent;
+}
+#preferencesChooser:showing:hover {
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
+    -fx-text-fill: #ffffff;
+    -fx-font: 14px Dekko;
+    -fx-font-weight: bold;
+}
+#preferencesChooser:showing:hover .list-cell{
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
+    -fx-text-fill: #ffffff;
+    -fx-font: 14px Dekko;
+    -fx-font-weight: bold;
+}
+#preferencesChooser:showing:hover .arrow {
+	-fx-background-color: #ffffff;
+	-fx-font: 14px Dekko;
+}
+#preferencesChooser .list-view .list-cell:filled:selected, 
+#preferencesChooser .list-view .list-cell:filled:selected:hover {
+    -fx-background: linear-gradient(#fa9873, #f97f51);
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
+    -fx-text-fill: #ffffff;
+}
+#preferencesChooser .list-view .list-cell:filled:hover {
+    -fx-background-color: linear-gradient(#fa9873, #f97f51);
+    -fx-text-fill: #ffffff;
+    -fx-font: 14px Dekko;
+    -fx-font-weight: bold;
+}
+#preferencesChooser .scroll-bar:horizontal ,
+#preferencesChooser  .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+#preferencesChooser .scroll-bar .increment-arrow ,
+#preferencesChooser .scroll-bar .decrement-arrow {
+	-fx-shape: " ";	
+	-fx-padding:0;
+}
+#preferencesChooser .increment-button ,
+#preferencesChooser .decrement-button {
+    -fx-background-color:transparent;
+	-fx-background-radius: 2em;
+}
+#preferencesChooser .scroll-bar:horizontal .thumb,
+#preferencesChooser .scroll-bar:vertical .thumb {
+    -fx-background-color: #c0bcb6;
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+#preferencesChooser .scroll-bar:horizontal .thumb:hover,
+#preferencesChooser .scroll-bar:vertical .thumb:hover,
+#preferencesChooser .scroll-bar:horizontal .thumb:pressed,
+#preferencesChooser .scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: linear-gradient(to right, #c0bcb6, #aca9a3);
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+#preferencesChooser:disabled {
+    -fx-opacity: .4;
+}
+/******************************************************************************************/
 /* The settings button to switch to the settings panel */
 /******************************************************************************************/
 #settingsButton {

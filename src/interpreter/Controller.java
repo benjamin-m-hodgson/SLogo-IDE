@@ -6,6 +6,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -37,6 +38,7 @@ public class Controller {
     private final String DEFAULT_LANGUAGE = "English";
     private final String DEFAULT_COLOR = "Grey";
     private final String DEFAULT_SETTINGS = "settings";
+    private final String DEFAULT_WORKSPACE_PREF = "default";
     private String DEFAULT_CSS = Controller.class.getClassLoader().
 	    getResource("default.css").toExternalForm(); 
     private ResourceBundle CURRENT_TEXT_DISPLAY;
@@ -45,7 +47,9 @@ public class Controller {
     private ResourceBundle CURRENT_PEN_COLOR;
     private ResourceBundle CURRENT_LANGUAGE;
     private ResourceBundle CURRENT_SETTINGS;
+
     private Stage PROGRAM_STAGE;
+    private UserScreen USER_SCREEN;
     private String PROGRAM_TITLE;
     private double DEFAULT_HEIGHT;
     private double DEFAULT_WIDTH;
@@ -87,8 +91,8 @@ public class Controller {
      */
     public void loadUserScreen() {
 	try {
-	    UserScreen programScreen = new UserScreen(this);
-	    Parent programRoot = programScreen.getRoot();
+	    USER_SCREEN = new UserScreen(this);
+	    Parent programRoot = USER_SCREEN.getRoot();
 	    Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);	
 	    programScene.getStylesheets().add(DEFAULT_CSS);
 	    PROGRAM_STAGE.setScene(programScene);
@@ -316,6 +320,10 @@ public class Controller {
 	}
     }
 
+    public void changeBackgroundColorHex(String hex) {
+	USER_SCREEN.changeBackgroundColorHex(hex);
+    }
+
     /**
      * Updates the color of lines to be drawn by the turtle
      * 
@@ -381,7 +389,7 @@ public class Controller {
     }
 
     /**
-     * 
+     * Used for changing pen color from settings panel through a command sent to parser
      * @param hexCodeUnParsed
      * @throws TurtleNotFoundException
      * @throws BadFormatException
@@ -392,12 +400,21 @@ public class Controller {
 	try {
 	    String hexCode = hexCodeUnParsed.substring(1, hexCodeUnParsed.length());
 	    int hexConvert = Integer.parseInt(hexCode,16);
-	    parseInput("setpc " + hexConvert);
+	    changePenColorHex(hexConvert);
 	}
 	catch (Exception e){
 	    loadErrorScreen(resourceErrorText(FILE_ERROR_KEY) + System.lineSeparator()
 	    + resourceErrorText("ColorErrorPrompt"));
 	}
+    }
+    
+    public void changePenColorHex(int hex) {
+	    try {
+		parseInput("setpc " + hex);
+	    } catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
+		    | MissingInformationException e) {
+		USER_SCREEN.displayErrorMessage("Invalid Color Chosen");
+	    }
     }
 
     /**
@@ -459,6 +476,35 @@ public class Controller {
 	    e.printStackTrace();
 	    loadErrorScreen(RESOURCE_ERROR);
 	}
+    }
+
+
+    public Map<String, String> getWorkspacePreferences(String fileName) {
+	String currentDir = System.getProperty("user.dir");
+	try {
+	    return locatePreferences(currentDir, fileName);
+	    }
+	catch (Exception e) {
+	    try {
+		return locatePreferences(currentDir, DEFAULT_WORKSPACE_PREF);
+	    } catch (MalformedURLException e1) {
+		loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+		return null;
+	    }
+	}
+    }
+
+    private Map<String, String> locatePreferences(String currentDir, String fileName) throws MalformedURLException {
+	File file = new File(currentDir);
+	URL[] urls = {file.toURI().toURL()};
+	ClassLoader loader = new URLClassLoader(urls);
+	ResourceBundle workspacePref = ResourceBundle.getBundle(fileName, 
+		Locale.getDefault(), loader);
+	Map<String, String> preferences = new HashMap<String,String>();
+	preferences.put("backgroundColor", workspacePref.getString("backgroundColor"));
+	preferences.put("penColor", workspacePref.getString("penColor"));
+	preferences.put("language", workspacePref.getString("language"));
+	return preferences;
     }
 
     /**
