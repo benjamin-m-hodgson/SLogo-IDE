@@ -26,6 +26,10 @@ class CommandTreeReader {
 	 */
 	private boolean treeIsComplete(CommandNode root) throws UnidentifiedCommandException{
 		//System.out.println("reading a node");
+		//System.out.println("node" + root.getInfo());
+//		for(int k = 0; k<root.getNumChildren(); k+=1) {
+//			System.out.println("node children " + root.getChildren().get(k).getInfo());
+//		}
 		if(root.getIsDouble()||root.getIsString()) {
 			return true;
 		}
