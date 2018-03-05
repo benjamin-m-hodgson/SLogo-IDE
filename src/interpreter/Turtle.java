@@ -239,6 +239,10 @@ public class Turtle {
 	protected void clearPen() {
 		myPen.clear();
 	}
+	
+	protected String getPenColor() {
+		return myPen.getColor();
+	}
 
 
 
