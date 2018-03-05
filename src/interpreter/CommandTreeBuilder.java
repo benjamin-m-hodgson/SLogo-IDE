@@ -108,7 +108,7 @@ class CommandTreeBuilder {
 
 	private CommandNode createCommandTree(Turtle turtle, String[] userInput, int startIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 
-		if (startIdx >= userInput.length) { // || commandTypes[startIdx] == null
+		if (startIdx >= userInput.length||userInput[startIdx].equals("]")) { // || commandTypes[startIdx] == null //TODO fix this so not so obvious
 			return null; // TODO make this more detailed
 		}
 		if(myVariables.containsKey(userInput[startIdx])) {
@@ -139,6 +139,7 @@ class CommandTreeBuilder {
 				return null; // TODO FIX THIS 
 				//				return createCommandTree(turtle, userInput, startAfterUserCommand);
 			}
+			//System.out.println("currCommand: " + currCommand);
 			int numArgs = getNumArgs(currCommand);
 			CommandNode newParentNode = new CommandNode(currCommand, numArgs, turtle);
 			while (newParentNode.getNumArgs() == 0 ) { // accounts for multiple 1-arg arguments before args that need child nodes 
