@@ -643,6 +643,7 @@ class CommandTreeBuilder {
 				throw new UnidentifiedCommandException("Repeat syntax is not correct.");
 			}
 			//adding command info to children
+			//System.out.print("command info" + String.join(" ", Arrays.copyOfRange(userInput, currIdx, currIdxCopy-1)));
 			parent.addChild(createCommandTree(turtle, Arrays.copyOfRange(userInput, currIdx, currIdxCopy-1), 0));
 				currIdx = currIdxCopy - 1;
 		//adding string info to children
