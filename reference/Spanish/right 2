@@ -1,0 +1,12 @@
+Turtle Commands:
+RIGHT degrees
+RT degrees
+
+Description:
+Turns turtle clockwise by degrees angle
+
+Parameters:
+degrees - clockwise angle
+
+Returns:
+The value of degrees

@@ -14,6 +14,8 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,19 +28,22 @@ import screen.UserScreen;
 /**
  * 
  * @author Ben Hodgson
+ * @author Susie Choi
  * 
  * The main class for reading in data files and relaying information about these files 
  * to the front end. Also acts as a mediator and handles front end to back end communication.
  */
 public class Controller {
-    private final String RESOURCE_ERROR = "Could not find resource bundle";
-    private final String FILE_ERROR_KEY = "FileErrorPrompt";
-    private final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
-    private final String SYNTAX_FILE_NAME = "Syntax.properties";
-    private final String DEFAULT_LANGUAGE = "English";
-    private final String DEFAULT_COLOR = "Grey";
-    private final String DEFAULT_SETTINGS = "settings";
+
+    public static final String RESOURCE_ERROR = "Could not find resource bundle";
+    public static final String FILE_ERROR_KEY = "FileErrorPrompt";
+    public static final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
+    public static final String SYNTAX_FILE_NAME = "Syntax.properties";
+    public static final String DEFAULT_LANGUAGE = "English";
+    public static final String DEFAULT_COLOR = "Grey";
+    public static final String DEFAULT_SETTINGS = "settings";
     private final String DEFAULT_WORKSPACE_PREF = "default";
+    public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
     private String DEFAULT_CSS = Controller.class.getClassLoader().
 	    getResource("default.css").toExternalForm(); 
     private ResourceBundle CURRENT_TEXT_DISPLAY;
@@ -47,7 +52,6 @@ public class Controller {
     private ResourceBundle CURRENT_PEN_COLOR;
     private ResourceBundle CURRENT_LANGUAGE;
     private ResourceBundle CURRENT_SETTINGS;
-
     private Stage PROGRAM_STAGE;
     private UserScreen USER_SCREEN;
     private String PROGRAM_TITLE;
@@ -61,6 +65,24 @@ public class Controller {
 	findSettings();
 	findResources(DEFAULT_LANGUAGE);
 	PROGRAM_STAGE.setTitle(PROGRAM_TITLE);
+	setUpBackColorListener(); 
+    }
+
+    private void setUpBackColorListener() {
+	myTextFieldParser.getBackColorChangeHeard().addListener(new ChangeListener<Boolean>() {
+	    @Override
+	    public void changed(ObservableValue<? extends Boolean> observable, Boolean t1, Boolean t2) {
+		RegexMatcher backColorRegex = new RegexMatcher(DEFAULT_COLORPALETTE_FILE);
+		String matchingHex = ""; 
+		try {
+		    matchingHex = backColorRegex.findMatchingVal(myTextFieldParser.getBackColor().getValue().toString());
+		    //						changeBackgroundColorHex(matchingHex);
+		} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
+		    System.out.println("error locating that backgorund color"); // TODO make this more elaborate
+		    e.printStackTrace();
+		}
+	    }
+	});
     }
 
     /**
@@ -223,6 +245,38 @@ public class Controller {
 	return Collections.unmodifiableList(new ArrayList<String>());
     }
 
+
+    public void changeBackgroundColorHex(String hex) {
+	USER_SCREEN.changeBackgroundColorHex(hex);
+    }
+
+    /**
+     * Updates the color of lines to be drawn by the turtle
+     * 
+     * @param color: the new color to be used for drawing lines
+     * @throws TurtleNotFoundException
+     * @throws BadFormatException
+     * @throws UnidentifiedCommandException
+     * @throws MissingInformationException
+     */
+    public void changePenColor(String color) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	CURRENT_PEN_COLOR = findColorFile(color);
+	try {
+	    String hexCodeUnParsed = CURRENT_PEN_COLOR.getString(color+"Code");
+	    parseHexCodeandPass(hexCodeUnParsed);
+	}
+	catch(MissingResourceException e){
+	    try {
+		CURRENT_PEN_COLOR = findColorFile(DEFAULT_COLOR);
+		String hexCodeUnParsed = CURRENT_PEN_COLOR.getString(color+"Code");
+		parseHexCodeandPass(hexCodeUnParsed);
+	    }
+	    catch(MissingResourceException e1) {
+		loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+	    }
+	}
+    }
+
     /**
      * Looks in the CURRENT_TEXT_DISPLAY resourceBundle to determine the String
      * that should be used for text display.
@@ -271,87 +325,6 @@ public class Controller {
     }
 
     /**
-     * Parses input from a text field or button press by the user
-     * @throws MissingInformationException 
-     * @throws UnidentifiedCommandException 
-     * @throws BadFormatException 
-     * @throws TurtleNotFoundException 
-     */
-    public double parseInput(String userTextInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
-	return myTextFieldParser.parseText(userTextInput);
-    }
-
-    /**
-     * Takes a list of String color names and generates a new list of String hex values
-     * taken from the colors.properties file.
-     * 
-     * @param colors: A list of Strings representing color names
-     * @return A List<String> containing string representations of hex codes 
-     */
-    public List<String> translateColors(List<String> colors){
-	List<String> translatedColors = new ArrayList<String>();
-	for(int i =0; i<colors.size(); i++) {
-	    translatedColors.add(resourceDisplayText(colors.get(i)));
-	}
-	return translatedColors;
-    }
-
-    /**
-     * Takes a String color name and generates a new String representing the 
-     * colors associated hex value taken from the colors.properties file.
-     * 
-     * @param color: The String color name for the newly desired background color
-     * @return String representation of @param colors hex value.
-     */
-    public String changeBackgroundColor(String color) {
-	CURRENT_BACKGROUND_COLOR = findColorFile(color);
-	try {
-	    return CURRENT_BACKGROUND_COLOR.getString(color+"Code");
-	}
-	catch(MissingResourceException e){
-	    try {
-		CURRENT_BACKGROUND_COLOR = findColorFile(DEFAULT_COLOR );
-		return CURRENT_BACKGROUND_COLOR.getString(color+"Code");
-	    }
-	    catch(MissingResourceException e1) {
-		loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
-		return null;
-	    }
-	}
-    }
-
-    public void changeBackgroundColorHex(String hex) {
-	USER_SCREEN.changeBackgroundColorHex(hex);
-    }
-
-    /**
-     * Updates the color of lines to be drawn by the turtle
-     * 
-     * @param color: the new color to be used for drawing lines
-     * @throws TurtleNotFoundException
-     * @throws BadFormatException
-     * @throws UnidentifiedCommandException
-     * @throws MissingInformationException
-     */
-    public void changePenColor(String color) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
-	CURRENT_PEN_COLOR = findColorFile(color);
-	try {
-	    String hexCodeUnParsed = CURRENT_PEN_COLOR.getString(color+"Code");
-	    parseHexCodeandPass(hexCodeUnParsed);
-	}
-	catch(MissingResourceException e){
-	    try {
-		CURRENT_PEN_COLOR = findColorFile(DEFAULT_COLOR);
-		String hexCodeUnParsed = CURRENT_PEN_COLOR.getString(color+"Code");
-		parseHexCodeandPass(hexCodeUnParsed);
-	    }
-	    catch(MissingResourceException e1) {
-		loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
-	    }
-	}
-    }
-
-    /**
      * Searches through the class path to find the appropriate resource files to use for 
      * the program. If it can't locate the files, it displays an error screen to the user
      * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
@@ -389,6 +362,33 @@ public class Controller {
     }
 
     /**
+     * Parses input from a text field or button press by the user
+     * @throws MissingInformationException 
+     * @throws UnidentifiedCommandException 
+     * @throws BadFormatException 
+     * @throws TurtleNotFoundException 
+     */
+    public double parseInput(String userTextInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	return myTextFieldParser.parseText(userTextInput);
+    }
+
+    /**
+     * Takes a list of String color names and generates a new list of String hex values
+     * taken from the colors.properties file.
+     * 
+     * @param colors: A list of Strings representing color names
+     * @return A List<String> containing string representations of hex codes 
+     */
+    public List<String> translateColors(List<String> colors){
+	List<String> translatedColors = new ArrayList<String>();
+	for(int i =0; i<colors.size(); i++) {
+	    translatedColors.add(resourceDisplayText(colors.get(i)));
+	}
+	return translatedColors;
+    }
+
+
+    /**
      * Used for changing pen color from settings panel through a command sent to parser
      * @param hexCodeUnParsed
      * @throws TurtleNotFoundException
@@ -407,15 +407,43 @@ public class Controller {
 	    + resourceErrorText("ColorErrorPrompt"));
 	}
     }
-    
-    public void changePenColorHex(int hex) {
+
+    /**
+     * Takes a String color name and generates a new String representing the 
+     * colors associated hex value taken from the colors.properties file.
+     * 
+     * @param color: The String color name for the newly desired background color
+     * @return String representation of @param colors hex value.
+     */
+    public String changeBackgroundColor(String color) {
+	CURRENT_BACKGROUND_COLOR = findColorFile(color);
+	try {
+	    return CURRENT_BACKGROUND_COLOR.getString(color+"Code");
+	}
+	catch(MissingResourceException e){
 	    try {
-		parseInput("setpc " + hex);
-	    } catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
-		    | MissingInformationException e) {
-		USER_SCREEN.displayErrorMessage("Invalid Color Chosen");
+		CURRENT_BACKGROUND_COLOR = findColorFile(DEFAULT_COLOR );
+		return CURRENT_BACKGROUND_COLOR.getString(color+"Code");
 	    }
+	    catch(MissingResourceException e1) {
+		loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
+		return null;
+	    }
+	}
+
     }
+
+    public void changePenColorHex(int hex) {
+	try {
+	    parseInput("setpc " + hex);
+	} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
+		| MissingInformationException e) {
+	    USER_SCREEN.displayErrorMessage("Invalid Color Chosen");
+	}
+    }
+
+
+
 
     /**
      * Searches through the class path to find the appropriate resource files to use for 
@@ -452,6 +480,8 @@ public class Controller {
 
 
 
+
+
     /**
      * Searches through the class path to find the appropriate settings resource file to use for 
      * the program. If it can't locate the file, it displays an error screen to the user
@@ -478,12 +508,24 @@ public class Controller {
 	}
     }
 
+    /**
+     * Looks in the CURRENT_SETTINGS resourceBundle to determine the String
+     * that should be used to get the String used to define some program setting.
+     * 
+     * @param key: the key used for look up in the .properties file
+     * @return The string value @param key is assigned to in the .properties file
+     */
+    private String resourceSettingsText(String key) {
+	return CURRENT_SETTINGS.getString(key);
+    }
+
+
 
     public Map<String, String> getWorkspacePreferences(String fileName) {
 	String currentDir = System.getProperty("user.dir");
 	try {
 	    return locatePreferences(currentDir, fileName);
-	    }
+	}
 	catch (Exception e) {
 	    try {
 		return locatePreferences(currentDir, DEFAULT_WORKSPACE_PREF);
@@ -507,14 +549,6 @@ public class Controller {
 	return preferences;
     }
 
-    /**
-     * Looks in the CURRENT_SETTINGS resourceBundle to determine the String
-     * that should be used to get the String used to define some program setting.
-     * 
-     * @param key: the key used for look up in the .properties file
-     * @return The string value @param key is assigned to in the .properties file
-     */
-    private String resourceSettingsText(String key) {
-	return CURRENT_SETTINGS.getString(key);
-    }
+
 }
+

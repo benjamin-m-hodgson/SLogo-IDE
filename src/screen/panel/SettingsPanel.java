@@ -21,13 +21,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import screen.UserScreen;
-import java.util.List;
-import interpreter.BadFormatException;
-import interpreter.Controller;
-import interpreter.MissingInformationException;
-import interpreter.TurtleNotFoundException;
-import interpreter.UnidentifiedCommandException;
-import javafx.scene.control.Tooltip;
 import StartUp.Driver;
 
 
@@ -43,7 +36,6 @@ public class SettingsPanel extends SpecificPanel  {
     private final String COLOR_FOLDER = "colors";
     private final String PREFERENCES_FOLDER = "workspacePreferences";
     private final String TURTLE_IMAGE_FOLDER = "turtleimages";
-
     private  Parent PANEL;
     private final Controller PROGRAM_CONTROLLER;
     private final BorderPane PANE;
@@ -57,9 +49,7 @@ public class SettingsPanel extends SpecificPanel  {
     private ComboBox<Object> PREFERENCES_CHOOSER;
     private List<String> colorsUntranslated;
     private List<String> colorsTranslated;
-
     private UserScreen USER_SCREEN;
-
     private final int DEFAULT_BUTTON_SPACEING = 10;
     private final String[] DROPDOWN_IDS = {"languageSettingsChooser", "backgroundColorChooser", "penColorChooser", "turtleImageChooser", "preferencesChooser"};
     private final String[] BUTTON_IDS = {"newworkspaceButton", "saveprefButton"};
@@ -117,7 +107,7 @@ public class SettingsPanel extends SpecificPanel  {
 	});
 	return dropDownMenu;
     }
-
+    
     /**
      * 
      * @return dropDownMenu: a drop down menu that lets the user choose the
@@ -126,6 +116,9 @@ public class SettingsPanel extends SpecificPanel  {
     private ComboBox<Object> makeBackgroundColorChooser(String itemID) {
 	String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
 	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
+	Tooltip backgroundTip = new Tooltip();
+	backgroundTip.setText(selectionPrompt);
+	dropDownMenu.setTooltip(backgroundTip);
 	ObservableList<Object> simulationChoices = 
 		FXCollections.observableArrayList(selectionPrompt);
 	colorsUntranslated = PROGRAM_CONTROLLER.getFileNames(COLOR_FOLDER);
@@ -151,6 +144,9 @@ public class SettingsPanel extends SpecificPanel  {
     private ComboBox<Object> makePenColorChooser(String itemID) {
 	String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
 	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
+	Tooltip penTip = new Tooltip();
+	penTip.setText(selectionPrompt);
+	dropDownMenu.setTooltip(penTip);
 	ObservableList<Object> simulationChoices = 
 		FXCollections.observableArrayList(selectionPrompt);
 	colorsUntranslated = PROGRAM_CONTROLLER.getFileNames(COLOR_FOLDER);
@@ -217,7 +213,9 @@ public class SettingsPanel extends SpecificPanel  {
     private ComboBox<Object> makeTurtleImageChooser(String itemID) {
 	String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
 	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
-	//dropDownMenu.setTooltip(SELECTION_TIP);
+	Tooltip turtleTip = new Tooltip();
+	turtleTip.setText(selectionPrompt);
+	dropDownMenu.setTooltip(turtleTip);
 	ObservableList<Object> simulationChoices = 
 		FXCollections.observableArrayList(selectionPrompt);
 	simulationChoices.addAll(PROGRAM_CONTROLLER.getFileNames(TURTLE_IMAGE_FOLDER));
@@ -231,12 +229,14 @@ public class SettingsPanel extends SpecificPanel  {
 	    }
 	});
 	return dropDownMenu;
-    }
+    }  
 
     private Button makeNewWorkspaceButton(String itemId) {
 	Button workspaceButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText(itemId));
 	workspaceButton.setId(itemId);
-	// handle click event
+	Tooltip workspaceTip = new Tooltip();
+	workspaceTip.setText(PROGRAM_CONTROLLER.resourceDisplayText(itemId));
+	workspaceButton.setTooltip(workspaceTip);
 	workspaceButton.setOnAction(click ->{Driver d = new Driver();try {
 	    d.start(new Stage());
 	} catch (Exception e) {

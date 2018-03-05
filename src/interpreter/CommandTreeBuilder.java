@@ -5,6 +5,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 /** 
  * @author Susie Choi
  */
@@ -27,6 +32,7 @@ class CommandTreeBuilder {
 	public static final String DEFAULT_VAR_IDENTIFIER = ":";
 	public static final String DEFAULT_USERCOMMAND_IDENTIFIER = "MakeUserInstruction";
 	public static final String DEFAULT_USERCOMMAND_NAME = "UserInstruction";
+	public static final String DEFAULT_BACKCHANGE_IDENTIFIER = "SetBackground";
 	public static final String[] DEFAULT_DOUBLE_SUBSTITUTES = {"PenDown","PenUp","ShowTurtle","HideTurtle","Home","ClearScreen",
 			"XCoordinate","YCoordinate","Heading","IsPenDown","IsShowing","Pi"};
 	//	private CommandTreeReader myCommandTreeReader; 
@@ -37,6 +43,7 @@ class CommandTreeBuilder {
 	private HashMap<String, String> myUserDefCommands; 
 	private HashMap<String, Integer> myUserDefCommandsNumArgs;
 	private Map<String, Double> myVariables;
+	private SimpleIntegerProperty myBackColor; 
 
 	protected CommandTreeBuilder(Map<String, Double> variables, Map<String, String> userDefCommands, Map<String, Integer> userDefCommandsNumArgs) {
 		this(DEFAULT_NUM_ARGS_FNAME, variables, userDefCommands, userDefCommandsNumArgs);
@@ -50,6 +57,7 @@ class CommandTreeBuilder {
 		myUserDefCommands = (HashMap<String, String>)userDefCommands; 
 		myUserDefCommandsNumArgs = (HashMap<String, Integer>)userDefCommandsNumArgs;
 		myVariables = variables;
+		myBackColor = new SimpleIntegerProperty(0);
 	}
 
 	protected double buildAndExecute(Turtle turtle, String[] userInput, boolean shouldExecute) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
@@ -61,6 +69,9 @@ class CommandTreeBuilder {
 		myCommandTrees.clear(); 
 		int currIdx = 0;
 		//System.out.println("current user input: " + userInput[currIdx]);
+		if(myVariables.containsKey(userInput[currIdx])) {
+			userInput[currIdx] = myVariables.get(userInput[currIdx]).toString();
+		}
 		while(currIdx<userInput.length) {
 			try {
 				Double doubleArg = Double.parseDouble(userInput[currIdx]);
@@ -86,6 +97,9 @@ class CommandTreeBuilder {
 		//	System.out.println("number of command trees" + myCommandTrees.size());
 		if(shouldExecute) {
 			for (CommandNode commandTree : myCommandTrees) {
+				if (commandTree.getInfo().equals(DEFAULT_BACKCHANGE_IDENTIFIER)) {
+					myBackColor.set(Integer.parseInt(commandTree.childrenToString().trim())); 
+				}
 				finalReturnVal = myCommandTreeReader.readAndExecute(commandTree);
 			}
 		}
@@ -94,12 +108,13 @@ class CommandTreeBuilder {
 
 	private CommandNode createCommandTree(Turtle turtle, String[] userInput, int startIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 
-		if (startIdx >= userInput.length) { // || commandTypes[startIdx] == null
+		if (startIdx >= userInput.length||userInput[startIdx].equals("]")) { // || commandTypes[startIdx] == null //TODO fix this so not so obvious
 			return null; // TODO make this more detailed
 		}
 		if(myVariables.containsKey(userInput[startIdx])) {
 			userInput[startIdx] = myVariables.get(userInput[startIdx]).toString();
 		}
+
 		Double checkIfDouble; 
 		String currCommand = userInput[startIdx]; 
 		try {
@@ -124,6 +139,7 @@ class CommandTreeBuilder {
 				return null; // TODO FIX THIS 
 				//				return createCommandTree(turtle, userInput, startAfterUserCommand);
 			}
+			//System.out.println("currCommand: " + currCommand);
 			int numArgs = getNumArgs(currCommand);
 			CommandNode newParentNode = new CommandNode(currCommand, numArgs, turtle);
 			while (newParentNode.getNumArgs() == 0 ) { // accounts for multiple 1-arg arguments before args that need child nodes 
@@ -191,14 +207,7 @@ class CommandTreeBuilder {
 			}
 			return;
 		}
-		if (userInput[currIdx-1].equals(DEFAULT_USERCOMMAND_IDENTIFIER)) {
-			int startAfterTo = parseMakeUserCommand(turtle, userInput, currIdx);
-			CommandNode temp = createCommandTree(turtle, userInput, startAfterTo);
-			if(addToTrees) {
-				myCommandTrees.add(temp);
-			}
-			return;
-		}
+
 		
 		Double firstIsDouble; 
 		try {
@@ -260,11 +269,7 @@ class CommandTreeBuilder {
 					CommandNode newChildNode = new CommandNode(userInput[idx], turtle);
 					int numArgs = getNumArgs(userInput[idx-1]);
 					CommandNode newCommandNode = new CommandNode(userInput[idx-1], numArgs, newChildNode, turtle);
-					for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) { 
-						int backTrackNumArgs = getNumArgs(userInput[backtrack]);
-						CommandNode backtrackCommandNode = new CommandNode(userInput[backtrack], backTrackNumArgs, newCommandNode, turtle);
-						newCommandNode = backtrackCommandNode; 
-					}
+//					System.out.println("new command ndoe..." +newCommandNode.toString());
 					parent.addChild(newCommandNode);
 					if (parent.getNumChildren() == parent.getNumArgs() && addToTrees && !myCommandTrees.contains(parent)) {
 						myCommandTrees.add(parent);
@@ -639,6 +644,7 @@ class CommandTreeBuilder {
 				throw new UnidentifiedCommandException("Repeat syntax is not correct.");
 			}
 			//adding command info to children
+			//System.out.print("command info" + String.join(" ", Arrays.copyOfRange(userInput, currIdx, currIdxCopy-1)));
 			parent.addChild(createCommandTree(turtle, Arrays.copyOfRange(userInput, currIdx, currIdxCopy-1), 0));
 				currIdx = currIdxCopy - 1;
 		//adding string info to children
@@ -758,6 +764,7 @@ class CommandTreeBuilder {
 		myCommandTrees.add(userCommandNode);
 
 		return endCommandContent; 
+
 	}
 
 	private void parseUserCommand(Turtle turtle, String[] userInput, int startIdx, int numArgs) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
@@ -798,9 +805,6 @@ class CommandTreeBuilder {
 	}
 
 	private int getNumArgs(String commandType) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		if (myUserDefCommandsNumArgs.containsKey(commandType)) {
-			return myUserDefCommandsNumArgs.get(commandType);
-		}
 		try {
 			Double.parseDouble(commandType);
 			return 0;
@@ -853,4 +857,9 @@ class CommandTreeBuilder {
 		}
 		return currIdxCopy;
 	}
+	
+	protected IntegerProperty getBackColor() {
+		return myBackColor;
+	}
+	
 }

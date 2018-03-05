@@ -48,8 +48,13 @@ public class TextPanel implements Panel {
 
     public void run() {
 	try {
+	    // if there is no input, do nothing
+	    if (INPUT_AREA.getText().isEmpty()) {
+		return;
+	    }
 	    String inputText = INPUT_AREA.getText().replaceAll("\n", 
 		    System.getProperty("line.separator"));
+	    System.out.println(inputText);
 	    Double consoleVal = PROGRAM_CONTROLLER.parseInput(inputText);
 	    String outputText = consoleVal.toString();
 	    CONSOLE_AREA.setText(outputText);
