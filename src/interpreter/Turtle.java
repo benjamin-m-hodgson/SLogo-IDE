@@ -59,7 +59,7 @@ public class Turtle {
 
     	// TODO: put in setting.properties file
     	public static final double DEFAULT_TURTLE_SIZE = 20;
-	public static final String DEFAULT_NAME = "";
+	public static final double DEFAULT_ID = -1;
 	public static final String DEFAULT_PEN_COLORCODE = "#2d3436";
 	public static final double DEFAULT_PEN_WIDTH = 1.0;
 	public static final double DEFAULT_X_POS = 0.0; 
@@ -67,7 +67,7 @@ public class Turtle {
 	public static final double DEFAULT_ANGLE = 0.0; 
 	//	public static final ImageView DEFAULT_IMAGE = ;
 
-	private String myName;
+	private double myID;
 	private ImageView myImage; 
 	private Pen myPen; 
 	private boolean myVisibility; 
@@ -81,11 +81,11 @@ public class Turtle {
 	private double myAngle; 
 
 	public Turtle() {
-		this(DEFAULT_NAME, new ImageView(), new Group(), DEFAULT_PEN_COLORCODE);
+		this(DEFAULT_ID, new ImageView(), new Group(), DEFAULT_PEN_COLORCODE);
 	}
 
-	protected Turtle(String name, ImageView image, Group penGroup, String colorCode) {
-		myName = name; 
+	protected Turtle(double id, ImageView image, Group penGroup, String colorCode) {
+		myID = id; 
 		myImage = image;
 		myPen = new Pen(penGroup, colorCode); 
 		myVisibility = true; 
@@ -98,21 +98,24 @@ public class Turtle {
 
 
 	// GETTERS
-	protected String getName() {
-		return myName; 
+	/**
+	 * @return double ID of the Turtle in question
+	 */
+	public double getID() {
+		return myID; 
 	}
 	
 	/**
 	 * Returns the current x-position of the turtle
 	 */
-	protected double getX() {
+	public double getX() {
 		return myX;
 	}
 
 	/**
 	 * Returns the current y-position of the turtle
 	 */
-	protected double getY() {
+	public double getY() {
 		return myY;
 	}
 

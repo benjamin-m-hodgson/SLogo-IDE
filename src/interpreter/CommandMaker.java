@@ -50,7 +50,8 @@ class CommandMaker {
 	private HashMap<String, Double> myVariables; 
 	private HashMap<String, String> myUserDefCommands; 
 	private HashMap<String, Integer> myUserCommandsNumArgs; 
-	private ArrayList<Turtle> myTurtles; 
+	private ArrayList<Turtle> myActiveTurtles; 
+	private ArrayList<Turtle> myTurtles;
 	private ResourceBundle myLanguage; 
 	private CommandTreeBuilder myCommandTreeBuilder; 
 	private IntegerProperty myBackColor; 
@@ -82,21 +83,27 @@ class CommandMaker {
 		});
 	}
 	
-	protected double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		return parseValidTextArray(turtleName, userInput, typesOfInput, DEFAULT_COMMAND_IDENTIFIER);
+	protected double parseValidTextArray(String turtleID, String[] userInput, String[] typesOfInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		return parseValidTextArray(turtleID, userInput, typesOfInput, DEFAULT_COMMAND_IDENTIFIER);
 	}
 
-	private double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput, String commandIdentifier) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private double parseValidTextArray(String turtleID, String[] userInput, String[] typesOfInput, String commandIdentifier) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		Turtle identifiedTurtle = null;
 		if (myTurtles.size() > 0) {
 			identifiedTurtle = myTurtles.get(0); 
 		}
 		boolean turtleIdentified = false; 
-		for (Turtle turtle : myTurtles) {
-			if (turtle.getName().equals(turtleName)) {
-				identifiedTurtle = turtle; 
-				turtleIdentified = true; 
+		try {
+			double turtleIDDouble = Double.parseDouble(turtleID);
+			for (Turtle turtle : myTurtles) {
+				if (turtle.getID()==(turtleIDDouble)) {
+					identifiedTurtle = turtle; 
+					turtleIdentified = true; 
+				}
 			}
+		}
+		catch(NumberFormatException e) {
+			//TODO: do I need to have something here?
 		}
 		String[] commandTypes = new String[userInput.length];
 		int startIdx = 0; 
@@ -176,9 +183,10 @@ class CommandMaker {
 		return Collections.unmodifiableMap(myVariables);
 	}
 
-	protected void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
-		System.out.println(name);
-		myTurtles.add(new Turtle(name, turtleImage, penLines, penColor));
+	protected void addNewTurtle(String ID, ImageView turtleImage, String penColor, Group penLines) {
+		//System.out.println(name);
+		double id = Double.parseDouble(ID);
+		myTurtles.add(new Turtle(id, turtleImage, penLines, penColor));
 	}
 
 	protected Map<String, String> getUserDefined() {

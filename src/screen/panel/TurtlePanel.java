@@ -81,7 +81,7 @@ public class TurtlePanel implements Panel {
 			penLines.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
 			panel.getChildren().add(penLines);
 			// TODO: possibly add turtles to list ?
-			PROGRAM_CONTROLLER.makeNewTurtleCommand("Turtle", turtleView,DEFAULT_COLOR_HEXCODE , penLines);
+			PROGRAM_CONTROLLER.makeNewTurtleCommand("1", turtleView,DEFAULT_COLOR_HEXCODE , penLines);
 		}
 		catch (Exception e) {
 			// TODO: make custom exception super class with sub classes for specifications
@@ -89,7 +89,7 @@ public class TurtlePanel implements Panel {
 			System.out.println("FAILED TO LOAD TURTLE IMG");
 		}
 	}
-
+	
 	public void displayErrorMessage(String error) {
 		Button errorButton = new Button(error);
 		errorButton.setId("errorButton");
