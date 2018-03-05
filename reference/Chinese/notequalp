@@ -1,0 +1,14 @@
+Boolean Operations:
+NOTEQUAL? expr1 expr2
+NOTEQUALP expr1 expr2
+
+Description:
+N/A
+
+Parameters:
+expr1 - any value
+expr2 - any value
+
+Returns:
+1 if the value of expr1 and the value of expr2 are not equal;
+Otherwise 0

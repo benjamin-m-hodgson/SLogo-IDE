@@ -1,0 +1,13 @@
+Turtle Queries:
+SHOWING?
+SHOWINGP
+
+Description:
+N/A
+
+Parameters:
+N/A
+
+Returns:
+1 if turtle is showing
+0 if it is hiding

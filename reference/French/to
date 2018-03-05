@@ -1,0 +1,17 @@
+Variables, Control Structures, and User-Defined Commands:
+TO commandName
+[ variable(s) ]
+[ command(s) ]
+
+Description:
+Assigns command(s) given in the second list to commandName using parameters given in first list as variables;
+when commandName is used later in a program, any given values are assigned to variables that can be accessed when the command list is run and the value of the final command executed is returned, or 0 if no commands are executed
+
+Parameters:
+commandName - command name
+variable(s) - variable name
+command(s) - any command
+
+Returns:
+1 if command is successfully defined;
+otherwise 0

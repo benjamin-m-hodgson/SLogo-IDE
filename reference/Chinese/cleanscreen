@@ -1,0 +1,12 @@
+Turtle Commands:
+CLEANSCREEN
+CS
+
+Description:
+Erases turtle's trails and sends it to the home position
+
+Parameters:
+N/A
+
+Returns:
+The distance turtle moved

@@ -79,7 +79,7 @@ class CommandTreeReader {
 			return myCommandFactory.makeCommand(root.getInfo(), args, root.getTurtle());
 		}
 		for(CommandNode k: root.getChildren()) {
-			System.out.println("child info" + k.getInfo());
+//			System.out.println("child info" + k.getInfo());
 			args.add(compressTree(k));
 		}
 		//System.out.println("Making a command");

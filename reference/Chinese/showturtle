@@ -1,0 +1,12 @@
+Turtle Commands:
+SHOWTURTLE
+ST
+
+Description:
+Makes turtle visible
+
+Parameters:
+N/A
+
+Returns:
+1

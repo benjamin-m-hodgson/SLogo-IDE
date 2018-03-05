@@ -54,9 +54,8 @@ class UserInstructionCommand extends Command {
 				splitCommContent[j] = userCommArgs.get(splitCommContent[j]).toString(); 
 			}
 		}
-
 		myUserCommContent = splitCommContent; 
-
+		for (String s : myUserCommContent) System.out.println(s);
 	}
 
 	@Override

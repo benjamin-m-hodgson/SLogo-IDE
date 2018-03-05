@@ -1,0 +1,12 @@
+Display Commands:
+PENCOLOR
+PC
+
+Description:
+N/A
+
+Parameters:
+N/A
+
+Returns:
+Turtle's current color index
