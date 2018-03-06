@@ -76,14 +76,14 @@ class CommandTreeReader {
 			return myCommandFactory.makeDoubleCommand(root.getInfo());
 		}
 		if(root.getIsString()) {
-			return myCommandFactory.makeCommand(root.getInfo(), args, root.getTurtle());
+			return myCommandFactory.makeCommand(root.getInfo(), args, root.getTurtles(), root.getActiveTurtles());
 		}
 		for(CommandNode k: root.getChildren()) {
 //			System.out.println("child info" + k.getInfo());
 			args.add(compressTree(k));
 		}
 		//System.out.println("Making a command");
-		return myCommandFactory.makeCommand(root.getInfo(), args, root.getTurtle());
+		return myCommandFactory.makeCommand(root.getInfo(), args,  root.getTurtles(), root.getActiveTurtles());
 	}
 	
 //	public static void main(String[] args) {

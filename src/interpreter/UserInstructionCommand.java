@@ -62,7 +62,9 @@ class UserInstructionCommand extends Command {
 	protected double execute() {
 		double retVal = 0.0;
 		try {
-			retVal = myBuilder.buildAndExecute(myTurtle, myUserCommContent, true);
+			ArrayList<Turtle> turtleList = new ArrayList<Turtle>();
+			turtleList.add(myTurtle);
+			retVal = myBuilder.buildAndExecute(turtleList, myUserCommContent, true);
 		} catch (BadFormatException e) {
 			e.printStackTrace();
 		} catch (MissingInformationException e) {

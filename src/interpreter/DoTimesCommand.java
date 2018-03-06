@@ -31,7 +31,9 @@ class DoTimesCommand extends Command{
 				System.out.println("executing " + executeArray[i]);
 			}
 			try {
-				returnVal = myBuilder.buildAndExecute(myTurtle, executeArray, true);
+				ArrayList<Turtle> turtleList = new ArrayList<Turtle>();
+				turtleList.add(myTurtle);
+				returnVal = myBuilder.buildAndExecute(turtleList, executeArray, true);
 			}
 			catch(Exception e){
 				//TODO fix this! Don't just throw another exception

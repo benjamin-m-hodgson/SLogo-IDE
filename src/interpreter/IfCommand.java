@@ -1,5 +1,6 @@
 package interpreter;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -38,7 +39,9 @@ class IfCommand extends Command{
 	    CommandTreeBuilder buildIfBody = new CommandTreeBuilder(myVariables, myUserDefCommands, myUserDefComNumArgs); 
 	    String[] userInput = myIfBody.split("\\s+");
 	    try {
-		ifBodyRetVal = buildIfBody.buildAndExecute(myTurtle, userInput, true);
+			ArrayList<Turtle> turtleList = new ArrayList<Turtle>();
+			turtleList.add(myTurtle);
+			ifBodyRetVal = buildIfBody.buildAndExecute(turtleList, userInput, true);
 	    } catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
 		return ifBodyRetVal; 
 	    }

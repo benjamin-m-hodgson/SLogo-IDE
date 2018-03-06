@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.List;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -63,6 +64,7 @@ class CommandMaker {
 
 	protected CommandMaker(ResourceBundle languageBundle, String numArgsFileName) {
 		myTurtles = new ArrayList<Turtle>(); 
+		myActiveTurtles = new ArrayList<Turtle>();
 		myLanguage = languageBundle;
 		myVariables = new HashMap<String, Double>(); 
 		myUserDefCommands = new HashMap<String, String>(); 
@@ -137,7 +139,7 @@ class CommandMaker {
 			}
 		}
  		//		makeListForBuilder(myListForBuilder, userInput, commandTypes, 1, DEFAULT_CONTROLFLOW_IDENTIFIERS);
-		return myCommandTreeBuilder.buildAndExecute(identifiedTurtle, userInputArrayToPass, true); 
+		return myCommandTreeBuilder.buildAndExecute(myTurtles, myActiveTurtles, userInputArrayToPass, true); 
 	}
 
 	//	private void makeListForBuilder(ArrayList<String> currCommandList, String[] inputArray, String[] commandTypes, int numTimesToAdd, String[] controlFlowIdentifiers) {
@@ -182,13 +184,20 @@ class CommandMaker {
 	protected Map<String, Double> getVariables() {
 		return Collections.unmodifiableMap(myVariables);
 	}
+	protected List<Turtle> getAllTurtles(){
+		return Collections.unmodifiableList(myTurtles);
+	}
+	protected List<Turtle> getActiveTurtles(){
+		return Collections.unmodifiableList(myActiveTurtles);
+	}
 
 	protected void addNewTurtle(String ID, ImageView turtleImage, String penColor, Group penLines) {
 		//System.out.println(name);
 		double id = Double.parseDouble(ID);
-		myTurtles.add(new Turtle(id, turtleImage, penLines, penColor));
+		Turtle newTurtle = new Turtle(id, turtleImage, penLines, penColor);
+		myTurtles.add(newTurtle);
+		myActiveTurtles.add(newTurtle);
 	}
-
 	protected Map<String, String> getUserDefined() {
 		return myUserDefCommands;
 	}

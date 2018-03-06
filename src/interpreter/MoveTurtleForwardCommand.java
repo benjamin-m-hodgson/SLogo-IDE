@@ -1,6 +1,7 @@
 package interpreter;
 
 import java.util.Map;
+import java.util.List;
 
 /**
  * Command class used to move Turtles an absolute distance forward. Must be created correctly by the CommandFactory.
@@ -10,7 +11,7 @@ import java.util.Map;
  */
 class MoveTurtleForwardCommand extends Command {
 	private Command myForwardDistCommand;
-	private Turtle myTurtle;
+	private List<Turtle> myActiveTurtles;
 	private Map<String, Double> myVariables; 
 
 	/**
@@ -18,8 +19,8 @@ class MoveTurtleForwardCommand extends Command {
 	 * @param forwarddist is Command that returns the absolute distance that the turtle must move forward
 	 * @param turtle is Turtle that needs to move
 	 */
-	protected MoveTurtleForwardCommand(Command forwarddist, Turtle turtle, Map<String, Double> variables){
-		myTurtle = turtle;
+	protected MoveTurtleForwardCommand(Command forwarddist, List<Turtle> activeTurtle, Map<String, Double> variables){
+		myActiveTurtles = activeTurtle;
 		myForwardDistCommand = forwarddist;
 		myVariables = variables;
 	}
@@ -34,8 +35,10 @@ class MoveTurtleForwardCommand extends Command {
 	 */
 	protected double execute() throws UnidentifiedCommandException{
 		double forwardDist = getCommandValue(myForwardDistCommand, myVariables);
-		double angle = Math.toRadians(myTurtle.getAngle());
-		myTurtle.setXY(myTurtle.getX()-forwardDist*Math.sin(-angle), myTurtle.getY()-forwardDist*Math.cos(-angle));
+		for(Turtle myTurtle: myActiveTurtles) {
+			double angle = Math.toRadians(myTurtle.getAngle());
+			myTurtle.setXY(myTurtle.getX()-forwardDist*Math.sin(-angle), myTurtle.getY()-forwardDist*Math.cos(-angle));
+		}
 		return forwardDist;
 	}
 }
