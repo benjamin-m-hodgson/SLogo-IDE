@@ -1,8 +1,11 @@
 package interpreter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 abstract class Command {
+	private List<Turtle> myActiveTurtles;
 	/**
 	 * Executes Commands by changing objects in the back-end (Turtles/Pens) or retrieving information
 	 * @return double corresponding to return value of this command in SLogo
@@ -13,8 +16,11 @@ abstract class Command {
 		if(command instanceof StringCommand) {
 			return getValueOfVar(((StringCommand)command).toString(), varsMap);
 		}
-		else if(command instanceof IDQueryCommand) {
-			return turtle.getID();
+		else if(command instanceof IDQueryCommand || command instanceof XCoordinateQueryCommand || command instanceof YCoordinateQueryCommand || command instanceof HeadingQueryCommand || command instanceof IsPenDownQueryCommand || command instanceof IsShowingQueryCommand) {
+			ArrayList<Turtle> singleTurtle = new ArrayList<>();
+			singleTurtle.add(turtle);
+			command.setActiveTurtles(singleTurtle);
+			return command.execute();
 		}
 		else {
 			return command.execute();
@@ -28,4 +34,10 @@ abstract class Command {
 		System.out.println("returning "+varVal);
 		return varVal; 
 	}
-}
+		protected void setActiveTurtles( List<Turtle> newTurtles) {
+			myActiveTurtles= newTurtles;
+		}
+		protected List<Turtle> getActiveTurtles(){
+			return myActiveTurtles;
+		}
+	}

@@ -29,63 +29,63 @@ public class CommandFactory {
 		else if(commandName.equals("Backward")) {
 			return new MoveTurtleBackwardCommand(commandArgs.get(0), activeTurtles, myVariables);
 		}
-//		else if(commandName.equals("Left")) {
-//			return new RotateTurtleCounterclockwiseCommand(commandArgs.get(0), turtle, myVariables);
-//		}
-//		else if(commandName.equals("Right")) {
-//			return new RotateTurtleClockwiseCommand(commandArgs.get(0), turtle, myVariables);
-//		}
-//		else if(commandName.equals("SetHeading")) {
-//			return new SetHeadingCommand(commandArgs.get(0), turtle, myVariables);
-//		}
-//		else if(commandName.equals("SetTowards")) {
-//			return new SetTowardsCommand(commandArgs.get(0), commandArgs.get(1), turtle, myVariables);
-//		}
-//		else if(commandName.equals("SetPosition")) {
-//			return new SetPositionCommand(commandArgs.get(0), commandArgs.get(1), turtle, myVariables);
-//		}
-//		else if(commandName.equals("PenDown")) {
-//			return new PenDownCommand(turtle);
-//		}
-//		else if(commandName.equals("PenUp")) {
-//			return new PenUpCommand(turtle);
-//		}
-//		else if(commandName.equals("ShowTurtle")) {
-//			return new ShowTurtleCommand(turtle);
-//		}
-//		else if(commandName.equals("HideTurtle")) {
-//			return new HideTurtleCommand(turtle);
-//		}
-//		else if(commandName.equals("Home")) {
-//			return new HomeCommand(turtle);
-//		}
-//		else if(commandName.equals("ClearScreen")) {
-//			return new ClearScreenCommand(turtle);
-//		}
-//		else if(commandName.equals("XCoordinate")) {
-//			return new XCoordinateQueryCommand(turtle);
-//		}
-//		else if(commandName.equals("YCoordinate")) {
-//			return new YCoordinateQueryCommand(turtle);
-//		}
-//		else if (commandName.equals("Heading")) {
-//			return new HeadingQueryCommand(turtle);
-//		}
-//		else if (commandName.equals("IsPenDown")) {
-//			return new IsPenDownQueryCommand(turtle);
-//		}
-//		else if (commandName.equals("IsShowing")) {
-//			return new IsShowingQueryCommand(turtle);
-//		}
-//		else if(commandName.equals("Sum")) {
-//			return new SumCommand(commandArgs.get(0), commandArgs.get(1), myVariables);
-//		}
-//		else if(commandName.equals("Difference")) {
-//			return new DifferenceCommand(commandArgs.get(0), commandArgs.get(1), myVariables);
-//		}
-//		else if(commandName.equals("Product")) {
-//			return new ProductCommand(commandArgs.get(0), commandArgs.get(1), myVariables);
-//		}
+		else if(commandName.equals("Left")) {
+			return new RotateTurtleCounterclockwiseCommand(commandArgs.get(0), activeTurtles, myVariables);
+		}
+		else if(commandName.equals("Right")) {
+			return new RotateTurtleClockwiseCommand(commandArgs.get(0), activeTurtles, myVariables);
+		}
+		else if(commandName.equals("SetHeading")) {
+			return new SetHeadingCommand(commandArgs.get(0), activeTurtles, myVariables);
+		}
+		else if(commandName.equals("SetTowards")) {
+			return new SetTowardsCommand(commandArgs.get(0), commandArgs.get(1), activeTurtles, myVariables);
+		}
+		else if(commandName.equals("SetPosition")) {
+			return new SetPositionCommand(commandArgs.get(0), commandArgs.get(1), activeTurtles, myVariables);
+		}
+		else if(commandName.equals("PenDown")) {
+			return new PenDownCommand(activeTurtles);
+		}
+		else if(commandName.equals("PenUp")) {
+			return new PenUpCommand(activeTurtles);
+		}
+		else if(commandName.equals("ShowTurtle")) {
+			return new ShowTurtleCommand(activeTurtles);
+		}
+		else if(commandName.equals("HideTurtle")) {
+			return new HideTurtleCommand(activeTurtles);
+		}
+		else if(commandName.equals("Home")) {
+			return new HomeCommand(activeTurtles);
+		}
+		else if(commandName.equals("ClearScreen")) {
+			return new ClearScreenCommand(activeTurtles);
+		}
+		else if(commandName.equals("XCoordinate")) {
+			return new XCoordinateQueryCommand(activeTurtles);
+		}
+		else if(commandName.equals("YCoordinate")) {
+			return new YCoordinateQueryCommand(activeTurtles);
+		}
+		else if (commandName.equals("Heading")) {
+			return new HeadingQueryCommand(activeTurtles);
+		}
+		else if (commandName.equals("IsPenDown")) {
+			return new IsPenDownQueryCommand(activeTurtles);
+		}
+		else if (commandName.equals("IsShowing")) {
+			return new IsShowingQueryCommand(activeTurtles);
+		}
+		else if(commandName.equals("Sum")) {
+			return new SumCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
+		}
+		else if(commandName.equals("Difference")) {
+			return new DifferenceCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
+		}
+		else if(commandName.equals("Product")) {
+			return new ProductCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
+		}
 //		else if(commandName.equals("Quotient")) {
 //			return new QuotientCommand(commandArgs.get(0), commandArgs.get(1), myVariables);
 //		}
@@ -174,7 +174,7 @@ public class CommandFactory {
 //			return new ForCommand(commandArgs.get(0), commandArgs.get(1), commandArgs.get(2), commandArgs.get(3), commandArgs.get(4), turtle, myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
 //		}
 		else if(commandName.equals("ID")) {
-			return new IDQueryCommand(activeTurtles.get(0));
+			return new IDQueryCommand();
 		}
 		else {
 			return new StringCommand(commandName);

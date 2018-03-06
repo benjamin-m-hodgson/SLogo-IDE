@@ -1,5 +1,6 @@
 package interpreter;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,7 +12,6 @@ import java.util.Map;
  class SetPositionCommand extends Command{
 	private Command myNewXCommand;
 	private Command myNewYCommand;
-	private Turtle myTurtle;
 	private Map<String, Double> myVariables; 
 
 	/**
@@ -20,10 +20,10 @@ import java.util.Map;
 	 * @param newYCommand is Command that when executed returns the new Y position
 	 * @param turtle is Turtle that should be moving
 	 */
-	protected SetPositionCommand(Command newXCommand, Command newYCommand, Turtle turtle		,Map<String, Double> variables) {
+	protected SetPositionCommand(Command newXCommand, Command newYCommand, List<Turtle> turtles, Map<String, Double> variables) {
 		myNewXCommand = newXCommand;
 		myNewYCommand = newYCommand;
-		myTurtle = turtle;
+		setActiveTurtles(turtles);
 		myVariables = variables;
 
 	}
@@ -34,8 +34,12 @@ import java.util.Map;
 	 */
 	@Override 
 	protected double execute() throws UnidentifiedCommandException{
-		double newX = getCommandValue(myNewXCommand, myVariables);
-		double newY = getCommandValue(myNewYCommand, myVariables);
-		return myTurtle.setXY(newX, -newY);
+		double returnVal = -1.0;
+		for(Turtle myTurtle: getActiveTurtles()) {
+			double newX = getCommandValue(myNewXCommand, myVariables, myTurtle);
+			double newY = getCommandValue(myNewYCommand, myVariables, myTurtle);
+			returnVal = myTurtle.setXY(newX, newY);
+		}
+	    return returnVal;
 	}
 }

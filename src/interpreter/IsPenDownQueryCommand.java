@@ -1,5 +1,7 @@
 package interpreter;
 
+import java.util.List;
+
 /**
  * Command class that retrieves and returns a boolean 0.0/1.0 indicating whether its Pen is up/down
  * Dependent on the CommandFactory to make it correctly and on the Turtle class to retrieve pen visibility
@@ -7,12 +9,11 @@ package interpreter;
  *
  */
 class IsPenDownQueryCommand extends Command{
-    private Turtle myTurtle;
     /**
      * @param turtle is turtle whose pen visibility is desired
      */
-    protected IsPenDownQueryCommand(Turtle turtle) {
-	myTurtle = turtle;
+    protected IsPenDownQueryCommand(List<Turtle> turtles) {
+    		setActiveTurtles(turtles);
     }
     /**
      * @return pen visibility of Turtle (0.0 for up/hidden, 1.0 for down/visible)
@@ -20,7 +21,11 @@ class IsPenDownQueryCommand extends Command{
      */
     @Override
     protected double execute() {
-	int retVal = myTurtle.getPenVisibility() ? 1 : 0; 
+    	double  retVal = -1.0;
+    		for(Turtle myTurtle: getActiveTurtles()) {
+    			retVal = myTurtle.getPenVisibility() ? 1 : 0; 
+    	}
+	
 	return retVal; 
     }
 }

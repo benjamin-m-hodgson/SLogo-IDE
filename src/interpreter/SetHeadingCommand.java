@@ -1,5 +1,6 @@
 package interpreter;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,7 +11,6 @@ import java.util.Map;
  */
 class SetHeadingCommand extends Command{
 	private Command myDegreesCommand;
-	private Turtle myTurtle;
 	private Map<String, Double> myVariables; 
 
 	/**
@@ -18,8 +18,8 @@ class SetHeadingCommand extends Command{
 	 * @param angleCommand is Command that will eventually return the angle the Turtle should turn to
 	 * @param turtle is Turtle whose angle should be changed
 	 */
-	protected SetHeadingCommand(Command angleCommand, Turtle turtle,Map<String, Double> variables) {
-		myTurtle = turtle;
+	protected SetHeadingCommand(Command angleCommand, List<Turtle> turtles, Map<String, Double> variables) {
+		this.setActiveTurtles(turtles);
 		myDegreesCommand = angleCommand;
 		myVariables = variables;
 
@@ -30,9 +30,13 @@ class SetHeadingCommand extends Command{
 	 */
 	@Override 
 	protected double execute() throws UnidentifiedCommandException{
-		double newAngle = getCommandValue(myDegreesCommand, myVariables);
-		double oldAngle = myTurtle.getAngle();
-		myTurtle.setAngle(newAngle);
+		double newAngle = 0.0;
+		double oldAngle = 1.0;
+		for(Turtle myTurtle: this.getActiveTurtles()) {
+			newAngle = getCommandValue(myDegreesCommand, myVariables, myTurtle);
+			oldAngle = myTurtle.getAngle();
+			myTurtle.setAngle(newAngle);
+		}	
 		return (newAngle-oldAngle);
 	}
 }

@@ -1,15 +1,17 @@
 package interpreter;
 
 class IDQueryCommand extends Command{
-	Turtle myTurtle;
 	
-	protected IDQueryCommand(Turtle turtle) {
-		myTurtle = turtle;
+	protected IDQueryCommand() {
 	}
 	
 	@Override
 	protected double execute() {
-		return myTurtle.getID();
+		double returnVal = -1;
+		for(Turtle myTurtle : getActiveTurtles()) {
+			returnVal = myTurtle.getID();
+		}
+		return returnVal;
 	}
 	
 }

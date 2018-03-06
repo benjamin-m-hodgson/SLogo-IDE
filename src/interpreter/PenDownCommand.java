@@ -1,18 +1,19 @@
 package interpreter;
 
+import java.util.List;
+
 /**
  * Command class that, when executed, puts the Turtle's pen down
  * @author Sarahbland
  *
  */
  class PenDownCommand extends Command{
-    private Turtle myTurtle;
 	/**
 	 * Creates new instance of command, which can be executed at the correct time
 	 * @param turtle is turtle whose pen should be put down
 	 */
-	protected PenDownCommand(Turtle turtle) {
-		myTurtle = turtle;
+	protected PenDownCommand(List<Turtle> turtles) {
+		setActiveTurtles(turtles);
 	}
 	/**
 	 * Puts turtle's pen down, so that subsequent movements will leave a trail
@@ -20,7 +21,9 @@ package interpreter;
 	 */
 	@Override
 	protected double execute() {
-		myTurtle.showPen();
+		for(Turtle myTurtle: getActiveTurtles()) {
+			myTurtle.showPen();
+		}
 		return 1;
 	}
 

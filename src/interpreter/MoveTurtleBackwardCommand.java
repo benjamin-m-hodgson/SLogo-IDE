@@ -13,7 +13,6 @@ import java.util.List;
 class MoveTurtleBackwardCommand extends Command{
 
     private Command myBackwardDistCommand;
-    private List<Turtle> myActiveTurtles;
     private Map<String, Double> myVariables; 
 
     /**
@@ -22,7 +21,7 @@ class MoveTurtleBackwardCommand extends Command{
      * @param turtle is the Turtle that should move
      */
     protected MoveTurtleBackwardCommand(Command backwarddist, List<Turtle> turtles, Map<String, Double> variables){
-	myActiveTurtles = turtles;
+	this.setActiveTurtles(turtles);
 	myBackwardDistCommand = backwarddist;
 	myVariables = variables; 
     }
@@ -36,7 +35,7 @@ class MoveTurtleBackwardCommand extends Command{
      */
     protected double execute() throws UnidentifiedCommandException{
     	double dist = -1;
-    	for(Turtle myTurtle: myActiveTurtles) {
+    	for(Turtle myTurtle: this.getActiveTurtles()) {
 		dist = getCommandValue(myBackwardDistCommand, myVariables, myTurtle);
 		double angle = Math.toRadians(myTurtle.getAngle());
 		myTurtle.setXY(myTurtle.getX()+dist*Math.sin(-angle), myTurtle.getY()+dist*Math.cos(-angle));

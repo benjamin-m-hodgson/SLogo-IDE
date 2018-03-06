@@ -1,5 +1,6 @@
 package interpreter;
 
+import java.util.List;
 
 /**
  * Command class that retrieves and returns the X-coordinate of a turtle (relative to the center of the screen being
@@ -9,13 +10,12 @@ package interpreter;
  *
  */
 class XCoordinateQueryCommand extends Command{
-    private Turtle myTurtle;
 
     /**
      * @param turtle is turtle whose x-coordinate is desired
      */
-    protected XCoordinateQueryCommand(Turtle turtle) {
-	myTurtle = turtle;
+    protected XCoordinateQueryCommand(List<Turtle> turtles) {
+    		setActiveTurtles(turtles);
     }
     /**
      * @return x-coordinate of Turtle
@@ -23,6 +23,10 @@ class XCoordinateQueryCommand extends Command{
      */
     @Override
     protected double execute() {
-	return myTurtle.getX();
+    		double returnVal = -1.0;
+    		for(Turtle myTurtle : getActiveTurtles()) {
+    			returnVal = myTurtle.getX();
+    		}
+    		return returnVal;
     }
 }
