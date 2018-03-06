@@ -10,7 +10,7 @@ import java.util.Map;
  * @date 2/26/18
  *
  */
-public class EqualCommand extends Command{
+class EqualCommand extends Command{
 
     private Command expr1Command;
     private Command expr2Command;

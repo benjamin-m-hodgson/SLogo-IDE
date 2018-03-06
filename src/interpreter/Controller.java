@@ -76,8 +76,7 @@ public class Controller {
 				String matchingHex = ""; 
 				try {
 					matchingHex = backColorRegex.findMatchingVal(myTextFieldParser.getBackColor().getValue().toString());
-					//		    System.out.println("matching hex is "+matchingHex.substring(1));
-					//						changeBackgroundColorHex(matchingHex);
+					USER_SCREEN.changeBackgroundColorHex(matchingHex);
 				} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
 					System.out.println("error locating that backgorund color"); // TODO make this more elaborate
 					e.printStackTrace();
@@ -176,13 +175,6 @@ public class Controller {
 	 */
 	public ReadOnlyDoubleProperty getWidthProperty() {
 		return PROGRAM_STAGE.widthProperty();
-	}
-
-	/**
-	 * Returns an ImmutableList of available User Commands
-	 */
-	public List<String> getUserCommands() {
-		return null;
 	}
 
 	/**
