@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -103,12 +104,32 @@ public class VariablesPanel extends SpecificPanel {
 	    String variableName = variable.getKey();
 	    String variableValue = variable.getValue().toString();
 	    Label nameLabel = new Label(variableName);
-	    nameLabel.setId("variableLabel");
+	    nameLabel.setId("variableNameLabel");
 	    Label valueLabel = new Label(variableValue);
 	    valueLabel.setId("variableLabel");
+	    valueLabel.setOnMouseClicked((arg0)->getPane().setRight(verboseVariableDisplay(variableName, variableValue)));
 	    HBox infoRow = new HBox(nameLabel, valueLabel);
 	    infoRow.setAlignment(Pos.CENTER);
 	    VARIABLE_BOX.getChildren().add(infoRow);
 	}
+    }
+
+    private VBox verboseVariableDisplay(String varName, String varValue) {
+	Button backButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText("backButton"));
+	backButton.setId("backButton");
+	// override click event
+	backButton.setOnMouseClicked((arg0)-> getPane()
+		.setRight(PANEL));
+	Label nameLabel = new Label(varName);
+	nameLabel.setId("variableNameLabel");
+	TextArea valueDisplay = new TextArea();
+	valueDisplay.setText(varValue);
+	valueDisplay.setEditable(true);
+	Button setVariable = new Button(PROGRAM_CONTROLLER.resourceDisplayText("saveVariableButton"));
+	setVariable.setId("saveVariableButton");
+	setVariable.setOnMouseClicked((arg0)-> USER_SCREEN.commandRunFromHistory("set " + varName + " " + valueDisplay.getText()));
+	VBox panelRoot = new VBox(nameLabel,valueDisplay,setVariable, backButton);
+	panelRoot.setId("infoPanel");
+	return panelRoot;
     }
 }
