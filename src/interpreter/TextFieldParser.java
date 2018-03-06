@@ -75,15 +75,15 @@ class TextFieldParser {
 		setUpBackColorChangeListener();
 	}
 
-		private void setUpBackColorChangeListener() {
-			myCommandMaker.getBackColorChangeHeard().addListener(new ChangeListener<Boolean>() {
-				@Override
-				public void changed(ObservableValue<? extends Boolean> observable, Boolean t1, Boolean t2) {
-					myBackColor = myCommandMaker.getBackColor();
-					myBackColorChangeHeard.set(true);
-				}
-			});
-		}
+	private void setUpBackColorChangeListener() {
+		myCommandMaker.getBackColorChangeHeard().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean t1, Boolean t2) {
+				myBackColor = myCommandMaker.getBackColor();
+				myBackColorChangeHeard.set(true);
+			}
+		});
+	}
 
 	/**
 	 * Returns a Queue of commands given a String of concatenated commands (chops up the commands 
@@ -144,7 +144,7 @@ class TextFieldParser {
 		return parseTextArray(tokenizedInputArray);
 	}
 
-	
+
 
 	private double parseTextArray(String[] userInputArray) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String[] listOfTypes = new String[userInputArray.length];
@@ -158,6 +158,16 @@ class TextFieldParser {
 		double finalReturnVal = myCommandMaker.parseValidTextArray(userInputArray[0], userInputArray, listOfTypes); // TODO consider special case in which turtle name is command name; 
 
 		return finalReturnVal; 
+	}
+
+	
+	// USER SAVING CAPABILITIES 
+	public void saveUserDefined() {
+		// call a file writer, sending in variables map 
+	}
+
+	public void saveVariables() {
+
 	}
 
 
@@ -174,7 +184,7 @@ class TextFieldParser {
 	protected Map<String, String> getUserDefined() {
 		return myCommandMaker.getUserDefined();
 	}
-	
+
 	/**
 	 * Returns an ImmutableQueue of the Command Queue (where commands are Command objects) 
 	 */
@@ -189,7 +199,7 @@ class TextFieldParser {
 	protected BooleanProperty getBackColorChangeHeard()  {
 		return myBackColorChangeHeard;
 	}
-	
+
 
 
 
@@ -227,7 +237,7 @@ class TextFieldParser {
 			//					"fd 100\n" + 
 			//					"rt 90");
 			//			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
-//						testingParser.parseText("fd sum 100 :a");
+			//						testingParser.parseText("fd sum 100 :a");
 			//			testingParser.parseText("to corner [ :length :width ] [ fd :length rt 90 bk :width ]");
 		} catch (Exception e) {
 			System.out.println("FAIL");

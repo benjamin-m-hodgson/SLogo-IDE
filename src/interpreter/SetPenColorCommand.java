@@ -8,11 +8,14 @@ import java.util.Map;
  *
  */
 public class SetPenColorCommand extends Command {
+	public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
+	boolean myIdxSent; 
 	private Turtle myTurtle;
 	private Command colorCodeCommand;
 	private Map<String, Double> myVariables; 
 
-	protected SetPenColorCommand(Command codeIn, Turtle turtle,Map<String, Double> variables) {
+	protected SetPenColorCommand(Command codeIn, Turtle turtle,Map<String, Double> variables, boolean idxSent) {
+		myIdxSent = idxSent; 
 		colorCodeCommand = codeIn;
 		myTurtle = turtle;
 		myVariables = variables;
@@ -20,11 +23,32 @@ public class SetPenColorCommand extends Command {
 
 	@Override
 	protected double execute() throws UnidentifiedCommandException {
-		double hexAsDouble = getCommandValue(colorCodeCommand, myVariables);
-		String hexAsString = Integer.toHexString((int)hexAsDouble);
-		hexAsString = addLeadingZeros(hexAsString);
+		double retVal = 0; 
+		String hexAsString = "";
+		
+		double commandInfo = getCommandValue(colorCodeCommand, myVariables);
+		
+		if (myIdxSent) {
+			RegexMatcher rm = new RegexMatcher(DEFAULT_COLORPALETTE_FILE);
+			try {
+				int idxAsInt = (int) commandInfo;
+				hexAsString = rm.findMatchingVal(Integer.toString(idxAsInt)).substring(1);
+			} catch (BadFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MissingInformationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			retVal = commandInfo; 
+		}
+		else {
+			hexAsString = Integer.toHexString((int)commandInfo);
+			hexAsString = addLeadingZeros(hexAsString);
+			System.out.println(hexAsString);
+		}
 		myTurtle.setPenColor(hexAsString);
-		return 0;
+		return retVal;
 	}
 
 	private String addLeadingZeros(String hexAsString) {

@@ -151,6 +151,14 @@ public class Controller {
 	public Map<String, String> getUserDefined() {
 		return myTextFieldParser.getUserDefined(); 
 	}
+	
+	/**
+	 * Invokes back-end method to save user's defined commands 
+	 * in a Properties file 
+	 */
+	public void saveUserDefined() {
+		myTextFieldParser.saveUserDefined(); 
+	}
 
 
 	/**
@@ -159,6 +167,14 @@ public class Controller {
 	 */
 	public Map<String, Double> getVariables() {
 		return myTextFieldParser.getVariables();
+	}
+	
+	/**
+	 * Invokes back-end method to save user's defined commands 
+	 * in a Properties file 
+	 */
+	public void saveVariables() {
+		myTextFieldParser.saveVariables(); 
 	}
 
 	/**
@@ -428,7 +444,7 @@ public class Controller {
 
 	public void changePenColorHex(int hex) {
 		try {
-			parseInput("setpc " + hex);
+			parseInput("setpcbyhex " + hex);
 		} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
 				| MissingInformationException e) {
 			USER_SCREEN.displayErrorMessage("Invalid Color Chosen");
