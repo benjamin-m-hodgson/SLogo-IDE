@@ -428,7 +428,7 @@ public class Controller {
 
 	public void changePenColorHex(int hex) {
 		try {
-			parseInput("setpc " + hex);
+			parseInput("setpcbyhex " + hex);
 		} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
 				| MissingInformationException e) {
 			USER_SCREEN.displayErrorMessage("Invalid Color Chosen");
