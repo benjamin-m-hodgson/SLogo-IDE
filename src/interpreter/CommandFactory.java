@@ -86,18 +86,18 @@ public class CommandFactory {
 		else if(commandName.equals("Product")) {
 			return new ProductCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
 		}
-//		else if(commandName.equals("Quotient")) {
-//			return new QuotientCommand(commandArgs.get(0), commandArgs.get(1), myVariables);
-//		}
-//		else if(commandName.equals("Remainder")) {
-//			return new RemainderCommand(commandArgs.get(0), commandArgs.get(1), myVariables);
-//		}
-//		else if(commandName.equals("Minus")) {
-//			return new MinusCommand(commandArgs.get(0), myVariables);
-//		}
-//		else if(commandName.equals("Random")) {
-//			return new RandomCommand(commandArgs.get(0), myVariables);
-//		}
+		else if(commandName.equals("Quotient")) {
+			return new QuotientCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
+		}
+		else if(commandName.equals("Remainder")) {
+			return new RemainderCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
+		}
+		else if(commandName.equals("Minus")) {
+			return new MinusCommand(commandArgs.get(0), myVariables, activeTurtles);
+		}
+		else if(commandName.equals("Random")) {
+			return new RandomCommand(commandArgs.get(0), myVariables, activeTurtles);
+		}
 //		else if(commandName.equals("Sine")) {
 //			return new SineCommand(commandArgs.get(0), myVariables);
 //		}

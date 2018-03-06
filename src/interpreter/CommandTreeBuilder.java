@@ -88,7 +88,7 @@ class CommandTreeBuilder {
 		}
 
 
-		System.out.println("command tree number bigger: " + myCommandTrees.size());
+		//System.out.println("command tree number bigger: " + myCommandTrees.size());
 		System.out.println("PRINTING OUT COMM TREES ------------------------------------");
 		for (CommandNode n : myCommandTrees) {
 			System.out.println(n.toString());
@@ -261,13 +261,6 @@ class CommandTreeBuilder {
 					createCommandTree(turtles, activeTurtles, userInput, currIdx+1);
 				}
 				return; 
-			}
-			if(getNumArgs(userInput[currIdx])==0 && (currIdx+1)==userInput.length) { //takes care of final noarg commands
-				parent.addChild(new CommandNode(userInput[currIdx], 0, turtles, activeTurtles));
-				if(addToTrees) {
-					myCommandTrees.add(parent);
-				}
-				return;
 			}
 			for (int idx = currIdx+1; idx < userInput.length; idx++) { 
 				Double currDouble; 
