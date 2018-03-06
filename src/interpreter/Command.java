@@ -9,9 +9,12 @@ abstract class Command {
 	 */
 	abstract double execute() throws UnidentifiedCommandException;
 	
-	protected double getCommandValue(Command command, Map<String, Double> varsMap) throws UnidentifiedCommandException {
+	protected double getCommandValue(Command command, Map<String, Double> varsMap, Turtle turtle) throws UnidentifiedCommandException {
 		if(command instanceof StringCommand) {
 			return getValueOfVar(((StringCommand)command).toString(), varsMap);
+		}
+		else if(command instanceof IDQueryCommand) {
+			return turtle.getID();
 		}
 		else {
 			return command.execute();

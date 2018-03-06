@@ -100,7 +100,7 @@ public class TurtlePanel implements Panel {
 			panel.getChildren().add(penLines2);
 			// TODO: possibly add turtles to list ?
 			PROGRAM_CONTROLLER.makeNewTurtleCommand("1", turtleView,DEFAULT_COLOR_HEXCODE , penLines);
-			PROGRAM_CONTROLLER.makeNewTurtleCommand("2", turtleView2, DEFAULT_COLOR_HEXCODE, penLines2);
+			PROGRAM_CONTROLLER.makeNewTurtleCommand("50", turtleView2, DEFAULT_COLOR_HEXCODE, penLines2);
 		}
 		catch (Exception e) {
 			// TODO: make custom exception super class with sub classes for specifications

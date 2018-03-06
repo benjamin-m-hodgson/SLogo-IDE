@@ -26,9 +26,9 @@ public class CommandFactory {
 		if(commandName.equals("Forward")) {
 			return new MoveTurtleForwardCommand(commandArgs.get(0), activeTurtles, myVariables);
 		}
-//		else if(commandName.equals("Backward")) {
-//			return new MoveTurtleBackwardCommand(commandArgs.get(0), turtle, myVariables);
-//		}
+		else if(commandName.equals("Backward")) {
+			return new MoveTurtleBackwardCommand(commandArgs.get(0), activeTurtles, myVariables);
+		}
 //		else if(commandName.equals("Left")) {
 //			return new RotateTurtleCounterclockwiseCommand(commandArgs.get(0), turtle, myVariables);
 //		}
@@ -173,9 +173,9 @@ public class CommandFactory {
 //		else if(commandName.equals("For")) {
 //			return new ForCommand(commandArgs.get(0), commandArgs.get(1), commandArgs.get(2), commandArgs.get(3), commandArgs.get(4), turtle, myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
 //		}
-//		else if(commandName.equals("ID")) {
-//			return new IDQueryCommand(turtle);
-//		}
+		else if(commandName.equals("ID")) {
+			return new IDQueryCommand(activeTurtles.get(0));
+		}
 		else {
 			return new StringCommand(commandName);
 		}
