@@ -171,6 +171,10 @@ class TextFieldParser {
 		return myCommandMaker.getVariables();
 	}
 
+	protected Map<String, String> getUserDefined() {
+		return myCommandMaker.getUserDefined();
+	}
+	
 	/**
 	 * Returns an ImmutableQueue of the Command Queue (where commands are Command objects) 
 	 */
@@ -178,6 +182,14 @@ class TextFieldParser {
 		return myCommandQueue;
 	}
 
+	protected IntegerProperty getBackColor()  {
+		return myBackColor;
+	}
+
+	protected BooleanProperty getBackColorChangeHeard()  {
+		return myBackColorChangeHeard;
+	}
+	
 
 
 
@@ -222,16 +234,4 @@ class TextFieldParser {
 		}
 	}
 
-	protected Map<String, String> getUserDefined() {
-		return myCommandMaker.getUserDefined();
-	}
-	
-	protected IntegerProperty getBackColor()  {
-		return myBackColor;
-	}
-
-	protected BooleanProperty getBackColorChangeHeard()  {
-		return myBackColorChangeHeard;
-	}
-	
 }
