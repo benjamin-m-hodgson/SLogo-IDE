@@ -12,7 +12,7 @@ import java.util.Properties;
 
 class SetPaletteCommand extends Command {
 
-	public static final String DEFAULT_COLORPALETTE_FILE = "ColorPalette.properties"; 
+	public static final String DEFAULT_COLORPALETTE_FILE = "src/interpreter/ColorPalette.properties"; 
 	private HashMap<String, Double> myVars;
 	private Command myIdx;
 	private Command myR;
@@ -36,6 +36,7 @@ class SetPaletteCommand extends Command {
 		String hex = String.format("#%02x%02x%02x", (int) r,  (int) g, (int) b);  
 		Properties prop = new Properties();
 		InputStream in = getClass().getResourceAsStream(DEFAULT_COLORPALETTE_FILE);
+		
 		try {
 			in = new FileInputStream(new File(DEFAULT_COLORPALETTE_FILE));
 		} catch (FileNotFoundException e2) {
@@ -50,11 +51,14 @@ class SetPaletteCommand extends Command {
 			e.printStackTrace();
 		}
 		
-		prop.setProperty(Double.toString(idx), hex);
+		int idxAsInt = (int) idx; 
+		String idxAsKey = Integer.toString(idxAsInt);
+		
+		prop.setProperty(idxAsKey, hex);
 		
 		FileOutputStream fileOut = null;
 		try {
-			fileOut = new FileOutputStream(DEFAULT_COLORPALETTE_FILE, true);
+			fileOut = new FileOutputStream(DEFAULT_COLORPALETTE_FILE);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
