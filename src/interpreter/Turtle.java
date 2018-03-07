@@ -1,5 +1,8 @@
 package interpreter;
 
+import java.io.File;
+import java.net.MalformedURLException;
+
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -57,8 +60,13 @@ import javafx.scene.shape.Line;
  */
 public class Turtle {
 
-    	// TODO: put in setting.properties file
-    	public static final double DEFAULT_TURTLE_SIZE = 20;
+	// TODO: put in setting.properties file
+	public static final String DEFAULT_FILEPATH_PREFIX = "user.dir/";
+	public static final String DEFAULT_IMAGES_FOLDER = "turtleimages/";
+	public static final String DEFAULT_IMAGE_SUFFIX = ".png";
+	public static final String DEFAULT_TURTLESHAPES_FILE = "interpreter/TurtleShapes";
+
+	public static final double DEFAULT_TURTLE_SIZE = 35;
 	public static final String DEFAULT_NAME = "";
 	public static final String DEFAULT_PEN_COLORCODE = "#2d3436";
 	public static final double DEFAULT_PEN_WIDTH = 1.0;
@@ -101,7 +109,7 @@ public class Turtle {
 	protected String getName() {
 		return myName; 
 	}
-	
+
 	/**
 	 * Returns the current x-position of the turtle
 	 */
@@ -161,7 +169,7 @@ public class Turtle {
 	protected void setX(double x) {
 		setXY(x, myY);
 	}
-	
+
 	/**
 	 * Sets the y-position of the turtle
 	 */
@@ -191,8 +199,8 @@ public class Turtle {
 	 * @return distance traveled
 	 */
 	protected double calcDistance(double oldX, double oldY, double x, double y) {
-//		System.out.println("old x: " + oldX + " new x: "+ x);
-//		System.out.println("old y" + oldY + " new y: "+ y);
+		//		System.out.println("old x: " + oldX + " new x: "+ x);
+		//		System.out.println("old y" + oldY + " new y: "+ y);
 		double xSquared = Math.pow((oldX-x), 2);
 		double ySquared = Math.pow((oldY-y), 2);
 		return Math.sqrt(xSquared+ySquared);
@@ -206,6 +214,16 @@ public class Turtle {
 		myOldY = myY;
 	}
 
+	public void setShape(String idxKey) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException {
+		RegexMatcher rm = new RegexMatcher(DEFAULT_TURTLESHAPES_FILE);
+		String matchingShape = "";
+		matchingShape = rm.findMatchingVal(idxKey);
+
+		File turtleFile = new File(DEFAULT_IMAGES_FOLDER  + matchingShape + DEFAULT_IMAGE_SUFFIX);
+		setImage(turtleFile.toURI().toURL().toExternalForm());
+		setImageName(idxKey);
+	}
+
 	/**
 	 * Sets the visual image of the turtle to the image contained in filepath
 	 */
@@ -217,11 +235,11 @@ public class Turtle {
 	protected void setPenColor(String colorCode) {
 		myPen.setColor(colorCode);
 	}
-	
+
 	protected void setPenWidth(double width) {
 		myPen.setWidth(width);
 	}
-	
+
 	protected void setAngle(double angle) {
 		myAngle = angle;
 		System.out.println("angle" + myAngle);
@@ -239,9 +257,17 @@ public class Turtle {
 	protected void clearPen() {
 		myPen.clear();
 	}
-	
+
 	protected String getPenColor() {
 		return myPen.getColor();
+	}
+
+	protected void setImageName(String shapeName) {
+		myImage.setId(shapeName);
+	}
+
+	protected String getImageName() {
+		return myImage.getId();
 	}
 
 
@@ -269,11 +295,11 @@ public class Turtle {
 		private Pen(Group penLines) {
 			this(penLines, true, DEFAULT_PEN_COLORCODE, DEFAULT_PEN_WIDTH);
 		}
-		
+
 		private Pen(Group penLines, String colorCode) {
 			this(penLines, true, colorCode, DEFAULT_PEN_WIDTH);
 		}
-		
+
 		/**
 		 * Constructor for a pen with default state as pen visible
 		 * @param penlines is (already-attached-to-stage) Group which will house lines drawn by Pen
