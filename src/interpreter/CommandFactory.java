@@ -170,6 +170,9 @@ public class CommandFactory {
 		else if(commandName.equals("SetPenSize")) {
 			return new SetPenSizeCommand(turtle, commandArgs.get(0), myVariables);
 		}
+		else if (commandName.equals("SetShape")) {
+			return new SetShapeCommand(turtle, commandArgs.get(0), myVariables);
+		}
 		else if (commandName.equals("GetPenColor")) {
 			return new GetPenColorCommand(turtle);
 		}
