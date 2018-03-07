@@ -1,5 +1,6 @@
 package interpreter;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,14 +15,18 @@ import java.util.Map;
     private Command exprCommand;
     private Map<String, Double> myVariables; 
 
-    protected NaturalLogCommand(Command expr,Map<String, Double> variables) {
+    protected NaturalLogCommand(Command expr,Map<String, Double> variables, List<Turtle> turtles) {
 	exprCommand = expr;
 	myVariables = variables;
+	setActiveTurtles(turtles);
     }
 
     @Override
     protected double execute() throws UnidentifiedCommandException{
-	Double EXPR = getCommandValue(exprCommand, myVariables);
+    	Double EXPR = -1.0;
+    	for(Turtle myTurtle : getActiveTurtles()) {
+    		EXPR = getCommandValue(exprCommand, myVariables, myTurtle);
+    	}
 	return Math.log(EXPR);
     }
 

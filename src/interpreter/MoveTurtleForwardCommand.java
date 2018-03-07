@@ -11,15 +11,16 @@ import java.util.List;
  */
 class MoveTurtleForwardCommand extends Command {
 	private Command myForwardDistCommand;
-	private Map<String, Double> myVariables; 
+	private Map<String, Double> myVariables;
+	Turtle myTurtle;
 
 	/**
 	 * Creates a new command that can be executed at the proper time
 	 * @param forwarddist is Command that returns the absolute distance that the turtle must move forward
 	 * @param turtle is Turtle that needs to move
 	 */
-	protected MoveTurtleForwardCommand(Command forwarddist, List<Turtle> activeTurtle, Map<String, Double> variables){
-		this.setActiveTurtles(activeTurtle);
+	protected MoveTurtleForwardCommand(Command forwarddist, Turtle activeTurtle, Map<String, Double> variables){
+		myTurtle = activeTurtle;
 		myForwardDistCommand = forwarddist;
 		myVariables = variables;
 	}
@@ -33,14 +34,19 @@ class MoveTurtleForwardCommand extends Command {
 	 * @see interpreter.Command#execute()
 	 */
 	protected double execute() throws UnidentifiedCommandException{
-			double forwardDist = -1;
-			System.out.println("active turtles" + getActiveTurtles().size());
-		for(Turtle myTurtle: this.getActiveTurtles()) {
-			System.out.println("id: " + myTurtle.getID());
-			forwardDist = getCommandValue(myForwardDistCommand, myVariables, myTurtle);
+			myTurtle.forEach( turtle -> {
+			double forwardDist = -1.0;
+			try {
+				forwardDist = getCommandValue(myForwardDistCommand, myVariables, turtle);
+			} catch (UnidentifiedCommandException e) {
+				//TODO: figure this OUT!!!
+			}
 			double angle = Math.toRadians(myTurtle.getAngle());
-			myTurtle.setXY(myTurtle.getX()-forwardDist*Math.sin(-angle), myTurtle.getY()-forwardDist*Math.cos(-angle));
-		}
-		return forwardDist;
+			turtle.setXY(turtle.getX()-forwardDist*Math.sin(-angle), turtle.getY()-forwardDist*Math.cos(-angle));
+			});
+			return getCommandValue(myForwardDistCommand, myVariables, myTurtle.toSingleTurtle());
+	}
+	protected void setTurtle(Turtle turtle) {
+		myTurtle = turtle;
 	}
 }

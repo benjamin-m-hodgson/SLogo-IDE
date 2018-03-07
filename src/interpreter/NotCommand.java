@@ -1,5 +1,6 @@
 package interpreter;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,12 +17,16 @@ class NotCommand extends Command{
     	private Map<String, Double> myVariables; 
 
     	
-	protected NotCommand(Command test, Map<String, Double> variables) {
+	protected NotCommand(Command test, Map<String, Double> variables, List<Turtle> turtles) {
 		testCommand = test;
+		setActiveTurtles(turtles);
 	}
 	@Override
 	protected double execute() throws UnidentifiedCommandException{
-		double TEST = getCommandValue(testCommand, myVariables);
+		double TEST = 0;
+		for(Turtle myTurtle : getActiveTurtles()) {
+			TEST = getCommandValue(testCommand, myVariables, myTurtle);
+		}
 		if (TEST == FALSE) {
 		    return TRUE;
 		}

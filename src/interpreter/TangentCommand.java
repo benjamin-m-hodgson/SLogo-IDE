@@ -1,5 +1,6 @@
 package interpreter;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,14 +15,18 @@ class TangentCommand extends Command{
     private Command degreesCommand;
     private Map<String, Double> myVariables; 
 
-    protected TangentCommand(Command degrees ,Map<String, Double> variables) {
+    protected TangentCommand(Command degrees ,Map<String, Double> variables, List<Turtle> turtles) {
 	degreesCommand = degrees;
 	myVariables = variables;
+	setActiveTurtles(turtles);
 
     }
     @Override
     protected double execute() throws UnidentifiedCommandException{
-	double DEGREES = getCommandValue(degreesCommand, myVariables);
+    	double DEGREES = -1;
+    	for(Turtle myTurtle: getActiveTurtles()) {
+    		DEGREES = getCommandValue(degreesCommand, myVariables, myTurtle);
+    	}
 	return Math.tan(Math.toRadians(DEGREES));
     }
 

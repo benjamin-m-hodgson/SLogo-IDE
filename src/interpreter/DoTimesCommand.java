@@ -9,15 +9,16 @@ class DoTimesCommand extends Command{
 	private String myTempVar;
 	private Command endExpressionCommand;
 	private CommandTreeBuilder myBuilder;
-	private Turtle myTurtle;
+	private List<Turtle> myAllTurtles;
 	
-	protected DoTimesCommand(Command tempVarCommand, Command endExpression, Command toExecuteCommand, Turtle turtle, 
+	protected DoTimesCommand(Command tempVarCommand, Command endExpression, Command toExecuteCommand, List<Turtle> activeTurtles, List<Turtle> allTurtles, 
 			Map<String, Double> variables, Map<String, String> userDefCommands, Map<String, Integer> userDefCommandNumArgs) {
 		myTempVar = ((StringCommand)tempVarCommand).getString();
 		toExecute = ((StringCommand)toExecuteCommand).getString();
 		endExpressionCommand = endExpression;
 		myBuilder = new CommandTreeBuilder(variables, userDefCommands, userDefCommandNumArgs);
-		myTurtle = turtle;
+		setActiveTurtles(activeTurtles);
+		myAllTurtles = allTurtles;
 	}
 	@Override
 	protected double execute() throws UnidentifiedCommandException {
@@ -31,9 +32,7 @@ class DoTimesCommand extends Command{
 				System.out.println("executing " + executeArray[i]);
 			}
 			try {
-				ArrayList<Turtle> turtleList = new ArrayList<Turtle>();
-				turtleList.add(myTurtle);
-				returnVal = myBuilder.buildAndExecute(turtleList, executeArray, true);
+				returnVal = myBuilder.buildAndExecute(myAllTurtles, getActiveTurtles() executeArray, true);
 			}
 			catch(Exception e){
 				//TODO fix this! Don't just throw another exception

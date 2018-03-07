@@ -22,126 +22,126 @@ public class CommandFactory {
 		return new DoubleCommand(doubleArg);
 	}
 
-	public Command makeCommand(String commandName, List<Command> commandArgs, List<Turtle> turtles, List<Turtle> activeTurtles) {
+	public Command makeCommand(String commandName, List<Command> commandArgs, Turtle turtles, Turtle activeTurtles) {
 		if(commandName.equals("Forward")) {
 			return new MoveTurtleForwardCommand(commandArgs.get(0), activeTurtles, myVariables);
 		}
-		else if(commandName.equals("Backward")) {
-			return new MoveTurtleBackwardCommand(commandArgs.get(0), activeTurtles, myVariables);
-		}
-		else if(commandName.equals("Left")) {
-			return new RotateTurtleCounterclockwiseCommand(commandArgs.get(0), activeTurtles, myVariables);
-		}
-		else if(commandName.equals("Right")) {
-			return new RotateTurtleClockwiseCommand(commandArgs.get(0), activeTurtles, myVariables);
-		}
-		else if(commandName.equals("SetHeading")) {
-			return new SetHeadingCommand(commandArgs.get(0), activeTurtles, myVariables);
-		}
-		else if(commandName.equals("SetTowards")) {
-			return new SetTowardsCommand(commandArgs.get(0), commandArgs.get(1), activeTurtles, myVariables);
-		}
-		else if(commandName.equals("SetPosition")) {
-			return new SetPositionCommand(commandArgs.get(0), commandArgs.get(1), activeTurtles, myVariables);
-		}
-		else if(commandName.equals("PenDown")) {
-			return new PenDownCommand(activeTurtles);
-		}
-		else if(commandName.equals("PenUp")) {
-			return new PenUpCommand(activeTurtles);
-		}
-		else if(commandName.equals("ShowTurtle")) {
-			return new ShowTurtleCommand(activeTurtles);
-		}
-		else if(commandName.equals("HideTurtle")) {
-			return new HideTurtleCommand(activeTurtles);
-		}
-		else if(commandName.equals("Home")) {
-			return new HomeCommand(activeTurtles);
-		}
-		else if(commandName.equals("ClearScreen")) {
-			return new ClearScreenCommand(activeTurtles);
-		}
-		else if(commandName.equals("XCoordinate")) {
-			return new XCoordinateQueryCommand(activeTurtles);
-		}
-		else if(commandName.equals("YCoordinate")) {
-			return new YCoordinateQueryCommand(activeTurtles);
-		}
-		else if (commandName.equals("Heading")) {
-			return new HeadingQueryCommand(activeTurtles);
-		}
-		else if (commandName.equals("IsPenDown")) {
-			return new IsPenDownQueryCommand(activeTurtles);
-		}
-		else if (commandName.equals("IsShowing")) {
-			return new IsShowingQueryCommand(activeTurtles);
-		}
-		else if(commandName.equals("Sum")) {
-			return new SumCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
-		}
-		else if(commandName.equals("Difference")) {
-			return new DifferenceCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
-		}
-		else if(commandName.equals("Product")) {
-			return new ProductCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
-		}
-		else if(commandName.equals("Quotient")) {
-			return new QuotientCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
-		}
-		else if(commandName.equals("Remainder")) {
-			return new RemainderCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
-		}
-		else if(commandName.equals("Minus")) {
-			return new MinusCommand(commandArgs.get(0), myVariables, activeTurtles);
-		}
-		else if(commandName.equals("Random")) {
-			return new RandomCommand(commandArgs.get(0), myVariables, activeTurtles);
-		}
+//		else if(commandName.equals("Backward")) {
+//			return new MoveTurtleBackwardCommand(commandArgs.get(0), activeTurtles, myVariables);
+//		}
+//		else if(commandName.equals("Left")) {
+//			return new RotateTurtleCounterclockwiseCommand(commandArgs.get(0), activeTurtles, myVariables);
+//		}
+//		else if(commandName.equals("Right")) {
+//			return new RotateTurtleClockwiseCommand(commandArgs.get(0), activeTurtles, myVariables);
+//		}
+//		else if(commandName.equals("SetHeading")) {
+//			return new SetHeadingCommand(commandArgs.get(0), activeTurtles, myVariables);
+//		}
+//		else if(commandName.equals("SetTowards")) {
+//			return new SetTowardsCommand(commandArgs.get(0), commandArgs.get(1), activeTurtles, myVariables);
+//		}
+//		else if(commandName.equals("SetPosition")) {
+//			return new SetPositionCommand(commandArgs.get(0), commandArgs.get(1), activeTurtles, myVariables);
+//		}
+//		else if(commandName.equals("PenDown")) {
+//			return new PenDownCommand(activeTurtles);
+//		}
+//		else if(commandName.equals("PenUp")) {
+//			return new PenUpCommand(activeTurtles);
+//		}
+//		else if(commandName.equals("ShowTurtle")) {
+//			return new ShowTurtleCommand(activeTurtles);
+//		}
+//		else if(commandName.equals("HideTurtle")) {
+//			return new HideTurtleCommand(activeTurtles);
+//		}
+//		else if(commandName.equals("Home")) {
+//			return new HomeCommand(activeTurtles);
+//		}
+//		else if(commandName.equals("ClearScreen")) {
+//			return new ClearScreenCommand(activeTurtles);
+//		}
+//		else if(commandName.equals("XCoordinate")) {
+//			return new XCoordinateQueryCommand(activeTurtles);
+//		}
+//		else if(commandName.equals("YCoordinate")) {
+//			return new YCoordinateQueryCommand(activeTurtles);
+//		}
+//		else if (commandName.equals("Heading")) {
+//			return new HeadingQueryCommand(activeTurtles);
+//		}
+//		else if (commandName.equals("IsPenDown")) {
+//			return new IsPenDownQueryCommand(activeTurtles);
+//		}
+//		else if (commandName.equals("IsShowing")) {
+//			return new IsShowingQueryCommand(activeTurtles);
+//		}
+//		else if(commandName.equals("Sum")) {
+//			return new SumCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
+//		}
+//		else if(commandName.equals("Difference")) {
+//			return new DifferenceCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
+//		}
+//		else if(commandName.equals("Product")) {
+//			return new ProductCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
+//		}
+//		else if(commandName.equals("Quotient")) {
+//			return new QuotientCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
+//		}
+//		else if(commandName.equals("Remainder")) {
+//			return new RemainderCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
+//		}
+//		else if(commandName.equals("Minus")) {
+//			return new MinusCommand(commandArgs.get(0), myVariables, activeTurtles);
+//		}
+//		else if(commandName.equals("Random")) {
+//			return new RandomCommand(commandArgs.get(0), myVariables, activeTurtles);
+//		}
 //		else if(commandName.equals("Sine")) {
-//			return new SineCommand(commandArgs.get(0), myVariables);
+//			return new SineCommand(commandArgs.get(0), myVariables, activeTurtles);
 //		}
 //		else if(commandName.equals("Cosine")) {
-//			return new CosineCommand(commandArgs.get(0), myVariables);
+//			return new CosineCommand(commandArgs.get(0), myVariables, activeTurtles);
 //		}
 //		else if(commandName.equals("Tangent")) {
-//			return new TangentCommand(commandArgs.get(0), myVariables);
+//			return new TangentCommand(commandArgs.get(0), myVariables, activeTurtles);
 //		}
 //		else if(commandName.equals("ArcTangent")) {
-//			return new ArcTangentCommand(commandArgs.get(0), myVariables);
+//			return new ArcTangentCommand(commandArgs.get(0), myVariables, activeTurtles);
 //		}
 //		else if(commandName.equals("NaturalLog")) {
-//			return new NaturalLogCommand(commandArgs.get(0), myVariables);
+//			return new NaturalLogCommand(commandArgs.get(0), myVariables, activeTurtles);
 //		}
 //		else if(commandName.equals("Power")) {
-//			return new PowerCommand(commandArgs.get(0), commandArgs.get(1), myVariables);
+//			return new PowerCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
 //		}
 //		else if(commandName.equals("Pi")) {
 //			return new PiCommand();
 //		}
 //		else if(commandName.equals("LessThan")) {
-//			return new LessThanCommand(commandArgs.get(0), commandArgs.get(1), myVariables);
+//			return new LessThanCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
 //		}
 //		else if(commandName.equals("GreaterThan")) {
-//			return new GreaterThanCommand(commandArgs.get(0), commandArgs.get(1), myVariables);
+//			return new GreaterThanCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
 //		}
 //		else if(commandName.equals("Equal")) {
-//			return new EqualCommand(commandArgs.get(0), commandArgs.get(1), myVariables);
+//			return new EqualCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
 //		}
 //		else if(commandName.equals("NotEqual")) {
-//			return new NotEqualCommand(commandArgs.get(0), commandArgs.get(1), myVariables);
+//			return new NotEqualCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
 //		}
 //		else if(commandName.equals("And")) {
-//			return new AndCommand(commandArgs.get(0), commandArgs.get(1), myVariables);
+//			return new AndCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
 //		}
 //		else if(commandName.equals("Or")) {
-//			return new OrCommand(commandArgs.get(0), commandArgs.get(1), myVariables);
+//			return new OrCommand(commandArgs.get(0), commandArgs.get(1), myVariables, activeTurtles);
 //		}
 //		else if(commandName.equals("Not")) {
-//			return new NotCommand(commandArgs.get(0), myVariables);
+//			return new NotCommand(commandArgs.get(0), myVariables, activeTurtles);
 //		}
 //		else if(commandName.equals("DoTimes")||commandName.equals("Repeat")) {
-//			return new DoTimesCommand(commandArgs.get(0), commandArgs.get(1), commandArgs.get(2), turtle, myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
+//			return new DoTimesCommand(commandArgs.get(0), commandArgs.get(1), commandArgs.get(2), activeTurtles, myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
 //		}
 //		else if(commandName.equals("If")) {
 //			return new IfCommand(commandArgs.get(1), commandArgs.get(0), turtle, myVariables, myUserDefCommands, myUserDefCommandsNumArgs); 
@@ -174,7 +174,10 @@ public class CommandFactory {
 //			return new ForCommand(commandArgs.get(0), commandArgs.get(1), commandArgs.get(2), commandArgs.get(3), commandArgs.get(4), turtle, myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
 //		}
 		else if(commandName.equals("ID")) {
-			return new IDQueryCommand();
+			return new IDQueryCommand(activeTurtles);
+		}
+		else if(commandName.equals("Turtles")) {
+			return makeDoubleCommand("" + turtles.size());
 		}
 		else {
 			return new StringCommand(commandName);

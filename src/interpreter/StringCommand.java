@@ -12,7 +12,7 @@ package interpreter;
 	
 	@Override
 	public double execute() throws UnidentifiedCommandException{
-		throw new UnidentifiedCommandException("You entered an unrecognized word in the command field.");
+		return null; //TODO: fix this!! HAS TO DO THIS APPARENTLY YIKES YIKES YIKES
 	}
 	
 	@Override

@@ -51,8 +51,8 @@ class CommandMaker {
 	private HashMap<String, Double> myVariables; 
 	private HashMap<String, String> myUserDefCommands; 
 	private HashMap<String, Integer> myUserCommandsNumArgs; 
-	private ArrayList<Turtle> myActiveTurtles; 
-	private ArrayList<Turtle> myTurtles;
+	private MultipleTurtles myActiveTurtles; 
+	private MultipleTurtles myTurtles;
 	private ResourceBundle myLanguage; 
 	private CommandTreeBuilder myCommandTreeBuilder; 
 	private IntegerProperty myBackColor; 
@@ -63,8 +63,8 @@ class CommandMaker {
 	}
 
 	protected CommandMaker(ResourceBundle languageBundle, String numArgsFileName) {
-		myTurtles = new ArrayList<Turtle>(); 
-		myActiveTurtles = new ArrayList<Turtle>();
+		myTurtles = new MultipleTurtles(new ArrayList<SingleTurtle>()); 
+		myActiveTurtles = new MultipleTurtles(new ArrayList<SingleTurtle>());
 		myLanguage = languageBundle;
 		myVariables = new HashMap<String, Double>(); 
 		myUserDefCommands = new HashMap<String, String>(); 
@@ -91,22 +91,7 @@ class CommandMaker {
 
 	private double parseValidTextArray(String turtleID, String[] userInput, String[] typesOfInput, String commandIdentifier) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		Turtle identifiedTurtle = null;
-		if (myTurtles.size() > 0) {
-			identifiedTurtle = myTurtles.get(0); 
-		}
-		boolean turtleIdentified = false; 
-		try {
-			double turtleIDDouble = Double.parseDouble(turtleID);
-			for (Turtle turtle : myTurtles) {
-				if (turtle.getID()==(turtleIDDouble)) {
-					identifiedTurtle = turtle; 
-					turtleIdentified = true; 
-				}
-			}
-		}
-		catch(NumberFormatException e) {
-			//TODO: do I need to have something here?
-		}
+		boolean turtleIdentified = myTurtles.containsTurtleWithID(turtleID);
 		String[] commandTypes = new String[userInput.length];
 		int startIdx = 0; 
 		if (turtleIdentified) {
@@ -184,19 +169,19 @@ class CommandMaker {
 	protected Map<String, Double> getVariables() {
 		return Collections.unmodifiableMap(myVariables);
 	}
-	protected List<Turtle> getAllTurtles(){
-		return Collections.unmodifiableList(myTurtles);
+	protected List<SingleTurtle> getAllTurtles(){
+		return myTurtles.getAllImmutableTurtles();
 	}
-	protected List<Turtle> getActiveTurtles(){
-		return Collections.unmodifiableList(myActiveTurtles);
+	protected List<SingleTurtle> getActiveTurtles(){
+		return myActiveTurtles.getAllImmutableTurtles();
 	}
 
 	protected void addNewTurtle(String ID, ImageView turtleImage, String penColor, Group penLines) {
 		//System.out.println(name);
 		double id = Double.parseDouble(ID);
-		Turtle newTurtle = new Turtle(id, turtleImage, penLines, penColor);
-		myTurtles.add(newTurtle);
-		myActiveTurtles.add(newTurtle);
+		SingleTurtle newTurtle = new SingleTurtle(id, turtleImage, penLines, penColor);
+		myTurtles.addTurtle(newTurtle);
+		myActiveTurtles.addTurtle(newTurtle);
 	}
 	protected Map<String, String> getUserDefined() {
 		return myUserDefCommands;

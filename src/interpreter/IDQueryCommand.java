@@ -1,17 +1,21 @@
 package interpreter;
 
+import java.util.List;
+
 class IDQueryCommand extends Command{
-	
-	protected IDQueryCommand() {
+		Turtle myTurtle;
+	protected IDQueryCommand(Turtle turtle) {
+		myTurtle = turtle;
 	}
 	
 	@Override
 	protected double execute() {
 		double returnVal = -1;
-		for(Turtle myTurtle : getActiveTurtles()) {
-			returnVal = myTurtle.getID();
-		}
+		returnVal = myTurtle.getID();
 		return returnVal;
+	}
+	protected void setTurtle(Turtle turtle) {
+		myTurtle = turtle;
 	}
 	
 }
