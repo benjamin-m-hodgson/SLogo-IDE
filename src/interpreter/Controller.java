@@ -51,6 +51,7 @@ public class Controller {
 	public static final String DEFAULT_SAVEDVARIABLES = "src/interpreter/SavedVariables.properties" ;
 	public static final String DEFAULT_FILEPATH_PREFIX = "src/";
 	public static final String DEFAULT_PROPSFILE_SUFFIX = ".properties";
+	public static final String DEFAULT_SHAPES_FILE = "interpreter/TurtleShapes";
 	public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
 	private String DEFAULT_CSS = Controller.class.getClassLoader().
 			getResource("default.css").toExternalForm(); 
@@ -208,10 +209,24 @@ public class Controller {
 		myTextFieldParser.loadSavedVariables(); 
 	}
 	
+	/**
+	 * Returns information about default & user-defined colors (in hex) corresponding to indices 
+	 * @return Map of String indices to String hex colors
+	 */
 	public Map<String, String> getColors() {
 		PropertiesReader pw = new PropertiesReader(DEFAULT_FILEPATH_PREFIX+DEFAULT_COLORPALETTE_FILE+DEFAULT_PROPSFILE_SUFFIX);
-		Map<String, String> colorsMap = (HashMap<String, String>) pw.read(); 
+		Map<String, String> colorsMap = pw.read(); 
 		return colorsMap; 
+	}
+	
+	/**
+	 * Returns information about default shape options for Turtle corresponding to indices
+	 * @return Map of String indices to String shape options
+	 */
+	public Map<String, String> getShapes() {
+		PropertiesReader pw = new PropertiesReader(DEFAULT_FILEPATH_PREFIX+DEFAULT_SHAPES_FILE+DEFAULT_PROPSFILE_SUFFIX);
+		Map<String, String> shapesMap = pw.read(); 
+		return shapesMap; 
 	}
 
 	/**
@@ -415,9 +430,7 @@ public class Controller {
 	 * @throws TurtleNotFoundException 
 	 */
 	public double parseInput(String userTextInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
-//		return myTextFieldParser.parseText(userTextInput);
-		getColors(); 
-		return 0.0;
+		return myTextFieldParser.parseText(userTextInput);
 	}
 
 	/**
