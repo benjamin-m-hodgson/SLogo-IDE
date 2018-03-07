@@ -43,6 +43,9 @@ public class Controller {
 	public static final String DEFAULT_COLOR = "Grey";
 	public static final String DEFAULT_SETTINGS = "settings";
 	private final String DEFAULT_WORKSPACE_PREF = "default";
+
+	public static final String DEFAULT_SAVEDUSERCOMMANDS = "src/interpreter/SavedUserCommands.properties" ;
+	public static final String DEFAULT_SAVEDVARIABLES = "src/interpreter/SavedVariables.properties" ;
 	public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
 	private String DEFAULT_CSS = Controller.class.getClassLoader().
 			getResource("default.css").toExternalForm(); 
@@ -157,10 +160,19 @@ public class Controller {
 	 * in a Properties file 
 	 */
 	public void saveUserDefined() {
-		myTextFieldParser.saveUserDefined(); 
+		Map<String, String> userDefinedMap = this.getUserDefined(); 
+		PropertiesWriter pw = new PropertiesWriter(DEFAULT_SAVEDUSERCOMMANDS, userDefinedMap);
+		pw.write(); 
 	}
 
-
+	/**
+	 * Adds previously-saved user-defined commands to Map of user-defined commands
+	 * to display to the user 
+	 */
+	public void getSavedUserDefined() {
+		
+	}
+	
 	/**
 	 * TODO: optimize this to return an unmodifiable version of the map
 	 * Returns an UnmodifiableMap of variables to their values
@@ -174,7 +186,21 @@ public class Controller {
 	 * in a Properties file 
 	 */
 	public void saveVariables() {
-		myTextFieldParser.saveVariables(); 
+		Map<String, Double> userDefinedMap = this.getVariables(); 
+		HashMap<String, String> parsedMap = new HashMap<String, String>(); 
+		for (String key : userDefinedMap.keySet()) {
+			parsedMap.put(key.substring(1), Double.toString(userDefinedMap.get(key)));
+		}
+		PropertiesWriter pw = new PropertiesWriter(DEFAULT_SAVEDVARIABLES, parsedMap);
+		pw.write(); 
+	}
+	
+	/**
+	 * Adds previously-saved variables to Map of variables
+	 * to display to the user 
+	 */
+	public void getSavedVariables() {
+		
 	}
 
 	/**

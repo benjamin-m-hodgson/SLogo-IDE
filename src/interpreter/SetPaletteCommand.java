@@ -35,7 +35,7 @@ class SetPaletteCommand extends Command {
 		double b = getCommandValue(myB, myVars);
 		String hex = String.format("#%02x%02x%02x", (int) r,  (int) g, (int) b);  
 		Properties prop = new Properties();
-		InputStream in = getClass().getResourceAsStream(DEFAULT_COLORPALETTE_FILE);
+		InputStream in = null;
 		
 		try {
 			in = new FileInputStream(new File(DEFAULT_COLORPALETTE_FILE));

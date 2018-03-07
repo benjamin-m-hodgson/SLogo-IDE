@@ -51,7 +51,7 @@ class TextFieldParser {
 	public static final ResourceBundle DEFAULT_LANGUAGE = ResourceBundle.getBundle("interpreter/English");
 	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
 	public static final String DEFAULT_COMMENT_SYMBOL = "Comment";
-
+	
 	private String mySyntaxFileName; 
 	private CommandMaker myCommandMaker; 
 	private Queue<Command> myCommandQueue;
@@ -158,16 +158,6 @@ class TextFieldParser {
 		double finalReturnVal = myCommandMaker.parseValidTextArray(userInputArray[0], userInputArray, listOfTypes); // TODO consider special case in which turtle name is command name; 
 
 		return finalReturnVal; 
-	}
-
-	
-	// USER SAVING CAPABILITIES 
-	public void saveUserDefined() {
-		// call a file writer, sending in variables map 
-	}
-
-	public void saveVariables() {
-
 	}
 
 
