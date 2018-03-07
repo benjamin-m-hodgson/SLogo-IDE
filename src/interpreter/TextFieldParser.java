@@ -51,7 +51,7 @@ class TextFieldParser {
 	public static final ResourceBundle DEFAULT_LANGUAGE = ResourceBundle.getBundle("interpreter/English");
 	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
 	public static final String DEFAULT_COMMENT_SYMBOL = "Comment";
-
+	
 	private String mySyntaxFileName; 
 	private CommandMaker myCommandMaker; 
 	private Queue<Command> myCommandQueue;
@@ -75,15 +75,15 @@ class TextFieldParser {
 		setUpBackColorChangeListener();
 	}
 
-		private void setUpBackColorChangeListener() {
-			myCommandMaker.getBackColorChangeHeard().addListener(new ChangeListener<Boolean>() {
-				@Override
-				public void changed(ObservableValue<? extends Boolean> observable, Boolean t1, Boolean t2) {
-					myBackColor = myCommandMaker.getBackColor();
-					myBackColorChangeHeard.set(true);
-				}
-			});
-		}
+	private void setUpBackColorChangeListener() {
+		myCommandMaker.getBackColorChangeHeard().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean t1, Boolean t2) {
+				myBackColor = myCommandMaker.getBackColor();
+				myBackColorChangeHeard.set(true);
+			}
+		});
+	}
 
 	/**
 	 * Returns a Queue of commands given a String of concatenated commands (chops up the commands 
@@ -144,7 +144,7 @@ class TextFieldParser {
 		return parseTextArray(tokenizedInputArray);
 	}
 
-	
+
 
 	private double parseTextArray(String[] userInputArray) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String[] listOfTypes = new String[userInputArray.length];
@@ -171,11 +171,23 @@ class TextFieldParser {
 		return myCommandMaker.getVariables();
 	}
 
+	protected Map<String, String> getUserDefined() {
+		return myCommandMaker.getUserDefined();
+	}
+
 	/**
 	 * Returns an ImmutableQueue of the Command Queue (where commands are Command objects) 
 	 */
 	protected Queue<Command> getCurrentCommandQueue() {
 		return myCommandQueue;
+	}
+
+	protected IntegerProperty getBackColor()  {
+		return myBackColor;
+	}
+
+	protected BooleanProperty getBackColorChangeHeard()  {
+		return myBackColorChangeHeard;
 	}
 
 
@@ -215,23 +227,19 @@ class TextFieldParser {
 			//					"fd 100\n" + 
 			//					"rt 90");
 			//			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
-//						testingParser.parseText("fd sum 100 :a");
+			//						testingParser.parseText("fd sum 100 :a");
 			//			testingParser.parseText("to corner [ :length :width ] [ fd :length rt 90 bk :width ]");
 		} catch (Exception e) {
 			System.out.println("FAIL");
 		}
 	}
 
-	protected Map<String, String> getUserDefined() {
-		return myCommandMaker.getUserDefined();
-	}
-	
-	protected IntegerProperty getBackColor()  {
-		return myBackColor;
+	public void loadSavedUserDefined() {
+		myCommandMaker.loadSavedUserDefined(); 
 	}
 
-	protected BooleanProperty getBackColorChangeHeard()  {
-		return myBackColorChangeHeard;
+	public void loadSavedVariables() {
+		myCommandMaker.loadSavedVariables(); 
 	}
-	
+
 }
