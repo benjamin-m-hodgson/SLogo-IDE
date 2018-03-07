@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.value.ChangeListener;
@@ -48,6 +49,8 @@ public class Controller {
 
 	public static final String DEFAULT_SAVEDUSERCOMMANDS = "src/interpreter/SavedUserCommands.properties" ;
 	public static final String DEFAULT_SAVEDVARIABLES = "src/interpreter/SavedVariables.properties" ;
+	public static final String DEFAULT_FILEPATH_PREFIX = "src/";
+	public static final String DEFAULT_PROPSFILE_SUFFIX = ".properties";
 	public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
 	private String DEFAULT_CSS = Controller.class.getClassLoader().
 			getResource("default.css").toExternalForm(); 
@@ -203,6 +206,12 @@ public class Controller {
 	 */
 	public void loadSavedVariables() {
 		myTextFieldParser.loadSavedVariables(); 
+	}
+	
+	public Map<String, String> getColors() {
+		PropertiesReader pw = new PropertiesReader(DEFAULT_FILEPATH_PREFIX+DEFAULT_COLORPALETTE_FILE+DEFAULT_PROPSFILE_SUFFIX);
+		Map<String, String> colorsMap = (HashMap<String, String>) pw.read(); 
+		return colorsMap; 
 	}
 
 	/**
@@ -406,7 +415,9 @@ public class Controller {
 	 * @throws TurtleNotFoundException 
 	 */
 	public double parseInput(String userTextInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		return myTextFieldParser.parseText(userTextInput);
+//		return myTextFieldParser.parseText(userTextInput);
+		getColors(); 
+		return 0.0;
 	}
 
 	/**

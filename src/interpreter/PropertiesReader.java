@@ -32,10 +32,11 @@ class PropertiesReader {
 	}
 
 	protected Map<String, String> read() {
-		HashMap<String, String> readInProperties = new HashMap<String, String>(); 
+		Map<String, String> readInProperties = new HashMap<String, String>(); 
 		for (Enumeration<?> e = myProps.propertyNames(); e.hasMoreElements(); ) {
 			String key = (String)e.nextElement();
 			String val = myProps.getProperty(key);
+//			System.out.println(key+" "+val);
 			readInProperties.put(key, val);
 		}
 		return readInProperties; 
