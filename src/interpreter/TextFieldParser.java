@@ -234,4 +234,12 @@ class TextFieldParser {
 		}
 	}
 
+	public void loadSavedUserDefined() {
+		myCommandMaker.loadSavedUserDefined(); 
+	}
+
+	public void loadSavedVariables() {
+		myCommandMaker.loadSavedVariables(); 
+	}
+
 }
