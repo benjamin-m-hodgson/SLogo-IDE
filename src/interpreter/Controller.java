@@ -169,7 +169,7 @@ public class Controller {
 	 * Adds previously-saved user-defined commands to Map of user-defined commands
 	 * to display to the user 
 	 */
-	public void getSavedUserDefined() {
+	public void loadSavedUserDefined() {
 		
 	}
 	
@@ -199,7 +199,7 @@ public class Controller {
 	 * Adds previously-saved variables to Map of variables
 	 * to display to the user 
 	 */
-	public void getSavedVariables() {
+	public void loadSavedVariables() {
 		
 	}
 
