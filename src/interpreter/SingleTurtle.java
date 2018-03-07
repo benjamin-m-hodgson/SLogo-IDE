@@ -97,7 +97,7 @@ public class SingleTurtle extends Turtle{
 		myY = DEFAULT_Y_POS; 
 		myAngle = DEFAULT_ANGLE; 
 	}	
-	public void forEach(Consumer<Turtle> action) {
+	public void executeSequentially(Consumer<Turtle> action){
 		action.accept(this);
 	}
 

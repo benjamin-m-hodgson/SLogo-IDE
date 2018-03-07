@@ -80,6 +80,6 @@ abstract class Turtle {
 
 	protected abstract SingleTurtle toSingleTurtle();
 	protected abstract int size();
-	protected abstract void forEach(Consumer<Turtle> action);
+	protected abstract void executeSequentially(Consumer<Turtle> action);
 	
 }

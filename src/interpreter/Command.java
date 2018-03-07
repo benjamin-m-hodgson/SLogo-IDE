@@ -5,20 +5,20 @@ import java.util.List;
 import java.util.Map;
 
 abstract class Command {
-	//private List<Turtle> myActiveTurtles;
+	private Turtle myTurtle;
 	/**
 	 * Executes Commands by changing objects in the back-end (Turtles/Pens) or retrieving information
 	 * @return double corresponding to return value of this command in SLogo
 	 */
-	abstract double execute() throws UnidentifiedCommandException;
+	abstract double execute();
 	
-	protected double getCommandValue(Command command, Map<String, Double> varsMap, Turtle turtle) throws UnidentifiedCommandException {
+	protected double getCommandValue(Command command, Map<String, Double> varsMap, Turtle turtle) {
 		if(command instanceof StringCommand) {
 			return getValueOfVar(((StringCommand)command).toString(), varsMap);
 		}
 		else if(command instanceof IDQueryCommand) { //|| command instanceof XCoordinateQueryCommand || command instanceof YCoordinateQueryCommand || command instanceof HeadingQueryCommand || command instanceof IsPenDownQueryCommand || command instanceof IsShowingQueryCommand) {
 			SingleTurtle singleTurtle = turtle.toSingleTurtle();
-			command.setTurtle(singleTurtle);
+			command.setActiveTurtles(singleTurtle);
 			return command.execute();
 		}
 		else {
@@ -41,5 +41,10 @@ abstract class Command {
 //			return myActiveTurtles;
 //		}
 	
-	protected abstract void setTurtle(Turtle turtle);
+	protected void setActiveTurtles(Turtle turtle) {
+		myTurtle = turtle;
+		}
+	protected Turtle getActiveTurtles() {
+		return myTurtle;
+	}
 	}

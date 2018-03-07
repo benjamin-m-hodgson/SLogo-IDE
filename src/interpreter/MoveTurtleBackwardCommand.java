@@ -20,8 +20,8 @@ class MoveTurtleBackwardCommand extends Command{
      * @param backwarddist is the distance the Turtle will move backward
      * @param turtle is the Turtle that should move
      */
-    protected MoveTurtleBackwardCommand(Command backwarddist, List<Turtle> turtles, Map<String, Double> variables){
-	this.setActiveTurtles(turtles);
+    protected MoveTurtleBackwardCommand(Command backwarddist, Turtle turtles, Map<String, Double> variables){
+	setActiveTurtles(turtles);
 	myBackwardDistCommand = backwarddist;
 	myVariables = variables; 
     }
@@ -33,9 +33,9 @@ class MoveTurtleBackwardCommand extends Command{
      * @return distance the turtle moved backward
      * @see interpreter.Command#execute()
      */
-    protected double execute() throws UnidentifiedCommandException{
+    protected double execute(){
     	double dist = -1;
-    	for(Turtle myTurtle: this.getActiveTurtles()) {
+    getActiveTurtles().executeSequentially(myTurt
 		dist = getCommandValue(myBackwardDistCommand, myVariables, myTurtle);
 		double angle = Math.toRadians(myTurtle.getAngle());
 		myTurtle.setXY(myTurtle.getX()+dist*Math.sin(-angle), myTurtle.getY()+dist*Math.cos(-angle));

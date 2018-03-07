@@ -1,6 +1,8 @@
 package interpreter;
 
+ 
  class StringCommand extends Command{
+	public static int DEFAULT_STRING_ID = Integer.MAX_VALUE;
 	private String myString;
 	protected StringCommand(String argument) {
 		myString = argument;
@@ -11,8 +13,8 @@ package interpreter;
 	}
 	
 	@Override
-	public double execute() throws UnidentifiedCommandException{
-		return null; //TODO: fix this!! HAS TO DO THIS APPARENTLY YIKES YIKES YIKES
+	public double execute(){
+		return DEFAULT_STRING_ID;
 	}
 	
 	@Override

@@ -5,17 +5,14 @@ import java.util.List;
 class IDQueryCommand extends Command{
 		Turtle myTurtle;
 	protected IDQueryCommand(Turtle turtle) {
-		myTurtle = turtle;
+		setActiveTurtles(turtle);
 	}
 	
 	@Override
 	protected double execute() {
 		double returnVal = -1;
-		returnVal = myTurtle.getID();
+		returnVal = getActiveTurtles().getID();
 		return returnVal;
-	}
-	protected void setTurtle(Turtle turtle) {
-		myTurtle = turtle;
 	}
 	
 }

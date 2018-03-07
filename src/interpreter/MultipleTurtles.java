@@ -16,8 +16,9 @@ public class MultipleTurtles extends Turtle{
 	public double getID() {
 		return getLastTurtle().getID(); 
 	}
-	public void forEach(Consumer<Turtle> action) {
+	public void executeSequentially(Consumer<Turtle> action){
 		myActiveTurtleHolder.applyToAllTurtles(action);
+		myActiveTurtleHolder.resetTemporaryTurtles();
 	}
 	protected boolean containsTurtleWithID(String ID) {
 		try {
