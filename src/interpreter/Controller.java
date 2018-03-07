@@ -6,11 +6,13 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyDoubleProperty;
@@ -154,7 +156,7 @@ public class Controller {
 	public Map<String, String> getUserDefined() {
 		return myTextFieldParser.getUserDefined(); 
 	}
-	
+
 	/**
 	 * Invokes back-end method to save user's defined commands 
 	 * in a Properties file 
@@ -170,9 +172,9 @@ public class Controller {
 	 * to display to the user 
 	 */
 	public void loadSavedUserDefined() {
-		
+		myTextFieldParser.loadSavedUserDefined(); 
 	}
-	
+
 	/**
 	 * TODO: optimize this to return an unmodifiable version of the map
 	 * Returns an UnmodifiableMap of variables to their values
@@ -180,7 +182,7 @@ public class Controller {
 	public Map<String, Double> getVariables() {
 		return myTextFieldParser.getVariables();
 	}
-	
+
 	/**
 	 * Invokes back-end method to save user's defined commands 
 	 * in a Properties file 
@@ -194,13 +196,13 @@ public class Controller {
 		PropertiesWriter pw = new PropertiesWriter(DEFAULT_SAVEDVARIABLES, parsedMap);
 		pw.write(); 
 	}
-	
+
 	/**
 	 * Adds previously-saved variables to Map of variables
 	 * to display to the user 
 	 */
 	public void loadSavedVariables() {
-		
+		myTextFieldParser.loadSavedVariables(); 
 	}
 
 	/**
