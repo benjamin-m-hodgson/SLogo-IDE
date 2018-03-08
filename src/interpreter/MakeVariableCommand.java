@@ -21,7 +21,7 @@ class MakeVariableCommand extends Command {
 	}
 	
 	@Override
-	protected double execute() throws UnidentifiedCommandException {
+	protected double execute(){
 		double exprEval = myVarVal.execute();
 		myVariables.put(((StringCommand)myVarName).getString(), exprEval);
 //		System.out.println("var successfully set "+exprEval);

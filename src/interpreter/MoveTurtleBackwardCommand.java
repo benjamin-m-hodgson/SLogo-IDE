@@ -1,6 +1,7 @@
 package interpreter;
 
 import java.util.Map;
+import java.util.List;
 
 /**
  * Command class that moves a Turtle back a specified number of pixels. Dependent on the CommandFactory class to create
@@ -12,7 +13,6 @@ import java.util.Map;
 class MoveTurtleBackwardCommand extends Command{
 
     private Command myBackwardDistCommand;
-    private Turtle myTurtle;
     private Map<String, Double> myVariables; 
 
     /**
@@ -20,8 +20,8 @@ class MoveTurtleBackwardCommand extends Command{
      * @param backwarddist is the distance the Turtle will move backward
      * @param turtle is the Turtle that should move
      */
-    protected MoveTurtleBackwardCommand(Command backwarddist, Turtle turtle, Map<String, Double> variables){
-	myTurtle = turtle;
+    protected MoveTurtleBackwardCommand(Command backwarddist, Turtle turtles, Map<String, Double> variables){
+	setActiveTurtles(turtles);
 	myBackwardDistCommand = backwarddist;
 	myVariables = variables; 
     }
@@ -33,10 +33,13 @@ class MoveTurtleBackwardCommand extends Command{
      * @return distance the turtle moved backward
      * @see interpreter.Command#execute()
      */
-    protected double execute() throws UnidentifiedCommandException{
-	double dist = getCommandValue(myBackwardDistCommand, myVariables); 
-	double angle = Math.toRadians(myTurtle.getAngle());
-	myTurtle.setXY(myTurtle.getX()+dist*Math.sin(-angle), myTurtle.getY()+dist*Math.cos(-angle));
-	return dist;
+    protected double execute(){
+    	double distance = getCommandValue(myBackwardDistCommand, myVariables, getActiveTurtles().toSingleTurtle());
+    getActiveTurtles().executeSequentially(myTurtle ->{
+		double dist = getCommandValue(myBackwardDistCommand, myVariables, myTurtle);
+		double angle = Math.toRadians(myTurtle.getAngle());
+		myTurtle.setXY(myTurtle.getX()+dist*Math.sin(-angle), myTurtle.getY()+dist*Math.cos(-angle));
+    		});
+	return distance;
     }
 }
