@@ -25,10 +25,8 @@ class CommandTreeBuilder {
 	public static final String DEFAULT_IFELSE_IDENTIFIER = "IfElse"; 
 	public static final String DEFAULT_DOTIMES_IDENTIFIER = "DoTimes";
 	public static final String DEFAULT_REPEAT_IDENTIFIER = "Repeat";
+	public static final String DEFAULT_TELL_IDENTIFIER = "Tell";
 	public static final String DEFAULT_FOR_IDENTIFIER = "For";
-	public static final String DEFAULT_IFEXPR_END = "[";
-	public static final String DEFAULT_IFBODY_END = "]";
-	public static final String DEFAULT_ELSEBODY_END = "]";
 	public static final String DEFAULT_BRACKET_START_IDENTIFIER = "[";
 	public static final String DEFAULT_BRACKET_END_IDENTIFIER = "]";
 	public static final String DEFAULT_VAR_IDENTIFIER = ":";
@@ -204,6 +202,11 @@ class CommandTreeBuilder {
 			createCommandTree(turtles, activeTurtles, userInput, startAfterIfElse);
 			return;
 		}
+		if(userInput[currIdx-1].equals(DEFAULT_TELL_IDENTIFIER)) {
+			int startAfterTell = parseTell(turtles, activeTurtles, userInput, currIdx); 
+			createCommandTree(turtles, activeTurtles, userInput, startAfterTell);
+			return;
+		}
 
 
 		Double firstIsDouble; 
@@ -326,12 +329,12 @@ class CommandTreeBuilder {
 	}
 	private int parseIf(Turtle turtles, Turtle activeTurtles, String[] userInput, int ifIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		int ifExprEndSearch = ifIdx; 
-		while (! userInput[ifExprEndSearch].equals(DEFAULT_IFEXPR_END)) {
+		while (! userInput[ifExprEndSearch].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
 			ifExprEndSearch++; 
 		}
 		// ifExprEndSearch is now at "["
 		int ifBodyEndSearch = ifExprEndSearch; 
-		while (! userInput[ifBodyEndSearch].equals(DEFAULT_IFBODY_END)) {
+		while (! userInput[ifBodyEndSearch].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
 			ifBodyEndSearch++; 
 		}
 		// ifBodyEndSearch is now at "]"
@@ -353,17 +356,17 @@ class CommandTreeBuilder {
 
 	private int parseIfElse(Turtle turtles, Turtle activeTurtles, String[] userInput, int ifIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		int ifExprEndSearch = ifIdx; 
-		while (! userInput[ifExprEndSearch].equals(DEFAULT_IFEXPR_END)) {
+		while (! userInput[ifExprEndSearch].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
 			ifExprEndSearch++; 
 		}
 		// ifExprEndSearch is now at first "["
 		int ifBodyEndSearch = ifExprEndSearch; 
-		while (! userInput[ifBodyEndSearch].equals(DEFAULT_IFBODY_END)) {
+		while (! userInput[ifBodyEndSearch].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
 			ifBodyEndSearch++; 
 		}
 		// ifBodyEndSearch is now at first "]"
 		int elseBodyEndSearch = ifBodyEndSearch+2; // skipping over [ 
-		while (! userInput[elseBodyEndSearch].equals(DEFAULT_ELSEBODY_END)) {
+		while (! userInput[elseBodyEndSearch].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
 			elseBodyEndSearch++; 
 		}
 		String[] ifExpr = Arrays.copyOfRange(userInput, ifIdx+1, ifExprEndSearch);
@@ -594,6 +597,17 @@ class CommandTreeBuilder {
 
 		return endCommandContent; 
 
+	}
+	private int parseTell(Turtle turtles, Turtle activeTurtles, String[] userInput, int startIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		startIdx++;
+		int endIdx = searchForBracket(startIdx, userInput, DEFAULT_BRACKET_END_IDENTIFIER, 1);
+		String[] idStringArray = Arrays.copyOfRange(userInput, startIdx, endIdx);
+		String idString = String.join(" ", idStringArray);
+		CommandNode idNode = new CommandNode(idString, turtles, activeTurtles);
+		CommandNode tellNode = new CommandNode(DEFAULT_TELL_IDENTIFIER, 1, turtles, activeTurtles);
+		tellNode.addChild(idNode);
+		myCommandTrees.add(tellNode);
+		return startIdx+1;
 	}
 
 	private void parseUserCommand(Turtle turtles, Turtle activeTurtles, String[] userInput, int startIdx, int numArgs) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {

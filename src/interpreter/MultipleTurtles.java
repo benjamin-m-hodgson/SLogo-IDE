@@ -40,8 +40,10 @@ public class MultipleTurtles extends Turtle{
 	protected SingleTurtle toSingleTurtle() {
 		return getLastTurtle();
 	}
-	protected void addTurtle(SingleTurtle turtle) {
+	protected MultipleTurtles addTurtle(SingleTurtle turtle) {
 		myActiveTurtleHolder.addTurtle(turtle);
+		myActiveTurtleHolder.resetTemporaryTurtles();
+		return this;
 	}
 	public List<SingleTurtle> getAllImmutableTurtles(){
 		return myActiveTurtleHolder.getCopyTurtleList();

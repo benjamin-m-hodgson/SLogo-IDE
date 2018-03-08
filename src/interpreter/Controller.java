@@ -152,7 +152,7 @@ public class Controller {
 	 * that has already been attached to the Stage to hold lines for the pen
 	 */
 	public double makeNewTurtleCommand(String name, ImageView turtleImage, String penColor, Group penLines) {
-		System.out.println("is it null" + turtleImage==null);
+		//System.out.println("is it null" + turtleImage==null);
 		myTextFieldParser.addNewTurtle(name, turtleImage, penColor, penLines);
 		return 1.0; 
 	}
@@ -608,6 +608,19 @@ public class Controller {
 		preferences.put("penColor", workspacePref.getString("penColor"));
 		preferences.put("language", workspacePref.getString("language"));
 		return preferences;
+	}
+
+	/**
+	 * @return immutable list of immutable/temporary Turtles that have been made so far
+	 */
+	public List<SingleTurtle>  getAllTurtles(){
+		return myTextFieldParser.getAllTurtles();
+	}
+	/**
+	 * @return immutable list of immutable/temporary Turtles that have been made so far and are currently active
+	 */
+	public List<SingleTurtle> getActiveTurtles(){
+		return myTextFieldParser.getActiveTurtles();
 	}
 
 

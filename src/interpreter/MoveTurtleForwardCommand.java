@@ -36,7 +36,6 @@ class MoveTurtleForwardCommand extends Command {
 			getActiveTurtles().executeSequentially( turtle -> {
 				double forwardDist = -1.0;
 				forwardDist = getCommandValue(myForwardDistCommand, myVariables, turtle);
-				System.out.println("SHOULD BE DIFF FORWARD DISTS: " + forwardDist);
 				double angle = Math.toRadians(turtle.getAngle());
 				turtle.setXY(turtle.getX()-forwardDist*Math.sin(-angle), turtle.getY()-forwardDist*Math.cos(-angle));
 			});

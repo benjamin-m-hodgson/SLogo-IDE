@@ -2,6 +2,7 @@ package interpreter;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import javafx.scene.Group;
@@ -109,6 +110,14 @@ public class SingleTurtle extends Turtle{
 	}
 	protected SingleTurtle getCopy() {
 		SingleTurtle turtle = new SingleTurtle(myID, new ImageView(), new Group(), myPen.getColor());
+		try {
+		turtle.setShape(getImageName());
+		}
+		catch(Exception e){
+			//Empty catch block because we know that this is a valid turtle file since it was used to create the first one
+		}
+		turtle.setPenColor(myPen.myColorCode);
+		turtle.setPenWidth(myPen.getWidth());
 		turtle.setX(myX);
 		turtle.setY(myY);
 		turtle.setOldXY(myOldX, myOldY);
@@ -125,7 +134,6 @@ public class SingleTurtle extends Turtle{
 		RegexMatcher rm = new RegexMatcher(DEFAULT_TURTLESHAPES_FILE);
 		String matchingShape = "";
 		matchingShape = rm.findMatchingVal(idxKey);
-
 		File turtleFile = new File(DEFAULT_IMAGES_FOLDER  + matchingShape + DEFAULT_IMAGE_SUFFIX);
 		setImage(turtleFile.toURI().toURL().toExternalForm());
 		setImageName(idxKey);
@@ -136,6 +144,15 @@ public class SingleTurtle extends Turtle{
 	}
 	protected void setImageName(String name) {
 		myImage.setId(name);
+	}
+	protected boolean containsTurtleWithID(String ID) {
+		return(ID.equals(new String("" + myID)));
+	}
+	protected MultipleTurtles addTurtle(SingleTurtle turtle) {
+		ArrayList<SingleTurtle> singles = new ArrayList<>();
+		singles.add(this);
+		singles.add(turtle);
+		return new MultipleTurtles(singles);
 	}
 
 
