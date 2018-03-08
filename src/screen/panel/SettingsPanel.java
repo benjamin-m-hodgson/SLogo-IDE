@@ -36,7 +36,6 @@ public class SettingsPanel extends SpecificPanel  {
     private final String COLOR_FOLDER = "colors";
     private final String PREFERENCES_FOLDER = "workspacePreferences";
     private final String TURTLE_IMAGE_FOLDER = "turtleimages";
-    private  Parent PANEL;
     private final Controller PROGRAM_CONTROLLER;
     private final BorderPane PANE;
     private  Button BACK;
@@ -275,13 +274,6 @@ public class SettingsPanel extends SpecificPanel  {
 
 
 
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
-	}
-	return PANEL;
-    }
 
     @Override
     protected BorderPane getPane() {
