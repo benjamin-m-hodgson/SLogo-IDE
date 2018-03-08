@@ -96,5 +96,7 @@ public abstract class Turtle {
 	protected abstract void executeSequentially(Consumer<Turtle> action);
 	protected abstract double calcDistance(double oldX, double oldY, double x, double y);
 	protected abstract MultipleTurtles addTurtle(SingleTurtle turtle);
+	protected abstract SingleTurtle getTurtleWithID(String id) throws UnidentifiedCommandException;
+//	protected abstract MultipleTurtles getTurtlesWithAttribute(String query, double value);
 }
 

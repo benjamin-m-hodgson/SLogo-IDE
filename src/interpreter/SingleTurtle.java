@@ -148,6 +148,14 @@ public class SingleTurtle extends Turtle{
 	protected boolean containsTurtleWithID(String ID) {
 		return(ID.equals(new String("" + myID)));
 	}
+	protected SingleTurtle getTurtleWithID(String ID) throws UnidentifiedCommandException{
+		if(containsTurtleWithID(ID)) {
+			return this;
+		}
+		else {
+			throw new UnidentifiedCommandException("Invalid ID");
+		}
+	}
 	protected MultipleTurtles addTurtle(SingleTurtle turtle) {
 		ArrayList<SingleTurtle> singles = new ArrayList<>();
 		singles.add(this);

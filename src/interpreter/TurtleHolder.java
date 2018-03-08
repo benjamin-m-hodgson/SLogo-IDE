@@ -45,6 +45,14 @@ public class TurtleHolder {
 		resetTemporaryTurtles();
 		return count>0;	
 	}
+	public SingleTurtle getTurtleWithID(double ID) {
+		for(SingleTurtle turtle : myCurrentTurtles) {
+			if(turtle.getID()==ID) {
+				return turtle;
+			}
+		}
+		return mySharedTurtles.get(0); //returns a "fake" turtle that changing will not do anything to
+	}
     private List<SingleTurtle> deepCopy (List<SingleTurtle> original) {
         List<SingleTurtle> result = new ArrayList<>();
         for (SingleTurtle c : original) {
