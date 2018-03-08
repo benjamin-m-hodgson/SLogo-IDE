@@ -83,7 +83,7 @@ class CommandMaker {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number t1, Number t2) {
 				myBackColor = myCommandTreeBuilder.getBackColor();
-				myBackColorChangeHeard.set(true);
+				myBackColorChangeHeard.set(!myBackColorChangeHeard.getValue());
 			}
 		});
 	}
