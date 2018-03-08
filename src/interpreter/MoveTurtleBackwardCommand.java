@@ -1,7 +1,6 @@
 package interpreter;
 
 import java.util.Map;
-import java.util.List;
 
 /**
  * Command class that moves a Turtle back a specified number of pixels. Dependent on the CommandFactory class to create
@@ -33,12 +32,18 @@ class MoveTurtleBackwardCommand extends Command{
      * @return distance the turtle moved backward
      * @see interpreter.Command#execute()
      */
-    protected double execute(){
+    protected double execute() throws UnidentifiedCommandException{
     	double distance = getCommandValue(myBackwardDistCommand, myVariables, getActiveTurtles().toSingleTurtle());
     getActiveTurtles().executeSequentially(myTurtle ->{
+    		try {
 		double dist = getCommandValue(myBackwardDistCommand, myVariables, myTurtle);
 		double angle = Math.toRadians(myTurtle.getAngle());
 		myTurtle.setXY(myTurtle.getX()+dist*Math.sin(-angle), myTurtle.getY()+dist*Math.cos(-angle));
+    		}
+    		catch(UnidentifiedCommandException e) {
+    			throw new UnidentifiedCommandError("Improper # arguments");
+    		}
+		
     		});
 	return distance;
     }

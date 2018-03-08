@@ -14,9 +14,15 @@ class SetBackgroundColorCommand extends Command {
 	}
 
 	@Override
-	double execute() {
+	double execute() throws UnidentifiedCommandException {
 		double retVal = getCommandValue(myColorIdxCommand, myVariables, getActiveTurtles().toSingleTurtle());
-		getActiveTurtles().executeSequentially(myTurtle -> getCommandValue(myColorIdxCommand, myVariables, myTurtle));
+		getActiveTurtles().executeSequentially(myTurtle ->{ 
+			try{getCommandValue(myColorIdxCommand, myVariables, myTurtle);
+			}
+			catch(UnidentifiedCommandException e) {
+				throw new UnidentifiedCommandError("Improper # arguments");
+			}
+			});
 		return retVal; 
 	}
 

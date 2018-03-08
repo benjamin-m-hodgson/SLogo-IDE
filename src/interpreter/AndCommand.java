@@ -1,6 +1,5 @@
 package interpreter;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,12 +23,17 @@ class AndCommand extends Command {
     }
 
     @Override
-    protected double execute(){
+    protected double execute() throws UnidentifiedCommandException{
     double arg1Val = getCommandValue(testOneCommand, myVariables, getActiveTurtles().toSingleTurtle());
     double arg2Val = getCommandValue(testTwoCommand, myVariables, getActiveTurtles().toSingleTurtle()); 
     	getActiveTurtles().executeSequentially(myTurtle -> {
+    		try {
     		getCommandValue(testOneCommand, myVariables, myTurtle);
-    		getCommandValue(testTwoCommand, myVariables, myTurtle); 
+    		getCommandValue(testTwoCommand, myVariables, myTurtle);
+    		}
+    		catch(UnidentifiedCommandException e) {
+    			throw new UnidentifiedCommandError("Improper # arguments");
+    		}
     	});
 	
 	return ((arg1Val > 0) && (arg2Val > 0)) ? 1.0 : 0.0; 

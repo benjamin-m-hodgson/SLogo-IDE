@@ -1,6 +1,6 @@
 package interpreter;
 
-import java.util.List;
+
 import java.util.Map;
 
 /**
@@ -23,12 +23,17 @@ class RemainderCommand extends Command{
 		setActiveTurtles(turtles);
 	}
 	@Override
-	protected double execute(){
+	protected double execute() throws UnidentifiedCommandException {
 		double EXPR1 = getCommandValue(expr1Command, myVariables, getActiveTurtles().toSingleTurtle());
 		double EXPR2 = getCommandValue(expr2Command, myVariables, getActiveTurtles().toSingleTurtle());
 		getActiveTurtles().executeSequentially(myTurtle -> {
+			try {
 			getCommandValue(expr1Command, myVariables, myTurtle);
 			getCommandValue(expr2Command, myVariables, myTurtle);
+			}
+    		catch(UnidentifiedCommandException e) {
+    			throw new UnidentifiedCommandError("Improper # arguments");
+    		}
 		}); 
 		return EXPR1%EXPR2;
 	}

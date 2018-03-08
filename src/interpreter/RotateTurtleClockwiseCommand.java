@@ -1,6 +1,6 @@
 package interpreter;
 
-import java.util.List;
+
 import java.util.Map;
 
 /**
@@ -30,11 +30,16 @@ import java.util.Map;
 	 * Sets the heading of the turtle to the specified number of degrees clockwise of its current position
 	 * @see interpreter.Command#execute()
 	 */
-	protected double execute(){
+	protected double execute() throws UnidentifiedCommandException {
 		double degreesReturn = getCommandValue(myDegreesCommand, myVariables, getActiveTurtles().toSingleTurtle());
 		getActiveTurtles().executeSequentially(myTurtle -> {
+			try {
 			double degrees = getCommandValue(myDegreesCommand, myVariables, myTurtle); 
 			myTurtle.setAngle(myTurtle.getAngle()+degrees);
+			}
+    		catch(UnidentifiedCommandException e) {
+    			throw new UnidentifiedCommandError("Improper # arguments");
+    		}
 		});
 		return degreesReturn;
 	}

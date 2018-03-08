@@ -1,6 +1,6 @@
 package interpreter;
 
-import java.util.List;
+
 import java.util.Map;
 
 /**
@@ -21,10 +21,15 @@ class SineCommand extends Command{
 	myVariables = variables;
     }
     @Override
-    protected double execute() {
+    protected double execute() throws UnidentifiedCommandException{
     	Double DEGREES = getCommandValue(degreesCommand, myVariables, getActiveTurtles());
     	getActiveTurtles().executeSequentially(myTurtle -> {
+    		try {
     		getCommandValue(degreesCommand, myVariables, myTurtle);
+    		}
+    		catch(UnidentifiedCommandException e) {
+				throw new UnidentifiedCommandError("Improper # arguments");
+		}
     	});
 	
 	return Math.sin(Math.toRadians(DEGREES));

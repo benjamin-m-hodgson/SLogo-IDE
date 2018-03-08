@@ -1,6 +1,6 @@
 package interpreter;
 
-import java.util.List;
+
 import java.util.Map;
 
 /**
@@ -23,12 +23,17 @@ class PowerCommand extends Command{
 	setActiveTurtles(turtles);
     }
     @Override
-    protected double execute(){
+    protected double execute() throws UnidentifiedCommandException {
     	double BASE = getCommandValue(baseCommand, myVariables, getActiveTurtles().toSingleTurtle());
     	double POWER = getCommandValue(powerCommand, myVariables, getActiveTurtles().toSingleTurtle());
     	getActiveTurtles().executeSequentially(myTurtle -> {
+    		try {
     		getCommandValue(baseCommand, myVariables, myTurtle);
     		getCommandValue(powerCommand, myVariables, myTurtle);
+    		}
+    		catch(UnidentifiedCommandException e) {
+    			throw new UnidentifiedCommandError("Improper # arguments");
+    		}
     	});
 	return Math.pow(BASE, POWER);
     }

@@ -87,6 +87,7 @@ public class TurtlePanel implements Panel {
 	    //String specification = "%nFailed to find language files";
 	    System.out.println("FAILED TO LOAD TURTLE IMG");
 	}
+
     }
 
     public void displayErrorMessage(String error) {

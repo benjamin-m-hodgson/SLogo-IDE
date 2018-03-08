@@ -1,6 +1,6 @@
 package interpreter;
 
-import java.util.List;
+
 import java.util.Map;
 
 /**
@@ -22,10 +22,15 @@ import java.util.Map;
     }
 
     @Override
-    protected double execute(){
+    protected double execute() throws UnidentifiedCommandException {
     	Double EXPR = getCommandValue(exprCommand, myVariables, getActiveTurtles().toSingleTurtle());
     	getActiveTurtles().executeSequentially(myTurtle -> {
+    		try {
     		getCommandValue(exprCommand, myVariables, myTurtle);
+    		}
+    		catch(UnidentifiedCommandException e) {
+    			throw new UnidentifiedCommandError("Improper # arguments");
+    		}
     	});
 	return Math.log(EXPR);
     }
