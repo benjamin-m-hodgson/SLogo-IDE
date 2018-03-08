@@ -1,7 +1,6 @@
 package interpreter;
 
 import java.util.Map;
-import java.util.List;
 
 /**
  * Command class used to move Turtles an absolute distance forward. Must be created correctly by the CommandFactory.
@@ -31,13 +30,18 @@ class MoveTurtleForwardCommand extends Command {
 	 * @return distance the turtle moved forward
 	 * @see interpreter.Command#execute()
 	 */
-	protected double execute(){
+	protected double execute() throws UnidentifiedCommandException {
 			double returnVal = getCommandValue(myForwardDistCommand, myVariables, getActiveTurtles().toSingleTurtle());
 			getActiveTurtles().executeSequentially( turtle -> {
 				double forwardDist = -1.0;
+				try {
 				forwardDist = getCommandValue(myForwardDistCommand, myVariables, turtle);
 				double angle = Math.toRadians(turtle.getAngle());
 				turtle.setXY(turtle.getX()-forwardDist*Math.sin(-angle), turtle.getY()-forwardDist*Math.cos(-angle));
+				}
+				catch(UnidentifiedCommandException e) {
+					throw new UnidentifiedCommandError("Improper # arguments");
+				}
 			});
 			
 			return returnVal;

@@ -1,6 +1,6 @@
 package interpreter;
 
-import java.util.List;
+
 import java.util.Map;
 
 /**
@@ -22,10 +22,15 @@ class NotCommand extends Command{
 		setActiveTurtles(turtles);
 	}
 	@Override
-	protected double execute() {
+	protected double execute() throws UnidentifiedCommandException {
 		double TEST = getCommandValue(testCommand, myVariables, getActiveTurtles().toSingleTurtle());
 		getActiveTurtles().executeSequentially(myTurtle -> {
+			try {
 			getCommandValue(testCommand, myVariables, myTurtle);
+			}
+			catch(UnidentifiedCommandException e) {
+				throw new UnidentifiedCommandError("Improper # arguments");
+			}
 		});
 		if (TEST == FALSE) {
 		    return TRUE;

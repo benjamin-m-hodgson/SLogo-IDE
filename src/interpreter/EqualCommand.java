@@ -1,6 +1,5 @@
 package interpreter;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,12 +24,17 @@ class EqualCommand extends Command{
     }
 
     @Override
-    protected double execute(){
+    protected double execute() throws UnidentifiedCommandException{
     	double arg1Val = getCommandValue(expr1Command, myVariables, getActiveTurtles().toSingleTurtle()); ;
     	double arg2Val = getCommandValue(expr2Command, myVariables, getActiveTurtles().toSingleTurtle());
 	getActiveTurtles().executeSequentially(myTurtle -> {
+		try {
     		getCommandValue(expr1Command, myVariables, myTurtle); 
     		getCommandValue(expr2Command, myVariables, myTurtle); 
+		}
+		catch(UnidentifiedCommandException e) {
+			throw new UnidentifiedCommandError("Improper # arguments");
+		}
     	});
 	
 	return (arg1Val == arg2Val) ? 1.0 : 0.0; 

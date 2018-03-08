@@ -26,7 +26,7 @@ class IfElseCommand extends Command {
 	}
 
 	@Override
-	protected double execute() {
+	protected double execute() throws UnidentifiedCommandException{
 		double ifExprRetVal = 0;
 		double ifElseRetVal = 0; 
 			ifExprRetVal = myIfExprCommand.execute();

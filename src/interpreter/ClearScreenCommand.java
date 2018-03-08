@@ -1,6 +1,5 @@
 package interpreter;
 
-import java.util.List;
 
 /**
  * Command class that, when executed, moves the turtle back to the center of the screen and erases all previous pen
@@ -23,10 +22,10 @@ class ClearScreenCommand extends Command{
      * @see interpreter.Command#execute()
      */
     @Override
-    protected double execute() {
-    double returnVal = getActiveTurtles().setXY(0, 0);
-    getActiveTurtles().setAngle(0);
-    	getActiveTurtles().clearPen();
-	return returnVal;
+    protected double execute() throws UnidentifiedCommandException{
+    		double returnVal = getActiveTurtles().setXY(0, 0);
+    		getActiveTurtles().setAngle(0);
+    		getActiveTurtles().clearPen();
+    		return returnVal;
     }
 }

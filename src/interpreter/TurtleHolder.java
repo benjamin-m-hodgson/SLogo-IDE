@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import javax.swing.text.Element;
-import javax.swing.text.html.ImageView;
-
-import javafx.scene.Group;
-
 /**
  * Class used to hide/manipulate collection of active Turtles.
  * @author Sarahbland
@@ -37,6 +32,7 @@ public class TurtleHolder {
 		resetTemporaryTurtles();
 	} 
 	public List<SingleTurtle> getCopyTurtleList(){
+		System.out.println("makin a copy");
 		return mySharedTurtles;
 	}
 	public boolean hasTurtleWithID(double ID) {

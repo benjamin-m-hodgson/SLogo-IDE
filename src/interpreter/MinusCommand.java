@@ -1,6 +1,6 @@
 package interpreter;
 
-import java.util.List;
+
 import java.util.Map;
 
 /**
@@ -24,10 +24,15 @@ class MinusCommand extends Command{
     }
 
     @Override
-    protected double execute(){
+    protected double execute() throws UnidentifiedCommandException {
     	double exprVal = getCommandValue(exprCommand, myVariables, getActiveTurtles());
     getActiveTurtles().executeSequentially(myTurtle -> {
+    		try {
     		getCommandValue(exprCommand, myVariables, myTurtle); 
+    		}
+    		catch(UnidentifiedCommandException e) {
+    			throw new UnidentifiedCommandError("Improper # arguments");
+    		}
     	});
 	return -exprVal;
     }

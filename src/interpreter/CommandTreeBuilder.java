@@ -74,7 +74,7 @@ class CommandTreeBuilder {
 		}
 		while(currIdx<userInput.length) {
 			try {
-				Double doubleArg = Double.parseDouble(userInput[currIdx]);
+				Double.parseDouble(userInput[currIdx]);
 				myCommandTrees.add(new CommandNode(userInput[currIdx], 0, turtles, activeTurtles));
 				currIdx++;
 			}
@@ -115,11 +115,10 @@ class CommandTreeBuilder {
 		if(myVariables.containsKey(userInput[startIdx])) {
 			userInput[startIdx] = myVariables.get(userInput[startIdx]).toString();
 		}
-
-		Double checkIfDouble; 
+ 
 		String currCommand = userInput[startIdx]; 
 		try {
-			checkIfDouble = Double.parseDouble(currCommand);
+			Double.parseDouble(currCommand);
 			return new CommandNode(currCommand, 0, turtles, activeTurtles); 
 		}
 		catch (NumberFormatException e) {
@@ -209,9 +208,9 @@ class CommandTreeBuilder {
 		}
 
 
-		Double firstIsDouble; 
+		 
 		try {
-			firstIsDouble = Double.parseDouble(userInput[currIdx]);
+			Double.parseDouble(userInput[currIdx]);
 			CommandNode newChildNode = new CommandNode(userInput[currIdx], turtles, activeTurtles);
 			parent.addChild(newChildNode);
 			if (parent.getNumChildren() < parent.getNumArgs()) { 
@@ -263,9 +262,8 @@ class CommandTreeBuilder {
 				return; 
 			}
 			for (int idx = currIdx+1; idx < userInput.length; idx++) { 
-				Double currDouble; 
 				try {
-					currDouble = Double.parseDouble(userInput[idx]);
+					Double.parseDouble(userInput[idx]);
 					CommandNode newChildNode = new CommandNode(userInput[idx], turtles, activeTurtles);
 					int numArgs = getNumArgs(userInput[idx-1]);
 					CommandNode newCommandNode = new CommandNode(userInput[idx-1], numArgs, newChildNode, turtles, activeTurtles);
@@ -461,7 +459,6 @@ class CommandTreeBuilder {
 		//adding string info to children
 		if(userInput[currIdx].equals(DEFAULT_BRACKET_START_IDENTIFIER)) {
 			int repeatCount = 1;
-			int endBracketCount = 0;
 			currIdx++;
 			String repeatedCommand = userInput[currIdx];
 			repeatCount = repeatCount + getNumBrackets(userInput[currIdx]);
@@ -642,14 +639,14 @@ class CommandTreeBuilder {
 		return numArgs;
 	}
 
-	private boolean isDoubleSubstitute(String inputToken) {
-		for (int j = 0; j < DEFAULT_DOUBLE_SUBSTITUTES.length; j ++) {
-			if (inputToken.equals(DEFAULT_DOUBLE_SUBSTITUTES[j])) {
-				return true;
-			}
-		}
-		return false; 
-	}
+//	private boolean isDoubleSubstitute(String inputToken) {
+//		for (int j = 0; j < DEFAULT_DOUBLE_SUBSTITUTES.length; j ++) {
+//			if (inputToken.equals(DEFAULT_DOUBLE_SUBSTITUTES[j])) {
+//				return true;
+//			}
+//		}
+//		return false; 
+//	}
 	//RETURNS INDEX OF BRACKET!!
 	private int searchForBracket(int currIdxCopy, String[] userInput, String bracketIdentifier, int initialNeeded) throws BadFormatException, UnidentifiedCommandException, MissingInformationException{
 		int bracketNeededCount = initialNeeded;

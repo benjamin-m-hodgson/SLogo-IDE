@@ -1,12 +1,12 @@
 package interpreter;
 
-public class UnidentifiedCommandException extends Exception{
+public class UnidentifiedCommandError extends Error{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	protected UnidentifiedCommandException(String text) {
+	protected UnidentifiedCommandError(String text) {
 		super("UnidentifiedCommandException "+ text);
 	}
 }

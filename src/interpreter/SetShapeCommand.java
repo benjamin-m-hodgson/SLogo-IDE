@@ -1,10 +1,9 @@
 package interpreter;
 
-import java.io.File;
+
 import java.net.MalformedURLException;
 import java.util.Map;
 
-import javafx.scene.image.Image;
 
 class SetShapeCommand extends Command {
 
@@ -18,7 +17,7 @@ class SetShapeCommand extends Command {
 	}
 
 	@Override
-	double execute(){
+	double execute() throws UnidentifiedCommandException {
 		double idxAsDouble = getCommandValue(myShapeIdx, myVars, getActiveTurtles().toSingleTurtle());
 		String idxKey = Integer.toString((int)idxAsDouble); 
 		try {

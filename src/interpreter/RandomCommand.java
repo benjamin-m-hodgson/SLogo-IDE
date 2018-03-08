@@ -1,6 +1,6 @@
 package interpreter;
 
-import java.util.List;
+
 import java.util.Map;
 import java.util.Random;
 
@@ -22,11 +22,16 @@ class RandomCommand extends Command{
 	setActiveTurtles(activeTurtles);
     }
     @Override
-    protected double execute(){
+    protected double execute() throws UnidentifiedCommandException{
     	Random randGenerator = new Random();
     	double MAX = getCommandValue(maxCommand, myVariables, getActiveTurtles().toSingleTurtle());
      getActiveTurtles().executeSequentially(myTurtle -> {
+    	 	try {
     		getCommandValue(maxCommand, myVariables, myTurtle);
+    	 	}
+    		catch(UnidentifiedCommandException e) {
+    			throw new UnidentifiedCommandError("Improper # arguments");
+    		}
     	});
     	return randGenerator.nextDouble() * MAX;
 	

@@ -1,7 +1,5 @@
 package interpreter;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 abstract class Command {
@@ -10,18 +8,13 @@ abstract class Command {
 	 * Executes Commands by changing objects in the back-end (Turtles/Pens) or retrieving information
 	 * @return double corresponding to return value of this command in SLogo
 	 */
-	abstract double execute() ;
+	abstract double execute() throws UnidentifiedCommandException;
 	
-	protected double getCommandValue(Command command, Map<String, Double> varsMap, Turtle turtle) {
+	protected double getCommandValue(Command command, Map<String, Double> varsMap, Turtle turtle) throws UnidentifiedCommandException {
 		if(command instanceof StringCommand) {
 			return getValueOfVar(((StringCommand)command).toString(), varsMap);
 		}
-//		else if(command instanceof IDQueryCommand || command instanceof XCoordinateQueryCommand || command instanceof YCoordinateQueryCommand || command instanceof HeadingQueryCommand || command instanceof IsPenDownQueryCommand || command instanceof IsShowingQueryCommand) {
-//			command.setActiveTurtles(turtle);
-//			return command.execute();
-//		}
 		else {
-			//TODO: might want single turtle here too? tbd!!
 			command.setActiveTurtles(turtle);
 			return command.execute();
 		}
@@ -31,15 +24,8 @@ abstract class Command {
 		if (varsMap.containsKey(variable)) {
 			varVal = varsMap.get(variable);
 		} 
-		System.out.println("returning "+varVal);
 		return varVal; 
 	}
-//		protected void setActiveTurtles( List<Turtle> newTurtles) {
-//			myActiveTurtles= newTurtles;
-//		}
-//		protected List<Turtle> getActiveTurtles(){
-//			return myActiveTurtles;
-//		}
 	
 	protected void setActiveTurtles(Turtle turtle) {
 		myTurtle = turtle;

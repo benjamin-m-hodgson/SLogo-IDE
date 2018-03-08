@@ -24,13 +24,9 @@ import java.util.ResourceBundle;
 import java.util.List;
 
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
@@ -93,7 +89,6 @@ class CommandMaker {
 	}
 
 	private double parseValidTextArray(String turtleID, String[] userInput, String[] typesOfInput, String commandIdentifier) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		Turtle identifiedTurtle = null;
 		boolean turtleIdentified = myTurtles.containsTurtleWithID(turtleID);
 		String[] commandTypes = new String[userInput.length];
 		int startIdx = 0; 

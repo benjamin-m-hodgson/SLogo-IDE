@@ -1,6 +1,6 @@
 package interpreter;
 
-import java.util.List;
+
 import java.util.Map;
 
 /**
@@ -23,12 +23,17 @@ class SumCommand extends Command{
     		myVariables = variables;
     }
     @Override
-    protected double execute(){
+    protected double execute() throws UnidentifiedCommandException {
     	double EXPR1Ret = getCommandValue(expr1Command, myVariables, getActiveTurtles().toSingleTurtle());
     	double EXPR2Ret = getCommandValue(expr2Command, myVariables, getActiveTurtles().toSingleTurtle());
     getActiveTurtles().executeSequentially(myTurtle -> {
+    		try {
     		getCommandValue(expr1Command, myVariables, myTurtle);
     		getCommandValue(expr2Command, myVariables, myTurtle);
+    		}
+    		catch(UnidentifiedCommandException e) {
+				throw new UnidentifiedCommandError("Improper # arguments");
+			}
     	});
 	return EXPR1Ret + EXPR2Ret;
     }

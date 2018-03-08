@@ -1,6 +1,6 @@
 package interpreter;
 
-import java.util.List;
+
 import java.util.Map;
 
 /**
@@ -24,12 +24,17 @@ class OrCommand extends Command{
 	setActiveTurtles(turtles);
     }
     @Override
-    protected double execute(){
+    protected double execute() throws UnidentifiedCommandException {
     double TEST1 = getCommandValue(test1Command, myVariables, getActiveTurtles().toSingleTurtle());
     double TEST2 =  getCommandValue(test2Command, myVariables, getActiveTurtles().toSingleTurtle());;
     	getActiveTurtles().executeSequentially(myTurtle -> {
+    		try {
     		getCommandValue(test1Command, myVariables, myTurtle);
     		getCommandValue(test2Command, myVariables, myTurtle);
+    		}
+    		catch(UnidentifiedCommandException e) {
+    			throw new UnidentifiedCommandError("Improper # arguments");
+    		}
     	});
 	
 	if (TEST1 != FALSE || TEST2 != FALSE) {
