@@ -139,7 +139,5 @@ public class TurtlePanel implements Panel {
 	public void removeErrorButton() {
 		PANEL.getChildren().remove(ErrorHolder);
 	}
-//	public void getBackGroundColor() {
-//	    SCROLL_PANE.getStyle();
-//	}
+
 }
