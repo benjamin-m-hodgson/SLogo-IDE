@@ -80,7 +80,7 @@ class TextFieldParser {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean t1, Boolean t2) {
 				myBackColor = myCommandMaker.getBackColor();
-				myBackColorChangeHeard.set(true);
+				myBackColorChangeHeard.set(!myBackColorChangeHeard.getValue());
 			}
 		});
 	}
