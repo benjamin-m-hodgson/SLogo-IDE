@@ -1,4 +1,6 @@
-package interpreter; 
+package interpreter;
+
+import java.util.List;
 
 /**
  * Command class that moves the turtle back to its home position (center of the screen). Dependent on the CommandFactory
@@ -8,13 +10,13 @@ package interpreter;
  */
 
 class HomeCommand extends Command{
-    Turtle myTurtle;
+    List<Turtle> myTurtles;
     /**
      * Creates a new instance of the command to be executed at the proper time
      * @param turtle
      */
-    protected HomeCommand(Turtle turtle) {
-	myTurtle = turtle;
+    protected HomeCommand(Turtle turtles) {
+    		setActiveTurtles(turtles);
     }
     /**
      * Sets the turtle's position to the center of the screen
@@ -23,7 +25,9 @@ class HomeCommand extends Command{
      */
     @Override
     protected double execute() {
-    	myTurtle.setAngle(0);
-	return myTurtle.setXY(0, 0);
+    double returnVal = -1.0;
+    		getActiveTurtles().setAngle(0);
+    		returnVal = getActiveTurtles().setXY(0, 0);
+    		return returnVal;
     }
 }

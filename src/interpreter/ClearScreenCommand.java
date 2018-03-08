@@ -1,5 +1,7 @@
 package interpreter;
 
+import java.util.List;
+
 /**
  * Command class that, when executed, moves the turtle back to the center of the screen and erases all previous pen
  * lines. Dependent on the CommandFactory to make it correctly and on the Turtle class to properly clear the pen
@@ -8,13 +10,12 @@ package interpreter;
  *
  */
 class ClearScreenCommand extends Command{
-    private Turtle myTurtle;
     /**
      * Creates new instance of command to be executed at the proper time
      * @param turtle is turtle who needs to be returned to home
      */
-    protected ClearScreenCommand(Turtle turtle) {
-	myTurtle = turtle;
+    protected ClearScreenCommand(Turtle turtles) {
+    		setActiveTurtles(turtles);
     }
     /**
      * Moves the turtle to the center of the screen, then clears all of the pen lines on the screen
@@ -23,9 +24,9 @@ class ClearScreenCommand extends Command{
      */
     @Override
     protected double execute() {
-	double returnVal = myTurtle.setXY(0, 0);
-	myTurtle.setAngle(0);
-	myTurtle.clearPen();
+    double returnVal = getActiveTurtles().setXY(0, 0);
+    getActiveTurtles().setAngle(0);
+    	getActiveTurtles().clearPen();
 	return returnVal;
     }
 }

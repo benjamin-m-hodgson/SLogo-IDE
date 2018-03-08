@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.List;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -53,7 +54,8 @@ class CommandMaker {
 	private HashMap<String, Double> myVariables; 
 	private HashMap<String, String> myUserDefCommands; 
 	private HashMap<String, Integer> myUserCommandsNumArgs; 
-	private ArrayList<Turtle> myTurtles; 
+	private MultipleTurtles myActiveTurtles; 
+	private MultipleTurtles myTurtles;
 	private ResourceBundle myLanguage; 
 	private CommandTreeBuilder myCommandTreeBuilder; 
 	private IntegerProperty myBackColor; 
@@ -64,7 +66,8 @@ class CommandMaker {
 	}
 
 	protected CommandMaker(ResourceBundle languageBundle, String numArgsFileName) {
-		myTurtles = new ArrayList<Turtle>(); 
+		myTurtles = new MultipleTurtles(new ArrayList<SingleTurtle>()); 
+		myActiveTurtles = new MultipleTurtles(new ArrayList<SingleTurtle>());
 		myLanguage = languageBundle;
 		myVariables = new HashMap<String, Double>(); 
 		myUserDefCommands = new HashMap<String, String>(); 
@@ -85,22 +88,13 @@ class CommandMaker {
 		});
 	}
 	
-	protected double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		return parseValidTextArray(turtleName, userInput, typesOfInput, DEFAULT_COMMAND_IDENTIFIER);
+	protected double parseValidTextArray(String turtleID, String[] userInput, String[] typesOfInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		return parseValidTextArray(turtleID, userInput, typesOfInput, DEFAULT_COMMAND_IDENTIFIER);
 	}
 
-	private double parseValidTextArray(String turtleName, String[] userInput, String[] typesOfInput, String commandIdentifier) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private double parseValidTextArray(String turtleID, String[] userInput, String[] typesOfInput, String commandIdentifier) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		Turtle identifiedTurtle = null;
-		if (myTurtles.size() > 0) {
-			identifiedTurtle = myTurtles.get(0); 
-		}
-		boolean turtleIdentified = false; 
-		for (Turtle turtle : myTurtles) {
-			if (turtle.getName().equals(turtleName)) {
-				identifiedTurtle = turtle; 
-				turtleIdentified = true; 
-			}
-		}
+		boolean turtleIdentified = myTurtles.containsTurtleWithID(turtleID);
 		String[] commandTypes = new String[userInput.length];
 		int startIdx = 0; 
 		if (turtleIdentified) {
@@ -133,7 +127,7 @@ class CommandMaker {
 			}
 		}
  		//		makeListForBuilder(myListForBuilder, userInput, commandTypes, 1, DEFAULT_CONTROLFLOW_IDENTIFIERS);
-		return myCommandTreeBuilder.buildAndExecute(identifiedTurtle, userInputArrayToPass, true); 
+		return myCommandTreeBuilder.buildAndExecute(myTurtles, myActiveTurtles, userInputArrayToPass, true); 
 	}
 
 	//	private void makeListForBuilder(ArrayList<String> currCommandList, String[] inputArray, String[] commandTypes, int numTimesToAdd, String[] controlFlowIdentifiers) {
@@ -178,12 +172,20 @@ class CommandMaker {
 	protected Map<String, Double> getVariables() {
 		return Collections.unmodifiableMap(myVariables);
 	}
-
-	protected void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
-		System.out.println(name);
-		myTurtles.add(new Turtle(name, turtleImage, penLines, penColor));
+	protected List<SingleTurtle> getAllTurtles(){
+		return myTurtles.getAllImmutableTurtles();
+	}
+	protected List<SingleTurtle> getActiveTurtles(){
+		return myActiveTurtles.getAllImmutableTurtles();
 	}
 
+	protected void addNewTurtle(String ID, ImageView turtleImage, String penColor, Group penLines) {
+		//System.out.println(name);
+		double id = Double.parseDouble(ID);
+		SingleTurtle newTurtle = new SingleTurtle(id, turtleImage, penLines, penColor);
+		myTurtles.addTurtle(newTurtle);
+		myActiveTurtles.addTurtle(newTurtle);
+	}
 	protected Map<String, String> getUserDefined() {
 		return myUserDefCommands;
 	}

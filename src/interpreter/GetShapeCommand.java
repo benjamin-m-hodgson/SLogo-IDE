@@ -10,7 +10,7 @@ class GetShapeCommand extends Command {
 	}
 	
 	@Override
-	double execute() throws UnidentifiedCommandException {
+	double execute(){
 		return Double.parseDouble(myTurtle.getImageName());
 	}
 

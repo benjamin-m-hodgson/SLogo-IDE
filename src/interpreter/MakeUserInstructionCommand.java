@@ -21,7 +21,7 @@ class MakeUserInstructionCommand extends Command {
 	}
 
 	@Override
-	double execute() throws UnidentifiedCommandException {
+	double execute(){
 		if (!myUserCommands.containsKey(myCommandName)) {
 			myUserCommands.put(myCommandName, myCommandContent);
 			myUserCommandsNumArgs.put(myCommandName, myCommandVars.split("\\s+").length);

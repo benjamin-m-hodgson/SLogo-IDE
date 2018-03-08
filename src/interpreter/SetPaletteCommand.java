@@ -28,11 +28,12 @@ class SetPaletteCommand extends Command {
 	}
 	
 	@Override
-	double execute() throws UnidentifiedCommandException {
-		double idx = getCommandValue(myIdx, myVars);
-		double r = getCommandValue(myR, myVars);
-		double g = getCommandValue(myG, myVars);
-		double b = getCommandValue(myB, myVars);
+	double execute() {
+		
+		double idx = getCommandValue(myIdx, myVars, new SingleTurtle());
+		double r = getCommandValue(myR, myVars, new SingleTurtle());
+		double g = getCommandValue(myG, myVars, new SingleTurtle());
+		double b = getCommandValue(myB, myVars, new SingleTurtle());
 		String hex = String.format("#%02x%02x%02x", (int) r,  (int) g, (int) b);  
 		Properties prop = new Properties();
 		InputStream in = null;

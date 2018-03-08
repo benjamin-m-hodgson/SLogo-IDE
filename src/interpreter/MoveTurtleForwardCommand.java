@@ -1,6 +1,7 @@
 package interpreter;
 
 import java.util.Map;
+import java.util.List;
 
 /**
  * Command class used to move Turtles an absolute distance forward. Must be created correctly by the CommandFactory.
@@ -10,16 +11,14 @@ import java.util.Map;
  */
 class MoveTurtleForwardCommand extends Command {
 	private Command myForwardDistCommand;
-	private Turtle myTurtle;
-	private Map<String, Double> myVariables; 
-
+	private Map<String, Double> myVariables;
 	/**
 	 * Creates a new command that can be executed at the proper time
 	 * @param forwarddist is Command that returns the absolute distance that the turtle must move forward
 	 * @param turtle is Turtle that needs to move
 	 */
-	protected MoveTurtleForwardCommand(Command forwarddist, Turtle turtle, Map<String, Double> variables){
-		myTurtle = turtle;
+	protected MoveTurtleForwardCommand(Command forwarddist, Turtle activeTurtle, Map<String, Double> variables){
+		setActiveTurtles(activeTurtle);
 		myForwardDistCommand = forwarddist;
 		myVariables = variables;
 	}
@@ -32,10 +31,16 @@ class MoveTurtleForwardCommand extends Command {
 	 * @return distance the turtle moved forward
 	 * @see interpreter.Command#execute()
 	 */
-	protected double execute() throws UnidentifiedCommandException{
-		double forwardDist = getCommandValue(myForwardDistCommand, myVariables);
-		double angle = Math.toRadians(myTurtle.getAngle());
-		myTurtle.setXY(myTurtle.getX()-forwardDist*Math.sin(-angle), myTurtle.getY()-forwardDist*Math.cos(-angle));
-		return forwardDist;
+	protected double execute(){
+			double returnVal = getCommandValue(myForwardDistCommand, myVariables, getActiveTurtles().toSingleTurtle());
+			getActiveTurtles().executeSequentially( turtle -> {
+				double forwardDist = -1.0;
+				forwardDist = getCommandValue(myForwardDistCommand, myVariables, turtle);
+				System.out.println("SHOULD BE DIFF FORWARD DISTS: " + forwardDist);
+				double angle = Math.toRadians(turtle.getAngle());
+				turtle.setXY(turtle.getX()-forwardDist*Math.sin(-angle), turtle.getY()-forwardDist*Math.cos(-angle));
+			});
+			
+			return returnVal;
 	}
 }

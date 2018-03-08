@@ -1,5 +1,6 @@
 package interpreter;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,19 +17,19 @@ class MinusCommand extends Command{
     private Command exprCommand;
     private Map<String, Double> myVariables; 
 
-    protected MinusCommand(Command expr, Map<String, Double> variables) {
+    protected MinusCommand(Command expr, Map<String, Double> variables, Turtle turtles) {
 	exprCommand = expr;
 	myVariables = variables; 
+	setActiveTurtles(turtles);
     }
 
     @Override
-    protected double execute() throws UnidentifiedCommandException{
-	double exprVal = getCommandValue(exprCommand, myVariables); 
+    protected double execute(){
+    	double exprVal = getCommandValue(exprCommand, myVariables, getActiveTurtles());
+    getActiveTurtles().executeSequentially(myTurtle -> {
+    		getCommandValue(exprCommand, myVariables, myTurtle); 
+    	});
 	return -exprVal;
-    }
-
-    protected int getNumArgs() {
-	return 1;
     }
 
 }

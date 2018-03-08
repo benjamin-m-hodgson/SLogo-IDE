@@ -1,18 +1,19 @@
 package interpreter;
 
+import java.util.List;
+
 /**
  * Command class that, when executed, makes the Turtle visible
  * @author Sarahbland
  *
  */
 class ShowTurtleCommand extends Command{
-    private Turtle myTurtle;
     /**
      * Creates new instance of command, which can be executed at the correct time
      * @param turtle is turtle who should be made visible
      */
-    protected ShowTurtleCommand(Turtle turtle) {
-	myTurtle = turtle;
+    protected ShowTurtleCommand(Turtle turtles) {
+    		setActiveTurtles(turtles);
     }
     /**
      * Shows turtle's image to the user
@@ -20,7 +21,7 @@ class ShowTurtleCommand extends Command{
      */
     @Override 
     protected double execute() {
-	myTurtle.showTurtle();
+    	getActiveTurtles().showTurtle();
 	return 1;
     }
 
