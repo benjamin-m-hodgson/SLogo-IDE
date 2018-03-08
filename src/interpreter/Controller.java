@@ -151,9 +151,10 @@ public class Controller {
 	 * Makes a new Turtle given a name, an ImageView (previously attached to the Stage), a penColor, and an empty Group
 	 * that has already been attached to the Stage to hold lines for the pen
 	 */
-	public double makeNewTurtleCommand(String name, ImageView turtleImage, String penColor, Group penLines) {
-		//System.out.println("is it null" + turtleImage==null);
-		myTextFieldParser.addNewTurtle(name, turtleImage, penColor, penLines);
+
+	public double makeNewTurtleCommand(String id, ImageView turtleImage, String penColor, Group penLines) {
+		System.out.println("is it null" + turtleImage==null);
+		myTextFieldParser.addNewTurtle(id, turtleImage, penColor, penLines);
 		return 1.0; 
 	}
 

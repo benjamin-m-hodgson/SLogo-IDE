@@ -64,8 +64,8 @@ public class MultipleTurtles extends Turtle{
 	public double getX() {
 		return getLastTurtle().getX();
 	}
-	protected String getImageName() {
-		return getLastTurtle().getImageName();
+	protected double getImageIdx() {
+		return getLastTurtle().getImageIdx();
 	}
 
 	/**
@@ -133,9 +133,10 @@ public class MultipleTurtles extends Turtle{
 		myActiveTurtleHolder.applyToAllTurtles(t->t.setY(y));
 		myActiveTurtleHolder.resetTemporaryTurtles();
 	}
-	protected void setImageName(String shapeName) {
-		myActiveTurtleHolder.applyToAllTurtles(t->t.setImageName(shapeName));
-	}
+//	protected void setImageIdx(double shapeIdx) {
+//		myActiveTurtleHolder.applyToAllTurtles(t->t.setImageIdx(shapeIdx));
+//	}
+	
 	public void setShape(String idxKey) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException{
 		myActiveTurtleHolder.applyToAllTurtles(t->{
 			try {

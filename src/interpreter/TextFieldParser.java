@@ -205,8 +205,8 @@ class TextFieldParser {
 		myCommandMaker.changeLanguage(languageBundle);
 	}
 
-	protected void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
-		myCommandMaker.addNewTurtle(name, turtleImage, penColor, penLines);
+	protected void addNewTurtle(String id, ImageView turtleImage, String penColor, Group penLines) {
+		myCommandMaker.addNewTurtle(id, turtleImage, penColor, penLines);
 	}
 
 	protected static void main(String[] args) {

@@ -83,14 +83,14 @@ public abstract class Turtle {
 
 	protected abstract void hidePen();
 
-
 	protected abstract void clearPen();
 	
 	protected abstract String getPenColor();
 
-	protected abstract void setImageName(String shapeName);
+//	protected abstract void setImageIdx(double imgIdx);
 
-	protected abstract String getImageName();
+	protected abstract double getImageIdx();
+	
 	protected abstract SingleTurtle toSingleTurtle();
 	protected abstract int size();
 	protected abstract void executeSequentially(Consumer<Turtle> action);
