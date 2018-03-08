@@ -88,6 +88,7 @@ public class SingleTurtle extends Turtle{
 	private double myX;
 	private double myY; 
 	private double myAngle; 
+	private double myImageIdx; 
 
 	public SingleTurtle() {
 		this(DEFAULT_ID, new ImageView(), new Group(), DEFAULT_PEN_COLORCODE);
@@ -103,6 +104,7 @@ public class SingleTurtle extends Turtle{
 		myX = DEFAULT_X_POS; 
 		myY = DEFAULT_Y_POS; 
 		myAngle = DEFAULT_ANGLE; 
+		myImageIdx = 1; 
 	}	
 	public void executeSequentially(Consumer<Turtle> action){
 		action.accept(this);
@@ -113,6 +115,11 @@ public class SingleTurtle extends Turtle{
 		turtle.setY(myY);
 		turtle.setOldXY(myOldX, myOldY);
 		turtle.setAngle(myAngle);
+		try {
+			turtle.setShape(Integer.toString((int)myImageIdx));
+		} catch (Exception e) {
+			throw new RuntimeException();
+		} 
 		if(myVisibility) {
 			turtle.showTurtle();
 		}
@@ -121,6 +128,7 @@ public class SingleTurtle extends Turtle{
 		}
 		return turtle;
 	}
+	
 	public void setShape(String idxKey) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException {
 		RegexMatcher rm = new RegexMatcher(DEFAULT_TURTLESHAPES_FILE);
 		String matchingShape = "";
@@ -128,15 +136,17 @@ public class SingleTurtle extends Turtle{
 
 		File turtleFile = new File(DEFAULT_IMAGES_FOLDER  + matchingShape + DEFAULT_IMAGE_SUFFIX);
 		setImage(turtleFile.toURI().toURL().toExternalForm());
-		setImageName(idxKey);
+		myImageIdx = Double.parseDouble(idxKey);
+		System.out.println("successfully changed to "+myImageIdx);
 	}
+	
 	protected void setOldXY(double oldX, double oldY) {
 		myOldX = oldX;
 		myOldY = oldY;
 	}
-	protected void setImageName(String name) {
-		myImage.setId(name);
-	}
+//	protected void setImageIdx(double imgIdx) {
+//		myImageIdx = imgIdx; 		
+//	}
 
 
 	// GETTERS
@@ -146,8 +156,9 @@ public class SingleTurtle extends Turtle{
 	public double getID() {
 		return myID; 
 	}
-	protected String getImageName() {
-		return myImage.getId();
+	
+	protected double getImageIdx() {
+		return myImageIdx;
 	}
 	
 	

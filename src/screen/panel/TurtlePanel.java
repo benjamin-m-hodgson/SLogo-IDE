@@ -23,7 +23,7 @@ import javafx.scene.layout.Priority;
 public class TurtlePanel implements Panel {
     // TODO: put in setting.properties file
     private final double DEFAULT_TURTLE_SIZE = 40;
-    private final String DEFAULT_TURTLE = "Turtle.png";
+    private final String DEFAULT_TURTLE = "Green Turtle.png";
     private BorderPane PANEL;
     private ScrollPane SCROLL_PANE;
     private Controller PROGRAM_CONTROLLER;
