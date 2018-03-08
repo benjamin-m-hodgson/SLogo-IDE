@@ -179,10 +179,10 @@ class CommandMaker {
 		return myActiveTurtles.getAllImmutableTurtles();
 	}
 
-	protected void addNewTurtle(String ID, ImageView turtleImage, String penColor, Group penLines) {
+	protected void addNewTurtle(String id, ImageView turtleImage, String penColor, Group penLines) {
 		//System.out.println(name);
-		double id = Double.parseDouble(ID);
-		SingleTurtle newTurtle = new SingleTurtle(id, turtleImage, penLines, penColor);
+		double turtleId = Double.parseDouble(id);
+		SingleTurtle newTurtle = new SingleTurtle(turtleId, turtleImage, penLines, penColor);
 		myTurtles.addTurtle(newTurtle);
 		myActiveTurtles.addTurtle(newTurtle);
 	}

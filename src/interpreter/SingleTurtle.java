@@ -67,7 +67,7 @@ public class SingleTurtle extends Turtle{
 	public static final String DEFAULT_IMAGE_SUFFIX = ".png";
 	public static final String DEFAULT_TURTLESHAPES_FILE = "interpreter/TurtleShapes";
 
-    	public static final double DEFAULT_TURTLE_SIZE = 20;
+    	public static final double DEFAULT_TURTLE_SIZE = 40;
 	public static final double DEFAULT_ID = -1;
 	public static final String DEFAULT_PEN_COLORCODE = "#2d3436";
 	public static final double DEFAULT_PEN_WIDTH = 1.0;
