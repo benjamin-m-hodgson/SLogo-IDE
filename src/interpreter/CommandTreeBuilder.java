@@ -36,7 +36,7 @@ class CommandTreeBuilder {
 	public static final String DEFAULT_USERCOMMAND_NAME = "UserInstruction";
 	public static final String DEFAULT_BACKCHANGE_IDENTIFIER = "SetBackground";
 	public static final String[] DEFAULT_DOUBLE_SUBSTITUTES = {"PenDown","PenUp","ShowTurtle","HideTurtle","Home","ClearScreen",
-			"XCoordinate","YCoordinate","Heading","IsPenDown","IsShowing","Pi"};
+			"XCoordinate","YCoordinate","Heading","IsPenDown","IsShowing","Pi", "ID", "Turtles"};
 	//	private CommandTreeReader myCommandTreeReader; 
 	private String myNumArgsFileName; 
 	private String myNumBracketsFileName;
@@ -45,7 +45,7 @@ class CommandTreeBuilder {
 	private HashMap<String, String> myUserDefCommands; 
 	private HashMap<String, Integer> myUserDefCommandsNumArgs;
 	private Map<String, Double> myVariables;
-	private SimpleIntegerProperty myBackColor; 
+	private SimpleIntegerProperty myBackColor;
 
 	protected CommandTreeBuilder(Map<String, Double> variables, Map<String, String> userDefCommands, Map<String, Integer> userDefCommandsNumArgs) {
 		this(DEFAULT_NUM_ARGS_FNAME, variables, userDefCommands, userDefCommandsNumArgs);
@@ -62,7 +62,7 @@ class CommandTreeBuilder {
 		myBackColor = new SimpleIntegerProperty(0);
 	}
 
-	protected double buildAndExecute(Turtle turtle, String[] userInput, boolean shouldExecute) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	protected double buildAndExecute(Turtle turtles, Turtle activeTurtles, String[] userInput, boolean shouldExecute) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		System.out.println("BEGINNING OF SENT IN INPUT -------------------------");
 		for (String s : userInput) System.out.println(s);
 		System.out.println("END OF SENT IN INPUT -------------------------");
@@ -77,7 +77,7 @@ class CommandTreeBuilder {
 		while(currIdx<userInput.length) {
 			try {
 				Double doubleArg = Double.parseDouble(userInput[currIdx]);
-				myCommandTrees.add(new CommandNode(userInput[currIdx], 0, turtle));
+				myCommandTrees.add(new CommandNode(userInput[currIdx], 0, turtles, activeTurtles));
 				currIdx++;
 			}
 			catch(NumberFormatException e) {
@@ -85,7 +85,7 @@ class CommandTreeBuilder {
 			}
 		}
 		if(!(currIdx>=userInput.length)) {
-			createCommandTree(turtle, userInput, currIdx);
+			createCommandTree(turtles, activeTurtles, userInput, currIdx);
 			//System.out.println("command tree number: " + myCommandTrees.size());
 		}
 
@@ -95,6 +95,7 @@ class CommandTreeBuilder {
 		for (CommandNode n : myCommandTrees) {
 			System.out.println(n.toString());
 		}
+		System.out.println("DONE PRINTING OUT COMM TREES --------------------------------");
 
 		//	System.out.println("number of command trees" + myCommandTrees.size());
 		if(shouldExecute) {
@@ -108,7 +109,7 @@ class CommandTreeBuilder {
 		return finalReturnVal; 
 	}
 
-	private CommandNode createCommandTree(Turtle turtle, String[] userInput, int startIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private CommandNode createCommandTree(Turtle turtles, Turtle activeTurtles, String[] userInput, int startIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 
 		if (startIdx >= userInput.length||userInput[startIdx].equals("]")) { // || commandTypes[startIdx] == null //TODO fix this so not so obvious
 			return null; // TODO make this more detailed
@@ -121,29 +122,29 @@ class CommandTreeBuilder {
 		String currCommand = userInput[startIdx]; 
 		try {
 			checkIfDouble = Double.parseDouble(currCommand);
-			return new CommandNode(currCommand, 0, turtle); 
+			return new CommandNode(currCommand, 0, turtles, activeTurtles); 
 		}
 		catch (NumberFormatException e) {
-			if (currCommand.equals(DEFAULT_IF_IDENTIFIER)) { 
-				int startAfterIf = parseIf(turtle, userInput, startIdx); 
-				return createCommandTree(turtle, userInput, startAfterIf);
+			if (currCommand.equals(DEFAULT_IF_IDENTIFIER)) { // TODO deal with if "if" is not first 
+				int startAfterIf = parseIf(turtles, activeTurtles, userInput, startIdx); 
+				return createCommandTree(turtles, activeTurtles, userInput, startAfterIf);
 			}
 			if (currCommand.equals(DEFAULT_IFELSE_IDENTIFIER)) {
-				int startAfterIfElse = parseIfElse(turtle, userInput, startIdx); 
-				return createCommandTree(turtle, userInput, startAfterIfElse);
+				int startAfterIfElse = parseIfElse(turtles, activeTurtles, userInput, startIdx); 
+				return createCommandTree(turtles, activeTurtles, userInput, startAfterIfElse);
 			}
 			if (currCommand.equals(DEFAULT_USERCOMMAND_IDENTIFIER)) {
-				int startAfterTo = parseMakeUserCommand(turtle, userInput, startIdx);
-				return createCommandTree(turtle, userInput, startAfterTo);
+				int startAfterTo = parseMakeUserCommand(turtles, activeTurtles, userInput, startIdx);
+				return createCommandTree(turtles, activeTurtles, userInput, startAfterTo);
 			}
 			if (myUserDefCommands.containsKey(currCommand)) {
-				parseUserCommand(turtle, userInput, startIdx, myUserDefCommandsNumArgs.get(currCommand));
+				parseUserCommand(turtles, activeTurtles, userInput, startIdx, myUserDefCommandsNumArgs.get(currCommand));
 				return null; // TODO FIX THIS 
 				//				return createCommandTree(turtle, userInput, startAfterUserCommand);
 			}
 			//System.out.println("currCommand: " + currCommand);
 			int numArgs = getNumArgs(currCommand);
-			CommandNode newParentNode = new CommandNode(currCommand, numArgs, turtle);
+			CommandNode newParentNode = new CommandNode(currCommand, numArgs, turtles, activeTurtles);
 			while (newParentNode.getNumArgs() == 0 ) { // accounts for multiple 1-arg arguments before args that need child nodes 
 				if (startIdx >= userInput.length) {
 					return newParentNode; 
@@ -153,23 +154,24 @@ class CommandTreeBuilder {
 				if (startIdx < userInput.length) {
 					currCommand = userInput[startIdx]; 
 					numArgs = getNumArgs(currCommand);
-					newParentNode = new CommandNode(currCommand, numArgs, turtle);
+					newParentNode = new CommandNode(currCommand, numArgs, turtles, activeTurtles);
 				}
 				else {
 					return newParentNode;
 				}
 			}
 			if (myUserDefCommands.containsKey(currCommand)) {
-				parseUserCommand(turtle, userInput, startIdx, myUserDefCommandsNumArgs.get(currCommand));
+				parseUserCommand(turtles, activeTurtles, userInput, startIdx, myUserDefCommandsNumArgs.get(currCommand));
 				return null; // TODO FIX THIS 
 				//				return createCommandTree(turtle, userInput, startAfterUserCommand);
 			}
-			createAndSetChildren(turtle, newParentNode, userInput, startIdx+1, true);
+			createAndSetChildren(turtles, activeTurtles, newParentNode, userInput, startIdx+1, true);
 			return newParentNode;
 		}
 	}
 
-	private void createAndSetChildren(Turtle turtle, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	// THIS IS THE RIGHT ONE
+	private void createAndSetChildren(Turtle turtles, Turtle activeTurtles, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		//int currIdxNonRepeat = currIdx + 1; CHANGED THIS
 		if ((currIdx) >= userInput.length) { //base case if out of bounds
 			if (addToTrees) {
@@ -177,38 +179,46 @@ class CommandTreeBuilder {
 			}
 			return;
 		}
-		if (currIdx >= 1) {
-			if(userInput[currIdx-1].equals(DEFAULT_REPEAT_IDENTIFIER)) { //CHANGED CURRIDX-1
-				int afterRepeat = createAndSetRepeatChildren(turtle, parent, userInput, currIdx, addToTrees);
-				createCommandTree(turtle, userInput, afterRepeat);
-				return;
-			}
-			if(userInput[currIdx-1].equals(DEFAULT_DOTIMES_IDENTIFIER)) { //CHANGED CURRIDX-1
-				int afterDoTimes = createAndSetDoTimesChildren(turtle, parent, userInput, currIdx, addToTrees);
-				createCommandTree(turtle, userInput, afterDoTimes);
-				return;
-			}
-			if(userInput[currIdx-1].equals(DEFAULT_FOR_IDENTIFIER)) { //CHANGED CURRIDX-1
-				int afterFor = createAndSetForChildren(turtle, parent, userInput, currIdx, addToTrees);
-				createCommandTree(turtle, userInput, afterFor);
-				return;
-			}
+		if(userInput[currIdx-1].equals(DEFAULT_REPEAT_IDENTIFIER)) { //CHANGED CURRIDX-1
+			int afterRepeat = createAndSetRepeatChildren(turtles, activeTurtles, parent, userInput, currIdx, addToTrees);
+			createCommandTree(turtles, activeTurtles, userInput, afterRepeat);
+			return;
+		}
+		if(userInput[currIdx-1].equals(DEFAULT_DOTIMES_IDENTIFIER)) { //CHANGED CURRIDX-1
+			int afterDoTimes = createAndSetDoTimesChildren(turtles, activeTurtles, parent, userInput, currIdx, addToTrees);
+			createCommandTree(turtles, activeTurtles, userInput, afterDoTimes);
+			return;
+		}
+		if(userInput[currIdx-1].equals(DEFAULT_FOR_IDENTIFIER)) { //CHANGED CURRIDX-1
+			int afterFor = createAndSetForChildren(turtles, activeTurtles, parent, userInput, currIdx, addToTrees);
+			createCommandTree(turtles, activeTurtles, userInput, afterFor);
+			return;
+		}
+		if (userInput[currIdx-1].equals(DEFAULT_IF_IDENTIFIER)) { // TODO deal with if "if" is not first 
+			int startAfterIf = parseIf(turtles, activeTurtles, userInput, currIdx); 
+			createCommandTree(turtles, activeTurtles,  userInput, startAfterIf);
+			return;
+		}
+		if (userInput[currIdx-1].equals(DEFAULT_IFELSE_IDENTIFIER)) {
+			int startAfterIfElse = parseIfElse(turtles, activeTurtles, userInput, currIdx); 
+			createCommandTree(turtles, activeTurtles, userInput, startAfterIfElse);
+			return;
 		}
 
 
 		Double firstIsDouble; 
 		try {
 			firstIsDouble = Double.parseDouble(userInput[currIdx]);
-			CommandNode newChildNode = new CommandNode(userInput[currIdx], turtle);
+			CommandNode newChildNode = new CommandNode(userInput[currIdx], turtles, activeTurtles);
 			parent.addChild(newChildNode);
 			if (parent.getNumChildren() < parent.getNumArgs()) { 
-				createAndSetChildren(turtle, parent, userInput, currIdx+1, addToTrees);
+				createAndSetChildren(turtles, activeTurtles, parent, userInput, currIdx+1, addToTrees);
 			} 
 			else {
 				if (addToTrees) {
 					myCommandTrees.add(parent);
 				}
-				createCommandTree(turtle, userInput, currIdx+1);
+				createCommandTree(turtles, activeTurtles, userInput, currIdx+1);
 			}
 			return; 
 		} 
@@ -221,31 +231,31 @@ class CommandTreeBuilder {
 			//		}
 			for (String substitute : DEFAULT_DOUBLE_SUBSTITUTES) {
 				if (userInput[currIdx].equals(substitute)) {
-					CommandNode newChildNode = new CommandNode(userInput[currIdx], turtle);
+					CommandNode newChildNode = new CommandNode(userInput[currIdx], turtles, activeTurtles);
 					parent.addChild(newChildNode);
 					if (parent.getNumChildren() < parent.getNumArgs()) { 
-						createAndSetChildren(turtle, parent, userInput, currIdx+1, addToTrees);
+						createAndSetChildren(turtles, activeTurtles, parent, userInput, currIdx+1, addToTrees);
 					} 
 					else {
 						if (addToTrees) {
 							myCommandTrees.add(parent);
 						}
-						createCommandTree(turtle, userInput, currIdx+1);
+						createCommandTree(turtles, activeTurtles, userInput, currIdx+1);
 					}
 					return; 
 				}
 			}
 			if (String.valueOf(userInput[currIdx].charAt(0)).equals(DEFAULT_VAR_IDENTIFIER)) {
-				CommandNode newChildNode = new CommandNode(userInput[currIdx], turtle);
+				CommandNode newChildNode = new CommandNode(userInput[currIdx], turtles, activeTurtles);
 				parent.addChild(newChildNode);
 				if (parent.getNumChildren() < parent.getNumArgs()) { 
-					createAndSetChildren(turtle, parent, userInput, currIdx+1, addToTrees);
+					createAndSetChildren(turtles, activeTurtles, parent, userInput, currIdx+1, addToTrees);
 				} 
 				else {
 					if (addToTrees) {
 						myCommandTrees.add(parent);
 					}
-					createCommandTree(turtle, userInput, currIdx+1);
+					createCommandTree(turtles, activeTurtles, userInput, currIdx+1);
 				}
 				return; 
 			}
@@ -253,32 +263,33 @@ class CommandTreeBuilder {
 				Double currDouble; 
 				try {
 					currDouble = Double.parseDouble(userInput[idx]);
-					CommandNode newChildNode = new CommandNode(userInput[idx], turtle);
+					CommandNode newChildNode = new CommandNode(userInput[idx], turtles, activeTurtles);
 					int numArgs = getNumArgs(userInput[idx-1]);
-					CommandNode newCommandNode = new CommandNode(userInput[idx-1], numArgs, newChildNode, turtle);
+					CommandNode newCommandNode = new CommandNode(userInput[idx-1], numArgs, newChildNode, turtles, activeTurtles);
 					for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) { 
 						int backTrackNumArgs = getNumArgs(userInput[backtrack]);
-						CommandNode backtrackCommandNode = new CommandNode(userInput[backtrack], backTrackNumArgs, newCommandNode, turtle);
+						CommandNode backtrackCommandNode = new CommandNode(userInput[backtrack], backTrackNumArgs, newCommandNode, turtles, activeTurtles);
 						newCommandNode = backtrackCommandNode; 
 					}
+
 					parent.addChild(newCommandNode);
 					if (parent.getNumChildren() == parent.getNumArgs() && addToTrees && !myCommandTrees.contains(parent)) {
 						myCommandTrees.add(parent);
 					}
 					if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
-						createAndSetChildren(turtle, newCommandNode, userInput, idx+1, false);
+						createAndSetChildren(turtles, activeTurtles, newCommandNode, userInput, idx+1, false);
 					}
 					if (parent.getNumChildren() < parent.getNumArgs()) { 
-						createAndSetChildren(turtle, parent, userInput, idx+1, addToTrees);
+						createAndSetChildren(turtles, activeTurtles, parent, userInput, idx+1, addToTrees);
 					}
 					else {
-						createCommandTree(turtle, userInput, idx+1);
+						createCommandTree(turtles, activeTurtles, userInput, idx+1);
 					}
 					return; 
 				} 
 				catch (NumberFormatException e1) {
 					if (String.valueOf(userInput[idx].charAt(0)).equals(DEFAULT_VAR_IDENTIFIER)) {
-						CommandNode newChildNode = new CommandNode(userInput[idx], turtle);
+						CommandNode newChildNode = new CommandNode(userInput[idx], turtles, activeTurtles);
 						int numArgs = getNumArgs(userInput[idx-1]);
 						//						System.out.println("parent to string"+parent.toString());
 						if (numArgs == 0) {
@@ -287,22 +298,22 @@ class CommandTreeBuilder {
 							} 
 							return;
 						}
-						CommandNode newCommandNode = new CommandNode(userInput[idx-1], numArgs, newChildNode, turtle);
+						CommandNode newCommandNode = new CommandNode(userInput[idx-1], numArgs, newChildNode, turtles, activeTurtles);
 						if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
-							createAndSetChildren(turtle, newCommandNode, userInput, idx+1, false);
+							createAndSetChildren(turtles, activeTurtles, newCommandNode, userInput, idx+1, false);
 						}
 						parent.addChild(newCommandNode);
 						if (parent.getNumChildren() == parent.getNumArgs() && addToTrees && !myCommandTrees.contains(parent)) {
 							myCommandTrees.add(parent);
 						}
 						if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
-							createAndSetChildren(turtle, newCommandNode, userInput, idx+1, false);
+							createAndSetChildren(turtles, activeTurtles, newCommandNode, userInput, idx+1, false);
 						}
 						if (parent.getNumChildren() < parent.getNumArgs()) { 
-							createAndSetChildren(turtle, parent, userInput, idx+1, addToTrees);
+							createAndSetChildren(turtles, activeTurtles, parent, userInput, idx+1, addToTrees);
 						}
 						else {
-							createCommandTree(turtle, userInput, idx+1);
+							createCommandTree(turtles, activeTurtles, userInput, idx+1);
 						}
 						return; 
 					}
@@ -313,8 +324,7 @@ class CommandTreeBuilder {
 			}
 		}
 	}
-
-	private int parseIf(Turtle turtle, String[] userInput, int ifIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private int parseIf(Turtle turtles, Turtle activeTurtles, String[] userInput, int ifIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		int ifExprEndSearch = ifIdx; 
 		while (! userInput[ifExprEndSearch].equals(DEFAULT_IFEXPR_END)) {
 			ifExprEndSearch++; 
@@ -331,17 +341,17 @@ class CommandTreeBuilder {
 
 		String ifCommand = userInput[ifIdx]; 
 		int numArgs = getNumArgs(ifCommand);
-		CommandNode ifCommandNode = new CommandNode(userInput[ifIdx], numArgs, turtle);
+		CommandNode ifCommandNode = new CommandNode(userInput[ifIdx], numArgs, turtles, activeTurtles);
 
 		ArrayList<String> ifBodyString = new ArrayList<String>(Arrays.asList(ifBody)); 
 		String commandNodeInfo = String.join(" ", ifBodyString);
-		ifCommandNode.addChild(new CommandNode(commandNodeInfo, turtle));
+		ifCommandNode.addChild(new CommandNode(commandNodeInfo, turtles, activeTurtles));
 
-		createAndSetChildren(turtle, ifCommandNode, ifExpr, 0, true);
+		createAndSetChildren(turtles, activeTurtles, ifCommandNode, ifExpr, 0, true);
 		return ifBodyEndSearch+1;
 	}
 
-	private int parseIfElse(Turtle turtle, String[] userInput, int ifIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private int parseIfElse(Turtle turtles, Turtle activeTurtles, String[] userInput, int ifIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		int ifExprEndSearch = ifIdx; 
 		while (! userInput[ifExprEndSearch].equals(DEFAULT_IFEXPR_END)) {
 			ifExprEndSearch++; 
@@ -362,21 +372,21 @@ class CommandTreeBuilder {
 
 		String ifCommand = userInput[ifIdx]; 
 		int numArgs = getNumArgs(ifCommand);
-		CommandNode ifElseCommandNode = new CommandNode(userInput[ifIdx], numArgs, turtle);
+		CommandNode ifElseCommandNode = new CommandNode(userInput[ifIdx], numArgs, turtles, activeTurtles);
 
 		ArrayList<String> ifBodyList = new ArrayList<String>(Arrays.asList(ifBody)); 
 		String ifCommandNodeInfo = String.join(" ", ifBodyList);
-		ifElseCommandNode.addChild(new CommandNode(ifCommandNodeInfo, turtle));
+		ifElseCommandNode.addChild(new CommandNode(ifCommandNodeInfo, turtles, activeTurtles));
 
 		ArrayList<String> elseBodyList = new ArrayList<String>(Arrays.asList(elseBody));
 		String elseCommandNodeInfo = String.join(" ", elseBodyList);
-		ifElseCommandNode.addChild(new CommandNode(elseCommandNodeInfo, turtle));
+		ifElseCommandNode.addChild(new CommandNode(elseCommandNodeInfo, turtles, activeTurtles));
 
-		createAndSetChildren(turtle, ifElseCommandNode, ifExpr, 0, true);
+		createAndSetChildren(turtles, activeTurtles, ifElseCommandNode, ifExpr, 0, true);
 		return elseBodyEndSearch+1;
 	}
 
-	private int createAndSetDoTimesChildren(Turtle turtle, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private int createAndSetDoTimesChildren(Turtle turtles,  Turtle activeTurtles, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		if (addToTrees) {
 			myCommandTrees.add(parent);
 		}
@@ -384,7 +394,7 @@ class CommandTreeBuilder {
 		//adding temporary variable name to children
 		if(userInput[currIdx].equals(DEFAULT_BRACKET_START_IDENTIFIER)) {
 			currIdx++;
-			parent.addChild(new CommandNode(userInput[currIdx], turtle));
+			parent.addChild(new CommandNode(userInput[currIdx], turtles, activeTurtles));
 			currIdx++;
 		}
 		//else {
@@ -400,7 +410,7 @@ class CommandTreeBuilder {
 		//		}
 		//adding command info to children
 		//System.out.println("currIdx" + currIdx + "currIdxCopy" + currIdxCopy);
-		parent.addChild(createCommandTree(turtle, Arrays.copyOfRange(userInput, currIdx, currIdxCopy), 0));
+		parent.addChild(createCommandTree(turtles, activeTurtles, Arrays.copyOfRange(userInput, currIdx, currIdxCopy), 0));
 		currIdxCopy++;
 		currIdx = currIdxCopy;
 		//System.out.println("should be start bracket" + userInput[currIdx]);
@@ -437,7 +447,7 @@ class CommandTreeBuilder {
 			//			if(!userInput[currIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
 			//				throw new BadFormatException("Brackets are messed up in DoTimes");
 			//			}
-			parent.addChild(new CommandNode(repeatedCommand, turtle));
+			parent.addChild(new CommandNode(repeatedCommand, turtles, activeTurtles));
 
 		}
 		else {
@@ -446,26 +456,26 @@ class CommandTreeBuilder {
 		//currIdx++;
 		return currIdx;
 	}
-	private int createAndSetRepeatChildren(Turtle turtle, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private int createAndSetRepeatChildren(Turtle turtles, Turtle activeTurtles, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		//myCommandTrees.add(parent);
 		//System.out.println("command tree number: " + myCommandTrees.size());
 		if (addToTrees) {
 			myCommandTrees.add(parent);
 		}
-		parent.addChild(new CommandNode(":repcount", turtle));
+		parent.addChild(new CommandNode(":repcount", turtles, activeTurtles));
 		//adding temporary variable name to children
-		int currIdxCopy = currIdx;
-		currIdxCopy++;
-		try {
-			currIdxCopy = searchForBracket(currIdxCopy, userInput, DEFAULT_BRACKET_START_IDENTIFIER, 1);
-		}
-		catch(NullPointerException e) {
-			throw new UnidentifiedCommandException("Repeat syntax is not correct.");
-		}
-		//adding command info to children
-		//System.out.print("command info" + String.join(" ", Arrays.copyOfRange(userInput, currIdx, currIdxCopy-1)));
-		parent.addChild(createCommandTree(turtle, Arrays.copyOfRange(userInput, currIdx, currIdxCopy-1), 0));
-		currIdx = currIdxCopy - 1;
+			int currIdxCopy = currIdx;
+			currIdxCopy++;
+			try {
+				currIdxCopy = searchForBracket(currIdxCopy, userInput, DEFAULT_BRACKET_START_IDENTIFIER, 1);
+			}
+			catch(NullPointerException e) {
+				throw new UnidentifiedCommandException("Repeat syntax is not correct.");
+			}
+			//adding command info to children
+			//System.out.print("command info" + String.join(" ", Arrays.copyOfRange(userInput, currIdx, currIdxCopy-1)));
+			parent.addChild(createCommandTree(turtles, activeTurtles, Arrays.copyOfRange(userInput, currIdx, currIdxCopy-1), 0));
+				currIdx = currIdxCopy - 1;
 		//adding string info to children
 		if(userInput[currIdx].equals(DEFAULT_BRACKET_START_IDENTIFIER)) {
 			int repeatCount = 1;
@@ -483,7 +493,7 @@ class CommandTreeBuilder {
 			if(!(userInput[currIdx-1].equals(DEFAULT_BRACKET_END_IDENTIFIER))) {
 				throw new BadFormatException("Brackets are messed up in Repeat");
 			}
-			parent.addChild(new CommandNode(repeatedCommand, turtle));
+			parent.addChild(new CommandNode(repeatedCommand, turtles, activeTurtles));
 		}
 		else {
 			throw new UnidentifiedCommandException("Repeat syntax incorrect");
@@ -492,14 +502,14 @@ class CommandTreeBuilder {
 		return currIdx;
 	}
 
-	private int createAndSetForChildren(Turtle turtle, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private int createAndSetForChildren(Turtle turtles, Turtle activeTurtles, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		myCommandTrees.add(parent);
 		if(!userInput[currIdx].equals(DEFAULT_BRACKET_START_IDENTIFIER)) {
 			throw new UnidentifiedCommandException("No starting bracket for For.");
 		}
 		//adding variable child
 		currIdx++;
-		parent.addChild(new CommandNode(userInput[currIdx], turtle));
+		parent.addChild(new CommandNode(userInput[currIdx], turtles, activeTurtles));
 		currIdx++;
 		int currIdxCopy = currIdx;
 		//adding command children for start/end/increment
@@ -510,7 +520,7 @@ class CommandTreeBuilder {
 		currIdxCopy = searchForBracket(currIdx, userInput, DEFAULT_BRACKET_END_IDENTIFIER, 1)-1;
 		//		System.out.println("currIdx " + currIdx + "currIdxCopy" + currIdxCopy);
 		CommandTreeBuilder tempBuilder = new CommandTreeBuilder(myNumArgsFileName, myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
-		tempBuilder.buildAndExecute(turtle, Arrays.copyOfRange(userInput, currIdx, currIdxCopy), false);
+		tempBuilder.buildAndExecute(turtles, activeTurtles, Arrays.copyOfRange(userInput, currIdx, currIdxCopy), false);
 		List<CommandNode> discreteCommands = tempBuilder.getCommandTrees();
 		//System.out.println("discreteCommands" + discreteCommands.size());
 		for(CommandNode n: discreteCommands) {
@@ -535,7 +545,7 @@ class CommandTreeBuilder {
 				throw new BadFormatException("Brackets are messed up in loop");
 			}
 			//add repeated command string last
-			parent.addChild(new CommandNode(repeatedCommand, turtle));
+			parent.addChild(new CommandNode(repeatedCommand, turtles, activeTurtles));
 		}
 		else {
 			throw new UnidentifiedCommandException("Repeat syntax incorrect");
@@ -548,13 +558,13 @@ class CommandTreeBuilder {
 		return myCommandTrees;
 	}
 
-	private int parseMakeUserCommand(Turtle turtle, String[] userInput, int startIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private int parseMakeUserCommand(Turtle turtles, Turtle activeTurtles, String[] userInput, int startIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		int endToIdx = startIdx; 
 		while (! userInput[endToIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
 			endToIdx++; 
 		} // endToIdx is at FIRST ']' 
 		String[] varsArray = Arrays.copyOfRange(userInput, startIdx+3, endToIdx);
-		CommandNode varsNode = new CommandNode(String.join(" ", varsArray), turtle); 
+		CommandNode varsNode = new CommandNode(String.join(" ", varsArray), turtles, activeTurtles); 
 
 		int finalEndToIdx = endToIdx+1;
 		while (! userInput[finalEndToIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
@@ -571,12 +581,12 @@ class CommandTreeBuilder {
 
 		String[] commandContent = Arrays.copyOfRange(userInput, startIdx+2, endCommandContent);
 		String userCommandString = String.join(" ", commandContent);
-		CommandNode userCommandContent = new CommandNode(userCommandString, turtle);
+		CommandNode userCommandContent = new CommandNode(userCommandString, turtles, activeTurtles);
 
 		String userCommandName = userInput[startIdx+1];
-		CommandNode userCommandNameNode = new CommandNode(userCommandName, turtle);
+		CommandNode userCommandNameNode = new CommandNode(userCommandName, turtles, activeTurtles);
 
-		CommandNode userCommandNode = new CommandNode(userInput[startIdx], getNumArgs(userInput[startIdx]), userCommandNameNode, turtle);
+		CommandNode userCommandNode = new CommandNode(userInput[startIdx], getNumArgs(userInput[startIdx]), userCommandNameNode, turtles, activeTurtles);
 		userCommandNode.addChild(varsNode);
 		userCommandNode.addChild(userCommandContent);
 		myCommandTreeReader.readAndExecute(userCommandNode);
@@ -586,15 +596,15 @@ class CommandTreeBuilder {
 
 	}
 
-	private void parseUserCommand(Turtle turtle, String[] userInput, int startIdx, int numArgs) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private void parseUserCommand(Turtle turtles, Turtle activeTurtles, String[] userInput, int startIdx, int numArgs) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String userCommandName = userInput[startIdx];
-		CommandNode userCommandNameNode = new CommandNode(userCommandName, numArgs, turtle, true); 
+		CommandNode userCommandNameNode = new CommandNode(userCommandName, numArgs, turtles, activeTurtles, true); 
 		int treesStartSize = myCommandTrees.size(); 
-		createAndSetChildren(turtle, userCommandNameNode, userInput, startIdx+1, false); // verifying correct # children
+		createAndSetChildren(turtles, activeTurtles, userCommandNameNode, userInput, startIdx+1, false); // verifying correct # children
 		int treesEndSize = myCommandTrees.size();
-		CommandNode userCommandArgsNode = new CommandNode(("a"+userCommandNameNode.childrenToString()), turtle); 
+		CommandNode userCommandArgsNode = new CommandNode(("a"+userCommandNameNode.childrenToString()), turtles, activeTurtles); 
 
-		CommandNode userCommandNode = new CommandNode(DEFAULT_USERCOMMAND_NAME, getNumArgs(DEFAULT_USERCOMMAND_NAME), userCommandNameNode, turtle);
+		CommandNode userCommandNode = new CommandNode(DEFAULT_USERCOMMAND_NAME, getNumArgs(DEFAULT_USERCOMMAND_NAME), userCommandNameNode, turtles, activeTurtles);
 		userCommandNode.addChild(userCommandArgsNode);
 		//		if (startIdx == 0 || startIdx == 1) { // TODO make less ambiguous -- this is because the user command may be first or follow a 0-arg
 		//			ArrayList<CommandNode> tempTrees = new ArrayList<CommandNode>();

@@ -1,18 +1,20 @@
 package interpreter;
 
+import java.util.List;
+
 /**
  * Command class that, when executed, makes the Turtle invisible
  * @author Sarahbland
  *
  */
 class HideTurtleCommand extends Command{
-    Turtle myTurtle;
+    List<Turtle> myTurtles;
     /**
      * Creates new instance of command, which can be executed at the correct time
      * @param turtle is turtle who should be made invisible
      */
-    protected HideTurtleCommand(Turtle turtle) {
-	myTurtle = turtle;
+    protected HideTurtleCommand(Turtle turtles) {
+    		setActiveTurtles(turtles);
     }
     /**
      * Shows turtle's image to the user
@@ -20,8 +22,8 @@ class HideTurtleCommand extends Command{
      */
     @Override
     protected double execute() {
-	myTurtle.hideTurtle();
-	return 0;
+    	 	getActiveTurtles().hideTurtle();
+    		return 0;
     }
 
 }

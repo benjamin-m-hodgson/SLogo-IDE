@@ -12,26 +12,27 @@ class CommandNode {
 	private int myNumArgs; 
 	//private Command myCommand; 
 	private List<CommandNode> myChildren; 
-	private Turtle myTurtle;
+	private Turtle myTurtles;
+	private Turtle myActiveTurtles;
 	private boolean isString;
 
-	protected CommandNode(String info, Turtle turtle) {
-		this(info, DEFAULT_NUM_ARGS, new ArrayList<CommandNode>(), turtle, true);
+	protected CommandNode(String info, Turtle turtles, Turtle activeTurtles) {
+		this(info, DEFAULT_NUM_ARGS, new ArrayList<CommandNode>(), turtles, activeTurtles, true);
 	}
 
-	protected CommandNode(String info, int numArgs, Turtle turtle) { 
-		this(info, numArgs, new ArrayList<CommandNode>(), turtle, false);
+	protected CommandNode(String info, int numArgs, Turtle turtles, Turtle activeTurtles) { 
+		this(info, numArgs, new ArrayList<CommandNode>(), turtles, activeTurtles, false);
 	}
-	protected CommandNode(String info, int numArgs, CommandNode child, Turtle turtle) {
-		this(info, numArgs, new ArrayList<CommandNode>(), turtle, false);
+	protected CommandNode(String info, int numArgs, CommandNode child, Turtle turtles, Turtle activeTurtles) {
+		this(info, numArgs, new ArrayList<CommandNode>(), turtles, activeTurtles, false);
 		myChildren.add(child);
 	}
-	protected CommandNode(String info, int numArgs, Turtle turtle, boolean isString) {
-		this(info, numArgs, new ArrayList<CommandNode>(), turtle, isString); 
+	protected CommandNode(String info, int numArgs, Turtle turtles, Turtle activeTurtles, boolean isString) {
+		this(info, numArgs, new ArrayList<CommandNode>(), turtles, activeTurtles, isString); 
 	}
 	
 
-	protected CommandNode(String info, int numArgs, List<CommandNode> children, Turtle turtle, boolean isStringID) {	
+	protected CommandNode(String info, int numArgs, List<CommandNode> children, Turtle turtles, Turtle activeTurtles, boolean isStringID) {	
 		myInfo = info; 
 		try {
 			Double.parseDouble(info);
@@ -44,7 +45,8 @@ class CommandNode {
 		myNumArgs = numArgs;
 		myChildren = new ArrayList<CommandNode>(); 
 		myChildren.addAll(children); 
-		myTurtle = turtle;
+		myTurtles = turtles;
+		myActiveTurtles = activeTurtles;
 		
 	}
 
@@ -110,8 +112,11 @@ class CommandNode {
 	protected String getInfo() {
 		return myInfo;
 	}
-	protected Turtle getTurtle() {
-		return myTurtle;
+	protected Turtle getTurtles() {
+		return myTurtles;
+	}
+	protected Turtle getActiveTurtles() {
+		return myActiveTurtles;
 	}
 
 }

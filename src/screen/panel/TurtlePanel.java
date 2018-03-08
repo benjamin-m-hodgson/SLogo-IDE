@@ -22,8 +22,8 @@ import javafx.scene.layout.Priority;
 
 public class TurtlePanel implements Panel {
 	// TODO: put in setting.properties file
-	private final double DEFAULT_TURTLE_SIZE = 20;
-	private final String DEFAULT_TURTLE = "Colored Turtle.png";
+	private final double DEFAULT_TURTLE_SIZE = 35;
+	private final String DEFAULT_TURTLE = "Turtle.png";
 	private BorderPane PANEL;
 	private ScrollPane SCROLL_PANE;
 	private Controller PROGRAM_CONTROLLER;
@@ -67,7 +67,7 @@ public class TurtlePanel implements Panel {
 			Image turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
 			ImageView turtleView = new ImageView(turtleImage);
 			TURTLE_LIST.add(turtleView);
-			turtleView.setId("turtleView");
+			turtleView.setId("1");
 			turtleView.setFitHeight(DEFAULT_TURTLE_SIZE);
 			turtleView.setFitWidth(DEFAULT_TURTLE_SIZE);
 			// center the turtle on the screen
@@ -80,8 +80,27 @@ public class TurtlePanel implements Panel {
 			penLines.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
 			penLines.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
 			panel.getChildren().add(penLines);
+			
+			//TEMP
+			Image turtleImage2 = new Image(turtleFile.toURI().toURL().toExternalForm());
+			ImageView turtleView2 = new ImageView(turtleImage);
+			TURTLE_LIST.add(turtleView2);
+			turtleView2.setId("turtleView2");
+			turtleView2.setFitHeight(DEFAULT_TURTLE_SIZE);
+			turtleView2.setFitWidth(DEFAULT_TURTLE_SIZE);
+			// center the turtle on the screen
+			turtleView2.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
+			turtleView2.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
+			turtleView2.setX(-50);
+			turtleView2.setY(-50);
+			panel.getChildren().add(turtleView2);
+			Group penLines2 = new Group();
+			penLines2.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
+			penLines2.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
+			panel.getChildren().add(penLines2);
 			// TODO: possibly add turtles to list ?
-			PROGRAM_CONTROLLER.makeNewTurtleCommand("Turtle", turtleView,DEFAULT_COLOR_HEXCODE , penLines);
+			PROGRAM_CONTROLLER.makeNewTurtleCommand("50", turtleView,DEFAULT_COLOR_HEXCODE , penLines);
+			PROGRAM_CONTROLLER.makeNewTurtleCommand("100", turtleView2, DEFAULT_COLOR_HEXCODE, penLines2);
 		}
 		catch (Exception e) {
 			// TODO: make custom exception super class with sub classes for specifications
@@ -89,7 +108,7 @@ public class TurtlePanel implements Panel {
 			System.out.println("FAILED TO LOAD TURTLE IMG");
 		}
 	}
-
+	
 	public void displayErrorMessage(String error) {
 		Button errorButton = new Button(error);
 		errorButton.setId("errorButton");
@@ -139,7 +158,5 @@ public class TurtlePanel implements Panel {
 	public void removeErrorButton() {
 		PANEL.getChildren().remove(ErrorHolder);
 	}
-//	public void getBackGroundColor() {
-//	    SCROLL_PANE.getStyle();
-//	}
+
 }

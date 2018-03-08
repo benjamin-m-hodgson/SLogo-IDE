@@ -1,5 +1,6 @@
 package interpreter;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 class IfElseCommand extends Command {
@@ -11,7 +12,7 @@ class IfElseCommand extends Command {
 	private Map<String, String> myUserDefCommands; 
 	private Map<String, Integer> myUserDefComNumArgs; 
 	
-	protected IfElseCommand(Command ifExprCommand, Command ifBody, Command elseBody, Turtle turtle, 
+	protected IfElseCommand(Command ifExprCommand, Command ifBody, Command elseBody, Turtle turtle, Turtle activeTurtles,
 			Map<String, Double> variables, Map<String, String> userDefCommands, 
 			Map<String, Integer> userDefComNumArgs) {
 		myTurtle = turtle;
@@ -21,24 +22,21 @@ class IfElseCommand extends Command {
 		myVariables = variables; 
 		myUserDefCommands = userDefCommands;
 		myUserDefComNumArgs = userDefComNumArgs;
+		setActiveTurtles(activeTurtles);
 	}
 
 	@Override
-	protected double execute() throws UnidentifiedCommandException {
+	protected double execute() {
 		double ifExprRetVal = 0;
 		double ifElseRetVal = 0; 
-		try {
 			ifExprRetVal = myIfExprCommand.execute();
-		} catch (UnidentifiedCommandException e1) {
-			return ifElseRetVal; 
-		} 
 		String[] userInput;
 		if (ifExprRetVal > 0) {
 			System.out.println("if executed");
 			CommandTreeBuilder buildIfBody = new CommandTreeBuilder(myVariables, myUserDefCommands, myUserDefComNumArgs); 
 			userInput = myIfBody.split("\\s+");
 			try {
-				ifElseRetVal = buildIfBody.buildAndExecute(myTurtle, userInput, true);
+				ifElseRetVal = buildIfBody.buildAndExecute(myTurtle, getActiveTurtles(), userInput, true);
 			} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
 				return ifElseRetVal; 
 			}
@@ -48,7 +46,9 @@ class IfElseCommand extends Command {
 			CommandTreeBuilder buildElseBody = new CommandTreeBuilder(myVariables, myUserDefCommands, myUserDefComNumArgs); 
 			userInput = myElseBody.split("\\s+");
 			try {
-				ifElseRetVal = buildElseBody.buildAndExecute(myTurtle, userInput, true);
+				ArrayList<Turtle> turtleList = new ArrayList<Turtle>();
+				turtleList.add(myTurtle);
+				ifElseRetVal = buildElseBody.buildAndExecute(myTurtle, getActiveTurtles(), userInput, true);
 			} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
 				return ifElseRetVal; 
 			}

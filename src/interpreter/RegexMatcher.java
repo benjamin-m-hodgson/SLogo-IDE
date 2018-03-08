@@ -60,7 +60,7 @@ public class RegexMatcher {
 		String val = ""; 
 		try {
 			val = myResources.getString(text);
-			System.out.println(val);
+//			System.out.println(val);
 		}
 		catch (MissingResourceException e) {
 			myExceptionFactory.getException(myFileName, text);

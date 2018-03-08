@@ -1,5 +1,6 @@
 package interpreter;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,7 +11,6 @@ import java.util.Map;
  */
  class RotateTurtleClockwiseCommand extends Command{
 	private Command myDegreesCommand;
-	private Turtle myTurtle;
 	private Map<String, Double> myVariables; 
 
 	/**
@@ -18,9 +18,9 @@ import java.util.Map;
 	 * @param degrees is Command that, when executed, will return the number of degrees the turtle should move
 	 * @param turtle is Turtle whose heading should change
 	 */
-	protected RotateTurtleClockwiseCommand(Command degrees, Turtle turtle,Map<String, Double> variables) {
+	protected RotateTurtleClockwiseCommand(Command degrees, Turtle turtles,Map<String, Double> variables) {
 		myDegreesCommand = degrees;
-		myTurtle = turtle;
+		this.setActiveTurtles(turtles);
 		myVariables = variables;
 	}
 
@@ -30,9 +30,12 @@ import java.util.Map;
 	 * Sets the heading of the turtle to the specified number of degrees clockwise of its current position
 	 * @see interpreter.Command#execute()
 	 */
-	protected double execute() throws UnidentifiedCommandException{
-		double degrees = getCommandValue(myDegreesCommand, myVariables); 
-		myTurtle.setAngle(myTurtle.getAngle()+degrees);
-		return degrees;
+	protected double execute(){
+		double degreesReturn = getCommandValue(myDegreesCommand, myVariables, getActiveTurtles().toSingleTurtle());
+		getActiveTurtles().executeSequentially(myTurtle -> {
+			double degrees = getCommandValue(myDegreesCommand, myVariables, myTurtle); 
+			myTurtle.setAngle(myTurtle.getAngle()+degrees);
+		});
+		return degreesReturn;
 	}
 }
