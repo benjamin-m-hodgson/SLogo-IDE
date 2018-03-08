@@ -22,8 +22,8 @@ import javafx.scene.layout.Priority;
 
 public class TurtlePanel implements Panel {
 	// TODO: put in setting.properties file
-	private final double DEFAULT_TURTLE_SIZE = 20;
-	private final String DEFAULT_TURTLE = "Colored Turtle.png";
+	private final double DEFAULT_TURTLE_SIZE = 35;
+	private final String DEFAULT_TURTLE = "Turtle.png";
 	private BorderPane PANEL;
 	private ScrollPane SCROLL_PANE;
 	private Controller PROGRAM_CONTROLLER;
@@ -67,7 +67,7 @@ public class TurtlePanel implements Panel {
 			Image turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
 			ImageView turtleView = new ImageView(turtleImage);
 			TURTLE_LIST.add(turtleView);
-			turtleView.setId("turtleView");
+			turtleView.setId("1");
 			turtleView.setFitHeight(DEFAULT_TURTLE_SIZE);
 			turtleView.setFitWidth(DEFAULT_TURTLE_SIZE);
 			// center the turtle on the screen

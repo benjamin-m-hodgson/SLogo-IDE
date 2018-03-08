@@ -1,7 +1,11 @@
 package interpreter;
 
 
+
 import java.util.function.Consumer;
+
+import java.io.File;
+import java.net.MalformedURLException;
 
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -15,6 +19,7 @@ abstract class Turtle {
 	 */
 	public abstract double getID();
 	
+
 	/**
 	 * Returns the current x-position of the turtle
 	 */
@@ -59,25 +64,32 @@ abstract class Turtle {
 	protected abstract void setY(double y);
 
 	protected abstract double setXY(double x, double y);
+
+	public abstract void setShape(String idxKey) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException;
+
 	/**
 	 * Sets the visual image of the turtle to the image contained in filepath
 	 */
 	public abstract void setImage(String filepath);
+
 
 	protected abstract void setPenColor(String colorCode);
 	
 	protected abstract void setPenWidth(double width);
 	
 	protected abstract void setAngle(double angle);
-
 	protected abstract void showPen();
 
 	protected abstract void hidePen();
+
 
 	protected abstract void clearPen();
 	
 	protected abstract String getPenColor();
 
+	protected abstract void setImageName(String shapeName);
+
+	protected abstract String getImageName();
 	protected abstract SingleTurtle toSingleTurtle();
 	protected abstract int size();
 	protected abstract void executeSequentially(Consumer<Turtle> action);

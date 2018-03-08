@@ -162,13 +162,25 @@ public class CommandFactory {
 			return new SetBackgroundColorCommand(commandArgs.get(0), myVariables, activeTurtles);
 		}
 		else if(commandName.equals("SetPenColor")) {
-			return new SetPenColorCommand(commandArgs.get(0), activeTurtles, myVariables);
+			return new SetPenColorCommand(commandArgs.get(0), activeTurtles, myVariables, false);
+		}
+		else if (commandName.equals("SetPenColorByHex")) {
+			return new SetPenColorCommand(commandArgs.get(0), activeTurtles, myVariables, false);
 		}
 		else if(commandName.equals("SetPenSize")) {
 			return new SetPenSizeCommand(activeTurtles, commandArgs.get(0), myVariables);
 		}
+		else if (commandName.equals("SetShape")) {
+			return new SetShapeCommand(activeTurtles, commandArgs.get(0), myVariables);
+		}
 		else if (commandName.equals("GetPenColor")) {
 			return new GetPenColorCommand(activeTurtles);
+		}
+		else if (commandName.equals("GetShape")) {
+			return new GetShapeCommand(activeTurtles);
+		}
+		else if (commandName.equals("SetPalette")) {
+			return new SetPaletteCommand(commandArgs.get(0), commandArgs.get(1), commandArgs.get(2), commandArgs.get(3), myVariables);
 		}
 		else if(commandName.equals("For")) {
 			return new ForCommand(commandArgs.get(0), commandArgs.get(1), commandArgs.get(2), commandArgs.get(3), commandArgs.get(4), turtles, activeTurtles, myVariables, myUserDefCommands, myUserDefCommandsNumArgs);

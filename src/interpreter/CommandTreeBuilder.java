@@ -26,6 +26,8 @@ class CommandTreeBuilder {
 	public static final String DEFAULT_DOTIMES_IDENTIFIER = "DoTimes";
 	public static final String DEFAULT_REPEAT_IDENTIFIER = "Repeat";
 	public static final String DEFAULT_FOR_IDENTIFIER = "For";
+	public static final String DEFAULT_IFEXPR_END = "[";
+	public static final String DEFAULT_IFBODY_END = "]";
 	public static final String DEFAULT_ELSEBODY_END = "]";
 	public static final String DEFAULT_BRACKET_START_IDENTIFIER = "[";
 	public static final String DEFAULT_BRACKET_END_IDENTIFIER = "]";
@@ -203,7 +205,7 @@ class CommandTreeBuilder {
 			return;
 		}
 
-		
+
 		Double firstIsDouble; 
 		try {
 			firstIsDouble = Double.parseDouble(userInput[currIdx]);
@@ -270,7 +272,6 @@ class CommandTreeBuilder {
 						newCommandNode = backtrackCommandNode; 
 					}
 
-//					System.out.println("new command ndoe..." +newCommandNode.toString());
 					parent.addChild(newCommandNode);
 					if (parent.getNumChildren() == parent.getNumArgs() && addToTrees && !myCommandTrees.contains(parent)) {
 						myCommandTrees.add(parent);
@@ -278,14 +279,6 @@ class CommandTreeBuilder {
 					if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
 						createAndSetChildren(turtles, activeTurtles, newCommandNode, userInput, idx+1, false);
 					}
-					//					for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) { 
-					//						int backTrackNumArgs = getNumArgs(userInput[backtrack]);
-					//						CommandNode backtrackCommandNode = new CommandNode(userInput[backtrack], backTrackNumArgs, newCommandNode, turtle);
-					//						newCommandNode = backtrackCommandNode; 
-					//					}
-//					if (newCommandNode.getNumChildren() < newCommandNode.getNumArgs()) { 
-//						createAndSetChildren(turtles, activeTurtles, newCommandNode, userInput, idx+1, false);
-//					}
 					if (parent.getNumChildren() < parent.getNumArgs()) { 
 						createAndSetChildren(turtles, activeTurtles, parent, userInput, idx+1, addToTrees);
 					}
@@ -333,12 +326,12 @@ class CommandTreeBuilder {
 	}
 	private int parseIf(Turtle turtles, Turtle activeTurtles, String[] userInput, int ifIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		int ifExprEndSearch = ifIdx; 
-		while (! userInput[ifExprEndSearch].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
+		while (! userInput[ifExprEndSearch].equals(DEFAULT_IFEXPR_END)) {
 			ifExprEndSearch++; 
 		}
 		// ifExprEndSearch is now at "["
 		int ifBodyEndSearch = ifExprEndSearch; 
-		while (! userInput[ifBodyEndSearch].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
+		while (! userInput[ifBodyEndSearch].equals(DEFAULT_IFBODY_END)) {
 			ifBodyEndSearch++; 
 		}
 		// ifBodyEndSearch is now at "]"
@@ -360,12 +353,12 @@ class CommandTreeBuilder {
 
 	private int parseIfElse(Turtle turtles, Turtle activeTurtles, String[] userInput, int ifIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		int ifExprEndSearch = ifIdx; 
-		while (! userInput[ifExprEndSearch].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
+		while (! userInput[ifExprEndSearch].equals(DEFAULT_IFEXPR_END)) {
 			ifExprEndSearch++; 
 		}
 		// ifExprEndSearch is now at first "["
 		int ifBodyEndSearch = ifExprEndSearch; 
-		while (! userInput[ifBodyEndSearch].equals(DEFAULT_BRACKET_END_IDENTIFIER)) {
+		while (! userInput[ifBodyEndSearch].equals(DEFAULT_IFBODY_END)) {
 			ifBodyEndSearch++; 
 		}
 		// ifBodyEndSearch is now at first "]"
@@ -613,16 +606,16 @@ class CommandTreeBuilder {
 
 		CommandNode userCommandNode = new CommandNode(DEFAULT_USERCOMMAND_NAME, getNumArgs(DEFAULT_USERCOMMAND_NAME), userCommandNameNode, turtles, activeTurtles);
 		userCommandNode.addChild(userCommandArgsNode);
-//		if (startIdx == 0 || startIdx == 1) { // TODO make less ambiguous -- this is because the user command may be first or follow a 0-arg
-//			ArrayList<CommandNode> tempTrees = new ArrayList<CommandNode>();
-//			tempTrees.add(userCommandNode);
-//			tempTrees.addAll(myCommandTrees);
-//			myCommandTrees = tempTrees;
-//		} 
-//		else {
-//			myCommandTrees.add(userCommandNode);
-//
-//		}
+		//		if (startIdx == 0 || startIdx == 1) { // TODO make less ambiguous -- this is because the user command may be first or follow a 0-arg
+		//			ArrayList<CommandNode> tempTrees = new ArrayList<CommandNode>();
+		//			tempTrees.add(userCommandNode);
+		//			tempTrees.addAll(myCommandTrees);
+		//			myCommandTrees = tempTrees;
+		//		} 
+		//		else {
+		//			myCommandTrees.add(userCommandNode);
+		//
+		//		}
 		if (treesEndSize > treesStartSize) {
 			ArrayList<CommandNode> tempTrees = new ArrayList<CommandNode>();
 			for (int i = treesStartSize ; i < treesEndSize ; i ++) {
@@ -693,9 +686,9 @@ class CommandTreeBuilder {
 		}
 		return currIdxCopy;
 	}
-	
+
 	protected IntegerProperty getBackColor() {
 		return myBackColor;
 	}
-	
+
 }

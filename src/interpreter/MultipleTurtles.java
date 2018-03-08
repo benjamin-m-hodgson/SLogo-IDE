@@ -1,5 +1,6 @@
 package interpreter;
 
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -20,6 +21,7 @@ public class MultipleTurtles extends Turtle{
 		myActiveTurtleHolder.applyToAllTurtles(action);
 		myActiveTurtleHolder.resetTemporaryTurtles();
 	}
+	
 	protected boolean containsTurtleWithID(String ID) {
 		try {
 			Double id = Double.parseDouble(ID);
@@ -50,6 +52,9 @@ public class MultipleTurtles extends Turtle{
 	 */
 	public double getX() {
 		return getLastTurtle().getX();
+	}
+	protected String getImageName() {
+		return getLastTurtle().getImageName();
 	}
 
 	/**
@@ -117,7 +122,20 @@ public class MultipleTurtles extends Turtle{
 		myActiveTurtleHolder.applyToAllTurtles(t->t.setY(y));
 		myActiveTurtleHolder.resetTemporaryTurtles();
 	}
-
+	protected void setImageName(String shapeName) {
+		myActiveTurtleHolder.applyToAllTurtles(t->t.setImageName(shapeName));
+	}
+	public void setShape(String idxKey) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException{
+		myActiveTurtleHolder.applyToAllTurtles(t->{
+			try {
+				t.setShape(idxKey);
+			} catch (MalformedURLException | BadFormatException | UnidentifiedCommandException
+					| MissingInformationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+	}
 	protected double setXY(double x, double y) {
 		myActiveTurtleHolder.applyToAllTurtles(t->t.setXY(x, y));
 		System.out.println("y coordinate before reset: " + getLastTurtle().getY());

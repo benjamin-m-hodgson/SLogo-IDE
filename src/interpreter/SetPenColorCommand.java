@@ -8,23 +8,43 @@ import java.util.Map;
  *
  */
 public class SetPenColorCommand extends Command {
+	public static String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
 	private Command colorCodeCommand;
 	private Map<String, Double> myVariables; 
+	private boolean myIdxSent;
+	
 
-	protected SetPenColorCommand(Command codeIn, Turtle activeTurtles,Map<String, Double> variables) {
+	protected SetPenColorCommand(Command codeIn, Turtle turtle,Map<String, Double> variables, boolean idxSent) {
+		myIdxSent = idxSent; 
 		colorCodeCommand = codeIn;
-		setActiveTurtles(activeTurtles);
+		setActiveTurtles(turtle);
 		myVariables = variables;
 	}
 
 	@Override
-	protected double execute(){
-		double hexAsDouble = getCommandValue(colorCodeCommand, myVariables, getActiveTurtles().toSingleTurtle());
-		getActiveTurtles().executeSequentially(myTurtle -> getCommandValue(colorCodeCommand, myVariables, myTurtle));
-		String hexAsString = Integer.toHexString((int)hexAsDouble);
-		hexAsString = addLeadingZeros(hexAsString);
+	protected double execute() {
+		double retVal = 0; 
+		String hexAsString = "";
+		
+		double commandInfo = getCommandValue(colorCodeCommand, myVariables, getActiveTurtles());
+		getActiveTurtles().executeSequentially(turtle -> getCommandValue(colorCodeCommand, myVariables, turtle));
+		if (myIdxSent) {
+			RegexMatcher rm = new RegexMatcher(DEFAULT_COLORPALETTE_FILE);
+			try {
+				int idxAsInt = (int) commandInfo;
+				hexAsString = rm.findMatchingVal(Integer.toString(idxAsInt)).substring(1);
+			} catch (Exception e) {
+				return -1;
+			}
+			retVal = commandInfo; 
+		}
+		else {
+			hexAsString = Integer.toHexString((int)commandInfo);
+			hexAsString = addLeadingZeros(hexAsString);
+			System.out.println(hexAsString);
+		}
 		getActiveTurtles().setPenColor(hexAsString);
-		return 0;
+		return retVal;
 	}
 
 	private String addLeadingZeros(String hexAsString) {

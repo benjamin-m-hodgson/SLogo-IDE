@@ -43,11 +43,14 @@ import javafx.scene.image.ImageView;
 class CommandMaker {
 
 	public static final String DEFAULT_FILEPATH = "interpreter/";
+	public static final String DEFAULT_SAVEDUSERCOMMANDS = "src/interpreter/SavedUserCommands.properties" ;
+	public static final String DEFAULT_SAVEDVARIABLES = "src/interpreter/SavedVariables.properties" ;
 	public static final ResourceBundle DEFAULT_LANGUAGE = ResourceBundle.getBundle("interpreter/English");
 	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
 	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command"; //TODO allow this to be client-specified
 	public static final String[] DEFAULT_CONTROLFLOW_IDENTIFIERS = {"Repeat", "DoTimes", "For"};
-
+	public static final String DEFAULT_VAR_IDENTIFIER = ":";
+	
 	private HashMap<String, Double> myVariables; 
 	private HashMap<String, String> myUserDefCommands; 
 	private HashMap<String, Integer> myUserCommandsNumArgs; 
@@ -193,6 +196,20 @@ class CommandMaker {
 	
 	protected BooleanProperty getBackColorChangeHeard() {
 		return myBackColorChangeHeard;
+	}
+
+	public void loadSavedUserDefined() {
+		PropertiesReader pr = new PropertiesReader(DEFAULT_SAVEDUSERCOMMANDS);
+		HashMap<String, String> loadedCommands = (HashMap<String, String>) pr.read();
+		myUserDefCommands.putAll(loadedCommands);
+	}
+
+	public void loadSavedVariables() {
+		PropertiesReader pr = new PropertiesReader(DEFAULT_SAVEDVARIABLES);
+		HashMap<String, String> loadedVars = (HashMap<String, String>) pr.read();
+		for (String key : loadedVars.keySet()) {
+			myVariables.put(DEFAULT_VAR_IDENTIFIER+key, Double.parseDouble(loadedVars.get(key)));
+		}
 	}
 	
 

@@ -1,5 +1,7 @@
 package interpreter;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.function.Consumer;
 
 import javafx.scene.Group;
@@ -60,6 +62,11 @@ import javafx.scene.shape.Line;
 public class SingleTurtle extends Turtle{
 
     	// TODO: put in setting.properties file
+	public static final String DEFAULT_FILEPATH_PREFIX = "user.dir/";
+	public static final String DEFAULT_IMAGES_FOLDER = "turtleimages/";
+	public static final String DEFAULT_IMAGE_SUFFIX = ".png";
+	public static final String DEFAULT_TURTLESHAPES_FILE = "interpreter/TurtleShapes";
+
     	public static final double DEFAULT_TURTLE_SIZE = 20;
 	public static final double DEFAULT_ID = -1;
 	public static final String DEFAULT_PEN_COLORCODE = "#2d3436";
@@ -114,9 +121,21 @@ public class SingleTurtle extends Turtle{
 		}
 		return turtle;
 	}
+	public void setShape(String idxKey) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException {
+		RegexMatcher rm = new RegexMatcher(DEFAULT_TURTLESHAPES_FILE);
+		String matchingShape = "";
+		matchingShape = rm.findMatchingVal(idxKey);
+
+		File turtleFile = new File(DEFAULT_IMAGES_FOLDER  + matchingShape + DEFAULT_IMAGE_SUFFIX);
+		setImage(turtleFile.toURI().toURL().toExternalForm());
+		setImageName(idxKey);
+	}
 	protected void setOldXY(double oldX, double oldY) {
 		myOldX = oldX;
 		myOldY = oldY;
+	}
+	protected void setImageName(String name) {
+		myImage.setId(name);
 	}
 
 
@@ -127,6 +146,10 @@ public class SingleTurtle extends Turtle{
 	public double getID() {
 		return myID; 
 	}
+	protected String getImageName() {
+		return myImage.getId();
+	}
+	
 	
 	/**
 	 * Returns the current x-position of the turtle
