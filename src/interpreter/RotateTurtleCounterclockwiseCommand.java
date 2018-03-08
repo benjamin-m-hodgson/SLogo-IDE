@@ -18,7 +18,7 @@ import java.util.Map;
 	 * @param degrees is Command that, when executed, will return the number of degrees the turtle should move
 	 * @param turtle is Turtle whose heading should change
 	 */
-	protected RotateTurtleCounterclockwiseCommand(Command degrees, List<Turtle> activeTurtles,Map<String, Double> variables) {
+	protected RotateTurtleCounterclockwiseCommand(Command degrees, Turtle activeTurtles,Map<String, Double> variables) {
 		myDegreesCommand = degrees;
 		this.setActiveTurtles(activeTurtles);
 		myVariables = variables;
@@ -31,12 +31,12 @@ import java.util.Map;
 	 * @return number of degrees moved
 	 * @see interpreter.Command#execute()
 	 */
-	protected double execute() throws UnidentifiedCommandException{
-		double degrees = -1;
-		for(Turtle myTurtle: this.getActiveTurtles()) {
-			degrees = getCommandValue(myDegreesCommand, myVariables, myTurtle);
+	protected double execute(){
+		double degreesRet = getCommandValue(myDegreesCommand, myVariables, getActiveTurtles().toSingleTurtle());
+		getActiveTurtles().executeSequentially(myTurtle -> {
+			double degrees = getCommandValue(myDegreesCommand, myVariables, myTurtle);
 			myTurtle.setAngle(myTurtle.getAngle()-degrees);
-		}
-		return degrees;
+		});
+		return degreesRet;
 	}
 }

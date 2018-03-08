@@ -8,22 +8,22 @@ import java.util.Map;
  *
  */
 public class SetPenColorCommand extends Command {
-	private Turtle myTurtle;
 	private Command colorCodeCommand;
 	private Map<String, Double> myVariables; 
 
-	protected SetPenColorCommand(Command codeIn, Turtle turtle,Map<String, Double> variables) {
+	protected SetPenColorCommand(Command codeIn, Turtle activeTurtles,Map<String, Double> variables) {
 		colorCodeCommand = codeIn;
-		myTurtle = turtle;
+		setActiveTurtles(activeTurtles);
 		myVariables = variables;
 	}
 
 	@Override
-	protected double execute() throws UnidentifiedCommandException {
-		double hexAsDouble = getCommandValue(colorCodeCommand, myVariables);
+	protected double execute(){
+		double hexAsDouble = getCommandValue(colorCodeCommand, myVariables, getActiveTurtles().toSingleTurtle());
+		getActiveTurtles().executeSequentially(myTurtle -> getCommandValue(colorCodeCommand, myVariables, myTurtle));
 		String hexAsString = Integer.toHexString((int)hexAsDouble);
 		hexAsString = addLeadingZeros(hexAsString);
-		myTurtle.setPenColor(hexAsString);
+		getActiveTurtles().setPenColor(hexAsString);
 		return 0;
 	}
 

@@ -100,6 +100,24 @@ public class SingleTurtle extends Turtle{
 	public void executeSequentially(Consumer<Turtle> action){
 		action.accept(this);
 	}
+	protected SingleTurtle getCopy() {
+		SingleTurtle turtle = new SingleTurtle(myID, new ImageView(), new Group(), myPen.getColor());
+		turtle.setX(myX);
+		turtle.setY(myY);
+		turtle.setOldXY(myOldX, myOldY);
+		turtle.setAngle(myAngle);
+		if(myVisibility) {
+			turtle.showTurtle();
+		}
+		else {
+			turtle.hideTurtle();
+		}
+		return turtle;
+	}
+	protected void setOldXY(double oldX, double oldY) {
+		myOldX = oldX;
+		myOldY = oldY;
+	}
 
 
 	// GETTERS

@@ -14,7 +14,7 @@ class ClearScreenCommand extends Command{
      * Creates new instance of command to be executed at the proper time
      * @param turtle is turtle who needs to be returned to home
      */
-    protected ClearScreenCommand(List<Turtle> turtles) {
+    protected ClearScreenCommand(Turtle turtles) {
     		setActiveTurtles(turtles);
     }
     /**
@@ -24,12 +24,9 @@ class ClearScreenCommand extends Command{
      */
     @Override
     protected double execute() {
-    	double returnVal = 0.0;
-    	for(Turtle myTurtle : getActiveTurtles()) {
-    		returnVal = myTurtle.setXY(0, 0);
-    		myTurtle.setAngle(0);
-    		myTurtle.clearPen();
-    	}
+    double returnVal = getActiveTurtles().setXY(0, 0);
+    getActiveTurtles().setAngle(0);
+    	getActiveTurtles().clearPen();
 	return returnVal;
     }
 }

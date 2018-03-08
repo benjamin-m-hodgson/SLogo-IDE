@@ -15,18 +15,18 @@ class TangentCommand extends Command{
     private Command degreesCommand;
     private Map<String, Double> myVariables; 
 
-    protected TangentCommand(Command degrees ,Map<String, Double> variables, List<Turtle> turtles) {
+    protected TangentCommand(Command degrees ,Map<String, Double> variables, Turtle turtles) {
 	degreesCommand = degrees;
 	myVariables = variables;
 	setActiveTurtles(turtles);
 
     }
     @Override
-    protected double execute() throws UnidentifiedCommandException{
-    	double DEGREES = -1;
-    	for(Turtle myTurtle: getActiveTurtles()) {
-    		DEGREES = getCommandValue(degreesCommand, myVariables, myTurtle);
-    	}
+    protected double execute(){
+    	double DEGREES = getCommandValue(degreesCommand, myVariables, getActiveTurtles().toSingleTurtle());
+    getActiveTurtles().executeSequentially(myTurtle -> {
+    		getCommandValue(degreesCommand, myVariables, myTurtle);
+    	});
 	return Math.tan(Math.toRadians(DEGREES));
     }
 

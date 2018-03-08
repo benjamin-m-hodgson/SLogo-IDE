@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import javax.swing.text.Element;
+import javax.swing.text.html.ImageView;
+
+import javafx.scene.Group;
+
 /**
  * Class used to hide/manipulate collection of active Turtles.
  * @author Sarahbland
@@ -19,6 +24,7 @@ public class TurtleHolder {
 	}
 	protected void applyToAllTurtles (Consumer<Turtle> action) {
 		myCurrentTurtles.forEach(action);
+		resetTemporaryTurtles();
 	}
 	protected void applyTemporarily(Consumer<Turtle> action) {
 		mySharedTurtles.forEach(action);
@@ -42,7 +48,7 @@ public class TurtleHolder {
     private List<SingleTurtle> deepCopy (List<SingleTurtle> original) {
         List<SingleTurtle> result = new ArrayList<>();
         for (SingleTurtle c : original) {
-            result.add(new SingleTurtle(c.getID(), c.getImageView(), c.getPenLines(), c.getPenColor()));
+            result.add(c.getCopy());
         }
         return result;
     }

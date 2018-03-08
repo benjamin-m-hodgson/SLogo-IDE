@@ -14,7 +14,7 @@ class XCoordinateQueryCommand extends Command{
     /**
      * @param turtle is turtle whose x-coordinate is desired
      */
-    protected XCoordinateQueryCommand(List<Turtle> turtles) {
+    protected XCoordinateQueryCommand(Turtle turtles) {
     		setActiveTurtles(turtles);
     }
     /**
@@ -23,10 +23,7 @@ class XCoordinateQueryCommand extends Command{
      */
     @Override
     protected double execute() {
-    		double returnVal = -1.0;
-    		for(Turtle myTurtle : getActiveTurtles()) {
-    			returnVal = myTurtle.getX();
-    		}
-    		return returnVal;
+    		double returnVal = getActiveTurtles().getX();
+    		return -returnVal;
     }
 }

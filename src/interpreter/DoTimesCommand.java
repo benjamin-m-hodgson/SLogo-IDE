@@ -9,9 +9,9 @@ class DoTimesCommand extends Command{
 	private String myTempVar;
 	private Command endExpressionCommand;
 	private CommandTreeBuilder myBuilder;
-	private List<Turtle> myAllTurtles;
+	private Turtle myAllTurtles;
 	
-	protected DoTimesCommand(Command tempVarCommand, Command endExpression, Command toExecuteCommand, List<Turtle> activeTurtles, List<Turtle> allTurtles, 
+	protected DoTimesCommand(Command tempVarCommand, Command endExpression, Command toExecuteCommand,Turtle activeTurtles, Turtle allTurtles, 
 			Map<String, Double> variables, Map<String, String> userDefCommands, Map<String, Integer> userDefCommandNumArgs) {
 		myTempVar = ((StringCommand)tempVarCommand).getString();
 		toExecute = ((StringCommand)toExecuteCommand).getString();
@@ -21,10 +21,10 @@ class DoTimesCommand extends Command{
 		myAllTurtles = allTurtles;
 	}
 	@Override
-	protected double execute() throws UnidentifiedCommandException {
+	protected double execute() {
 		String[] executeArray = toExecute.split(" ");
 		double ending = endExpressionCommand.execute();
-		double returnVal = 0.0;
+		double returnVal = -1.0;
 		List<Integer> indices = getTempVarIndices(myTempVar, executeArray);
 		for(Double k = 1.0; k<=ending; k+=1) {
 			findAndReplace(indices, k, executeArray);
@@ -32,12 +32,10 @@ class DoTimesCommand extends Command{
 				System.out.println("executing " + executeArray[i]);
 			}
 			try {
-				returnVal = myBuilder.buildAndExecute(myAllTurtles, getActiveTurtles() executeArray, true);
+				returnVal = myBuilder.buildAndExecute(myAllTurtles, getActiveTurtles(), executeArray, true);
 			}
 			catch(Exception e){
-				//TODO fix this! Don't just throw another exception
-				e.printStackTrace();
-				throw new UnidentifiedCommandException("There was a problem within one of your loops.");
+				return returnVal;
 			}
 
 		}

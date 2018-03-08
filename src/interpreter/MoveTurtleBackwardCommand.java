@@ -34,12 +34,12 @@ class MoveTurtleBackwardCommand extends Command{
      * @see interpreter.Command#execute()
      */
     protected double execute(){
-    	double dist = -1;
-    getActiveTurtles().executeSequentially(myTurt
-		dist = getCommandValue(myBackwardDistCommand, myVariables, myTurtle);
+    	double distance = getCommandValue(myBackwardDistCommand, myVariables, getActiveTurtles().toSingleTurtle());
+    getActiveTurtles().executeSequentially(myTurtle ->{
+		double dist = getCommandValue(myBackwardDistCommand, myVariables, myTurtle);
 		double angle = Math.toRadians(myTurtle.getAngle());
 		myTurtle.setXY(myTurtle.getX()+dist*Math.sin(-angle), myTurtle.getY()+dist*Math.cos(-angle));
-	}
-	return dist;
+    		});
+	return distance;
     }
 }

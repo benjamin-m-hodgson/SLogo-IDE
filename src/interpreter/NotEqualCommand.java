@@ -17,20 +17,20 @@ class NotEqualCommand extends Command{
     private Command expr2Command;
     private Map<String, Double> myVariables; 
 
-    protected NotEqualCommand(Command expr1, Command expr2, Map<String, Double> variables, List<Turtle> turtles) {
+    protected NotEqualCommand(Command expr1, Command expr2, Map<String, Double> variables, Turtle turtles) {
 	expr1Command = expr1;
 	expr2Command = expr2;
 	myVariables = variables;
 	setActiveTurtles(turtles);
     }
     @Override
-    protected double execute() throws UnidentifiedCommandException{
-    	double EXPR1 = 1.0;
-    	double EXPR2 = 1.0;
-    	for(Turtle myTurtle : getActiveTurtles()) {
-    		EXPR1 = getCommandValue(expr1Command, myVariables, myTurtle);
-    		EXPR2 = getCommandValue(expr2Command, myVariables, myTurtle);
-    	}
+    protected double execute(){
+    	double EXPR1 = getCommandValue(expr1Command, myVariables, getActiveTurtles().toSingleTurtle());
+    	double EXPR2 = getCommandValue(expr2Command, myVariables, getActiveTurtles().toSingleTurtle());;
+    	getActiveTurtles().executeSequentially(myTurtle -> {
+    		getCommandValue(expr1Command, myVariables, myTurtle);
+    		getCommandValue(expr2Command, myVariables, myTurtle);
+    	});
 	
 	if (EXPR1 != EXPR2) {
 	    return TRUE;

@@ -12,7 +12,7 @@ class IsPenDownQueryCommand extends Command{
     /**
      * @param turtle is turtle whose pen visibility is desired
      */
-    protected IsPenDownQueryCommand(List<Turtle> turtles) {
+    protected IsPenDownQueryCommand(Turtle turtles) {
     		setActiveTurtles(turtles);
     }
     /**
@@ -21,10 +21,7 @@ class IsPenDownQueryCommand extends Command{
      */
     @Override
     protected double execute() {
-    	double  retVal = -1.0;
-    		for(Turtle myTurtle: getActiveTurtles()) {
-    			retVal = myTurtle.getPenVisibility() ? 1 : 0; 
-    	}
+    double retVal = getActiveTurtles().getPenVisibility() ? 1 : 0; 
 	
 	return retVal; 
     }

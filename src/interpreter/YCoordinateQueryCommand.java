@@ -13,7 +13,7 @@ class YCoordinateQueryCommand extends Command{
     /**
      * @param turtle is turtle whose x-coordinate is desired
      */
-    protected YCoordinateQueryCommand(List<Turtle> turtles) {
+    protected YCoordinateQueryCommand(Turtle turtles) {
     		setActiveTurtles(turtles);
     }
     /**
@@ -22,10 +22,8 @@ class YCoordinateQueryCommand extends Command{
      */
     @Override
     protected double execute() {
-    		double returnVal = -1.0;
-   		for(Turtle myTurtle : getActiveTurtles()) {
-   			returnVal = myTurtle.getY();
-   		}	
-   		return returnVal;
+    		System.out.println("active turtle size" + getActiveTurtles().size());
+   		double returnVal = getActiveTurtles().getY();
+   		return -returnVal;
     }
 }

@@ -17,20 +17,20 @@ class OrCommand extends Command{
     private Command test2Command;
     private Map<String, Double> myVariables; 
 
-    protected OrCommand(Command test1, Command test2, Map<String, Double> variables, List<Turtle> turtles) {
+    protected OrCommand(Command test1, Command test2, Map<String, Double> variables, Turtle turtles) {
 	test1Command = test1;
 	test2Command = test2;
 	myVariables = variables;
 	setActiveTurtles(turtles);
     }
     @Override
-    protected double execute() throws UnidentifiedCommandException{
-    double TEST1 = 0.0;
-    double TEST2 = 0.0;
-    	for(Turtle myTurtle : getActiveTurtles()) {
-    		TEST1 = getCommandValue(test1Command, myVariables, myTurtle);
-    		TEST2  = getCommandValue(test2Command, myVariables, myTurtle);
-    	}
+    protected double execute(){
+    double TEST1 = getCommandValue(test1Command, myVariables, getActiveTurtles().toSingleTurtle());
+    double TEST2 =  getCommandValue(test2Command, myVariables, getActiveTurtles().toSingleTurtle());;
+    	getActiveTurtles().executeSequentially(myTurtle -> {
+    		getCommandValue(test1Command, myVariables, myTurtle);
+    		getCommandValue(test2Command, myVariables, myTurtle);
+    	});
 	
 	if (TEST1 != FALSE || TEST2 != FALSE) {
 	    return TRUE;

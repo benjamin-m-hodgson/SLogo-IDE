@@ -12,7 +12,7 @@ import java.util.List;
 	 * Creates new instance of command, which can be executed at the correct time
 	 * @param turtle is turtle whose pen should be put down
 	 */
-	protected PenDownCommand(List<Turtle> turtles) {
+	protected PenDownCommand(Turtle turtles) {
 		setActiveTurtles(turtles);
 	}
 	/**
@@ -21,9 +21,7 @@ import java.util.List;
 	 */
 	@Override
 	protected double execute() {
-		for(Turtle myTurtle: getActiveTurtles()) {
-			myTurtle.showPen();
-		}
+		getActiveTurtles().showPen();
 		return 1;
 	}
 

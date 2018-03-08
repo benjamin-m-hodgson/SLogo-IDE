@@ -17,16 +17,16 @@ class NotCommand extends Command{
     	private Map<String, Double> myVariables; 
 
     	
-	protected NotCommand(Command test, Map<String, Double> variables, List<Turtle> turtles) {
+	protected NotCommand(Command test, Map<String, Double> variables, Turtle turtles) {
 		testCommand = test;
 		setActiveTurtles(turtles);
 	}
 	@Override
-	protected double execute() throws UnidentifiedCommandException{
-		double TEST = 0;
-		for(Turtle myTurtle : getActiveTurtles()) {
-			TEST = getCommandValue(testCommand, myVariables, myTurtle);
-		}
+	protected double execute() {
+		double TEST = getCommandValue(testCommand, myVariables, getActiveTurtles().toSingleTurtle());
+		getActiveTurtles().executeSequentially(myTurtle -> {
+			getCommandValue(testCommand, myVariables, myTurtle);
+		});
 		if (TEST == FALSE) {
 		    return TRUE;
 		}

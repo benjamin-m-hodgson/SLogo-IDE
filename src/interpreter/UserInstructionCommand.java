@@ -12,10 +12,11 @@ class UserInstructionCommand extends Command {
 	private Turtle myTurtle; 
 	private CommandTreeBuilder myBuilder; 
 
-	protected UserInstructionCommand(Turtle turtle, Command command, Command args, Map<String, Double> vars, Map<String, String> userDefCommands, Map<String, Integer> userDefCommandsNumArgs) {
+	protected UserInstructionCommand(Turtle turtle, Turtle activeTurtles, Command command, Command args, Map<String, Double> vars, Map<String, String> userDefCommands, Map<String, Integer> userDefCommandsNumArgs) {
 		myBuilder = new CommandTreeBuilder(vars, userDefCommands, userDefCommandsNumArgs);
 		myTurtle = turtle; 
 		myUserCommName = ((StringCommand)command).getString();
+		setActiveTurtles(activeTurtles);
 		String unparsedCommContent = userDefCommands.get(myUserCommName);
 		ArrayList<String> parsedCommContent = new ArrayList<String>(); 
 
@@ -62,9 +63,7 @@ class UserInstructionCommand extends Command {
 	protected double execute() {
 		double retVal = 0.0;
 		try {
-			ArrayList<Turtle> turtleList = new ArrayList<Turtle>();
-			turtleList.add(myTurtle);
-			retVal = myBuilder.buildAndExecute(turtleList, myUserCommContent, true);
+			retVal = myBuilder.buildAndExecute(myTurtle, getActiveTurtles(), myUserCommContent, true);
 		} catch (BadFormatException e) {
 			e.printStackTrace();
 		} catch (MissingInformationException e) {

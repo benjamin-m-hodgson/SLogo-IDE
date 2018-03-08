@@ -16,7 +16,7 @@ class AndCommand extends Command {
     private Command testTwoCommand;
     private Map<String, Double> myVariables; 
 
-    protected AndCommand(Command test1, Command test2, Map<String, Double> variables, List<Turtle> turtles) {
+    protected AndCommand(Command test1, Command test2, Map<String, Double> variables, Turtle turtles) {
 	testOneCommand = test1;
 	testTwoCommand = test2;
 	myVariables = variables; 
@@ -24,13 +24,13 @@ class AndCommand extends Command {
     }
 
     @Override
-    protected double execute() throws UnidentifiedCommandException{
-    double arg1Val = 0.0;
-    double arg2Val = 0.0;
-    	for(Turtle myTurtle : getActiveTurtles()) {
-    		arg1Val = getCommandValue(testOneCommand, myVariables, myTurtle);
-    		arg2Val = getCommandValue(testTwoCommand, myVariables, myTurtle); 
-    	}
+    protected double execute(){
+    double arg1Val = getCommandValue(testOneCommand, myVariables, getActiveTurtles().toSingleTurtle());
+    double arg2Val = getCommandValue(testTwoCommand, myVariables, getActiveTurtles().toSingleTurtle()); 
+    	getActiveTurtles().executeSequentially(myTurtle -> {
+    		getCommandValue(testOneCommand, myVariables, myTurtle);
+    		getCommandValue(testTwoCommand, myVariables, myTurtle); 
+    	});
 	
 	return ((arg1Val > 0) && (arg2Val > 0)) ? 1.0 : 0.0; 
     }	

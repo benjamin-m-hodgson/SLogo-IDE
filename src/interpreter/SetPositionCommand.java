@@ -20,7 +20,7 @@ import java.util.Map;
 	 * @param newYCommand is Command that when executed returns the new Y position
 	 * @param turtle is Turtle that should be moving
 	 */
-	protected SetPositionCommand(Command newXCommand, Command newYCommand, List<Turtle> turtles, Map<String, Double> variables) {
+	protected SetPositionCommand(Command newXCommand, Command newYCommand, Turtle turtles, Map<String, Double> variables) {
 		myNewXCommand = newXCommand;
 		myNewYCommand = newYCommand;
 		setActiveTurtles(turtles);
@@ -33,13 +33,13 @@ import java.util.Map;
 	 * @see interpreter.Command#execute()
 	 */
 	@Override 
-	protected double execute() throws UnidentifiedCommandException{
-		double returnVal = -1.0;
-		for(Turtle myTurtle: getActiveTurtles()) {
+	protected double execute() {
+		getActiveTurtles().executeSequentially( myTurtle ->{
 			double newX = getCommandValue(myNewXCommand, myVariables, myTurtle);
 			double newY = getCommandValue(myNewYCommand, myVariables, myTurtle);
-			returnVal = myTurtle.setXY(newX, newY);
-		}
-	    return returnVal;
+			myTurtle.setXY(newX, newY);
+		});
+		double returnVal = getActiveTurtles().toSingleTurtle().calcDistance(getActiveTurtles().getOldX(), getActiveTurtles().getOldY(), getActiveTurtles().getX(), getActiveTurtles().getY());
+		return returnVal;
 	}
 }

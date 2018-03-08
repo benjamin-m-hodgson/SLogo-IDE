@@ -16,19 +16,19 @@ class ArcTangentCommand extends Command{
 	private Command degreesCommand;
 	private Map<String, Double> myVariables; 
 
-	protected ArcTangentCommand(Command degrees, Map<String, Double> variables, List<Turtle> turtles) {
+	protected ArcTangentCommand(Command degrees, Map<String, Double> variables, Turtle turtles) {
 		degreesCommand = degrees;
 		myVariables = variables; 
 		setActiveTurtles(turtles);
 	}
 	
 	@Override
-	protected double execute() throws UnidentifiedCommandException {
-		double degrees = -1.0;
+	protected double execute(){
+		double degrees = getCommandValue(degreesCommand, myVariables, getActiveTurtles().toSingleTurtle());
 		
-		for(Turtle myTurtle : getActiveTurtles()) {
-			degrees = getCommandValue(degreesCommand, myVariables, myTurtle);
-		}
+		getActiveTurtles().executeSequentially(myTurtle -> {
+			getCommandValue(degreesCommand, myVariables, myTurtle);
+		});
 		
 	    	return Math.toDegrees(Math.atan(Math.toRadians(degrees)));
 	}

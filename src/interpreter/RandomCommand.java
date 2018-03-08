@@ -16,20 +16,18 @@ class RandomCommand extends Command{
     private Command maxCommand;
     private Map<String, Double> myVariables; 
 
-    protected RandomCommand(Command max,Map<String, Double> variables, List<Turtle> activeTurtles) {
+    protected RandomCommand(Command max,Map<String, Double> variables, Turtle activeTurtles) {
 	maxCommand = max;
 	myVariables = variables;
 	setActiveTurtles(activeTurtles);
     }
     @Override
-    protected double execute() throws UnidentifiedCommandException{
+    protected double execute(){
     	Random randGenerator = new Random();
-    	double returnVal = -1.0;
-    	double MAX = -1.0;
-    	for( Turtle myTurtle : getActiveTurtles()) {
-    		MAX = getCommandValue(maxCommand, myVariables, myTurtle);
-    		returnVal = randGenerator.nextDouble()*MAX;
-    	}
+    	double MAX = getCommandValue(maxCommand, myVariables, getActiveTurtles().toSingleTurtle());
+     getActiveTurtles().executeSequentially(myTurtle -> {
+    		getCommandValue(maxCommand, myVariables, myTurtle);
+    	});
     	return randGenerator.nextDouble() * MAX;
 	
 	

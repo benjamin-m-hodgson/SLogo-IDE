@@ -13,7 +13,7 @@ class HideTurtleCommand extends Command{
      * Creates new instance of command, which can be executed at the correct time
      * @param turtle is turtle who should be made invisible
      */
-    protected HideTurtleCommand(List<Turtle> turtles) {
+    protected HideTurtleCommand(Turtle turtles) {
     		setActiveTurtles(turtles);
     }
     /**
@@ -22,9 +22,7 @@ class HideTurtleCommand extends Command{
      */
     @Override
     protected double execute() {
-    	for(Turtle myTurtle : getActiveTurtles()) {
-    	 	myTurtle.hideTurtle();
-    	}
+    	 	getActiveTurtles().hideTurtle();
     		return 0;
     }
 

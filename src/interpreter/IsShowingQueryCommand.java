@@ -12,7 +12,7 @@ class IsShowingQueryCommand extends Command{
     /**
      * @param turtle is turtle whose visibility is desired
      */
-    protected IsShowingQueryCommand(List<Turtle> turtles) {
+    protected IsShowingQueryCommand(Turtle turtles) {
     		setActiveTurtles(turtles);
     }
     /**
@@ -21,10 +21,7 @@ class IsShowingQueryCommand extends Command{
      */
     @Override
     protected double execute() {
-    double retVal = -1.0;
-    	for( Turtle myTurtle: getActiveTurtles()) {
-    		retVal = myTurtle.getTurtleVisibility() ? 1 : 0; 
-    	}
+    	double retVal = getActiveTurtles().getTurtleVisibility() ? 1 : 0; 
 	
 	return retVal; 
     }

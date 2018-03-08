@@ -12,7 +12,7 @@ class ShowTurtleCommand extends Command{
      * Creates new instance of command, which can be executed at the correct time
      * @param turtle is turtle who should be made visible
      */
-    protected ShowTurtleCommand(List<Turtle> turtles) {
+    protected ShowTurtleCommand(Turtle turtles) {
     		setActiveTurtles(turtles);
     }
     /**
@@ -21,9 +21,7 @@ class ShowTurtleCommand extends Command{
      */
     @Override 
     protected double execute() {
-    	for(Turtle myTurtle: getActiveTurtles()) {
-    		myTurtle.showTurtle();
-    	}
+    	getActiveTurtles().showTurtle();
 	return 1;
     }
 

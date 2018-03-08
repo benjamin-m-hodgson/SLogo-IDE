@@ -93,6 +93,7 @@ class CommandTreeBuilder {
 		for (CommandNode n : myCommandTrees) {
 			System.out.println(n.toString());
 		}
+		System.out.println("DONE PRINTING OUT COMM TREES --------------------------------");
 
 		//	System.out.println("number of command trees" + myCommandTrees.size());
 		if(shouldExecute) {

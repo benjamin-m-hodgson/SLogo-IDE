@@ -12,7 +12,7 @@ class PenUpCommand extends Command{
      * Creates new instance of command, which can be executed at the correct time
      * @param turtle is turtle whose pen should be put up
      */
-    protected PenUpCommand(List<Turtle> turtles) {
+    protected PenUpCommand(Turtle turtles) {
     		setActiveTurtles(turtles);
     }
     /**
@@ -21,9 +21,7 @@ class PenUpCommand extends Command{
      */
     @Override
     protected double execute() {
-    	for(Turtle myTurtle : getActiveTurtles()) {
-    		myTurtle.hidePen();
-    	}
+    	getActiveTurtles().hidePen();
 	return 0;
     }
 

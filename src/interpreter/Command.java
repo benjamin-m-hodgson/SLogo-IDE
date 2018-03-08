@@ -10,19 +10,19 @@ abstract class Command {
 	 * Executes Commands by changing objects in the back-end (Turtles/Pens) or retrieving information
 	 * @return double corresponding to return value of this command in SLogo
 	 */
-	abstract double execute();
+	abstract double execute() ;
 	
 	protected double getCommandValue(Command command, Map<String, Double> varsMap, Turtle turtle) {
 		if(command instanceof StringCommand) {
 			return getValueOfVar(((StringCommand)command).toString(), varsMap);
 		}
-		else if(command instanceof IDQueryCommand) { //|| command instanceof XCoordinateQueryCommand || command instanceof YCoordinateQueryCommand || command instanceof HeadingQueryCommand || command instanceof IsPenDownQueryCommand || command instanceof IsShowingQueryCommand) {
-			SingleTurtle singleTurtle = turtle.toSingleTurtle();
-			command.setActiveTurtles(singleTurtle);
-			return command.execute();
-		}
+//		else if(command instanceof IDQueryCommand || command instanceof XCoordinateQueryCommand || command instanceof YCoordinateQueryCommand || command instanceof HeadingQueryCommand || command instanceof IsPenDownQueryCommand || command instanceof IsShowingQueryCommand) {
+//			command.setActiveTurtles(turtle);
+//			return command.execute();
+//		}
 		else {
 			//TODO: might want single turtle here too? tbd!!
+			command.setActiveTurtles(turtle);
 			return command.execute();
 		}
 	}

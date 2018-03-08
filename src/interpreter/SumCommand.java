@@ -16,20 +16,20 @@ class SumCommand extends Command{
     private Command expr2Command;
     private Map<String, Double> myVariables; 
 
-    protected SumCommand(Command expr1, Command expr2 ,Map<String, Double> variables, List<Turtle> turtles) {
+    protected SumCommand(Command expr1, Command expr2 ,Map<String, Double> variables, Turtle turtles) {
     		setActiveTurtles(turtles);
     		expr1Command = expr1;
     		expr2Command = expr2;
     		myVariables = variables;
     }
     @Override
-    protected double execute() throws UnidentifiedCommandException{
-    	double EXPR1 = 0.0;
-    	double EXPR2 = -1.0;
-    	for (Turtle myTurtle : getActiveTurtles()) {
-    		EXPR1 = getCommandValue(expr1Command, myVariables, myTurtle);
-    		EXPR2 = getCommandValue(expr2Command, myVariables, myTurtle);
-    	}
-	return EXPR1 + EXPR2;
+    protected double execute(){
+    	double EXPR1Ret = getCommandValue(expr1Command, myVariables, getActiveTurtles().toSingleTurtle());
+    	double EXPR2Ret = getCommandValue(expr2Command, myVariables, getActiveTurtles().toSingleTurtle());
+    getActiveTurtles().executeSequentially(myTurtle -> {
+    		getCommandValue(expr1Command, myVariables, myTurtle);
+    		getCommandValue(expr2Command, myVariables, myTurtle);
+    	});
+	return EXPR1Ret + EXPR2Ret;
     }
 }

@@ -17,7 +17,7 @@ public class ForCommand extends Command{
 		Map<String, Integer> myUserDefComsNumArgs;
 		
 		protected ForCommand(Command variable, Command start, Command end, Command increment, Command repeated, Turtle turtle,
-				Map<String, Double> vars, Map<String, String> userDefComs, Map<String, Integer> userDefComsNumArgs) {
+				Turtle activeTurtles, Map<String, Double> vars, Map<String, String> userDefComs, Map<String, Integer> userDefComsNumArgs) {
 			myTempVar = ((StringCommand)variable).getString();
 			myToExecute = ((StringCommand)repeated).getString();
 			myStartCommand = start;
@@ -25,9 +25,10 @@ public class ForCommand extends Command{
 			myIncrement = increment;
 			myBuilder = new CommandTreeBuilder(vars, userDefComs, userDefComsNumArgs);
 			myTurtle = turtle;
+			setActiveTurtles(activeTurtles);
 		}
 		@Override
-		public double execute() throws UnidentifiedCommandException {
+		public double execute(){
 			String[] executeArray = myToExecute.split(" ");
 			double start = 0;
 			try {
@@ -47,14 +48,10 @@ public class ForCommand extends Command{
 					System.out.println("executing " + executeArray[i]);
 				}
 				try {
-					ArrayList<Turtle> turtleList = new ArrayList<Turtle>();
-					turtleList.add(myTurtle);
-					returnVal = myBuilder.buildAndExecute(turtleList, executeArray, true);
+					returnVal = myBuilder.buildAndExecute(myTurtle, getActiveTurtles(), executeArray, true);
 				}
 				catch(Exception e){
-					//TODO fix this! Don't just throw another exception
-					e.printStackTrace();
-					throw new UnidentifiedCommandException("There was a problem within one of your loops.");
+					return returnVal;
 				}
 
 			}

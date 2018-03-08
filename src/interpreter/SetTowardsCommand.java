@@ -21,7 +21,7 @@ class SetTowardsCommand extends Command{
      * @param y is command that will, when executed, return the y-coordinate of the point turtle is turning toward
      * @param turtle is turtle that must be turned
      */
-    protected SetTowardsCommand(Command x, Command y, List<Turtle> turtles,Map<String, Double> variables) {
+    protected SetTowardsCommand(Command x, Command y, Turtle turtles,Map<String, Double> variables) {
 	myXCommand = x;
 	myYCommand = y;
 	this.setActiveTurtles(turtles);
@@ -34,18 +34,17 @@ class SetTowardsCommand extends Command{
      * @return number of degrees turned
      * @see interpreter.Command#execute()
      */
-    protected double execute() throws UnidentifiedCommandException {
-    	double heading = 0.0;
-    	double oldAngle = 1.0;
-    	for(Turtle myTurtle : getActiveTurtles()) {
+    protected double execute() {
+    double oldAngleRet = getActiveTurtles().toSingleTurtle().getAngle();
+    	getActiveTurtles().executeSequentially(myTurtle -> {
     		double xTowards = getCommandValue(myXCommand, myVariables, myTurtle);
     		double yTowards = getCommandValue(myYCommand, myVariables, myTurtle);
-    		double dist = myTurtle.calcDistance(myTurtle.getX(), myTurtle.getY(), xTowards, yTowards);
+    		double dist = myTurtle.toSingleTurtle().calcDistance(myTurtle.getX(), myTurtle.getY(), xTowards, yTowards);
     		if(dist == 0) {
-    		    return 0;
+    		    return;
     		}
-    		oldAngle = myTurtle.getAngle();
-    		heading = Math.toDegrees(Math.asin((xTowards-myTurtle.getX())/dist));
+    		double oldAngle = myTurtle.getAngle();
+    		double heading = Math.toDegrees(Math.asin((xTowards-myTurtle.getX())/dist));
     		System.out.println("absolute angle" + heading);
     		if(!upperHemisphere(xTowards, yTowards, myTurtle)) {
     		    if(heading>0) {
@@ -58,7 +57,6 @@ class SetTowardsCommand extends Command{
     			heading = heading + 180;
     		    }
     		    myTurtle.setAngle(heading);
-    		    return (heading-oldAngle);
     		}
     		else if((oldAngle==heading)) {
     		    if(!sameDirection(oldAngle, xTowards, yTowards, myTurtle)) {
@@ -66,9 +64,9 @@ class SetTowardsCommand extends Command{
     		    }
     		}
     		myTurtle.setAngle(heading);
-    	}
+    	});
 
-	return (heading-oldAngle);
+	return (getActiveTurtles().getAngle()-oldAngleRet);
 
     }
     private boolean sameDirection(double heading, double x, double y, Turtle turtle) {

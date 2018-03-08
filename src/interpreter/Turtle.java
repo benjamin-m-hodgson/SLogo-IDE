@@ -81,5 +81,5 @@ abstract class Turtle {
 	protected abstract SingleTurtle toSingleTurtle();
 	protected abstract int size();
 	protected abstract void executeSequentially(Consumer<Turtle> action);
-	
+	protected abstract double calcDistance(double oldX, double oldY, double x, double y);
 }

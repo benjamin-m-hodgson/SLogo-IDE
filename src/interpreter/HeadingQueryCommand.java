@@ -1,6 +1,5 @@
 package interpreter;
 
-import java.util.List;
 
 /**
  * Command class that retrieves and returns the angle of a turtle (relative to the center of the screen being
@@ -13,7 +12,7 @@ class HeadingQueryCommand extends Command{
     /**
      * @param turtle is turtle whose angle is desired
      */
-    protected HeadingQueryCommand(List<Turtle> turtles) {
+    protected HeadingQueryCommand(Turtle turtles) {
     		setActiveTurtles(turtles);
     }
     /**
@@ -22,10 +21,7 @@ class HeadingQueryCommand extends Command{
      */
     @Override
     protected double execute() {
-    		double returnVal = -1.0;
-    		for( Turtle myTurtle : getActiveTurtles()) {
-    			returnVal = (myTurtle.getAngle()%360);
-    		}
+    		double returnVal = getActiveTurtles().getAngle()%360;
     		return returnVal;
     }
 }

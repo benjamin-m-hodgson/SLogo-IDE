@@ -16,20 +16,20 @@ class PowerCommand extends Command{
     private Command powerCommand;
     private Map<String, Double> myVariables; 
 
-    protected PowerCommand(Command base, Command power, Map<String, Double> variables, List<Turtle> turtles) {
+    protected PowerCommand(Command base, Command power, Map<String, Double> variables, Turtle turtles) {
 	baseCommand = base;
 	powerCommand = power;
 	myVariables = variables;
 	setActiveTurtles(turtles);
     }
     @Override
-    protected double execute() throws UnidentifiedCommandException{
-    	double BASE = -1.0;
-    	double POWER = 0;
-    	for(Turtle myTurtle : getActiveTurtles()) {
-    		BASE = getCommandValue(baseCommand, myVariables, myTurtle);
-    		POWER = getCommandValue(powerCommand, myVariables, myTurtle);
-    	}
+    protected double execute(){
+    	double BASE = getCommandValue(baseCommand, myVariables, getActiveTurtles().toSingleTurtle());
+    	double POWER = getCommandValue(powerCommand, myVariables, getActiveTurtles().toSingleTurtle());
+    	getActiveTurtles().executeSequentially(myTurtle -> {
+    		getCommandValue(baseCommand, myVariables, myTurtle);
+    		getCommandValue(powerCommand, myVariables, myTurtle);
+    	});
 	return Math.pow(BASE, POWER);
     }
 }

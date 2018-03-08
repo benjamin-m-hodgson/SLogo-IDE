@@ -15,7 +15,7 @@ class HomeCommand extends Command{
      * Creates a new instance of the command to be executed at the proper time
      * @param turtle
      */
-    protected HomeCommand(List<Turtle> turtles) {
+    protected HomeCommand(Turtle turtles) {
     		setActiveTurtles(turtles);
     }
     /**
@@ -26,10 +26,8 @@ class HomeCommand extends Command{
     @Override
     protected double execute() {
     double returnVal = -1.0;
-    for(Turtle myTurtle: getActiveTurtles()) {
-    		myTurtle.setAngle(0);
-    		returnVal = myTurtle.setXY(0, 0);
-    }
+    		getActiveTurtles().setAngle(0);
+    		returnVal = getActiveTurtles().setXY(0, 0);
     		return returnVal;
     }
 }
