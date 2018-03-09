@@ -109,7 +109,7 @@ public class TurtlePanel implements Panel {
 			}
 		}
 	}
-
+	
 	private Image getTurtleImage(String selected) {
 		String currentDir = System.getProperty("user.dir");
 		File turtleFile = new File(currentDir + File.separator + "turtleimages" 

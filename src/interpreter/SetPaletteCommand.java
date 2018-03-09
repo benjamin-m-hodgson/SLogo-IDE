@@ -29,7 +29,7 @@ class SetPaletteCommand extends Command {
 	}
 	
 	@Override
-	double execute() {
+	double execute() throws UnidentifiedCommandException{
 		
 		double idx = getCommandValue(myIdx, myVars, new SingleTurtle());
 		double r = getCommandValue(myR, myVars, new SingleTurtle());

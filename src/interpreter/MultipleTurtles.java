@@ -31,6 +31,15 @@ public class MultipleTurtles extends Turtle{
 			return false;
 		}
 	}
+	protected SingleTurtle getTurtleWithID(String ID) throws UnidentifiedCommandException{
+		try {
+			double id = Double.parseDouble(ID);
+			return myActiveTurtleHolder.getTurtleWithID(id);
+		}
+		catch(NumberFormatException e) {
+			throw new UnidentifiedCommandException("You entered any invalid ID");
+		}
+	}
 	protected int size() {
 		return myActiveTurtleHolder.getCopyTurtleList().size();
 	}
@@ -40,8 +49,10 @@ public class MultipleTurtles extends Turtle{
 	protected SingleTurtle toSingleTurtle() {
 		return getLastTurtle();
 	}
-	protected void addTurtle(SingleTurtle turtle) {
+	protected MultipleTurtles addTurtle(SingleTurtle turtle) {
 		myActiveTurtleHolder.addTurtle(turtle);
+		myActiveTurtleHolder.resetTemporaryTurtles();
+		return this;
 	}
 	public List<SingleTurtle> getAllImmutableTurtles(){
 		return myActiveTurtleHolder.getCopyTurtleList();

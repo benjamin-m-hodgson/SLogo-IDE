@@ -11,7 +11,7 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-abstract class Turtle {
+public abstract class Turtle {
 
 	// GETTERS
 	/**
@@ -46,6 +46,7 @@ abstract class Turtle {
 
 	protected abstract boolean getPenVisibility();
 
+	protected abstract boolean containsTurtleWithID(String ID);
 
 
 	// SETTERS
@@ -94,4 +95,8 @@ abstract class Turtle {
 	protected abstract int size();
 	protected abstract void executeSequentially(Consumer<Turtle> action);
 	protected abstract double calcDistance(double oldX, double oldY, double x, double y);
+	protected abstract MultipleTurtles addTurtle(SingleTurtle turtle);
+	protected abstract SingleTurtle getTurtleWithID(String id) throws UnidentifiedCommandException;
+//	protected abstract MultipleTurtles getTurtlesWithAttribute(String query, double value);
 }
+
