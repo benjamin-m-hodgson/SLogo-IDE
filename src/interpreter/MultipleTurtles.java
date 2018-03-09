@@ -4,6 +4,9 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.function.Consumer;
 
+import javafx.scene.Group;
+import javafx.scene.image.ImageView;
+
 public class MultipleTurtles extends Turtle{
 		TurtleHolder myActiveTurtleHolder;
 	public MultipleTurtles(List<SingleTurtle> turtles) {
@@ -60,6 +63,12 @@ public class MultipleTurtles extends Turtle{
 	}
 	public List<SingleTurtle> getAllImmutableTurtles(){
 		return myActiveTurtleHolder.getCopyTurtleList();
+	}
+	protected ImageView getTurtleWithIDImageView(double ID) {
+		return myActiveTurtleHolder.getTurtleWithIDImageView(ID);
+	}
+	protected Group getTurtleWithIDPenLines(double ID) {
+		return myActiveTurtleHolder.getTurtleWithIDPenLines(ID);
 	}
 	
 	/**
