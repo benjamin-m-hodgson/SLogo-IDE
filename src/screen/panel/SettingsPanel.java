@@ -54,7 +54,7 @@ public class SettingsPanel extends SpecificPanel  {
 	private final String[] DROPDOWN_IDS = {"languageSettingsChooser", "backgroundColorChooser", "penColorChooser", "turtleImageChooser", "preferencesChooser"};
 	private final String[] BUTTON_IDS = {"newworkspaceButton", "saveprefButton"};
 
-	public SettingsPanel( BorderPane pane, UserScreen userScreen, FileIO fileReaderIn) {
+	public SettingsPanel(BorderPane pane, UserScreen userScreen, FileIO fileReaderIn) {
 		PANE = pane;
 		USER_SCREEN = userScreen;
 		fileReader = fileReaderIn;

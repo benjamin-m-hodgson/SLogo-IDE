@@ -157,7 +157,6 @@ public class UserScreen implements Screen {
 	penColor = penColor.substring(1, penColor.length());
 	System.out.println(penColor);
 	PROGRAM_CONTROLLER.changePenColorHex(Integer.parseInt(penColor,16));
-	
 	FILE_READER.bundleUpdateToNewLanguage(preferences.get("language"));
 
 
