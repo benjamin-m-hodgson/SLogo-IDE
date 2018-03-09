@@ -90,7 +90,7 @@ import java.util.function.Consumer;
 					hideTurtle();
 				}
 				try {
-				setShape("" + oneTurtle.getImageIdx());
+				setShape(Double.toString(oneTurtle.getImageIdx()));
 				}
 				catch(UnidentifiedCommandException |MalformedURLException | MissingInformationException | BadFormatException e) {
 					throw new UnidentifiedCommandError(e.getMessage());
@@ -388,14 +388,6 @@ import java.util.function.Consumer;
 			 */
 			private void putPenUp() {
 				myIsDown = false;
-			}
-
-
-			/**
-			 * @return current width of pen lines
-			 */
-			private double getWidth() {
-				return myWidth;
 			}
 
 			/**

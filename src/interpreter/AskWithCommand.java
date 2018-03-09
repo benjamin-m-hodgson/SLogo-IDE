@@ -1,6 +1,7 @@
 package interpreter;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class AskWithCommand extends Command {
@@ -21,6 +22,26 @@ public class AskWithCommand extends Command {
 		String[] criteria = criteriaString.split(" ");
 		String actionString = ((StringCommand) myActionCommand).getString();
 		String[] actions = actionString.split(" ");
+		List<Double> iDsToUse = getIDsMatching(criteria);
+		ArrayList<SingleTurtle> tempTurtles = new ArrayList<>();
+		for(double iD : iDsToUse) {
+			tempTurtles.add(myAllTurtles.getTurtleWithID(Double.toString(iD)));
+		}
+		MultipleTurtles tempActive = new MultipleTurtles(tempTurtles);
+		double returnVal = -1;
+		if(iDsToUse.isEmpty()) {
+			return returnVal;
+		}
+		try {
+			returnVal =  myBuilder.buildAndExecute(myAllTurtles, tempActive, actions, true);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw new UnidentifiedCommandException(e.getMessage());
+		}
+		return returnVal;
+	}
+	protected List<Double> getIDsMatching(String[] criteria) throws UnidentifiedCommandException {
 		ArrayList<Double> iDsToUse = new ArrayList<>();
 		for(SingleTurtle turtleSingle : myAllTurtles.getAllImmutableTurtles()) {
 			ArrayList<SingleTurtle> singleTurtleList = new ArrayList<>();
@@ -37,23 +58,6 @@ public class AskWithCommand extends Command {
 				iDsToUse.add(turtle.getID());
 			}
 		}
-		ArrayList<SingleTurtle> tempTurtles = new ArrayList<>();
-		for(double iD : iDsToUse) {
-			tempTurtles.add(myAllTurtles.getTurtleWithID("" + iD));
-		}
-		MultipleTurtles tempActive = new MultipleTurtles(tempTurtles);
-		double returnVal = -1;
-		if(iDsToUse.size()==0) {
-			return returnVal;
-		}
-		try {
-			returnVal =  myBuilder.buildAndExecute(myAllTurtles, tempActive, actions, true);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			throw new UnidentifiedCommandException(e.getMessage());
-		}
-		return returnVal;
-		
+		return iDsToUse;
 	}
 }
