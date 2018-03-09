@@ -141,16 +141,12 @@ import java.util.function.Consumer;
 			File turtleFile = new File(DEFAULT_IMAGES_FOLDER  + matchingShape + DEFAULT_IMAGE_SUFFIX);
 			setImage(turtleFile.toURI().toURL().toExternalForm());
 			myImageIdx = Double.parseDouble(idxKey);
-			System.out.println("successfully changed to "+myImageIdx);
 		}
 		
 		protected void setOldXY(double oldX, double oldY) {
 			myOldX = oldX;
 			myOldY = oldY;
 		}
-//		protected void setImageIdx(double imgIdx) {
-//			myImageIdx = imgIdx; 		
-//		}
 
 
 		// GETTERS

@@ -12,6 +12,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
+import java.util.regex.Pattern;
+
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -50,6 +53,7 @@ public class Controller {
 	public static final String DEFAULT_PROPSFILE_SUFFIX = ".properties";
 	public static final String DEFAULT_SHAPES_FILE = "interpreter/TurtleShapes";
 	public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
+	public static final String DEFAULT_COLORPALETTENAMES_FILE = "interpreter/ColorPaletteNames";
 	private String DEFAULT_CSS = Controller.class.getClassLoader().
 			getResource("default.css").toExternalForm(); 
 	private ResourceBundle CURRENT_TEXT_DISPLAY;
@@ -209,15 +213,15 @@ public class Controller {
 		myTextFieldParser.loadSavedVariables(); 
 	}
 	
-	/**
-	 * Returns information about default & user-defined colors (in hex) corresponding to indices 
-	 * @return Map of String indices to String hex colors
-	 */
-	public Map<String, String> getColors() {
-		PropertiesReader pw = new PropertiesReader(DEFAULT_FILEPATH_PREFIX+DEFAULT_COLORPALETTE_FILE+DEFAULT_PROPSFILE_SUFFIX);
-		Map<String, String> colorsMap = pw.read(); 
-		return colorsMap; 
-	}
+//	/**
+//	 * Returns information about default & user-defined colors (in hex) corresponding to indices 
+//	 * @return Map of String indices to String hex colors
+//	 */
+//	public Map<String, String> getColors() {
+//		PropertiesReader pw = new PropertiesReader(DEFAULT_FILEPATH_PREFIX+DEFAULT_COLORPALETTE_FILE+DEFAULT_PROPSFILE_SUFFIX);
+//		Map<String, String> colorsMap = pw.read(); 
+//		return colorsMap; 
+//	}
 	
 	/**
 	 * Returns information about default shape options for Turtle corresponding to indices
@@ -228,7 +232,13 @@ public class Controller {
 		Map<String, String> shapesMap = pw.read(); 
 		return shapesMap; 
 	}
-
+	
+	public Map<String, String> getColors() {
+		PropertiesReader pw = new PropertiesReader(DEFAULT_FILEPATH_PREFIX+DEFAULT_COLORPALETTENAMES_FILE+DEFAULT_PROPSFILE_SUFFIX);
+		Map<String, String> shapesMap = pw.read(); 
+		return shapesMap; 
+	}
+		
 	/**
 	 * 
 	 * @return ReadOnlyDoubleProperty: the height property of the application
@@ -431,6 +441,19 @@ public class Controller {
 	 */
 	public double parseInput(String userTextInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		return myTextFieldParser.parseText(userTextInput);
+	}
+	
+	public double parseSettingInput(String settingCommand) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		String[] settingCommandArray = settingCommand.split("\\s+");
+		String commandName = settingCommandArray[0];
+		String commandArg = settingCommandArray[1];
+		RegexMatcher rm = new RegexMatcher(CURRENT_LANGUAGE);
+		String appropriateLangCommand = rm.findMatchingVal(commandName);
+		if (appropriateLangCommand.contains("|")) {
+			String[] splitOnOr = appropriateLangCommand.split("\\|"); 
+			appropriateLangCommand = (splitOnOr[0]);
+		}
+		return myTextFieldParser.parseText(appropriateLangCommand+" "+commandArg);
 	}
 
 	/**
