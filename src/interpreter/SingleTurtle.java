@@ -70,6 +70,11 @@ import java.util.function.Consumer;
 		public void executeSequentially(Consumer<Turtle> action){
 			action.accept(this);
 		}
+		protected List<SingleTurtle> getAllImmutableTurtles(){
+			ArrayList<SingleTurtle> turtleList = new ArrayList<>();
+			turtleList.add(this.getCopy());
+			return turtleList;
+		}
 		protected Turtle replaceTurtles(List<SingleTurtle> turtle) {
 			if(turtle.size()>1) {
 				return new MultipleTurtles(turtle);

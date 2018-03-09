@@ -84,7 +84,7 @@ public class TurtlePanel implements Panel {
 	    // add button click event
 	    String turtleId = Integer.toString(TURTLE_COUNT);
 	    turtleView.setOnMousePressed((arg0)-> USER_PANE.setRight(
-		    new TurtleInfoPanel(USER_PANE, turtleId, FILE_READER).getPanel()));
+		    new TurtleInfoPanel(USER_PANE, USER_SCREEN, turtleId, FILE_READER).getPanel()));
 	    panel.getChildren().add(turtleView);
 	    Group penLines = new Group();
 	    penLines.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));

@@ -17,8 +17,9 @@ class TellCommand extends Command{
 	    		//TODO: clear turtles in a safe manner?????
 	    		ArrayList<SingleTurtle> newlyActivated = new ArrayList<>();
 	    		for(int k = 0; k<myIDs.length; k+=1) {
+	    			System.out.println("ID WE HAVE" + myIDs[k]);
 	    			if(!myAllTurtles.containsTurtleWithID(myIDs[k])) {
-	    				System.out.println("thinks this is id" + myIDs[k]);
+	    				System.out.println("GETTING TO NOT ALIVE" + myIDs[k]);
 	    				try {
 	    				SingleTurtle newTurtle = new SingleTurtle(Double.parseDouble(myIDs[k]));
 	    				myAllTurtles.addTurtle(newTurtle);
@@ -28,7 +29,8 @@ class TellCommand extends Command{
 	    					throw new UnidentifiedCommandException("Invalid ID");
 	    				}
 	    			}
-	    			else if(!getActiveTurtles().containsTurtleWithID(myIDs[k])){
+	    			else{
+	    				System.out.println("GETTING TO ALIVE BUT NOT ACTIVE" + myIDs[k]);
 	    				newlyActivated.add(myAllTurtles.getTurtleWithID(myIDs[k]));
 	    			}
 	    		}
