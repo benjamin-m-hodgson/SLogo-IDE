@@ -12,8 +12,8 @@ import java.util.function.Consumer;
 	import javafx.scene.shape.Line;
 
 	/**
-	 * @author Sarahbland - Pen inner class
-	 * @author Susie Choi - Surrounding Turtle class
+	 * @author Sarahbland - Pen inner class and adapting to extend abstract class
+	 * @author Susie Choi - Surrounding Turtle class (original single turtle implementation)
 	 *
 	 */
 	public class SingleTurtle extends Turtle{
@@ -40,8 +40,6 @@ import java.util.function.Consumer;
 
 		private double myOldX;
 		private double myOldY;
-		private double myOldImageX;
-		private double myOldImageY;
 		private double myX;
 		private double myY; 
 		private double myAngle; 
@@ -241,8 +239,6 @@ import java.util.function.Consumer;
 		}
 
 		protected double setXY(double x, double y) {
-			myOldImageX = myImage.getX();
-			myOldImageY = myImage.getY();
 			setOld();
 			myX = x; 
 			myY = y; 
