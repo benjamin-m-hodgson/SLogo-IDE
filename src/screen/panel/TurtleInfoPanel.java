@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -26,12 +27,15 @@ public class TurtleInfoPanel extends SpecificPanel {
     private final int MOVEMENT_MAX = Integer.MAX_VALUE;
     private Parent PANEL;
     private Controller PROGRAM_CONTROLLER;
-    private BorderPane USER_SCREEN;
+    private BorderPane USER_PANE;
+    private UserScreen USER_SCREEN;
     private String TURTLE_ID;
     
-    public TurtleInfoPanel(Controller programController, BorderPane pane, String id) {
+    public TurtleInfoPanel(Controller programController, BorderPane pane, UserScreen userScreen, 
+	    String id) {
 	PROGRAM_CONTROLLER = programController;
-	USER_SCREEN = pane;
+	USER_PANE = pane;
+	USER_SCREEN = userScreen;
 	TURTLE_ID = id;
     }
     
@@ -81,8 +85,9 @@ public class TurtleInfoPanel extends SpecificPanel {
 	rightButton.setId("rightButton");
 	rightButton.setOnMouseClicked((arg0) -> moveRight(movementField.getText()));
 	HBox movementRow = new HBox(leftButton, movementField, rightButton);
+	movementRow.setId("moveBox");
 	VBox movementButtons = new VBox(upButton, movementRow, downButton);
-	movementButtons.setAlignment(Pos.CENTER);
+	movementButtons.setId("moveBox");
 	return movementButtons;
     }
     
@@ -100,6 +105,7 @@ public class TurtleInfoPanel extends SpecificPanel {
 	numberTextField.setId("numberTextField");
 	String promptText = PROGRAM_CONTROLLER.resourceDisplayText("MovePrompt");
 	numberTextField.setPromptText(promptText);
+	numberTextField.setTooltip(new Tooltip(promptText));
 	// clear when the mouse clicks on the text field
 	numberTextField.setOnMouseClicked(new EventHandler<MouseEvent>() {
 	    @Override
@@ -118,12 +124,12 @@ public class TurtleInfoPanel extends SpecificPanel {
 			    numberTextField.setText(Integer.toString(sizeVal));
 			}
 			else {
-			    numberTextField.setText(numberTextField.getPromptText());
+			    numberTextField.clear();
 			}
 
 		    }
 		    catch(Exception e) {
-			numberTextField.setText(numberTextField.getPromptText());
+			numberTextField.clear();
 		    }
 		    root.requestFocus();
 		}
@@ -135,7 +141,11 @@ public class TurtleInfoPanel extends SpecificPanel {
     private void moveUp(String value) {
 	if (!value.isEmpty()) {
 	    try {
-		Integer.parseInt(value);
+		int amount = Integer.parseInt(value);
+		String command = "Forward " + amount;
+		//PROGRAM_CONTROLLER.parseInput("Ask [ " + TURTLE_ID + " ] [ " + command + " ]");
+		PROGRAM_CONTROLLER.parseInput(command);
+		USER_SCREEN.addCommand(command, value);
 	    }
 	    catch(Exception e) {
 		// do nothing, don't move the turtle
@@ -146,7 +156,11 @@ public class TurtleInfoPanel extends SpecificPanel {
     private void moveDown(String value) {
 	if (!value.isEmpty()) {
 	    try {
-		Integer.parseInt(value);
+		int amount = Integer.parseInt(value);
+		String command = "Backward " + amount;
+		//PROGRAM_CONTROLLER.parseInput("Ask [ " + TURTLE_ID + " ] [ " + command + " ]");
+		PROGRAM_CONTROLLER.parseInput(command);
+		USER_SCREEN.addCommand(command, value);
 	    }
 	    catch(Exception e) {
 		// do nothing, don't move the turtle
@@ -157,7 +171,11 @@ public class TurtleInfoPanel extends SpecificPanel {
     private void moveLeft(String value) {
 	if (!value.isEmpty()) {
 	    try {
-		Integer.parseInt(value);
+		int amount = Integer.parseInt(value);
+		String command = "Left " + amount;
+		//PROGRAM_CONTROLLER.parseInput("Ask [ " + TURTLE_ID + " ] [ " + command + " ]");
+		PROGRAM_CONTROLLER.parseInput(command);
+		USER_SCREEN.addCommand(command, value);
 	    }
 	    catch(Exception e) {
 		// do nothing, don't move the turtle
@@ -168,7 +186,11 @@ public class TurtleInfoPanel extends SpecificPanel {
     private void moveRight(String value) {
 	if (!value.isEmpty()) {
 	    try {
-		Integer.parseInt(value);
+		int amount = Integer.parseInt(value);
+		String command = "Right " + amount;
+		//PROGRAM_CONTROLLER.parseInput("Ask [ " + TURTLE_ID + " ] [ " + command + " ]");
+		PROGRAM_CONTROLLER.parseInput(command);
+		USER_SCREEN.addCommand(command, value);
 	    }
 	    catch(Exception e) {
 		// do nothing, don't move the turtle
@@ -178,7 +200,7 @@ public class TurtleInfoPanel extends SpecificPanel {
 
     @Override
     protected BorderPane getPane() {
-	return USER_SCREEN;
+	return USER_PANE;
     }
 
     @Override
@@ -190,7 +212,7 @@ public class TurtleInfoPanel extends SpecificPanel {
     @Override
     protected UserScreen getUserScreen() {
 	// TODO Auto-generated method stub
-	return null;
+	return USER_SCREEN;
     }
 
 }

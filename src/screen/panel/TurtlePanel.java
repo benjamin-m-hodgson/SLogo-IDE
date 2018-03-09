@@ -18,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import screen.UserScreen;
 
 
 public class TurtlePanel implements Panel {
@@ -27,15 +28,17 @@ public class TurtlePanel implements Panel {
     private BorderPane PANEL;
     private BorderPane USER_PANE;
     private ScrollPane SCROLL_PANE;
+    private UserScreen USER_SCREEN;
     private Controller PROGRAM_CONTROLLER;
     private String DEFAULT_COLOR_HEXCODE = "2d3436";
     private HBox ErrorHolder;
     private List<ImageView> TURTLE_LIST;
     private int TURTLE_COUNT = 1;
 
-    public TurtlePanel(Controller programController, BorderPane pane) {
+    public TurtlePanel(Controller programController, BorderPane pane, UserScreen userScreen) {
 	PROGRAM_CONTROLLER = programController;
 	USER_PANE = pane;
+	USER_SCREEN = userScreen;
 	TURTLE_LIST = new ArrayList<ImageView>();
     }
 
@@ -81,13 +84,15 @@ public class TurtlePanel implements Panel {
 	    // add button click event
 	    String turtleId = Integer.toString(TURTLE_COUNT);
 	    turtleView.setOnMousePressed((arg0)-> USER_PANE.setRight(
-		    new TurtleInfoPanel(PROGRAM_CONTROLLER, USER_PANE, turtleId).getPanel()));
+		    new TurtleInfoPanel(PROGRAM_CONTROLLER, USER_PANE, USER_SCREEN, 
+			    turtleId).getPanel()));
 	    panel.getChildren().add(turtleView);
 	    Group penLines = new Group();
 	    penLines.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
 	    penLines.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
 	    panel.getChildren().add(penLines);
-	    PROGRAM_CONTROLLER.makeNewTurtleCommand(turtleId, turtleView, DEFAULT_COLOR_HEXCODE , penLines);
+	    PROGRAM_CONTROLLER.makeNewTurtleCommand(turtleId, turtleView, 
+		    DEFAULT_COLOR_HEXCODE, penLines);
 	    TURTLE_COUNT++;
 	}
 	catch (Exception e) {

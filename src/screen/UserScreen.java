@@ -47,7 +47,7 @@ public class UserScreen implements Screen {
 	rootPane.setId("userScreenRoot");
 	rootPane.setBottom(new InputPanel(PROGRAM_CONTROLLER, this).getPanel());
 	rootPane.setRight(new InfoPanel(PROGRAM_CONTROLLER, rootPane, this).getPanel());
-	TURTLE_PANEL = new TurtlePanel(PROGRAM_CONTROLLER, rootPane);
+	TURTLE_PANEL = new TurtlePanel(PROGRAM_CONTROLLER, rootPane, this);
 	rootPane.setCenter(TURTLE_PANEL.getPanel());
 	ROOT = rootPane;
     }

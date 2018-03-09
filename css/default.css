@@ -481,6 +481,28 @@
 	-fx-background-radius: 2em;
 }
 /******************************************************************************************/
+/* The text field where the user can enter custom cell sizes */
+/******************************************************************************************/
+#numberTextField {
+	-fx-alignment: center;
+	-fx-pref-height: 20;
+	-fx-pref-width: 50;
+	-fx-background-color: #ffffff;
+	-fx-highlight-fill: #fbcbd7;
+	-fx-highlight-text-fill: #555555;
+	-fx-border-color: rgba(192, 188, 182, 0.5);
+	-fx-text-fill: #555555;
+	-fx-prompt-text-fill: #c0bcb6;
+	-fx-font: 12px 'Nova Flat';
+	-fx-display-caret: false;
+}
+#numberTextField:focused {
+	-fx-border-color: rgba(192, 188, 182, 1.0);
+}
+#numberTextField:disabled {
+	-fx-opacity: 1;
+}
+/******************************************************************************************/
 /* The apply button to apply some visualization property changes */
 /******************************************************************************************/
 #applyButton {
@@ -680,16 +702,71 @@
 #upButton {
 	-fx-background-color: transparent;
 	-fx-background-image: url("/images/UpArrow.png");
-	-fx-background-size: 50px 50px;
+	-fx-background-size: 40px 40px;
 	-fx-background-position: center;
 	-fx-background-repeat: no-repeat;
-	-fx-opacity: 0.6;
+	-fx-opacity: 0.8;
 	-fx-pref-width: 50px;
 	-fx-pref-height: 50px;
 	-fx-focus-color: transparent;
 	-fx-faint-focus-color: transparent;
 }
-#upButton:hover {
+#upButton:hover { 
+	-fx-opacity: 1.0;
+}
+/******************************************************************************************/
+/* The button that moves the turtle down */
+/******************************************************************************************/
+#downButton {
+	-fx-background-color: transparent;
+	-fx-background-image: url("/images/DownArrow.png");
+	-fx-background-size: 40px 40px;
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-opacity: 0.8;
+	-fx-pref-width: 50px;
+	-fx-pref-height: 50px;
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+}
+#downButton:hover { 
+	-fx-opacity: 1.0;
+} 
+/******************************************************************************************/
+/* The button that moves the turtle left */
+/******************************************************************************************/
+#leftButton {
+	-fx-background-color: transparent;
+	-fx-background-image: url("/images/LeftArrow.png");
+	-fx-background-size: 40px 40px;
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-opacity: 0.8;
+	-fx-pref-width: 50px;
+	-fx-pref-height: 50px;
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+}
+#leftButton:hover { 
+	-fx-opacity: 1.0;
+} 
+/******************************************************************************************/
+/* The button that moves the turtle right */
+/******************************************************************************************/
+#rightButton {
+	-fx-background-color: transparent;
+	-fx-background-image: url("/images/RightArrow.png");
+	-fx-background-size: 40px 40px;
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-opacity: 0.8;
+	-fx-pref-width: 50px;
+	-fx-pref-height: 50px;
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+}
+#rightButton:hover { 
+	-fx-opacity: 1.0;
 } 
 /******************************************************************************************/
 /* The drop down choice box the user uses to pick a language to use in the program */
@@ -1896,8 +1973,8 @@
 /******************************************************************************************/
 /* Centers a VBox or HBox used for aligning control object locations */
 /******************************************************************************************/
-#centerBox {
-	-fx-spacing: 20;
+#moveBox {
+	-fx-spacing: 2;
 	-fx-alignment: center;
 	-fx-background-color: #f3f3f3;
 }
