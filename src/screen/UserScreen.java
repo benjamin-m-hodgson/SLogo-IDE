@@ -9,10 +9,14 @@ import java.util.Map;
 
 import interpreter.BadFormatException;
 import interpreter.Controller;
+import interpreter.FileIO;
 import interpreter.MissingInformationException;
 import interpreter.TurtleNotFoundException;
 import interpreter.UnidentifiedCommandException;
+import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import screen.panel.InfoPanel;
 import screen.panel.InputPanel;
@@ -30,15 +34,15 @@ public class UserScreen implements Screen {
     private Parent ROOT;
     private TurtlePanel TURTLE_PANEL;
     private Controller PROGRAM_CONTROLLER;
+    private final FileIO FILE_READER;
     private List<String> INPUT_HISTORY;
     private List<String> OUTPUT_HISTORY;
-    private Map<String, String[]> workspacePreferences;
 
-    public UserScreen(Controller programController) {
+    public UserScreen(Controller programController, FileIO fileReader) {
+	FILE_READER = fileReader;
 	PROGRAM_CONTROLLER = programController;
 	INPUT_HISTORY = new ArrayList<String>();
 	OUTPUT_HISTORY = new ArrayList<String>();
-	workspacePreferences = new HashMap<String, String[]>();
     }
 
 
@@ -46,9 +50,9 @@ public class UserScreen implements Screen {
     public void makeRoot() {
 	BorderPane rootPane = new BorderPane();
 	rootPane.setId("userScreenRoot");
-	rootPane.setBottom(new InputPanel(PROGRAM_CONTROLLER, this).getPanel());
-	rootPane.setRight(new InfoPanel(PROGRAM_CONTROLLER, rootPane, this).getPanel());
-	TURTLE_PANEL = new TurtlePanel(PROGRAM_CONTROLLER, rootPane);
+	rootPane.setBottom(new InputPanel(this, FILE_READER).getPanel());
+	rootPane.setRight(new InfoPanel( rootPane, this, FILE_READER).getPanel());
+	TURTLE_PANEL = new TurtlePanel(this);//, rootPane
 	rootPane.setCenter(TURTLE_PANEL.getPanel());
 	ROOT = rootPane;
     }
@@ -122,7 +126,7 @@ public class UserScreen implements Screen {
 
     @Override
     public void changeBackgroundColor(String color) {
-	String colorCode = PROGRAM_CONTROLLER.changeBackgroundColor(color);
+	String colorCode = FILE_READER.getColorHexfromName(color);
 	TURTLE_PANEL.changeBackgroundColor(colorCode);
     }
 
@@ -144,15 +148,35 @@ public class UserScreen implements Screen {
 
 
     public void applyPreferences(String selected) {
-	Map<String, String> preferences = PROGRAM_CONTROLLER.getWorkspacePreferences(selected);
+	Map<String, String> preferences = FILE_READER.getWorkspacePreferences(selected);
 	TURTLE_PANEL.changeBackgroundColor(preferences.get("backgroundColor"));
 	String penColor = preferences.get("penColor");
 	penColor = penColor.substring(1, penColor.length());
 	System.out.println(penColor);
 	PROGRAM_CONTROLLER.changePenColorHex(Integer.parseInt(penColor,16));
 	
-	PROGRAM_CONTROLLER.changeLanguage(preferences.get("language"));
+	FILE_READER.bundleUpdateToNewLanguage(preferences.get("language"));
 
+    }
+    
+    public Map<String, Double> getVariables(){
+	return PROGRAM_CONTROLLER.getVariables();
+    }
+    
+    public Map<String, String> getUserDefined(){
+	return PROGRAM_CONTROLLER.getUserDefined();
+    }
+    
+    public void throwErrorScreen(String message) {
+	PROGRAM_CONTROLLER.loadErrorScreen(message);
+    }
+    
+    public void makeNewTurtleCommand(String id, ImageView turtleImage, String penColor, Group penLines) {
+	PROGRAM_CONTROLLER.makeNewTurtleCommand(id, turtleImage, penColor, penLines);
+    }
+    
+    public double sendCommandToParse(String inputText) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	 return PROGRAM_CONTROLLER.parseInput(inputText);
     }
 
 

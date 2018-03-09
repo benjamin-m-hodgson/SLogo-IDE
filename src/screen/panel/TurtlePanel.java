@@ -18,37 +18,38 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import screen.UserScreen;
 
 
 public class TurtlePanel extends Panel {
-	// TODO: put in setting.properties file
-	private final double DEFAULT_TURTLE_SIZE = 35;
-	private final String DEFAULT_TURTLE = "Turtle.png";
-	private BorderPane PANEL;
-	private ScrollPane SCROLL_PANE;
-	private Controller PROGRAM_CONTROLLER;
-	private String DEFAULT_COLOR_HEXCODE = "2d3436";
-	private HBox ErrorHolder;
-	private List<ImageView> TURTLE_LIST;
+    // TODO: put in setting.properties file
+    private final double DEFAULT_TURTLE_SIZE = 35;
+    private final String DEFAULT_TURTLE = "Turtle.png";
+    private BorderPane PANEL;
+    private ScrollPane SCROLL_PANE;
+    private String DEFAULT_COLOR_HEXCODE = "2d3436";
+    private HBox ErrorHolder;
+    private List<ImageView> TURTLE_LIST;
+    private final UserScreen USER_SCREEN;
 
-	public TurtlePanel(Controller programController) {
-		PROGRAM_CONTROLLER = programController;
-		TURTLE_LIST = new ArrayList<ImageView>();
-	}
-	  @Override
-	    public void makePanel() {
-		BorderPane layoutPane = new BorderPane();
-		Pane panel = new Pane();
+    public TurtlePanel(UserScreen userScreen) {
+	USER_SCREEN = userScreen;
+	TURTLE_LIST = new ArrayList<ImageView>();
+    }
+    @Override
+    public void makePanel() {
+	BorderPane layoutPane = new BorderPane();
+	Pane panel = new Pane();
 
-		ScrollPane scroll = new ScrollPane(panel);
-		layoutPane.setCenter(scroll);
+	ScrollPane scroll = new ScrollPane(panel);
+	layoutPane.setCenter(scroll);
 
-		SCROLL_PANE = scroll;
-		scroll.setId("turtlePanel");
-		createTurtle(panel, scroll);
+	SCROLL_PANE = scroll;
+	scroll.setId("turtlePanel");
+	createTurtle(panel, scroll);
 
-		PANEL = layoutPane;
-	    }
+	PANEL = layoutPane;
+    }
 
 
     private void createTurtle(Pane panel, ScrollPane scrollPane) {
@@ -72,7 +73,7 @@ public class TurtlePanel extends Panel {
 	    penLines.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
 	    penLines.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
 	    panel.getChildren().add(penLines);
-	    PROGRAM_CONTROLLER.makeNewTurtleCommand("50", turtleView,DEFAULT_COLOR_HEXCODE , penLines);
+	    USER_SCREEN.makeNewTurtleCommand("50", turtleView,DEFAULT_COLOR_HEXCODE , penLines);
 	}
 	catch (Exception e) {
 	    // TODO: make custom exception super class with sub classes for specifications
@@ -130,9 +131,9 @@ public class TurtlePanel extends Panel {
     public void removeErrorButton() {
 	PANEL.getChildren().remove(ErrorHolder);
     }
-    
+
     public void drawTurtleInfoPanel(String id) {
-	
+
     }
 
 }

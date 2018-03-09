@@ -1,9 +1,11 @@
 package screen.panel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import interpreter.BadFormatException;
 import interpreter.Controller;
+import interpreter.FileIO;
 import interpreter.MissingInformationException;
 import interpreter.TurtleNotFoundException;
 import interpreter.UnidentifiedCommandException;
@@ -36,7 +38,6 @@ public class SettingsPanel extends SpecificPanel  {
     private final String COLOR_FOLDER = "colors";
     private final String PREFERENCES_FOLDER = "workspacePreferences";
     private final String TURTLE_IMAGE_FOLDER = "turtleimages";
-    private final Controller PROGRAM_CONTROLLER;
     private final BorderPane PANE;
     private  Button BACK;
     private Button NEW_WORKSPACE;
@@ -49,14 +50,15 @@ public class SettingsPanel extends SpecificPanel  {
     private List<String> colorsUntranslated;
     private List<String> colorsTranslated;
     private UserScreen USER_SCREEN;
+    private final FileIO fileReader;
     private final int DEFAULT_BUTTON_SPACEING = 10;
     private final String[] DROPDOWN_IDS = {"languageSettingsChooser", "backgroundColorChooser", "penColorChooser", "turtleImageChooser", "preferencesChooser"};
     private final String[] BUTTON_IDS = {"newworkspaceButton", "saveprefButton"};
 
-    public SettingsPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
-	PROGRAM_CONTROLLER = programController;
+    public SettingsPanel( BorderPane pane, UserScreen userScreen, FileIO fileReaderIn) {
 	PANE = pane;
 	USER_SCREEN = userScreen;
+	fileReader = fileReaderIn;
 	//		String codeTest = "#2d3436";
 	//		codeTest = codeTest.substring(1, codeTest.length());
 	//		int hexConvert = Integer.parseInt(codeTest,16);
@@ -66,7 +68,7 @@ public class SettingsPanel extends SpecificPanel  {
 
     @Override
     public void makePanel() {
-	BACK = makeBackButton(PROGRAM_CONTROLLER);
+	BACK = makeBackButton(fileReader);
 	NEW_WORKSPACE =  makeNewWorkspaceButton(BUTTON_IDS[0]);
 	LANGUAGE_CHOOSER = makeLanguageChooser(DROPDOWN_IDS[0]);
 	BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[1]);
@@ -86,21 +88,21 @@ public class SettingsPanel extends SpecificPanel  {
      * language for the simulation
      */
     private ComboBox<Object> makeLanguageChooser(String itemID) {
-	String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
+	String selectionPrompt = fileReader.resourceDisplayText(itemID);
 	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
 	Tooltip languageTip = new Tooltip();
 	languageTip.setText(selectionPrompt);
 	dropDownMenu.setTooltip(languageTip);
 	ObservableList<Object> simulationChoices = 
 		FXCollections.observableArrayList(selectionPrompt);
-	simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());
+	simulationChoices.addAll(fileReader.getLanguages());
 	dropDownMenu.setItems(simulationChoices);
 	dropDownMenu.setId(itemID);
 	dropDownMenu.getSelectionModel().selectedIndexProperty()
 	.addListener(( arg0, arg1,  arg2) ->{
 	    String selected = (String) simulationChoices.get((Integer) arg2);
 	    if (!selected.equals(selectionPrompt)) {
-		PROGRAM_CONTROLLER.changeLanguage(selected);
+		fileReader.bundleUpdateToNewLanguage(selected);
 		updatePrompt();
 	    }
 	});
@@ -113,15 +115,15 @@ public class SettingsPanel extends SpecificPanel  {
      * background color for the simulation
      */
     private ComboBox<Object> makeBackgroundColorChooser(String itemID) {
-	String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
+	String selectionPrompt = fileReader.resourceDisplayText(itemID);
 	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
 	Tooltip backgroundTip = new Tooltip();
 	backgroundTip.setText(selectionPrompt);
 	dropDownMenu.setTooltip(backgroundTip);
 	ObservableList<Object> simulationChoices = 
 		FXCollections.observableArrayList(selectionPrompt);
-	colorsUntranslated = PROGRAM_CONTROLLER.getFileNames(COLOR_FOLDER);
-	colorsTranslated = PROGRAM_CONTROLLER.translateColors(colorsUntranslated);
+	colorsUntranslated = fileReader.getFileNames(COLOR_FOLDER);
+	colorsTranslated = translateColors(colorsUntranslated);
 	simulationChoices.addAll(colorsTranslated);
 	dropDownMenu.setItems(simulationChoices);
 	dropDownMenu.setId(itemID);
@@ -134,6 +136,21 @@ public class SettingsPanel extends SpecificPanel  {
 	});
 	return dropDownMenu;
     }
+    
+    /**
+     * Takes a list of String color names and generates a new list of String hex values
+     * taken from the colors.properties file.
+     * 
+     * @param colors: A list of Strings representing color names
+     * @return A List<String> containing string representations of hex codes 
+     */
+    private List<String> translateColors(List<String> colors){
+	List<String> translatedColors = new ArrayList<String>();
+	for(int i =0; i<colors.size(); i++) {
+	    translatedColors.add(fileReader.resourceDisplayText(colors.get(i)));
+	}
+	return translatedColors;
+    }
 
     /**
      * 
@@ -141,15 +158,15 @@ public class SettingsPanel extends SpecificPanel  {
      * language for the simulation
      */
     private ComboBox<Object> makePenColorChooser(String itemID) {
-	String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
+	String selectionPrompt = fileReader.resourceDisplayText(itemID);
 	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
 	Tooltip penTip = new Tooltip();
 	penTip.setText(selectionPrompt);
 	dropDownMenu.setTooltip(penTip);
 	ObservableList<Object> simulationChoices = 
 		FXCollections.observableArrayList(selectionPrompt);
-	colorsUntranslated = PROGRAM_CONTROLLER.getFileNames(COLOR_FOLDER);
-	colorsTranslated = PROGRAM_CONTROLLER.translateColors(colorsUntranslated);
+	colorsUntranslated = fileReader.getFileNames(COLOR_FOLDER);
+	colorsTranslated = translateColors(colorsUntranslated);
 	simulationChoices.addAll(colorsTranslated);
 	dropDownMenu.setItems(simulationChoices);
 	dropDownMenu.setId(itemID);
@@ -157,12 +174,12 @@ public class SettingsPanel extends SpecificPanel  {
 	.addListener(( arg0, arg1, arg2) ->{
 	    String selected = (String) dropDownMenu.getItems().get((Integer) arg2);
 	    if (!selected.equals(selectionPrompt)) {
-		try {
-		    PROGRAM_CONTROLLER.changePenColor(colorsUntranslated.get(colorsTranslated.indexOf(selected)));
-		} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
-			| MissingInformationException e) {
-		    PROGRAM_CONTROLLER.loadErrorScreen(e.getMessage());
-		} 
+//		try {
+//		    PROGRAM_CONTROLLER.changePenColor(colorsUntranslated.get(colorsTranslated.indexOf(selected)));
+//		} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
+//			| MissingInformationException e) {
+//		    PROGRAM_CONTROLLER.loadErrorScreen(e.getMessage());
+//		} 
 	    }
 	});
 	return dropDownMenu;
@@ -170,7 +187,7 @@ public class SettingsPanel extends SpecificPanel  {
     
     private HBox makeWorkspacePrefChooser(String dropId, String buttonId) {
 	PREFERENCES_CHOOSER = makeWorkspacePrefDropDown(dropId);
-	SAVE_PREFERENCES = new Button(PROGRAM_CONTROLLER.resourceDisplayText(buttonId));
+	SAVE_PREFERENCES = new Button(fileReader.resourceDisplayText(buttonId));
 	SAVE_PREFERENCES.setId(buttonId);
 	HBox holder = new HBox(PREFERENCES_CHOOSER,SAVE_PREFERENCES);
 
@@ -185,11 +202,11 @@ public class SettingsPanel extends SpecificPanel  {
      * language for the simulation
      */
     private ComboBox<Object> makeWorkspacePrefDropDown(String itemID) {
-	String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
+	String selectionPrompt = fileReader.resourceDisplayText(itemID);
 	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
 	ObservableList<Object> simulationChoices = 
 		FXCollections.observableArrayList(selectionPrompt);
-	List<String> preferenceOptions = PROGRAM_CONTROLLER.getFileNames(PREFERENCES_FOLDER);
+	List<String> preferenceOptions = fileReader.getFileNames(PREFERENCES_FOLDER);
 	simulationChoices.addAll(preferenceOptions);
 	dropDownMenu.setItems(simulationChoices);
 	dropDownMenu.setId(itemID);
@@ -210,14 +227,14 @@ public class SettingsPanel extends SpecificPanel  {
      * language for the simulation
      */
     private ComboBox<Object> makeTurtleImageChooser(String itemID) {
-	String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
+	String selectionPrompt = fileReader.resourceDisplayText(itemID);
 	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
 	Tooltip turtleTip = new Tooltip();
 	turtleTip.setText(selectionPrompt);
 	dropDownMenu.setTooltip(turtleTip);
 	ObservableList<Object> simulationChoices = 
 		FXCollections.observableArrayList(selectionPrompt);
-	simulationChoices.addAll(PROGRAM_CONTROLLER.getFileNames(TURTLE_IMAGE_FOLDER));
+	simulationChoices.addAll(fileReader.getFileNames(TURTLE_IMAGE_FOLDER));
 	dropDownMenu.setItems(simulationChoices);
 	dropDownMenu.setId(itemID);
 	dropDownMenu.getSelectionModel().selectedIndexProperty()
@@ -231,10 +248,10 @@ public class SettingsPanel extends SpecificPanel  {
     }  
 
     private Button makeNewWorkspaceButton(String itemId) {
-	Button workspaceButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText(itemId));
+	Button workspaceButton = new Button(fileReader.resourceDisplayText(itemId));
 	workspaceButton.setId(itemId);
 	Tooltip workspaceTip = new Tooltip();
-	workspaceTip.setText(PROGRAM_CONTROLLER.resourceDisplayText(itemId));
+	workspaceTip.setText(fileReader.resourceDisplayText(itemId));
 	workspaceButton.setTooltip(workspaceTip);
 	workspaceButton.setOnAction(click ->{Driver d = new Driver();try {
 	    d.start(new Stage());
@@ -250,7 +267,7 @@ public class SettingsPanel extends SpecificPanel  {
      * Updates the text displayed to the user to match the current language
      */
     private void updatePrompt() {
-	BACK.setText(PROGRAM_CONTROLLER.resourceDisplayText("backButton"));
+	BACK.setText(fileReader.resourceDisplayText("backButton"));
 	LANGUAGE_CHOOSER = makeLanguageChooser(DROPDOWN_IDS[0]);
 	NEW_WORKSPACE =  makeNewWorkspaceButton(BUTTON_IDS[0]);
 	BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[1]);
@@ -273,19 +290,13 @@ public class SettingsPanel extends SpecificPanel  {
     }
 
 
-
-
     @Override
     protected BorderPane getPane() {
 	// TODO Auto-generated method stub
 	return PANE;
     }
 
-    @Override
-    protected Controller getController() {
-	// TODO Auto-generated method stub
-	return PROGRAM_CONTROLLER;
-    }
+  
 
     @Override
     protected UserScreen getUserScreen() {

@@ -14,11 +14,9 @@ import screen.UserScreen;
 public class TurtleInfoPanel extends SpecificPanel {
 
     private Parent PANEL;
-    private Controller PROGRAM_CONTROLLER;
     private String TURTLE_ID;
     
-    public TurtleInfoPanel(Controller programController, String id) {
-	PROGRAM_CONTROLLER = programController;
+    public TurtleInfoPanel(String id) {
 	TURTLE_ID = id;
     }
     
@@ -42,11 +40,7 @@ public class TurtleInfoPanel extends SpecificPanel {
 	return null;
     }
 
-    @Override
-    protected Controller getController() {
-	// TODO Auto-generated method stub
-	return null;
-    }
+  
 
     @Override
     protected UserScreen getUserScreen() {

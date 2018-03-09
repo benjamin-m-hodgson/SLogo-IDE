@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import interpreter.Controller;
+import interpreter.FileIO;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -32,16 +33,16 @@ public class VariablesPanel extends SpecificPanel {
     private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private Parent PANEL;
-    private Controller PROGRAM_CONTROLLER;
+    private final FileIO FILE_READER;
     private BorderPane PANE;
     private VBox VARIABLE_BOX;
     private UserScreen USER_SCREEN;
 
 
-    public VariablesPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
-	PROGRAM_CONTROLLER = programController;
+    public VariablesPanel( BorderPane pane, UserScreen userScreen, FileIO fileReader) {
 	PANE = pane;
 	USER_SCREEN = userScreen;
+	FILE_READER = fileReader;
 	// attach "animation loop" to time line to play it
 	KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
 		e -> populateVariableBox(SECOND_DELAY));
@@ -53,7 +54,7 @@ public class VariablesPanel extends SpecificPanel {
 
     @Override
     public void makePanel() {
-	Button backButton = makeBackButton(PROGRAM_CONTROLLER);
+	Button backButton = makeBackButton(FILE_READER);
 	ScrollPane scroll = new ScrollPane();
 	scroll.setId("settingsField");
 	VARIABLE_BOX = new VBox();
@@ -80,11 +81,7 @@ public class VariablesPanel extends SpecificPanel {
 	return PANE;
     }
 
-    @Override
-    protected Controller getController() {
-	// TODO Auto-generated method stub
-	return PROGRAM_CONTROLLER;
-    }
+  
 
     @Override
     protected UserScreen getUserScreen() {
@@ -99,7 +96,7 @@ public class VariablesPanel extends SpecificPanel {
      */
     private void populateVariableBox(double elapsedTime) {
 	VARIABLE_BOX.getChildren().clear();
-	Map<String, Double> programVariables = PROGRAM_CONTROLLER.getVariables();
+	Map<String, Double> programVariables = USER_SCREEN.getVariables();
 	for (Entry<String, Double> variable : programVariables.entrySet()) {
 	    String variableName = variable.getKey();
 	    String variableValue = variable.getValue().toString();
@@ -115,7 +112,7 @@ public class VariablesPanel extends SpecificPanel {
     }
 
     private VBox verboseVariableDisplay(String varName, String varValue) {
-	Button backButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText("backButton"));
+	Button backButton = new Button(FILE_READER.resourceDisplayText("backButton"));
 	backButton.setId("backButton");
 	// override click event
 	backButton.setOnMouseClicked((arg0)-> getPane()
@@ -125,7 +122,7 @@ public class VariablesPanel extends SpecificPanel {
 	TextArea valueDisplay = new TextArea();
 	valueDisplay.setText(varValue);
 	valueDisplay.setEditable(true);
-	Button setVariable = new Button(PROGRAM_CONTROLLER.resourceDisplayText("saveVariableButton"));
+	Button setVariable = new Button(FILE_READER.resourceDisplayText("saveVariableButton"));
 	setVariable.setId("saveVariableButton");
 	setVariable.setOnMouseClicked((arg0)-> USER_SCREEN.commandRunFromHistory("set " + varName + " " + valueDisplay.getText()));
 	VBox panelRoot = new VBox(nameLabel,valueDisplay,setVariable, backButton);
