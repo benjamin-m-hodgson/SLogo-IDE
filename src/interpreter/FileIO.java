@@ -10,10 +10,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 
+/**
+ * Class to handle the basic reading and writing to property files 
+ * @author Andrew Arnold
+ *
+ */
 public class FileIO {
 
     private ResourceBundle CURRENT_TEXT_DISPLAY;

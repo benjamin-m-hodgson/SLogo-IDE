@@ -19,6 +19,7 @@ import screen.UserScreen;
 /**
  * 
  * @author Benjamin Hodgson
+ * @author Andrew Arnold
  * 
  * Class to create a side panel to display information about a specific turtle
  */
@@ -27,7 +28,7 @@ public class TurtleInfoPanel extends SpecificPanel {
     private final int MOVEMENT_MIN = 0;
     private final int MOVEMENT_MAX = Integer.MAX_VALUE;
     private Parent PANEL;
-    private FileIO FILE_READER;
+    private final FileIO FILE_READER;
     private BorderPane USER_PANE;
     private UserScreen USER_SCREEN;
     private String TURTLE_ID;
@@ -186,12 +187,9 @@ public class TurtleInfoPanel extends SpecificPanel {
 	return USER_PANE;
     }
 
-
-
     @Override
     protected UserScreen getUserScreen() {
 	// TODO Auto-generated method stub
 	return USER_SCREEN;
     }
-
 }
