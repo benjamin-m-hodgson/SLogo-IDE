@@ -157,6 +157,7 @@ class CommandMaker {
 	private String getCommandType(String text) throws BadFormatException, MissingInformationException, UnidentifiedCommandException {
 		RegexMatcher regexMatcher = new RegexMatcher(myLanguage);
 		String commandType = regexMatcher.findMatchingKey(text);
+		if (commandType.length() == 0 && regexMatcher.containsKey(text)) return text; 
 		return commandType;
 	}
 

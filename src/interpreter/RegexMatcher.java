@@ -56,6 +56,15 @@ public class RegexMatcher {
 		return ""; 
 	}
 	
+	public boolean containsKey(String text) {
+		for (Entry<String, Pattern> e : mySymbols) {
+            if (text.equals(e.getKey())) {
+            	return true;
+            }
+        }
+		return false; 
+	}
+	
 	public String findMatchingVal(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String val = ""; 
 		try {

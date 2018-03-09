@@ -115,8 +115,12 @@ public class UserScreen implements Screen {
      * Changes the image displayed on the screen to represent the Turtle
      * 
      * @param selected: The selected image to change the turtle display to
+     * @throws MissingInformationException 
+     * @throws UnidentifiedCommandException 
+     * @throws BadFormatException 
+     * @throws TurtleNotFoundException 
      */
-    public void changeTurtleImage(String selected) {
+    public void changeTurtleImage(String selected) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
 	TURTLE_PANEL.changeTurtlesImages(selected);
     }
 
@@ -150,9 +154,7 @@ public class UserScreen implements Screen {
 	penColor = penColor.substring(1, penColor.length());
 	System.out.println(penColor);
 	PROGRAM_CONTROLLER.changePenColorHex(Integer.parseInt(penColor,16));
-	
 	PROGRAM_CONTROLLER.changeLanguage(preferences.get("language"));
-
     }
 
 
