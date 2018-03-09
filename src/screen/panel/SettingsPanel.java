@@ -1,7 +1,9 @@
 package screen.panel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import interpreter.BadFormatException;
 import interpreter.Controller;
@@ -40,6 +42,7 @@ public class SettingsPanel extends SpecificPanel  {
     private final String TURTLE_IMAGE_FOLDER = "turtleimages";
     private final BorderPane PANE;
     private  Button BACK;
+    private  Parent PANEL;
     private Button NEW_WORKSPACE;
     private Button SAVE_PREFERENCES;
     private ComboBox<Object> LANGUAGE_CHOOSER;
@@ -59,10 +62,7 @@ public class SettingsPanel extends SpecificPanel  {
 	PANE = pane;
 	USER_SCREEN = userScreen;
 	fileReader = fileReaderIn;
-	//		String codeTest = "#2d3436";
-	//		codeTest = codeTest.substring(1, codeTest.length());
-	//		int hexConvert = Integer.parseInt(codeTest,16);
-	//		System.out.println(Integer.toHexString(hexConvert));
+
     }
 
 
@@ -108,7 +108,7 @@ public class SettingsPanel extends SpecificPanel  {
 	});
 	return dropDownMenu;
     }
-    
+
     /**
      * 
      * @return dropDownMenu: a drop down menu that lets the user choose the
@@ -136,7 +136,7 @@ public class SettingsPanel extends SpecificPanel  {
 	});
 	return dropDownMenu;
     }
-    
+
     /**
      * Takes a list of String color names and generates a new list of String hex values
      * taken from the colors.properties file.
@@ -174,27 +174,17 @@ public class SettingsPanel extends SpecificPanel  {
 	.addListener(( arg0, arg1, arg2) ->{
 	    String selected = (String) dropDownMenu.getItems().get((Integer) arg2);
 	    if (!selected.equals(selectionPrompt)) {
-//		try {
-//		    PROGRAM_CONTROLLER.changePenColor(colorsUntranslated.get(colorsTranslated.indexOf(selected)));
-//		} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
-//			| MissingInformationException e) {
-//		    PROGRAM_CONTROLLER.loadErrorScreen(e.getMessage());
-//		} 
+		//		try {
+		//		    PROGRAM_CONTROLLER.changePenColor(colorsUntranslated.get(colorsTranslated.indexOf(selected)));
+		//		} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
+		//			| MissingInformationException e) {
+		//		    PROGRAM_CONTROLLER.loadErrorScreen(e.getMessage());
+		//		} 
 	    }
 	});
 	return dropDownMenu;
     }
-    
-    private HBox makeWorkspacePrefChooser(String dropId, String buttonId) {
-	PREFERENCES_CHOOSER = makeWorkspacePrefDropDown(dropId);
-	SAVE_PREFERENCES = new Button(fileReader.resourceDisplayText(buttonId));
-	SAVE_PREFERENCES.setId(buttonId);
-	HBox holder = new HBox(PREFERENCES_CHOOSER,SAVE_PREFERENCES);
 
-	
-	return holder;
-	
-    }
 
     /**
      * 
@@ -220,6 +210,17 @@ public class SettingsPanel extends SpecificPanel  {
 	});
 	return dropDownMenu;
     }
+    private HBox makeWorkspacePrefChooser(String dropId, String buttonId) {
+	PREFERENCES_CHOOSER = makeWorkspacePrefDropDown(dropId);
+	SAVE_PREFERENCES = new Button(fileReader.resourceDisplayText(buttonId));
+	SAVE_PREFERENCES.setId(buttonId);
+	HBox holder = new HBox(PREFERENCES_CHOOSER,SAVE_PREFERENCES);
+
+
+	return holder;
+
+    }
+
 
     /**
      * 
@@ -278,6 +279,7 @@ public class SettingsPanel extends SpecificPanel  {
     }
 
 
+
     /**
      * @param defaultChoice: String that represents the default value for this combo box
      * @return A ComboBox bearing the default choice
@@ -290,13 +292,21 @@ public class SettingsPanel extends SpecificPanel  {
     }
 
 
+
+    @Override
+    public Parent getPanel() {
+	if (PANEL == null) {
+	    makePanel();
+	}
+	return PANEL;
+    }
+
     @Override
     protected BorderPane getPane() {
 	// TODO Auto-generated method stub
 	return PANE;
     }
 
-  
 
     @Override
     protected UserScreen getUserScreen() {

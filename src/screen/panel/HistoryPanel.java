@@ -2,12 +2,12 @@ package screen.panel;
 
 import java.util.Iterator;
 
-import interpreter.BadFormatException;
 import interpreter.Controller;
 import interpreter.FileIO;
 import interpreter.MissingInformationException;
 import interpreter.TurtleNotFoundException;
 import interpreter.UnidentifiedCommandException;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import screen.UserScreen;
 
-public class InputPanel extends Panel {
+public class InputPanel implements Panel {
     private final double FRAMES_PER_SECOND = 120;
     private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -24,6 +24,7 @@ public class InputPanel extends Panel {
     private final UserScreen USER_SCREEN;
     private Button RUN;
     private Button CLEAR;
+
 
     public InputPanel(UserScreen userScreen, FileIO fileReader) {
 	FILE_READER = fileReader;
@@ -56,6 +57,14 @@ public class InputPanel extends Panel {
 	runBox.setId("runBox");
 	return runBox;
     }
+    @Override
+    public Parent getPanel() {
+	if (PANEL == null) {
+	    makePanel();
+	}
+	return PANEL;
+    }
+
 
     private Button drawRunButton() {
 	Button runButton = new Button();

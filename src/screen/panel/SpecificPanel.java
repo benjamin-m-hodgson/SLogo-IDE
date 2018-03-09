@@ -11,7 +11,7 @@ import screen.UserScreen;
  * @author Andrew Arnold
  *
  */
-public abstract class SpecificPanel extends Panel {
+public abstract class SpecificPanel implements Panel {
 	
 	protected abstract BorderPane getPane();
 	protected abstract UserScreen getUserScreen();

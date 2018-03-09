@@ -42,11 +42,13 @@ class SetPaletteCommand extends Command {
 		try {
 			in = new FileInputStream(new File(DEFAULT_COLORPALETTE_FILE));
 		} catch (FileNotFoundException e2) {
+			
 		}
 		
 		try {
 			prop.load(in);
 		} catch (IOException e) {
+			
 		}
 		
 		int idxAsInt = (int) idx; 
@@ -62,6 +64,7 @@ class SetPaletteCommand extends Command {
 		try {
 			prop.store(fileOut, null);
 		} catch (IOException e) {
+			
 		}
 		
 		
@@ -70,11 +73,13 @@ class SetPaletteCommand extends Command {
 		try {
 			in = new FileInputStream(new File(DEFAULT_COLORPALETTENAMES_FILE));
 		} catch (FileNotFoundException e2) {
+			
 		}
 		
 		try {
 			prop.load(in);
 		} catch (IOException e) {
+			
 		}
 		
 		prop.setProperty(idxAsKey, "User "+idxAsKey);
@@ -83,13 +88,16 @@ class SetPaletteCommand extends Command {
 		try {
 			fileOut = new FileOutputStream(DEFAULT_COLORPALETTENAMES_FILE);
 		} catch (FileNotFoundException e1) {
+			
 		}
 		try {
 			prop.store(fileOut, null);
 		} catch (IOException e) {
+			
 		}
 		
 		return idx; 
 	}
 
 }
+

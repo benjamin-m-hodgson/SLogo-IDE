@@ -1,60 +1,14 @@
-
-
 	package interpreter;
 
 	import java.io.File;
 	import java.net.MalformedURLException;
 	import java.util.ArrayList;
-	import java.util.function.Consumer;
+import java.util.List;
+import java.util.function.Consumer;
 
 	import javafx.scene.Group;
 	import javafx.scene.image.Image;
 	import javafx.scene.image.ImageView;
-
-	//public interface Turtle {
-	//
-	///**
-	//* Returns the current x-position of the turtle
-	//*/
-	//public double getX();
-	//
-	///**
-	//* Returns the current y-position of the turtle
-	//*/
-	//public double getY();
-	//
-	///**
-	//* Returns the previous x-position of the turtle
-	//*/
-	//public double getOldX();
-	//
-	///**
-	//* Returns the previous y-position of the turtle
-	//*/
-	//public double getOldY();
-	//
-	///**
-	//* Copies the current values of X and Y into oldX and oldY
-	//*/
-	//public void setOld();
-	//
-	///**
-	//* Sets the y-position of the turtle
-	//*/
-	//public void setY(double y);
-	//
-	///**
-	//* Sets the x-position of the turtle
-	//*/
-	//public void setX(double x);
-	//
-	///**
-	//* Sets the visual image of the turtle to the image contained in filepath
-	//*/
-	//public void setImage(String filepath);
-	//
-	//}
-
 	import javafx.scene.shape.Line;
 
 	/**
@@ -93,8 +47,12 @@
 		private double myAngle; 
 		private double myImageIdx; 
 
-		public SingleTurtle() {
+		
+		protected SingleTurtle() {
 			this(DEFAULT_ID, new ImageView(), new Group(), DEFAULT_PEN_COLORCODE);
+		}
+		protected SingleTurtle(double id) {
+			this(id, new ImageView(), new Group(), DEFAULT_PEN_COLORCODE);
 		}
 
 		protected SingleTurtle(double id, ImageView image, Group penGroup, String colorCode) {
@@ -112,6 +70,31 @@
 		public void executeSequentially(Consumer<Turtle> action){
 			action.accept(this);
 		}
+		protected Turtle replaceTurtles(List<SingleTurtle> turtle) {
+			if(turtle.size()>1) {
+				return new MultipleTurtles(turtle);
+			}
+			else {
+				SingleTurtle oneTurtle = turtle.get(0);
+				setX(oneTurtle.getX());
+				setY(oneTurtle.getY());
+				setOldXY(oneTurtle.getX(), oneTurtle.getY());
+				setAngle(oneTurtle.getAngle());
+				if(oneTurtle.getTurtleVisibility()) {
+					showTurtle();
+				}
+				else {
+					hideTurtle();
+				}
+				try {
+				setShape("" + oneTurtle.getImageIdx());
+				}
+				catch(UnidentifiedCommandException |MalformedURLException | MissingInformationException | BadFormatException e) {
+					throw new UnidentifiedCommandError(e.getMessage());
+				}
+			}
+			return this;
+		}
 		protected SingleTurtle getCopy() {
 			SingleTurtle turtle = new SingleTurtle(myID, new ImageView(), new Group(), myPen.getColor());
 			turtle.setX(myX);
@@ -121,7 +104,7 @@
 			try {
 				turtle.setShape(Integer.toString((int)myImageIdx));
 			} catch (Exception e) {
-				throw new RuntimeException();
+				throw new UnidentifiedCommandError(e.getMessage());
 			} 
 			if(myVisibility) {
 				turtle.showTurtle();
@@ -158,16 +141,12 @@
 			File turtleFile = new File(DEFAULT_IMAGES_FOLDER  + matchingShape + DEFAULT_IMAGE_SUFFIX);
 			setImage(turtleFile.toURI().toURL().toExternalForm());
 			myImageIdx = Double.parseDouble(idxKey);
-			System.out.println("successfully changed to "+myImageIdx);
 		}
 		
 		protected void setOldXY(double oldX, double oldY) {
 			myOldX = oldX;
 			myOldY = oldY;
 		}
-//		protected void setImageIdx(double imgIdx) {
-//			myImageIdx = imgIdx; 		
-//		}
 
 
 		// GETTERS

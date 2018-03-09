@@ -1,6 +1,5 @@
 package screen;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -52,7 +51,7 @@ public class UserScreen implements Screen {
 	rootPane.setId("userScreenRoot");
 	rootPane.setBottom(new InputPanel(this, FILE_READER).getPanel());
 	rootPane.setRight(new InfoPanel( rootPane, this, FILE_READER).getPanel());
-	TURTLE_PANEL = new TurtlePanel(this);//, rootPane
+	TURTLE_PANEL = new TurtlePanel(rootPane, this, FILE_READER);//, rootPane
 	rootPane.setCenter(TURTLE_PANEL.getPanel());
 	ROOT = rootPane;
     }
@@ -109,8 +108,8 @@ public class UserScreen implements Screen {
 	    addCommand(command, commandVal.toString());
 	} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
 		| MissingInformationException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+		 e.printStackTrace();
+		displayErrorMessage(e.getMessage());
 	}
 	
     }
@@ -119,8 +118,12 @@ public class UserScreen implements Screen {
      * Changes the image displayed on the screen to represent the Turtle
      * 
      * @param selected: The selected image to change the turtle display to
+     * @throws MissingInformationException 
+     * @throws UnidentifiedCommandException 
+     * @throws BadFormatException 
+     * @throws TurtleNotFoundException 
      */
-    public void changeTurtleImage(String selected) {
+    public void changeTurtleImage(String selected)  {
 	TURTLE_PANEL.changeTurtlesImages(selected);
     }
 
@@ -156,6 +159,7 @@ public class UserScreen implements Screen {
 	PROGRAM_CONTROLLER.changePenColorHex(Integer.parseInt(penColor,16));
 	
 	FILE_READER.bundleUpdateToNewLanguage(preferences.get("language"));
+
 
     }
     

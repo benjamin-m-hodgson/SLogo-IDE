@@ -162,10 +162,7 @@ public class CommandFactory {
 			return new SetBackgroundColorCommand(commandArgs.get(0), myVariables, activeTurtles);
 		}
 		else if(commandName.equals("SetPenColor")) {
-			return new SetPenColorCommand(commandArgs.get(0), activeTurtles, myVariables, false);
-		}
-		else if (commandName.equals("SetPenColorByHex")) {
-			return new SetPenColorCommand(commandArgs.get(0), activeTurtles, myVariables, false);
+			return new SetPenColorCommand(commandArgs.get(0), activeTurtles, myVariables);
 		}
 		else if(commandName.equals("SetPenSize")) {
 			return new SetPenSizeCommand(activeTurtles, commandArgs.get(0), myVariables);
