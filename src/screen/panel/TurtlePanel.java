@@ -25,14 +25,16 @@ public class TurtlePanel implements Panel {
     private final double DEFAULT_TURTLE_SIZE = 40;
     private final String DEFAULT_TURTLE = "Turtle.png";
     private BorderPane PANEL;
+    private BorderPane USER_PANE;
     private ScrollPane SCROLL_PANE;
     private Controller PROGRAM_CONTROLLER;
     private String DEFAULT_COLOR_HEXCODE = "2d3436";
     private HBox ErrorHolder;
     private List<ImageView> TURTLE_LIST;
 
-    public TurtlePanel(Controller programController) {
+    public TurtlePanel(Controller programController, BorderPane userPane) {
 	PROGRAM_CONTROLLER = programController;
+	USER_PANE = userPane;
 	TURTLE_LIST = new ArrayList<ImageView>();
     }
 
@@ -137,6 +139,10 @@ public class TurtlePanel implements Panel {
 
     public void removeErrorButton() {
 	PANEL.getChildren().remove(ErrorHolder);
+    }
+    
+    public void drawTurtleInfoPanel(String id) {
+	
     }
 
 }
