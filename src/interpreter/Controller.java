@@ -219,9 +219,6 @@ public class Controller {
      * @throws TurtleNotFoundException 
      */
     public double parseInput(String userTextInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
-	for (String key : FILE_READER.getColors().keySet()) {
-		System.out.println(key);
-	}
     	return myTextFieldParser.parseText(userTextInput);
     }
 
