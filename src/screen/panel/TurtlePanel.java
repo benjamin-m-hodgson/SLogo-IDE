@@ -9,7 +9,6 @@ import interpreter.Controller;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -19,8 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
-
-public class TurtlePanel implements Panel {
+public class TurtlePanel extends Panel {
     // TODO: put in setting.properties file
     private final double DEFAULT_TURTLE_SIZE = 40;
     private final String DEFAULT_TURTLE = "Green Turtle.png";
@@ -54,13 +52,6 @@ public class TurtlePanel implements Panel {
 	PANEL = layoutPane;
     }
 
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
-	}
-	return PANEL;
-    }
 
     private void createTurtle(Pane panel, ScrollPane scrollPane) {
 	String currentDir = System.getProperty("user.dir");
@@ -95,7 +86,6 @@ public class TurtlePanel implements Panel {
 	    //String specification = "%nFailed to find language files";
 	    System.out.println("FAILED TO LOAD TURTLE IMG");
 	}
-
     }
 
     public void displayErrorMessage(String error) {
@@ -147,9 +137,9 @@ public class TurtlePanel implements Panel {
     public void removeErrorButton() {
 	PANEL.getChildren().remove(ErrorHolder);
     }
-    
+
     public void drawTurtleInfoPanel(String id) {
-	
+
     }
 
 }

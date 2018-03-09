@@ -17,7 +17,7 @@ import screen.UserScreen;
  * @author Andrew Arnold
  *
  */
-public class InfoPanel implements Panel {
+public class InfoPanel extends Panel {
 
 	private Parent PANEL;
 	private Controller PROGRAM_CONTROLLER;
@@ -67,12 +67,5 @@ public class InfoPanel implements Panel {
 		return button;
 	}
 
-	@Override
-	public Parent getPanel() {
-		if (PANEL == null) {
-			makePanel();
-		}
-		return PANEL;
-	}
 
 }
