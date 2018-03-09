@@ -26,7 +26,7 @@ public class PreferencePanel extends SpecificPanel {
     public static final String PREFERENCES_FOLDER = "workspacePreferences";
     private final int VISIBLE_ROW_COUNT = 5;
     private final String[] DROPDOWN_IDS = {"backgroundColorChooser", "preferencesChooser"};
-    private final String[] BUTTON_IDS = {"saveprefButton"};
+    private final String[] BUTTON_IDS = {"backButton", "saveprefButton"};
     private  Button BACK;
     private Button SAVE_PREFERENCES;
     private ComboBox<Object> BACKGROUND_COLOR_CHOOSER;
@@ -54,10 +54,10 @@ public class PreferencePanel extends SpecificPanel {
 
     @Override
     public void makePanel() {
-	BACK = makeBackButton(fileReader);
+	BACK = makeBackPrefButton(BUTTON_IDS[0]);
 	BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[0]);
 	PREFERENCES_CHOOSER = makeWorkspacePrefDropDown(DROPDOWN_IDS[1]);
-	SAVE_PREFERENCES = makeSavePrefButton(BUTTON_IDS[0]);
+	SAVE_PREFERENCES = makeSavePrefButton(BUTTON_IDS[1]);
 	VBox preferencePanel = new VBox(BACKGROUND_COLOR_CHOOSER,
 		PREFERENCES_CHOOSER, SAVE_PREFERENCES, BACK);
 	preferencePanel.setId("infoPanel");
@@ -122,12 +122,21 @@ public class PreferencePanel extends SpecificPanel {
 	});
 	return dropDownMenu;
     }
-    
+
     private Button makeSavePrefButton(String itemId) {
 	Button saveButton = makeButton(itemId);
 	return saveButton;
     }
-    
+
+    private Button makeBackPrefButton(String itemId) {
+	Button backButton = new Button(fileReader.resourceDisplayText(itemId));
+	backButton.setId(itemId);
+	// override click event
+	backButton.setOnMouseClicked((arg0)-> getPane()
+		.setRight(new SettingsPanel(PANE, USER_SCREEN, fileReader).getPanel()));
+	return backButton;
+    }
+
     private Button makeButton(String itemId) {
 	Button button = new Button(fileReader.resourceDisplayText(itemId));
 	button.setId(itemId);
@@ -152,10 +161,10 @@ public class PreferencePanel extends SpecificPanel {
      * Updates the text displayed to the user to match the current language
      */
     private void updatePrompt() {
-	BACK.setText(fileReader.resourceDisplayText("backButton"));
+	BACK = makeBackPrefButton(BUTTON_IDS[0]);
 	BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[1]);
 	PREFERENCES_CHOOSER = makeWorkspacePrefDropDown(DROPDOWN_IDS[1]);
-	SAVE_PREFERENCES = makeSavePrefButton(BUTTON_IDS[0]);
+	SAVE_PREFERENCES = makeSavePrefButton(BUTTON_IDS[1]);
 	((VBox)PANEL).getChildren().setAll(BACKGROUND_COLOR_CHOOSER, 
 		PREFERENCES_CHOOSER, SAVE_PREFERENCES, BACK);
     }
