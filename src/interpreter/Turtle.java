@@ -5,12 +5,7 @@ package interpreter;
 import java.util.List;
 import java.util.function.Consumer;
 
-import java.io.File;
 import java.net.MalformedURLException;
-
-import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public abstract class Turtle {
 
