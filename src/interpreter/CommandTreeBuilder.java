@@ -6,8 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+
 import javafx.beans.property.SimpleIntegerProperty;
 /** 
  * @author Susie Choi
@@ -217,7 +218,7 @@ class CommandTreeBuilder {
 		 
 		try {
 			Double.parseDouble(userInput[currIdx]);
-			CommandNode newChildNode = new CommandNode(userInput[currIdx], turtles, activeTurtles);
+			CommandNode newChildNode = new CommandNode(userInput[currIdx], 0, turtles, activeTurtles);
 			parent.addChild(newChildNode);
 			if (parent.getNumChildren() < parent.getNumArgs()) { 
 				createAndSetChildren(turtles, activeTurtles, parent, userInput, currIdx+1, addToTrees);
@@ -575,9 +576,6 @@ class CommandTreeBuilder {
 
 	}
 	private int parseTell(Turtle turtles, Turtle activeTurtles, String[] userInput, int startIdx, boolean addToTrees, CommandNode parent) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		if (addToTrees) {
-			myCommandTrees.add(parent);
-		}
 		startIdx++;
 		int endIdx = searchForBracket(startIdx, userInput, DEFAULT_BRACKET_END_IDENTIFIER, 1);
 		String[] idStringArray = Arrays.copyOfRange(userInput, startIdx, endIdx-1);

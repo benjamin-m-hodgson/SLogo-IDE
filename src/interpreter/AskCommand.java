@@ -31,7 +31,7 @@ public class AskCommand extends Command {
 		MultipleTurtles tempActive = new MultipleTurtles(tempActiveTurtles);
 		double returnVal = -1;
 		try {
-		returnVal = myBuilder.buildAndExecute(myAllTurtles, tempActive, actions, true);
+			returnVal = myBuilder.buildAndExecute(myAllTurtles, tempActive, actions, true);
 		}
 		catch(Exception e) {
 			throw new UnidentifiedCommandException(e.getMessage());
