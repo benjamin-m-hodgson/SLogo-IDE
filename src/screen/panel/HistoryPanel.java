@@ -54,6 +54,7 @@ public class HistoryPanel extends SpecificPanel {
 	panelRoot.setAlignment(Pos.BASELINE_CENTER);
 	VBox.setVgrow(historyPane, Priority.ALWAYS);
 	PANEL = panelRoot;
+	setHistory(SECOND_DELAY);
     }
 
     @Override
@@ -121,7 +122,6 @@ public class HistoryPanel extends SpecificPanel {
 	commandInfoArea.setId("historyField");
 	commandInfoArea.setText(command);
 	commandInfoArea.setEditable(false);
-	
 	TextArea consoleInfoArea = new TextArea();
 	consoleInfoArea.setId("historyField");
 	consoleInfoArea.setText(output);
