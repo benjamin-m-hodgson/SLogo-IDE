@@ -18,6 +18,7 @@ import screen.UserScreen;
 /**
  * 
  * @author Benjamin Hodgson
+ * @author Andrew Arnold
  * 
  * Class to create a side panel to display information about a specific turtle
  */
@@ -27,17 +28,15 @@ public class TurtleInfoPanel extends SpecificPanel {
     private final int MOVEMENT_MAX = Integer.MAX_VALUE;
     private Parent PANEL;
     private final FileIO FILE_READER;
-
-    private Controller PROGRAM_CONTROLLER;
     private BorderPane USER_PANE;
     private String TURTLE_ID;
-    
+
     public TurtleInfoPanel(BorderPane pane, String id, FileIO fileReader) {
 	FILE_READER = fileReader;
 	USER_PANE = pane;
 	TURTLE_ID = id;
     }
-    
+
     @Override
     public void makePanel() {
 	VBox turtleInfoPanel = new VBox();
@@ -45,7 +44,7 @@ public class TurtleInfoPanel extends SpecificPanel {
 	turtleInfoPanel.setId("infoPanel");
 	PANEL = turtleInfoPanel;
     }
-    
+
     @Override
     public Parent getPanel() {
 	if (PANEL == null) {
@@ -53,7 +52,7 @@ public class TurtleInfoPanel extends SpecificPanel {
 	}
 	return PANEL;
     }
-    
+
     private void populateInfoBox(VBox turtleInfoPanel) {
 	Button backButton = makeBackButton(FILE_READER);
 	Button turtleIdButton = new Button(TURTLE_ID);
@@ -62,7 +61,7 @@ public class TurtleInfoPanel extends SpecificPanel {
 	VBox movementButtons = drawMovementButtons(turtleInfoPanel);
 	turtleInfoPanel.getChildren().addAll(turtleIdButton, movementButtons, backButton);
     }
-    
+
     /**
      * An area of the turtle info panel that allows the user to move the turtle directionally
      * around the screen
@@ -88,7 +87,7 @@ public class TurtleInfoPanel extends SpecificPanel {
 	movementButtons.setAlignment(Pos.CENTER);
 	return movementButtons;
     }
-    
+
     /**
      * Creates a text field that takes integer only input to set the movement amount for the 
      * turtle movement buttons
@@ -134,7 +133,7 @@ public class TurtleInfoPanel extends SpecificPanel {
 	});
 	return numberTextField;
     }
-    
+
     private void moveUp(String value) {
 	if (!value.isEmpty()) {
 	    try {
@@ -145,7 +144,7 @@ public class TurtleInfoPanel extends SpecificPanel {
 	    }
 	}
     }
-    
+
     private void moveDown(String value) {
 	if (!value.isEmpty()) {
 	    try {
@@ -156,7 +155,7 @@ public class TurtleInfoPanel extends SpecificPanel {
 	    }
 	}
     }
-    
+
     private void moveLeft(String value) {
 	if (!value.isEmpty()) {
 	    try {
@@ -167,7 +166,7 @@ public class TurtleInfoPanel extends SpecificPanel {
 	    }
 	}
     }
-    
+
     private void moveRight(String value) {
 	if (!value.isEmpty()) {
 	    try {
@@ -184,12 +183,9 @@ public class TurtleInfoPanel extends SpecificPanel {
 	return USER_PANE;
     }
 
-
-
     @Override
     protected UserScreen getUserScreen() {
 	// TODO Auto-generated method stub
 	return null;
     }
-
 }

@@ -4,13 +4,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import interpreter.BadFormatException;
-import interpreter.Controller;
 import interpreter.FileIO;
-import interpreter.MissingInformationException;
-import interpreter.TurtleNotFoundException;
-import interpreter.UnidentifiedCommandException;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
