@@ -147,8 +147,8 @@ public class MultipleTurtles extends Turtle{
 				t.setShape(idxKey);
 			} catch (MalformedURLException | BadFormatException | UnidentifiedCommandException
 					| MissingInformationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new 
+				UnidentifiedCommandError(e.getMessage());
 			}
 		});
 	}

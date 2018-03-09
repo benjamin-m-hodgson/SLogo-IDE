@@ -31,13 +31,7 @@ public class ForCommand extends Command{
 		public double execute() throws UnidentifiedCommandException{
 			String[] executeArray = myToExecute.split(" ");
 			double start = 0;
-			try {
-				start = myStartCommand.execute();
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-			}
-			
+			start = myStartCommand.execute();
 			double ending = myEndCommand.execute();
 			double increment = myIncrement.execute();
 			double returnVal = 0.0;

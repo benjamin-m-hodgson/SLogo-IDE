@@ -10,7 +10,7 @@ class GetPenColorCommand extends Command {
 	}
 	
 	@Override
-	double execute() {
+	double execute() throws UnidentifiedCommandException {
 		RegexMatcher rm = new RegexMatcher(DEFAULT_COLORPALETTE_FILE);
 		String idx = "-1";
 		try {
@@ -18,6 +18,7 @@ class GetPenColorCommand extends Command {
 		} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
 			System.out.print("Oops! Your pen has no assigned color.");
 			e.printStackTrace();
+			throw new UnidentifiedCommandException("No pen color");
 		}
 		return Double.parseDouble(idx); 
 	}
