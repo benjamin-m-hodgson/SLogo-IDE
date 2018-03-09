@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import interpreter.Controller;
+import interpreter.FileIO;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -17,19 +18,18 @@ import screen.UserScreen;
  * @author Andrew Arnold
  *
  */
-public class InfoPanel implements Panel {
+public class InfoPanel extends Panel {
 
-	private Parent PANEL;
-	private Controller PROGRAM_CONTROLLER;
 	private BorderPane PANE;
 	private UserScreen USER_SCREEN;
+	private final FileIO FILE_READER;
 
 	private final String[] BUTTON_IDS = {"settingsButton", "variablesButton", "historyButton", "commandsButton", "helpButton"};
 
-	public InfoPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
-		PROGRAM_CONTROLLER = programController;
+	public InfoPanel(BorderPane pane, UserScreen userScreen, FileIO fileReader) {
 		PANE = pane;
 		USER_SCREEN = userScreen;
+		FILE_READER = fileReader;
 	}
 
 	@Override
@@ -53,26 +53,17 @@ public class InfoPanel implements Panel {
 
 	//CHANGE THIS METHOD TO A BETTER ALTERNATIVE
 	private void setLinks(List<Button> buttons) {
-		buttons.get(0).setOnMouseClicked((arg0) ->PANE.setRight(new SettingsPanel(PROGRAM_CONTROLLER, PANE, USER_SCREEN).getPanel()));
-		buttons.get(1).setOnMouseClicked((arg0) ->PANE.setRight(new VariablesPanel(PROGRAM_CONTROLLER, PANE, USER_SCREEN).getPanel()));
-		buttons.get(2).setOnMouseClicked((arg0) ->PANE.setRight(new HistoryPanel(PROGRAM_CONTROLLER, PANE, USER_SCREEN).getPanel()));
-		buttons.get(3).setOnMouseClicked((arg0) ->PANE.setRight(new CommandPanel(PROGRAM_CONTROLLER, PANE, USER_SCREEN).getPanel()));
-		buttons.get(4).setOnMouseClicked((arg0) ->PANE.setRight(new HelpPanel(PROGRAM_CONTROLLER, PANE, USER_SCREEN).getPanel()));
+		buttons.get(0).setOnMouseClicked((arg0) ->PANE.setRight(new SettingsPanel(PANE, USER_SCREEN, FILE_READER).getPanel()));
+		buttons.get(1).setOnMouseClicked((arg0) ->PANE.setRight(new VariablesPanel( PANE, USER_SCREEN,FILE_READER).getPanel()));
+		buttons.get(2).setOnMouseClicked((arg0) ->PANE.setRight(new HistoryPanel( PANE, USER_SCREEN,FILE_READER).getPanel()));
+		buttons.get(3).setOnMouseClicked((arg0) ->PANE.setRight(new CommandPanel( PANE, USER_SCREEN,FILE_READER).getPanel()));
+		buttons.get(4).setOnMouseClicked((arg0) ->PANE.setRight(new HelpPanel( PANE, USER_SCREEN,FILE_READER).getPanel()));
 	}
 
 	private Button makeButton(String buttonId) {
-	    	System.out.println(buttonId);
-		Button button = new Button(PROGRAM_CONTROLLER.resourceDisplayText(buttonId));
+		Button button = new Button(FILE_READER.resourceDisplayText(buttonId));
+
 		button.setId(buttonId);
 		return button;
 	}
-
-	@Override
-	public Parent getPanel() {
-		if (PANEL == null) {
-			makePanel();
-		}
-		return PANEL;
-	}
-
 }
