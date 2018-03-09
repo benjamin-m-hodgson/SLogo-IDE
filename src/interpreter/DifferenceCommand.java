@@ -1,6 +1,6 @@
 package interpreter;
 
-import java.util.List;
+
 import java.util.Map;
 
 /**
@@ -25,13 +25,18 @@ import java.util.Map;
 	}
 	
 	@Override
-	protected double execute(){
+	protected double execute() throws UnidentifiedCommandException{
 		double arg1ValRet = getCommandValue(expr1Command, myVariables, getActiveTurtles().toSingleTurtle());
 		double arg2ValRet = getCommandValue(expr1Command, myVariables, getActiveTurtles().toSingleTurtle());
 		
 		getActiveTurtles().executeSequentially(myTurtle ->{
+			try {
 			getCommandValue(expr1Command, myVariables, myTurtle); 
 			getCommandValue(expr2Command, myVariables, myTurtle); 
+			}
+			catch(UnidentifiedCommandException e) {
+				throw new UnidentifiedCommandError("Improper # arguments");
+			}
 		});
 		return arg1ValRet - arg2ValRet;
 	}

@@ -1,6 +1,6 @@
 package interpreter;
 
-import java.util.List;
+
 import java.util.Map;
 
 /**
@@ -35,9 +35,14 @@ import java.util.Map;
 	@Override 
 	protected double execute() {
 		getActiveTurtles().executeSequentially( myTurtle ->{
+			try {
 			double newX = getCommandValue(myNewXCommand, myVariables, myTurtle);
 			double newY = getCommandValue(myNewYCommand, myVariables, myTurtle);
 			myTurtle.setXY(newX, newY);
+			}
+			catch(UnidentifiedCommandException e) {
+				throw new UnidentifiedCommandError("Improper # arguments");
+			}
 		});
 		double returnVal = getActiveTurtles().toSingleTurtle().calcDistance(getActiveTurtles().getOldX(), getActiveTurtles().getOldY(), getActiveTurtles().getX(), getActiveTurtles().getY());
 		return returnVal;

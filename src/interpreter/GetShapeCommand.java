@@ -11,7 +11,7 @@ class GetShapeCommand extends Command {
 	
 	@Override
 	double execute(){
-		return Double.parseDouble(myTurtle.getImageName());
+		return myTurtle.getImageIdx();
 	}
 
 }

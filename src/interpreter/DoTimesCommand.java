@@ -21,7 +21,7 @@ class DoTimesCommand extends Command{
 		myAllTurtles = allTurtles;
 	}
 	@Override
-	protected double execute() {
+	protected double execute() throws UnidentifiedCommandException {
 		String[] executeArray = toExecute.split(" ");
 		double ending = endExpressionCommand.execute();
 		double returnVal = -1.0;
@@ -32,10 +32,10 @@ class DoTimesCommand extends Command{
 				System.out.println("executing " + executeArray[i]);
 			}
 			try {
-				returnVal = myBuilder.buildAndExecute(myAllTurtles, getActiveTurtles(), executeArray, true);
+			returnVal = myBuilder.buildAndExecute(myAllTurtles, getActiveTurtles(), executeArray, true);
 			}
-			catch(Exception e){
-				return returnVal;
+			catch(Exception e) {
+				throw new UnidentifiedCommandException("One or more commands has incorrect number of arguments");
 			}
 
 		}

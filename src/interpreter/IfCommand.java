@@ -1,6 +1,6 @@
 package interpreter;
 
-import java.util.ArrayList;
+
 import java.util.Map;
 
 /**
@@ -27,10 +27,10 @@ class IfCommand extends Command{
     }
 
     @Override
-    protected double execute() { // TODO discuss throwing of exceptions 
+    protected double execute() throws UnidentifiedCommandException{ // TODO discuss throwing of exceptions 
 	double ifExprRetVal = 0;
 	double ifBodyRetVal = 0; 
-	    ifExprRetVal = myIfExprCommand.execute();
+	ifExprRetVal = myIfExprCommand.execute();
 	if (ifExprRetVal > 0) {
 	    System.out.println("if executed");
 	    CommandTreeBuilder buildIfBody = new CommandTreeBuilder(myVariables, myUserDefCommands, myUserDefComNumArgs); 

@@ -1,6 +1,5 @@
 package interpreter;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,10 +22,15 @@ import java.util.Map;
 	}
 	
 	@Override
-	protected double execute() {
+	protected double execute() throws UnidentifiedCommandException {
 		double degrees = getCommandValue(degreesCommand, myVariables, getActiveTurtles().toSingleTurtle());
 		getActiveTurtles().executeSequentially(myTurtle ->{
+			try {
 			getCommandValue(degreesCommand, myVariables, myTurtle);
+			}
+			catch(UnidentifiedCommandException e) {
+				throw new UnidentifiedCommandError("Improper # arguments");
+			}
 		});
 	    	return Math.cos(Math.toRadians(degrees));
 	}

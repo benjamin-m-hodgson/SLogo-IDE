@@ -28,7 +28,7 @@ public class ForCommand extends Command{
 			setActiveTurtles(activeTurtles);
 		}
 		@Override
-		public double execute(){
+		public double execute() throws UnidentifiedCommandException{
 			String[] executeArray = myToExecute.split(" ");
 			double start = 0;
 			try {
