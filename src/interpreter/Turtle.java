@@ -4,6 +4,10 @@ package interpreter;
 
 import java.util.List;
 import java.util.function.Consumer;
+
+import javafx.scene.Group;
+import javafx.scene.image.ImageView;
+
 import java.net.MalformedURLException;
 
 public abstract class Turtle {

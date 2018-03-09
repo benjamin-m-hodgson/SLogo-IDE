@@ -285,6 +285,24 @@ public class Controller {
     public List<SingleTurtle> getActiveTurtles(){
 	return myTextFieldParser.getActiveTurtles();
     }
+	/**
+	 * Returns ImageView of a particular turtle so it may be attached to the scene
+	 * @param ID is ID of turtle whose ImageView is desired
+	 * @return ImageView of turtle with corresponding ID
+	 */
+	public ImageView getTurtleWithIDImageView(double ID) {
+		return myTextFieldParser.getTurtleWithIDImageView(ID);
+	}
+	/**
+	 * Returns Group of a particular turtle so it may be attached to the scene
+	 * @param ID is ID of turtle whose Group is desired
+	 * @return Group of turtle with corresponding ID
+	 */
+	public Group getTurtleWithIDPenLines(double ID) {
+		return myTextFieldParser.getTurtleWithIDPenLines(ID);
+	}
+
+
 
 }
 

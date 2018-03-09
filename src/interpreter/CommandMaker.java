@@ -174,6 +174,12 @@ class CommandMaker {
 	protected List<SingleTurtle> getActiveTurtles(){
 		return myActiveTurtles.getAllImmutableTurtles();
 	}
+	protected ImageView getTurtleWithIDImageView(double ID) {
+		return myTurtles.getTurtleWithIDImageView(ID);
+	}
+	protected Group getTurtleWithIDPenLines(double ID) {
+		return myTurtles.getTurtleWithIDPenLines(ID);
+	}
 
 	protected void addNewTurtle(String id, ImageView turtleImage, String penColor, Group penLines) {
 		//System.out.println(name);
