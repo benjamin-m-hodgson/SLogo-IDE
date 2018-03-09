@@ -48,7 +48,7 @@ public class HelpPanel extends SpecificPanel  {
 	panelRoot.setAlignment(Pos.BASELINE_CENTER);
 	VBox.setVgrow(helpPane, Priority.ALWAYS);
 	populateHelp();
-	PANEL = panelRoot;	
+	PANEL = panelRoot;
     }
 
 
