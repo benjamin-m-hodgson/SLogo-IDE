@@ -244,7 +244,7 @@ class CommandTreeBuilder {
 			//		}
 			for (String substitute : DEFAULT_DOUBLE_SUBSTITUTES) {
 				if (userInput[currIdx].equals(substitute)) {
-					CommandNode newChildNode = new CommandNode(userInput[currIdx], turtles, activeTurtles);
+					CommandNode newChildNode = new CommandNode(userInput[currIdx], 0, turtles, activeTurtles);
 					parent.addChild(newChildNode);
 					if (parent.getNumChildren() < parent.getNumArgs()) { 
 						createAndSetChildren(turtles, activeTurtles, parent, userInput, currIdx+1, addToTrees);
@@ -259,7 +259,7 @@ class CommandTreeBuilder {
 				}
 			}
 			if (String.valueOf(userInput[currIdx].charAt(0)).equals(DEFAULT_VAR_IDENTIFIER)) {
-				CommandNode newChildNode = new CommandNode(userInput[currIdx], turtles, activeTurtles);
+				CommandNode newChildNode = new CommandNode(userInput[currIdx], 0, turtles, activeTurtles);
 				parent.addChild(newChildNode);
 				if (parent.getNumChildren() < parent.getNumArgs()) { 
 					createAndSetChildren(turtles, activeTurtles, parent, userInput, currIdx+1, addToTrees);
