@@ -13,23 +13,23 @@ import java.util.Map;
 class PowerCommand extends Command{
 
     private Command baseCommand;
-    private Command powerCommand;
+    private Command exponentCommand;
     private Map<String, Double> myVariables; 
 
     protected PowerCommand(Command base, Command power, Map<String, Double> variables, Turtle turtles) {
 	baseCommand = base;
-	powerCommand = power;
+	exponentCommand = power;
 	myVariables = variables;
 	setActiveTurtles(turtles);
     }
     @Override
     protected double execute() throws UnidentifiedCommandException {
     	double BASE = getCommandValue(baseCommand, myVariables, getActiveTurtles().toSingleTurtle());
-    	double POWER = getCommandValue(powerCommand, myVariables, getActiveTurtles().toSingleTurtle());
+    	double POWER = getCommandValue(exponentCommand, myVariables, getActiveTurtles().toSingleTurtle());
     	getActiveTurtles().executeSequentially(myTurtle -> {
     		try {
     		getCommandValue(baseCommand, myVariables, myTurtle);
-    		getCommandValue(powerCommand, myVariables, myTurtle);
+    		getCommandValue(exponentCommand, myVariables, myTurtle);
     		}
     		catch(UnidentifiedCommandException e) {
     			throw new UnidentifiedCommandError("Improper # arguments");

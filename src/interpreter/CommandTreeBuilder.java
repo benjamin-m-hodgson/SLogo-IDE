@@ -35,7 +35,7 @@ class CommandTreeBuilder {
 	public static final String DEFAULT_USERCOMMAND_IDENTIFIER = "MakeUserInstruction";
 	public static final String DEFAULT_USERCOMMAND_NAME = "UserInstruction";
 	public static final String DEFAULT_BACKCHANGE_IDENTIFIER = "SetBackground";
-	public static final String[] DEFAULT_DOUBLE_SUBSTITUTES = {"PenDown","PenUp","ShowTurtle","HideTurtle","Home","ClearScreen",
+	protected static final String[] DEFAULT_DOUBLE_SUBSTITUTES = {"PenDown","PenUp","ShowTurtle","HideTurtle","Home","ClearScreen",
 			"XCoordinate","YCoordinate","Heading","IsPenDown","IsShowing","Pi", "ID", "Turtles"};
 	//	private CommandTreeReader myCommandTreeReader; 
 	private String myNumArgsFileName; 
