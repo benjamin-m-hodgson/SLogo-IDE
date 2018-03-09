@@ -20,7 +20,7 @@ import javafx.scene.layout.Priority;
 import screen.UserScreen;
 
 
-public class TurtlePanel extends Panel {
+public class TurtlePanel  {
     // TODO: put in setting.properties file
     private final double DEFAULT_TURTLE_SIZE = 40;
     private final String DEFAULT_TURTLE = "Green Turtle.png";
@@ -42,7 +42,6 @@ public class TurtlePanel extends Panel {
 	TURTLE_LIST = new ArrayList<ImageView>();
     }
 
-    @Override
     public void makePanel() {
 	BorderPane layoutPane = new BorderPane();
 	Pane panel = new Pane();
@@ -56,8 +55,18 @@ public class TurtlePanel extends Panel {
 
 	PANEL = layoutPane;
     }
-
-  
+    
+    /**
+     * If property PANEL is null, calls makePanel() to generate the root. 
+     * 
+     * @return PANEL: The Parent node to be used in the Scene object. 
+     */
+    public Parent getPanel() {
+ 	if (PANEL == null) {
+ 	    makePanel();
+ 	}
+ 	return PANEL;
+     } 
 
     private void createTurtle(Pane panel, ScrollPane scrollPane) {
 	String currentDir = System.getProperty("user.dir");

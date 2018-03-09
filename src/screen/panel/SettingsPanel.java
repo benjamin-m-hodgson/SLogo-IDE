@@ -1,16 +1,8 @@
 package screen.panel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import interpreter.BadFormatException;
-import interpreter.Controller;
 import interpreter.FileIO;
-import interpreter.MissingInformationException;
-import interpreter.TurtleNotFoundException;
-import interpreter.UnidentifiedCommandException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -40,9 +32,9 @@ public class SettingsPanel extends SpecificPanel  {
     private final String COLOR_FOLDER = "colors";
     private final String PREFERENCES_FOLDER = "workspacePreferences";
     private final String TURTLE_IMAGE_FOLDER = "turtleimages";
-    private final BorderPane PANE;
     private  Button BACK;
-    private  Parent PANEL;
+    private BorderPane PANE;
+
     private Button NEW_WORKSPACE;
     private Button SAVE_PREFERENCES;
     private ComboBox<Object> LANGUAGE_CHOOSER;
@@ -291,16 +283,14 @@ public class SettingsPanel extends SpecificPanel  {
 	return dropDownMenu;
     }
 
-
     @Override
-    protected BorderPane getPane() {
-	// TODO Auto-generated method stub
-	return PANE;
+    protected UserScreen getUserScreen() {
+	return USER_SCREEN;
     }
 
 
     @Override
-    protected UserScreen getUserScreen() {
-	return USER_SCREEN;
+    protected BorderPane getPane() {
+	return PANE;
     }
 }

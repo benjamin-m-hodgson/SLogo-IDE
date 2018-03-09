@@ -1,9 +1,6 @@
 package screen.panel;
-
-import interpreter.Controller;
 import interpreter.FileIO;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -27,15 +24,15 @@ public class TurtleInfoPanel extends SpecificPanel {
     // TODO: put in settings .properties file
     private final int MOVEMENT_MIN = 0;
     private final int MOVEMENT_MAX = Integer.MAX_VALUE;
-    private Parent PANEL;
     private final FileIO FILE_READER;
-    private BorderPane USER_PANE;
     private UserScreen USER_SCREEN;
     private String TURTLE_ID;
+    private BorderPane PANE;
+
 
     public TurtleInfoPanel(BorderPane pane, UserScreen userScreen, String id, FileIO fileReader) {
 	FILE_READER = fileReader;
-	USER_PANE = pane;
+	PANE = pane;
 	USER_SCREEN = userScreen;
 	TURTLE_ID = id;
     }
@@ -176,14 +173,15 @@ public class TurtleInfoPanel extends SpecificPanel {
 	}
     }
 
-    @Override
-    protected BorderPane getPane() {
-	return USER_PANE;
-    }
 
     @Override
     protected UserScreen getUserScreen() {
 	// TODO Auto-generated method stub
 	return USER_SCREEN;
+    }
+
+    @Override
+    protected BorderPane getPane() {
+	return PANE;
     }
 }

@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import interpreter.Controller;
+import javafx.scene.Parent;
+
 import interpreter.FileIO;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -32,9 +34,8 @@ public class VariablesPanel extends SpecificPanel {
     private final double FRAMES_PER_SECOND = 2;
     private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-    private Parent PANEL;
-    private final FileIO FILE_READER;
     private BorderPane PANE;
+    private final FileIO FILE_READER;
     private VBox VARIABLE_BOX;
     private UserScreen USER_SCREEN;
 
@@ -67,14 +68,6 @@ public class VariablesPanel extends SpecificPanel {
 
     }
 
-
-    @Override
-    protected BorderPane getPane() {
-	// TODO Auto-generated method stub
-	return PANE;
-    }
-
-  
 
     @Override
     protected UserScreen getUserScreen() {
@@ -121,5 +114,10 @@ public class VariablesPanel extends SpecificPanel {
 	VBox panelRoot = new VBox(nameLabel,valueDisplay,setVariable, backButton);
 	panelRoot.setId("infoPanel");
 	return panelRoot;
+    }
+
+    @Override
+    protected BorderPane getPane() {
+	return PANE;
     }
 }

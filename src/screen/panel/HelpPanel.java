@@ -3,8 +3,6 @@ package screen.panel;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
-import interpreter.Controller;
 import interpreter.FileIO;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -25,10 +23,10 @@ import screen.UserScreen;
  */
 public class HelpPanel extends SpecificPanel  {
 
-    private Parent PANEL;
     private final FileIO FILE_READER;
-    private BorderPane PANE;
     private VBox HELP_BOX;
+    private BorderPane PANE;
+
     private UserScreen USER_SCREEN;
 
     public HelpPanel( BorderPane pane, UserScreen userScreen, FileIO fileReader) {
@@ -53,12 +51,6 @@ public class HelpPanel extends SpecificPanel  {
 	PANEL = panelRoot;	
     }
 
-  
-
-    @Override
-    protected BorderPane getPane() {
-	return PANE;
-    }
 
  
     @Override
@@ -150,5 +142,9 @@ public class HelpPanel extends SpecificPanel  {
 	infoBox.setText(commandInfoBuilder.toString());
 	infoBox.setEditable(false);
 	in.close();
+    }
+    @Override
+    protected BorderPane getPane() {
+	return PANE;
     }
 }
