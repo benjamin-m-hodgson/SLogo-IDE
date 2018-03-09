@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import javafx.scene.Group;
+import javafx.scene.image.ImageView;
+
+
 /**
  * Class used to hide/manipulate collection of active Turtles.
  * @author Sarahbland
@@ -44,7 +48,7 @@ public class TurtleHolder {
 		resetTemporaryTurtles();
 		return count>0;	
 	}
-	public SingleTurtle getTurtleWithID(double ID) {
+	protected SingleTurtle getTurtleWithID(double ID) {
 		for(SingleTurtle turtle : myCurrentTurtles) {
 			if(turtle.getID()==ID) {
 				return turtle;
@@ -52,6 +56,18 @@ public class TurtleHolder {
 		}
 		return mySharedTurtles.get(0); //returns a "fake" turtle that changing will not do anything to
 	}
+	/**
+	 * Returns the ImageView held by the turtle with the given ID so it can be attached to scene
+	 * @param ID is double ID of turtle whose ImageView is desired
+	 * @return ImageView of turtle
+	 */
+	protected ImageView getTurtleWithIDImageView(double ID) {
+		return getTurtleWithID(ID).getImageView();
+	}
+	protected Group getTurtleWithIDPenLines(double ID) {
+		return getTurtleWithID(ID).getPenLines();
+	}
+	
     private List<SingleTurtle> deepCopy (List<SingleTurtle> original) {
         List<SingleTurtle> result = new ArrayList<>();
         for (SingleTurtle c : original) {
