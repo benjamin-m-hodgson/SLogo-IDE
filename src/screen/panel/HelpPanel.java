@@ -53,13 +53,7 @@ public class HelpPanel extends SpecificPanel  {
 	PANEL = panelRoot;	
     }
 
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
-	}
-	return PANEL;
-    }
+  
 
     @Override
     protected BorderPane getPane() {

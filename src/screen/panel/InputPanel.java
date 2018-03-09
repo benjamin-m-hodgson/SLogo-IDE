@@ -14,11 +14,10 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import screen.UserScreen;
 
-public class InputPanel implements Panel {
+public class InputPanel extends Panel {
     private final double FRAMES_PER_SECOND = 120;
     private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-    private Parent PANEL;
     private TextPanel INPUT_AREA;
     private FileIO FILE_READER;
     private final UserScreen USER_SCREEN;
@@ -57,13 +56,7 @@ public class InputPanel implements Panel {
 	runBox.setId("runBox");
 	return runBox;
     }
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
-	}
-	return PANEL;
-    }
+
 
 
     private Button drawRunButton() {

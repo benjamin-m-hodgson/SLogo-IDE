@@ -28,7 +28,6 @@ public class HistoryPanel extends SpecificPanel {
     private final double FRAMES_PER_SECOND = 2;
     private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-    private Parent PANEL;
     private FileIO FILE_READER;
     private BorderPane PANE;
     private VBox HISTORY_BOX; 
@@ -61,13 +60,7 @@ public class HistoryPanel extends SpecificPanel {
 	PANEL = panelRoot;
     }
 
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
-	}
-	return PANEL;
-    }
+
 
     @Override
     protected BorderPane getPane() {
