@@ -127,7 +127,6 @@ public class SettingsPanel extends SpecificPanel  {
 				FXCollections.observableArrayList(selectionPrompt);
 		colorsUntranslated = PROGRAM_CONTROLLER.getFileNames(COLOR_FOLDER);
 		colorsTranslated = PROGRAM_CONTROLLER.translateColors(colorsUntranslated);
-//		simulationChoices.addAll(colorsTranslated);
 		Map<String, String> colorPaletteNames = PROGRAM_CONTROLLER.getColors();
 		for (String key : colorPaletteNames.keySet()) {
 			simulationChoices.add(key+". "+colorPaletteNames.get(key));
