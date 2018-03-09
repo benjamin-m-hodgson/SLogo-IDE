@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 
 	    	public static final double DEFAULT_TURTLE_SIZE = 40;
 		public static final double DEFAULT_ID = -1;
-		public static final String DEFAULT_PEN_COLORCODE = "#2d3436";
+		public static final String DEFAULT_PEN_COLORCODE = "#000000";
 		public static final double DEFAULT_PEN_WIDTH = 1.0;
 		public static final double DEFAULT_X_POS = 0.0; 
 		public static final double DEFAULT_Y_POS = 0.0; 

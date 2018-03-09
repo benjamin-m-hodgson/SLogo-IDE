@@ -40,7 +40,6 @@ public class RegexMatcher {
             String key = iter.nextElement();
             String regex = resourcesToAdd.getString(key);
             listToAddTo.add(new SimpleEntry<>(key, Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
-            System.out.println("REGEX MATCHER HAS "+listToAddTo.get(listToAddTo.size()-1));
         }
     }
 	

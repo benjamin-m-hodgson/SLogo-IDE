@@ -8,7 +8,7 @@ import java.util.Map;
  *
  */
 public class SetPenColorCommand extends Command {
-	public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
+	public static final String DEFAULT_COLORPALETTE_FILE = "src/interpreter/ColorPalette.properties";
 	private Command colorCodeCommand;
 	private Map<String, Double> myVariables; 
 
@@ -21,11 +21,10 @@ public class SetPenColorCommand extends Command {
 	@Override
 	protected double execute() throws UnidentifiedCommandException {
 	
-		double retVal = 0; 
-		String hexAsString = "";
-
+		double retVal = -1; 
+		
 		double commandInfo = getCommandValue(colorCodeCommand, myVariables, getActiveTurtles());
-
+		
 		getActiveTurtles().executeSequentially(turtle -> {
 			try {
 				getCommandValue(colorCodeCommand, myVariables, turtle);
@@ -34,18 +33,19 @@ public class SetPenColorCommand extends Command {
 				throw new UnidentifiedCommandError("Improper # arguments");
 			}
 		});
-				
-		RegexMatcher rm = new RegexMatcher(DEFAULT_COLORPALETTE_FILE);
-		try {
-			int idxAsInt = (int) commandInfo;
-			hexAsString = rm.findMatchingVal(Integer.toString(idxAsInt)).substring(1);
-		} catch (Exception e) {
-			return -1;
+		
+		int idxAsInt = (int) commandInfo;
+		
+		PropertiesReader pr = new PropertiesReader(DEFAULT_COLORPALETTE_FILE);
+		String hex = pr.findVal(Integer.toString(idxAsInt));
+		if (hex.length() > 0) {
+			getActiveTurtles().setPenColor(hex.substring(1));
+			retVal = commandInfo; 
 		}
-		retVal = commandInfo; 
-
-		getActiveTurtles().setPenColor(hexAsString);
-				
+		else {
+			throw new UnidentifiedCommandException("Invalid color selection!");
+		}
+					
 		return retVal;
 	}
 	
