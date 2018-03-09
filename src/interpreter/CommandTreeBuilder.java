@@ -275,7 +275,7 @@ class CommandTreeBuilder {
 			for (int idx = currIdx+1; idx < userInput.length; idx++) { 
 				try {
 					Double.parseDouble(userInput[idx]);
-					CommandNode newChildNode = new CommandNode(userInput[idx], turtles, activeTurtles);
+					CommandNode newChildNode = new CommandNode(userInput[idx], 0, turtles, activeTurtles);
 					int numArgs = getNumArgs(userInput[idx-1]);
 					CommandNode newCommandNode = new CommandNode(userInput[idx-1], numArgs, newChildNode, turtles, activeTurtles);
 					for (int backtrack = idx-2; backtrack >= currIdx; backtrack--) { 
@@ -589,7 +589,6 @@ class CommandTreeBuilder {
 		CommandNode tellNode = new CommandNode(DEFAULT_TELL_IDENTIFIER, 1, turtles, activeTurtles);
 		tellNode.addChild(idNode);
 		myCommandTrees.add(tellNode);
-		System.out.println("USER INPUT" + userInput[endIdx+1]);
 		return endIdx;
 	}
 

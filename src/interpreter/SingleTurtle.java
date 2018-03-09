@@ -248,8 +248,6 @@ import java.util.function.Consumer;
 			myY = y; 
 			myImage.setX(myX - DEFAULT_TURTLE_SIZE/2);
 			myImage.setY(myY - DEFAULT_TURTLE_SIZE/2);
-			System.out.println(myImage.getX());
-			System.out.println(myImage.getY());
 			myPen.drawLine(myOldX, myOldY, myX, myY);
 			return calcDistance(myOldX, myOldY, myX, myY);
 		}
@@ -262,8 +260,8 @@ import java.util.function.Consumer;
 		 * @return distance traveled
 		 */
 		protected double calcDistance(double oldX, double oldY, double x, double y) {
-//			System.out.println("old x: " + oldX + " new x: "+ x);
-//			System.out.println("old y" + oldY + " new y: "+ y);
+			System.out.println("old x: " + oldX + " new x: "+ x);
+			System.out.println("old y" + oldY + " new y: "+ y);
 			double xSquared = Math.pow((oldX-x), 2);
 			double ySquared = Math.pow((oldY-y), 2);
 			return Math.sqrt(xSquared+ySquared);
@@ -295,7 +293,6 @@ import java.util.function.Consumer;
 		
 		protected void setAngle(double angle) {
 			myAngle = angle;
-			System.out.println("angle" + myAngle);
 			myImage.setRotate(angle);
 		}
 
