@@ -48,13 +48,7 @@ public class TurtleInfoPanel extends SpecificPanel {
 	PANEL = turtleInfoPanel;
     }
 
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
-	}
-	return PANEL;
-    }
+  
 
     private void populateInfoBox(VBox turtleInfoPanel) {
 	Button backButton = makeBackButton(FILE_READER);

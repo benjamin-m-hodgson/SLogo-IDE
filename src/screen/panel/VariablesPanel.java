@@ -67,13 +67,6 @@ public class VariablesPanel extends SpecificPanel {
 
     }
 
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
-	}
-	return PANEL;
-    }
 
     @Override
     protected BorderPane getPane() {

@@ -13,8 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import screen.UserScreen;
 
-public class TextPanel implements Panel {
-    private Parent PANEL;
+public class TextPanel extends Panel {
     private final FileIO FILE_READER;
     private final UserScreen USER_SCREEN;
     private TextArea INPUT_AREA;
@@ -25,13 +24,7 @@ public class TextPanel implements Panel {
 	USER_SCREEN = userScreen;
     }
 
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
-	}
-	return PANEL;
-    }
+
 
     @Override
     public void makePanel() {
