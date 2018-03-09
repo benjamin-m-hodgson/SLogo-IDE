@@ -38,7 +38,7 @@ public class Controller {
     public static final String DEFAULT_COLOR = "Grey";
     public static final String DEFAULT_SETTINGS = "settings";
     public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
-   
+    private final String DEFAULT_WORKSPACE_PREF = "default";
 
  
     private String DEFAULT_CSS = Controller.class.getClassLoader().
