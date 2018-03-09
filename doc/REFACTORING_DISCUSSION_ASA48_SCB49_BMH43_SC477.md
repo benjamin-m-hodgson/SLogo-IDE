@@ -1,0 +1,13 @@
+# Static Code Review and Refactoring
+Andrew Arnold, Sarah Bland, Susie Choi, Ben Hodgson
+
+##### Duplication Refactoring
+The primary duplicated code problem we tackled in this class period was in the Controller. There were multiple places in which standard file readings and property getting were duplicated. Unfortunately, refactoring this proved to take longer than the time given in the class as multiple other classes and methods rely on the duplicated code in the Controller. Additionally, we changed the panel class to be an abstract class to get rid of several duplicated methods in all of our panels. Specifically we removed the getPanel() methods from all of the panel subclasses and placed this methods implementation in the Panel.java abstract class.
+
+
+#### Checklist Refactoring
+For our checklist refactoring we again focused in part on the controller class. Flexibility had our lowest score, with all of the problems in the sub category Single Purpose. A significant portion of those issues came from long methods in the controller class. While its refactoring is not yet done, splitting the file operations from the controller will be able to be reduce the length of the class and isolate certain aspects of the programs functionality. Our second lowest score was in modularity, with one of the most significant issues being that the controller class had too many dependencies on the other classes. Again, by splitting off the file reading and manipulation from the Controller class we will be able to reduce that number. Another problem we faced that hindered our score was our use of factory classes. In lieu of reflection, we opted to use factory classes to differentiate between different command types and determine which command sub classes to instantiate. These factory classes were designed this way on purpose and we don't see a pressing need to refactor them, yet they still negatively impacted our score.
+
+#### General Refactoring
+
+One of the biggest changes we will need to make in the coming day will be to change how we handle exceptions. As our code stands now we process some exceptions in some places and not in others, and as a whole our program needs a more systematic way of handling exceptions and solving them. We need to rethrow or log a ton of exceptions which we will be doing tonight, rather than catching them at seemingly random places. We can also work on refactoring methods (particularly in the CommandTreeBuilder) to make them shorter/more modular and easier to understand. We do not need to have a class that is over 600 lines and methods over 100 lines.
