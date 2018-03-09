@@ -67,7 +67,6 @@ public class Controller {
 		    USER_SCREEN.changeBackgroundColorHex(matchingHex);
 		} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
 		    loadErrorScreen(COLOR_ERROR_KEY);
-		    e.printStackTrace();
 		}
 	    }
 	});
@@ -220,7 +219,10 @@ public class Controller {
      * @throws TurtleNotFoundException 
      */
     public double parseInput(String userTextInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
-	return myTextFieldParser.parseText(userTextInput);
+	for (String key : FILE_READER.getColors().keySet()) {
+		System.out.println(key);
+	}
+    	return myTextFieldParser.parseText(userTextInput);
     }
 
     /**

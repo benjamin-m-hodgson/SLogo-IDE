@@ -28,7 +28,7 @@ public class TurtlePanel  {
     private final BorderPane USER_PANE;
     private ScrollPane SCROLL_PANE;
     private final UserScreen USER_SCREEN;
-    private String DEFAULT_COLOR_HEXCODE = "2d3436";
+    private String DEFAULT_COLOR_HEXCODE = "000000";
   //  private final String DEFAULT_SETSHAPE_COMMAND = "";
     private HBox ErrorHolder;
     private List<ImageView> TURTLE_LIST;

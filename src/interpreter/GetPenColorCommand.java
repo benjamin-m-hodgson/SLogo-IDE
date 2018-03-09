@@ -1,8 +1,10 @@
 package interpreter;
 
+import java.util.Map;
+
 class GetPenColorCommand extends Command {
 	
-	public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
+	public static final String DEFAULT_COLORPALETTE_FILE = "src/interpreter/ColorPalette.properties";
 	Turtle myTurtle; 
 
 	protected GetPenColorCommand(Turtle turtle) {
@@ -11,17 +13,14 @@ class GetPenColorCommand extends Command {
 	
 	@Override
 	double execute() throws UnidentifiedCommandException {
-		RegexMatcher rm = new RegexMatcher(DEFAULT_COLORPALETTE_FILE);
-		String idx = "-1";
-		try {
-			idx = rm.findMatchingKey("#"+myTurtle.getPenColor());
-		} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
-			System.out.print("Oops! Your pen has no assigned color.");
-			e.printStackTrace();
-			throw new UnidentifiedCommandException("No pen color");
+		PropertiesReader pr = new PropertiesReader(DEFAULT_COLORPALETTE_FILE);
+		String colorIdx = pr.findKey("#"+myTurtle.getPenColor()); 
+		if (colorIdx.length() > 0) {
+			return Double.parseDouble(colorIdx); 
 		}
-		return Double.parseDouble(idx); 
+		else {
+			throw new UnidentifiedCommandException("No pen color");
+		} 
 	}
-
 	
 }
