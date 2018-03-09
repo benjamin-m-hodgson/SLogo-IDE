@@ -6,16 +6,12 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
-import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
-
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -103,6 +99,9 @@ public class Controller {
 	public void loadStartScreen() {
 		try {
 			StartScreen startScreen = new StartScreen(this);
+			// test the ErrorScreen
+			//ErrorScreen startScreen = new ErrorScreen(this, 
+			//		resourceErrorText(SCREEN_ERROR_KEY));
 			Parent programRoot = startScreen.getRoot();
 			Scene programScene = new Scene(programRoot, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 			programScene.getStylesheets().add(DEFAULT_CSS);
@@ -158,10 +157,6 @@ public class Controller {
 		return 1.0; 
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public Map<String, String> getUserDefined() {
 		return myTextFieldParser.getUserDefined(); 
 	}
@@ -234,7 +229,21 @@ public class Controller {
 		return shapesMap; 
 	}
 
+	/**
+	 * 
+	 * @return ReadOnlyDoubleProperty: the height property of the application
+	 */
+	public ReadOnlyDoubleProperty getHeightProperty() {
+		return PROGRAM_STAGE.heightProperty();
+	}
 
+	/**
+	 * 
+	 * @return ReadOnlyDoubleProperty: the height property of the application
+	 */
+	public ReadOnlyDoubleProperty getWidthProperty() {
+		return PROGRAM_STAGE.widthProperty();
+	}
 
 	/**
 	 * Loops through the files in the "languages" sub directory to determine which 

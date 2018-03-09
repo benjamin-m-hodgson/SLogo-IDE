@@ -147,8 +147,8 @@ public class MultipleTurtles extends Turtle{
 				t.setShape(idxKey);
 			} catch (MalformedURLException | BadFormatException | UnidentifiedCommandException
 					| MissingInformationException e) {
-				throw new 
-				UnidentifiedCommandError(e.getMessage());
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		});
 	}
@@ -202,3 +202,4 @@ public class MultipleTurtles extends Turtle{
 	}
 
 }
+

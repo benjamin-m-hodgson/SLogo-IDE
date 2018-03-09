@@ -20,36 +20,47 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
 
-public class TurtlePanel extends Panel {
-	// TODO: put in setting.properties file
-	private final double DEFAULT_TURTLE_SIZE = 35;
-	private final String DEFAULT_TURTLE = "Turtle.png";
-	private BorderPane PANEL;
-	private ScrollPane SCROLL_PANE;
-	private Controller PROGRAM_CONTROLLER;
-	private String DEFAULT_COLOR_HEXCODE = "2d3436";
-	private HBox ErrorHolder;
-	private List<ImageView> TURTLE_LIST;
+public class TurtlePanel implements Panel {
+    // TODO: put in setting.properties file
+    private final double DEFAULT_TURTLE_SIZE = 40;
+    private final String DEFAULT_TURTLE = "Green Turtle.png";
+    private BorderPane PANEL;
+    private BorderPane USER_PANE;
+    private ScrollPane SCROLL_PANE;
+    private Controller PROGRAM_CONTROLLER;
+    private String DEFAULT_COLOR_HEXCODE = "2d3436";
+    private HBox ErrorHolder;
+    private List<ImageView> TURTLE_LIST;
+    private int TURTLE_COUNT = 1;
 
-	public TurtlePanel(Controller programController) {
-		PROGRAM_CONTROLLER = programController;
-		TURTLE_LIST = new ArrayList<ImageView>();
+    public TurtlePanel(Controller programController, BorderPane pane) {
+	PROGRAM_CONTROLLER = programController;
+	USER_PANE = pane;
+	TURTLE_LIST = new ArrayList<ImageView>();
+    }
+
+    @Override
+    public void makePanel() {
+	BorderPane layoutPane = new BorderPane();
+	Pane panel = new Pane();
+
+	ScrollPane scroll = new ScrollPane(panel);
+	layoutPane.setCenter(scroll);
+
+	SCROLL_PANE = scroll;
+	scroll.setId("turtlePanel");
+	createTurtle(panel, scroll);
+
+	PANEL = layoutPane;
+    }
+
+    @Override
+    public Parent getPanel() {
+	if (PANEL == null) {
+	    makePanel();
 	}
-	  @Override
-	    public void makePanel() {
-		BorderPane layoutPane = new BorderPane();
-		Pane panel = new Pane();
-
-		ScrollPane scroll = new ScrollPane(panel);
-		layoutPane.setCenter(scroll);
-
-		SCROLL_PANE = scroll;
-		scroll.setId("turtlePanel");
-		createTurtle(panel, scroll);
-
-		PANEL = layoutPane;
-	    }
-
+	return PANEL;
+    }
 
     private void createTurtle(Pane panel, ScrollPane scrollPane) {
 	String currentDir = System.getProperty("user.dir");
@@ -59,7 +70,7 @@ public class TurtlePanel extends Panel {
 	    Image turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
 	    ImageView turtleView = new ImageView(turtleImage);
 	    TURTLE_LIST.add(turtleView);
-	    turtleView.setId("1");
+	    turtleView.setId("turtleView");
 	    turtleView.setFitHeight(DEFAULT_TURTLE_SIZE);
 	    turtleView.setFitWidth(DEFAULT_TURTLE_SIZE);
 	    // center the turtle on the screen
@@ -67,18 +78,24 @@ public class TurtlePanel extends Panel {
 	    turtleView.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
 	    turtleView.setX(-DEFAULT_TURTLE_SIZE/2);
 	    turtleView.setY(-DEFAULT_TURTLE_SIZE/2);
+	    // add button click event
+	    String turtleId = Integer.toString(TURTLE_COUNT);
+	    turtleView.setOnMousePressed((arg0)-> USER_PANE.setRight(
+		    new TurtleInfoPanel(PROGRAM_CONTROLLER, USER_PANE, turtleId).getPanel()));
 	    panel.getChildren().add(turtleView);
 	    Group penLines = new Group();
 	    penLines.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
 	    penLines.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
 	    panel.getChildren().add(penLines);
-	    PROGRAM_CONTROLLER.makeNewTurtleCommand("50", turtleView,DEFAULT_COLOR_HEXCODE , penLines);
+	    PROGRAM_CONTROLLER.makeNewTurtleCommand(turtleId, turtleView, DEFAULT_COLOR_HEXCODE , penLines);
+	    TURTLE_COUNT++;
 	}
 	catch (Exception e) {
 	    // TODO: make custom exception super class with sub classes for specifications
 	    //String specification = "%nFailed to find language files";
 	    System.out.println("FAILED TO LOAD TURTLE IMG");
 	}
+
     }
 
     public void displayErrorMessage(String error) {

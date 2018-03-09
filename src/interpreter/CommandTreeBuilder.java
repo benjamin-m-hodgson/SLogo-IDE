@@ -6,9 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javafx.beans.property.DoubleProperty;
+
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 /** 
  * @author Susie Choi
@@ -667,3 +666,5 @@ class CommandTreeBuilder {
 	}
 
 }
+
+

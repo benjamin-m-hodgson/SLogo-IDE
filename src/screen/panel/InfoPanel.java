@@ -17,7 +17,7 @@ import screen.UserScreen;
  * @author Andrew Arnold
  *
  */
-public class InfoPanel extends Panel {
+public class InfoPanel implements Panel {
 
 	private Parent PANEL;
 	private Controller PROGRAM_CONTROLLER;
@@ -61,10 +61,18 @@ public class InfoPanel extends Panel {
 	}
 
 	private Button makeButton(String buttonId) {
+	    	System.out.println(buttonId);
 		Button button = new Button(PROGRAM_CONTROLLER.resourceDisplayText(buttonId));
 		button.setId(buttonId);
 		return button;
 	}
 
+	@Override
+	public Parent getPanel() {
+		if (PANEL == null) {
+			makePanel();
+		}
+		return PANEL;
+	}
 
 }

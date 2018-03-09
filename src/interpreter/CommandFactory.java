@@ -191,9 +191,6 @@ public class CommandFactory {
 		else if(commandName.equals("Turtles")) {
 			return makeDoubleCommand("" + turtles.size());
 		}
-		else if(commandName.equals("Tell")) {
-			return new TellCommand(commandArgs.get(0), activeTurtles, turtles);
-		}
 		else {
 			return new StringCommand(commandName);
 		}

@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import screen.UserScreen;
 
-public class InputPanel extends Panel {
+public class InputPanel implements Panel {
 	private final double FRAMES_PER_SECOND = 120;
 	private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
 	private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -46,6 +46,14 @@ public class InputPanel extends Panel {
 		animation.setCycleCount(Animation.INDEFINITE);
 		animation.getKeyFrames().add(frame);
 		animation.play();
+	}
+
+	@Override
+	public Parent getPanel() {
+		if (PANEL == null) {
+			makePanel();
+		}
+		return PANEL;
 	}
 
 	private VBox drawRunBox() {
