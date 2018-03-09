@@ -60,16 +60,13 @@ class UserInstructionCommand extends Command {
 	}
 
 	@Override
-	protected double execute() {
+	protected double execute() throws UnidentifiedCommandException{
 		double retVal = 0.0;
 		try {
 			retVal = myBuilder.buildAndExecute(myTurtle, getActiveTurtles(), myUserCommContent, true);
-		} catch (BadFormatException e) {
-			e.printStackTrace();
-		} catch (MissingInformationException e) {
-			e.printStackTrace();
-		} catch (UnidentifiedCommandException e) {
-			e.printStackTrace();
+		} 
+		catch (BadFormatException | MissingInformationException e) {
+			throw new UnidentifiedCommandException(e.getMessage());
 		}
 		return retVal; 
 	}

@@ -32,8 +32,11 @@ public class TurtleHolder {
 		resetTemporaryTurtles();
 	} 
 	public List<SingleTurtle> getCopyTurtleList(){
-		System.out.println("makin a copy");
 		return mySharedTurtles;
+	}
+	protected void replaceTurtleList(List<SingleTurtle> turtles) {
+		myCurrentTurtles = turtles;
+		resetTemporaryTurtles();
 	}
 	public boolean hasTurtleWithID(double ID) {
 		long countLong = mySharedTurtles.stream().filter(turtle -> turtle.getID()==ID).count();
@@ -58,3 +61,6 @@ public class TurtleHolder {
     }
 
 }
+
+
+

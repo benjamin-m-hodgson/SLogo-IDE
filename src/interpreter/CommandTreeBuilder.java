@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 /** 
@@ -25,6 +26,8 @@ class CommandTreeBuilder {
 	public static final String DEFAULT_REPEAT_IDENTIFIER = "Repeat";
 	public static final String DEFAULT_TELL_IDENTIFIER = "Tell";
 	public static final String DEFAULT_FOR_IDENTIFIER = "For";
+	public static final String DEFAULT_ASK_WITH_IDENTIFIER = "AskWith";
+	public static final String DEFAULT_ASK_IDENTIFIER = "Ask";
 	public static final String DEFAULT_BRACKET_START_IDENTIFIER = "[";
 	public static final String DEFAULT_BRACKET_END_IDENTIFIER = "]";
 	public static final String DEFAULT_VAR_IDENTIFIER = ":";
@@ -200,8 +203,13 @@ class CommandTreeBuilder {
 			return;
 		}
 		if(userInput[currIdx-1].equals(DEFAULT_TELL_IDENTIFIER)) {
-			int startAfterTell = parseTell(turtles, activeTurtles, userInput, currIdx); 
+			int startAfterTell = parseTell(turtles, activeTurtles, userInput, currIdx, addToTrees, parent); 
 			createCommandTree(turtles, activeTurtles, userInput, startAfterTell);
+			return;
+		}
+		if(userInput[currIdx-1].equals(DEFAULT_ASK_IDENTIFIER)||userInput[currIdx-1].equals(DEFAULT_ASK_WITH_IDENTIFIER)) {
+			int startAfterAsk = parseAsks(turtles, activeTurtles, userInput, currIdx, addToTrees, parent); 
+			createCommandTree(turtles, activeTurtles, userInput, startAfterAsk);
 			return;
 		}
 
@@ -323,14 +331,14 @@ class CommandTreeBuilder {
 			}
 		}
 	}
-	private int parseAsks(Turtle turtles, Turtle activeTurtles, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private int parseAsks(Turtle turtles, Turtle activeTurtles, String[] userInput, int currIdx, boolean addToTrees, CommandNode parent) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		if (addToTrees) {
 			myCommandTrees.add(parent);
 		}
 		currIdx++;
 		for(int k = 0; k<2; k+=1) {
 			int currIdxCopy = searchForBracket(currIdx, userInput, DEFAULT_BRACKET_END_IDENTIFIER, 1);
-			String[] ids = Arrays.copyOfRange(userInput, currIdx, currIdxCopy);
+			String[] ids = Arrays.copyOfRange(userInput, currIdx, currIdxCopy-1);
 			String idString = String.join(" ", ids);
 			CommandNode idNode = new CommandNode(idString, turtles, activeTurtles);
 			parent.addChild(idNode);
@@ -566,10 +574,13 @@ class CommandTreeBuilder {
 		return endCommandContent; 
 
 	}
-	private int parseTell(Turtle turtles, Turtle activeTurtles, String[] userInput, int startIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	private int parseTell(Turtle turtles, Turtle activeTurtles, String[] userInput, int startIdx, boolean addToTrees, CommandNode parent) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+		if (addToTrees) {
+			myCommandTrees.add(parent);
+		}
 		startIdx++;
 		int endIdx = searchForBracket(startIdx, userInput, DEFAULT_BRACKET_END_IDENTIFIER, 1);
-		String[] idStringArray = Arrays.copyOfRange(userInput, startIdx, endIdx);
+		String[] idStringArray = Arrays.copyOfRange(userInput, startIdx, endIdx-1);
 		String idString = String.join(" ", idStringArray);
 		CommandNode idNode = new CommandNode(idString, turtles, activeTurtles);
 		CommandNode tellNode = new CommandNode(DEFAULT_TELL_IDENTIFIER, 1, turtles, activeTurtles);
@@ -636,15 +647,6 @@ class CommandTreeBuilder {
 		}
 		return numArgs;
 	}
-
-//	private boolean isDoubleSubstitute(String inputToken) {
-//		for (int j = 0; j < DEFAULT_DOUBLE_SUBSTITUTES.length; j ++) {
-//			if (inputToken.equals(DEFAULT_DOUBLE_SUBSTITUTES[j])) {
-//				return true;
-//			}
-//		}
-//		return false; 
-//	}
 	//RETURNS INDEX OF BRACKET!!
 	private int searchForBracket(int currIdxCopy, String[] userInput, String bracketIdentifier, int initialNeeded) throws BadFormatException, UnidentifiedCommandException, MissingInformationException{
 		int bracketNeededCount = initialNeeded;
@@ -664,3 +666,5 @@ class CommandTreeBuilder {
 	}
 
 }
+
+
