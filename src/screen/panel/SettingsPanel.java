@@ -1,14 +1,13 @@
 package screen.panel;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import interpreter.BadFormatException;
-import interpreter.Controller;
+import interpreter.FileIO;
 import interpreter.MissingInformationException;
 import interpreter.TurtleNotFoundException;
-import interpreter.UnidentifiedCommandException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -34,16 +33,14 @@ import StartUp.Driver;
  */
 public class SettingsPanel extends SpecificPanel  {
 
-	public static final int VISIBLE_ROW_COUNT = 5;
-	public static final String COLOR_FOLDER = "colors";
+	private final int VISIBLE_ROW_COUNT = 5;
 	public static final String PREFERENCES_FOLDER = "workspacePreferences";
-	public static final String TURTLE_IMAGE_FOLDER = "turtleimages";
 	public static final String DEFAULT_BGCOLORCHANGE_COMMAND = "SetBackground";
 	public static final String DEFAULT_PENCOLORCHANGE_COMMAND = "SetPenColor";
-	private  Parent PANEL;
-	private final Controller PROGRAM_CONTROLLER;
-	private final BorderPane PANE;
+	public static final String DEFAULT_SHAPE_COMMAND = "SetShape";
 	private  Button BACK;
+	private BorderPane PANE;
+
 	private Button NEW_WORKSPACE;
 	private Button SAVE_PREFERENCES;
 	private ComboBox<Object> LANGUAGE_CHOOSER;
@@ -51,27 +48,23 @@ public class SettingsPanel extends SpecificPanel  {
 	private ComboBox<Object> PEN_COLOR_CHOOSER;
 	private ComboBox<Object> TURTLE_IMAGE_CHOOSER;
 	private ComboBox<Object> PREFERENCES_CHOOSER;
-	private List<String> colorsUntranslated;
-	private List<String> colorsTranslated;
 	private UserScreen USER_SCREEN;
+	private final FileIO fileReader;
 	private final int DEFAULT_BUTTON_SPACEING = 10;
 	private final String[] DROPDOWN_IDS = {"languageSettingsChooser", "backgroundColorChooser", "penColorChooser", "turtleImageChooser", "preferencesChooser"};
 	private final String[] BUTTON_IDS = {"newworkspaceButton", "saveprefButton"};
 
-	public SettingsPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
-		PROGRAM_CONTROLLER = programController;
+	public SettingsPanel( BorderPane pane, UserScreen userScreen, FileIO fileReaderIn) {
 		PANE = pane;
 		USER_SCREEN = userScreen;
-		//		String codeTest = "#2d3436";
-		//		codeTest = codeTest.substring(1, codeTest.length());
-		//		int hexConvert = Integer.parseInt(codeTest,16);
-		//		System.out.println(Integer.toHexString(hexConvert));
+		fileReader = fileReaderIn;
+
 	}
 
 
 	@Override
 	public void makePanel() {
-		BACK = makeBackButton(PROGRAM_CONTROLLER);
+		BACK = makeBackButton(fileReader);
 		NEW_WORKSPACE =  makeNewWorkspaceButton(BUTTON_IDS[0]);
 		LANGUAGE_CHOOSER = makeLanguageChooser(DROPDOWN_IDS[0]);
 		BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[1]);
@@ -84,50 +77,20 @@ public class SettingsPanel extends SpecificPanel  {
 		PANEL = panelRoot;
 	}
 
-
-	/**
-	 * 
-	 * @return dropDownMenu: a drop down menu that lets the user choose the
-	 * language for the simulation
-	 */
-	private ComboBox<Object> makeLanguageChooser(String itemID) {
-		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
-		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
-		Tooltip languageTip = new Tooltip();
-		languageTip.setText(selectionPrompt);
-		dropDownMenu.setTooltip(languageTip);
-		ObservableList<Object> simulationChoices = 
-				FXCollections.observableArrayList(selectionPrompt);
-		simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());
-		dropDownMenu.setItems(simulationChoices);
-		dropDownMenu.setId(itemID);
-		dropDownMenu.getSelectionModel().selectedIndexProperty()
-		.addListener(( arg0, arg1,  arg2) ->{
-			String selected = (String) simulationChoices.get((Integer) arg2);
-			if (!selected.equals(selectionPrompt)) {
-				PROGRAM_CONTROLLER.changeLanguage(selected);
-				updatePrompt();
-			}
-		});
-		return dropDownMenu;
-	}
-
 	/**
 	 * 
 	 * @return dropDownMenu: a drop down menu that lets the user choose the
 	 * background color for the simulation
 	 */
 	private ComboBox<Object> makeBackgroundColorChooser(String itemID) {
-		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
+		String selectionPrompt = fileReader.resourceDisplayText(itemID);
 		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
 		Tooltip backgroundTip = new Tooltip();
 		backgroundTip.setText(selectionPrompt);
 		dropDownMenu.setTooltip(backgroundTip);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
-		colorsUntranslated = PROGRAM_CONTROLLER.getFileNames(COLOR_FOLDER);
-		colorsTranslated = PROGRAM_CONTROLLER.translateColors(colorsUntranslated);
-		Map<String, String> colorPaletteNames = PROGRAM_CONTROLLER.getColors();
+		Map<String, String> colorPaletteNames = fileReader.getColors();
 		for (String key : colorPaletteNames.keySet()) {
 			simulationChoices.add(key+". "+colorPaletteNames.get(key));
 		}
@@ -138,12 +101,7 @@ public class SettingsPanel extends SpecificPanel  {
 			String selected = (String) dropDownMenu.getItems().get((Integer) arg2);
 			if (!selected.equals(selectionPrompt)) {
 				String selectedColorIdx = (selected.split(". "))[0];
-				try {
-					PROGRAM_CONTROLLER.parseSettingInput(DEFAULT_BGCOLORCHANGE_COMMAND+" "+selectedColorIdx);
-				} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
-						| MissingInformationException e) {
-					PROGRAM_CONTROLLER.loadErrorScreen(e.getMessage());
-				} 
+				fileReader.parseSettingInput(DEFAULT_BGCOLORCHANGE_COMMAND+" "+selectedColorIdx);
 			}
 		});
 		return dropDownMenu;
@@ -155,47 +113,28 @@ public class SettingsPanel extends SpecificPanel  {
 	 * language for the simulation
 	 */
 	private ComboBox<Object> makePenColorChooser(String itemID) {
-		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
+		String selectionPrompt = fileReader.resourceDisplayText(itemID);
 		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
 		Tooltip penTip = new Tooltip();
 		penTip.setText(selectionPrompt);
 		dropDownMenu.setTooltip(penTip);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
-//		colorsUntranslated = PROGRAM_CONTROLLER.getFileNames(COLOR_FOLDER);
-//		colorsTranslated = PROGRAM_CONTROLLER.translateColors(colorsUntranslated);
-//		simulationChoices.addAll(colorsTranslated);
-		Map<String, String> colorPaletteNames = PROGRAM_CONTROLLER.getColors();
+		Map<String, String> colorPaletteNames = fileReader.getColors();
 		for (String key : colorPaletteNames.keySet()) {
 			simulationChoices.add(key+". "+colorPaletteNames.get(key));
 		}
- 		dropDownMenu.setItems(simulationChoices);
+		dropDownMenu.setItems(simulationChoices);
 		dropDownMenu.setId(itemID);
 		dropDownMenu.getSelectionModel().selectedIndexProperty()
 		.addListener(( arg0, arg1, arg2) ->{
 			String selected = (String) dropDownMenu.getItems().get((Integer) arg2);
 			if (!selected.equals(selectionPrompt)) {
 				String selectedColorIdx = (selected.split(". "))[0];
-				try {
-					PROGRAM_CONTROLLER.parseSettingInput(DEFAULT_PENCOLORCHANGE_COMMAND+" "+selectedColorIdx);
-				} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
-						| MissingInformationException e) {
-					PROGRAM_CONTROLLER.loadErrorScreen(e.getMessage());
-				} 
+				fileReader.parseSettingInput(DEFAULT_PENCOLORCHANGE_COMMAND+" "+selectedColorIdx);
 			}
 		});
 		return dropDownMenu;
-	}
-
-	private HBox makeWorkspacePrefChooser(String dropId, String buttonId) {
-		PREFERENCES_CHOOSER = makeWorkspacePrefDropDown(dropId);
-		SAVE_PREFERENCES = new Button(PROGRAM_CONTROLLER.resourceDisplayText(buttonId));
-		SAVE_PREFERENCES.setId(buttonId);
-		HBox holder = new HBox(PREFERENCES_CHOOSER,SAVE_PREFERENCES);
-
-
-		return holder;
-
 	}
 
 	/**
@@ -203,12 +142,41 @@ public class SettingsPanel extends SpecificPanel  {
 	 * @return dropDownMenu: a drop down menu that lets the user choose the
 	 * language for the simulation
 	 */
+	private ComboBox<Object> makeLanguageChooser(String itemID) {
+		String selectionPrompt = fileReader.resourceDisplayText(itemID);
+		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
+		Tooltip languageTip = new Tooltip();
+		languageTip.setText(selectionPrompt);
+		dropDownMenu.setTooltip(languageTip);
+		ObservableList<Object> simulationChoices = 
+				FXCollections.observableArrayList(selectionPrompt);
+		simulationChoices.addAll(fileReader.getLanguages());
+		dropDownMenu.setItems(simulationChoices);
+		dropDownMenu.setId(itemID);
+		dropDownMenu.getSelectionModel().selectedIndexProperty()
+		.addListener(( arg0, arg1,  arg2) ->{
+			String selected = (String) simulationChoices.get((Integer) arg2);
+			if (!selected.equals(selectionPrompt)) {
+				fileReader.bundleUpdateToNewLanguage(selected);
+				updatePrompt();
+			}
+		});
+		return dropDownMenu;
+	}
+
+
+
+	/**
+	 * 
+	 * @return dropDownMenu: a drop down menu that lets the user choose the
+	 * language for the simulation
+	 */
 	private ComboBox<Object> makeWorkspacePrefDropDown(String itemID) {
-		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
+		String selectionPrompt = fileReader.resourceDisplayText(itemID);
 		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
-		List<String> preferenceOptions = PROGRAM_CONTROLLER.getFileNames(PREFERENCES_FOLDER);
+		List<String> preferenceOptions = fileReader.getFileNames(PREFERENCES_FOLDER);
 		simulationChoices.addAll(preferenceOptions);
 		dropDownMenu.setItems(simulationChoices);
 		dropDownMenu.setId(itemID);
@@ -222,6 +190,17 @@ public class SettingsPanel extends SpecificPanel  {
 		});
 		return dropDownMenu;
 	}
+	private HBox makeWorkspacePrefChooser(String dropId, String buttonId) {
+		PREFERENCES_CHOOSER = makeWorkspacePrefDropDown(dropId);
+		SAVE_PREFERENCES = new Button(fileReader.resourceDisplayText(buttonId));
+		SAVE_PREFERENCES.setId(buttonId);
+		HBox holder = new HBox(PREFERENCES_CHOOSER,SAVE_PREFERENCES);
+
+
+		return holder;
+
+	}
+
 
 	/**
 	 * 
@@ -229,14 +208,14 @@ public class SettingsPanel extends SpecificPanel  {
 	 * language for the simulation
 	 */
 	private ComboBox<Object> makeTurtleImageChooser(String itemID) {
-		String selectionPrompt = PROGRAM_CONTROLLER.resourceDisplayText(itemID);
+		String selectionPrompt = fileReader.resourceDisplayText(itemID);
 		ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
 		Tooltip turtleTip = new Tooltip();
 		turtleTip.setText(selectionPrompt);
 		dropDownMenu.setTooltip(turtleTip);
 		ObservableList<Object> simulationChoices = 
 				FXCollections.observableArrayList(selectionPrompt);
-		Map<String, String> turtleShapesMap = PROGRAM_CONTROLLER.getShapes();
+		Map<String, String> turtleShapesMap = fileReader.getShapes();
 		for (String idx : turtleShapesMap.keySet()) {
 			simulationChoices.add(idx+". "+turtleShapesMap.get(idx));
 		}
@@ -246,23 +225,18 @@ public class SettingsPanel extends SpecificPanel  {
 		.addListener((arg0,arg1, arg2)-> {
 			String selected = (String) simulationChoices.get((Integer) arg2);
 			if (!selected.equals(selectionPrompt)) {
-				try {
-					USER_SCREEN.changeTurtleImage(selected);
-				} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
-						| MissingInformationException e) {
-					PROGRAM_CONTROLLER.loadErrorScreen(e.getMessage());
-				}
-
+				String selectedShapeIdx = (selected.split(". "))[0];
+				fileReader.parseSettingInput(DEFAULT_SHAPE_COMMAND+" "+selectedShapeIdx);
 			}
 		});
 		return dropDownMenu;
 	}  
 
 	private Button makeNewWorkspaceButton(String itemId) {
-		Button workspaceButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText(itemId));
+		Button workspaceButton = new Button(fileReader.resourceDisplayText(itemId));
 		workspaceButton.setId(itemId);
 		Tooltip workspaceTip = new Tooltip();
-		workspaceTip.setText(PROGRAM_CONTROLLER.resourceDisplayText(itemId));
+		workspaceTip.setText(fileReader.resourceDisplayText(itemId));
 		workspaceButton.setTooltip(workspaceTip);
 		workspaceButton.setOnAction(click ->{Driver d = new Driver();try {
 			d.start(new Stage());
@@ -278,7 +252,7 @@ public class SettingsPanel extends SpecificPanel  {
 	 * Updates the text displayed to the user to match the current language
 	 */
 	private void updatePrompt() {
-		BACK.setText(PROGRAM_CONTROLLER.resourceDisplayText("backButton"));
+		BACK.setText(fileReader.resourceDisplayText("backButton"));
 		LANGUAGE_CHOOSER = makeLanguageChooser(DROPDOWN_IDS[0]);
 		NEW_WORKSPACE =  makeNewWorkspaceButton(BUTTON_IDS[0]);
 		BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[1]);
@@ -287,6 +261,7 @@ public class SettingsPanel extends SpecificPanel  {
 		HBox prefHolder = makeWorkspacePrefChooser(DROPDOWN_IDS[4], BUTTON_IDS[1]);
 		((VBox)PANEL).getChildren().setAll(LANGUAGE_CHOOSER,BACKGROUND_COLOR_CHOOSER,PEN_COLOR_CHOOSER,TURTLE_IMAGE_CHOOSER,prefHolder,NEW_WORKSPACE,BACK);
 	}
+
 
 
 	/**
@@ -300,30 +275,14 @@ public class SettingsPanel extends SpecificPanel  {
 		return dropDownMenu;
 	}
 
-
-
-	@Override
-	public Parent getPanel() {
-		if (PANEL == null) {
-			makePanel();
-		}
-		return PANEL;
-	}
-
-	@Override
-	protected BorderPane getPane() {
-		// TODO Auto-generated method stub
-		return PANE;
-	}
-
-	@Override
-	protected Controller getController() {
-		// TODO Auto-generated method stub
-		return PROGRAM_CONTROLLER;
-	}
-
 	@Override
 	protected UserScreen getUserScreen() {
 		return USER_SCREEN;
+	}
+
+
+	@Override
+	protected BorderPane getPane() {
+		return PANE;
 	}
 }

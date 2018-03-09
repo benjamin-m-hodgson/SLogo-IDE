@@ -94,14 +94,6 @@ class TextFieldParser {
 	 * @throws UnidentifiedCommandException 
 	 * @throws BadFormatException 
 	 */
-	/**
-	 * Returns a Queue of commands given a String of concatenated commands (chops up the commands 
-	 * and sends them individually to CommandMaker)
-	 * @throws TurtleNotFoundException 
-	 * @throws MissingInformationException 
-	 * @throws UnidentifiedCommandException 
-	 * @throws BadFormatException 
-	 */
 	protected double parseText(String userInputString) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String[] userInputByLine = userInputString.split("\\r?\\n");
 		ArrayList<String> userInputList = new ArrayList<String>();
@@ -196,6 +188,12 @@ class TextFieldParser {
 	}
 	protected List<SingleTurtle> getActiveTurtles(){
 		return myCommandMaker.getActiveTurtles();
+	}
+	protected ImageView getTurtleWithIDImageView(double ID) {
+		return myCommandMaker.getTurtleWithIDImageView(ID);
+	}
+	protected Group getTurtleWithIDPenLines(double ID) {
+		return myCommandMaker.getTurtleWithIDPenLines(ID);
 	}
 
 

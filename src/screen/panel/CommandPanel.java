@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import interpreter.Controller;
+import interpreter.FileIO;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -31,17 +32,16 @@ public class CommandPanel extends SpecificPanel {
     private final double FRAMES_PER_SECOND = 2;
     private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-    private Parent PANEL;
-    private Controller PROGRAM_CONTROLLER;
     private BorderPane PANE;
+    private FileIO FILE_READER;
     private VBox COMMAND_BOX;
     private UserScreen USER_SCREEN;
 
 
-    public CommandPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
-	PROGRAM_CONTROLLER = programController;
+    public CommandPanel( BorderPane pane, UserScreen userScreen, FileIO fileReader) {
 	PANE = pane;
 	USER_SCREEN = userScreen;
+	FILE_READER = fileReader;
 	// attach "animation loop" to time line to play it
 	KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
 		e -> populateCommandBox(SECOND_DELAY));
@@ -53,7 +53,7 @@ public class CommandPanel extends SpecificPanel {
 
     @Override
     public void makePanel() {
-	Button backButton = makeBackButton(PROGRAM_CONTROLLER);
+	Button backButton = makeBackButton(FILE_READER);
 	ScrollPane scroll = new ScrollPane();
 	scroll.setId("settingsField");
 	COMMAND_BOX = new VBox();
@@ -65,25 +65,10 @@ public class CommandPanel extends SpecificPanel {
 	PANEL = panelRoot;	
     }
 
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
-	}
-	return PANEL;
-    }
+   
 
-    @Override
-    protected BorderPane getPane() {
-	// TODO Auto-generated method stub
-	return PANE;
-    }
-
-    @Override
-    protected Controller getController() {
-	// TODO Auto-generated method stub
-	return PROGRAM_CONTROLLER;
-    }
+    
+ 
 
     @Override
     protected UserScreen getUserScreen() {
@@ -98,7 +83,7 @@ public class CommandPanel extends SpecificPanel {
      */
     private void populateCommandBox(double elapsedTime) {
 	COMMAND_BOX.getChildren().clear();
-	Map<String, String> programCommands = PROGRAM_CONTROLLER.getUserDefined();
+	Map<String, String> programCommands = USER_SCREEN.getUserDefined();
 	for (Entry<String, String> command : programCommands.entrySet()) {
 	 //   System.out.println("anything?");
 	    String commandName = command.getKey();
@@ -127,7 +112,7 @@ public class CommandPanel extends SpecificPanel {
 	Button commandButton = new Button(commandName);
 	commandButton.setId("commandButton");
 	commandButton.setDisable(true);
-	Button backButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText("backButton"));
+	Button backButton = new Button(FILE_READER.resourceDisplayText("backButton"));
 	backButton.setId("backButton");
 	// override click event
 	backButton.setOnMouseClicked((arg0)-> getPane()
@@ -138,12 +123,12 @@ public class CommandPanel extends SpecificPanel {
 	commandInfoArea.setId("settingsField");
 	commandInfoPane.setContent(commandInfoArea);
 	commandInfoArea.setText(commandValue);
-	Button runFunction = new Button(PROGRAM_CONTROLLER.resourceDisplayText("runUserCommButton"));
+	Button runFunction = new Button(FILE_READER.resourceDisplayText("runUserCommButton"));
 	runFunction.setId("runUserCommButton");
 	runFunction.setDisable(true);
 	TextArea parameterInput = new TextArea();
 	parameterInput.setId("parametersField"); 
-	parameterInput.setPromptText(PROGRAM_CONTROLLER.resourceDisplayText("parameters"));
+	parameterInput.setPromptText(FILE_READER.resourceDisplayText("parameters"));
 	parameterInput.setEditable(true);
 	parameterInput.setOnKeyTyped((arg0) -> runFunction.setDisable(false));
 	runFunction.setOnMouseClicked((arg0) -> USER_SCREEN.commandRunFromHistory(commandName + " " + parameterInput.getText()));
@@ -154,6 +139,11 @@ public class CommandPanel extends SpecificPanel {
 	panelRoot.setId("infoPanel");
 	VBox.setVgrow(commandInfoArea, Priority.ALWAYS);
 	return panelRoot;
+    }
+
+    @Override
+    protected BorderPane getPane() {
+	return PANE;
     }
 
 }

@@ -2,6 +2,7 @@ package screen;
 
 
 import interpreter.Controller;
+import interpreter.FileIO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -25,14 +26,16 @@ public class StartScreen implements Screen {
     private String SELECTION_PROMPT;
     private Parent ROOT;
     private Controller PROGRAM_CONTROLLER;
+    private final FileIO FILE_READER;
     private Button START;
     private String LANGUAGE;
     private Tooltip START_TIP;
     private Tooltip SELECTION_TIP;
 
-    public StartScreen(Controller programController) {
+    public StartScreen(Controller programController, FileIO fileReader) {
+	FILE_READER = fileReader;
 	PROGRAM_CONTROLLER = programController;
-	SELECTION_PROMPT = PROGRAM_CONTROLLER.resourceDisplayText("languageChooser");
+	SELECTION_PROMPT = FILE_READER.resourceDisplayText("languageChooser");
     }
 
     @Override
@@ -72,7 +75,7 @@ public class StartScreen implements Screen {
      * @return Button: Button to start the program
      */
     private Button makeStartButton() {
-	Button startButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText("StartPrompt"));
+	Button startButton = new Button(FILE_READER.resourceDisplayText("StartPrompt"));
 	startButton.setId("startButton");
 	startButton.setTooltip(START_TIP);
 	// handle click event
@@ -104,7 +107,7 @@ public class StartScreen implements Screen {
 	    if (!selected.equals(SELECTION_PROMPT)) { 
 		START.setDisable(false);
 		LANGUAGE = selected;
-		PROGRAM_CONTROLLER.changeLanguage(LANGUAGE);
+		FILE_READER.bundleUpdateToNewLanguage(LANGUAGE);
 		updatePrompt();
 		dropDownMenu.setItems(simulationChoices());
 	    } 
@@ -121,7 +124,7 @@ public class StartScreen implements Screen {
     private ObservableList<Object> simulationChoices() {
 	ObservableList<Object> simulationChoices = 
 		FXCollections.observableArrayList(SELECTION_PROMPT);
-	simulationChoices.addAll(PROGRAM_CONTROLLER.getLanguages());
+	simulationChoices.addAll(FILE_READER.getLanguages());
 	return simulationChoices;
     }
 
@@ -156,8 +159,8 @@ public class StartScreen implements Screen {
      * Updates the text displayed to the user to match the current language
      */
     private void updatePrompt() {
-	START.setText(PROGRAM_CONTROLLER.resourceDisplayText("StartPrompt"));
-	SELECTION_PROMPT = PROGRAM_CONTROLLER.resourceDisplayText("languageChooser");
+	START.setText(FILE_READER.resourceDisplayText("StartPrompt"));
+	SELECTION_PROMPT = FILE_READER.resourceDisplayText("languageChooser");
 	writeTipText();
     }
 }

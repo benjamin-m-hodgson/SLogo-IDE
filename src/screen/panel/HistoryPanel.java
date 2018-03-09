@@ -1,13 +1,11 @@
 package screen.panel;
 
 import java.util.Iterator;
-
-import interpreter.Controller;
+import interpreter.FileIO;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -23,16 +21,15 @@ public class HistoryPanel extends SpecificPanel {
     private final double FRAMES_PER_SECOND = 2;
     private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-    private Parent PANEL;
-    private Controller PROGRAM_CONTROLLER;
-    private BorderPane PANE;
+    private FileIO FILE_READER;
     private VBox HISTORY_BOX; 
+    private BorderPane PANE;
     private UserScreen USER_SCREEN;
     
-    public HistoryPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
-	PROGRAM_CONTROLLER = programController;
+    public HistoryPanel( BorderPane pane, UserScreen userScreen, FileIO fileReader) {
 	PANE = pane;
 	USER_SCREEN = userScreen;
+	FILE_READER = fileReader;
 	// attach "animation loop" to time line to play it
 	KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
 		e -> setHistory(SECOND_DELAY));
@@ -44,7 +41,7 @@ public class HistoryPanel extends SpecificPanel {
 
     @Override
     public void makePanel() {
-	Button backButton = makeBackButton(PROGRAM_CONTROLLER);
+	Button backButton = makeBackButton(FILE_READER);
 	ScrollPane historyPane = new ScrollPane();
 	historyPane.setId("settingsField");
 	HISTORY_BOX = new VBox();
@@ -56,25 +53,6 @@ public class HistoryPanel extends SpecificPanel {
 	PANEL = panelRoot;
     }
 
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
-	}
-	return PANEL;
-    }
-
-    @Override
-    protected BorderPane getPane() {
-	// TODO Auto-generated method stub
-	return PANE;
-    }
-
-    @Override
-    protected Controller getController() {
-	// TODO Auto-generated method stub
-	return PROGRAM_CONTROLLER;
-    }
 
     @Override
     protected UserScreen getUserScreen() {
@@ -97,7 +75,7 @@ public class HistoryPanel extends SpecificPanel {
 	    // override click event
 	    commandLabel.setOnMouseClicked((arg0)-> getPane()
 		    .setRight(verboseCommand(command,
-			    PROGRAM_CONTROLLER.resourceDisplayText("RunPrompt") 
+			    FILE_READER.resourceDisplayText("RunPrompt") 
 			    + " " + commandNumber, output)));
 	    commandLabel.setId("historyLabel");
 	    HBox numberedCommand = new HBox(numberLabel, commandLabel);
@@ -109,7 +87,7 @@ public class HistoryPanel extends SpecificPanel {
 	Button commandButton = new Button(commandNumberHeading);
 	commandButton.setId("commandButton");
 	commandButton.setOnMouseClicked((arg0)-> USER_SCREEN.commandRunFromHistory(command));
-	Button backButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText("backButton"));
+	Button backButton = new Button(FILE_READER.resourceDisplayText("backButton"));
 	backButton.setId("backButton");
 	// override click event
 	backButton.setOnMouseClicked((arg0)-> getPane()
@@ -130,5 +108,9 @@ public class HistoryPanel extends SpecificPanel {
 	panelRoot.setId("infoPanel");
 	VBox.setVgrow(commandInfoArea, Priority.ALWAYS);
 	return panelRoot;
+    }
+    @Override
+    protected BorderPane getPane() {
+	return PANE;
     }
 }

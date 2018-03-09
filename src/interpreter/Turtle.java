@@ -4,6 +4,10 @@ package interpreter;
 
 import java.util.List;
 import java.util.function.Consumer;
+
+import javafx.scene.Group;
+import javafx.scene.image.ImageView;
+
 import java.net.MalformedURLException;
 
 public abstract class Turtle {
@@ -93,6 +97,7 @@ public abstract class Turtle {
 	protected abstract MultipleTurtles addTurtle(SingleTurtle turtle);
 	protected abstract SingleTurtle getTurtleWithID(String id) throws UnidentifiedCommandException;
 	protected abstract Turtle replaceTurtles(List<SingleTurtle> newTurtles);
+	protected abstract List<SingleTurtle> getAllImmutableTurtles();
 }
 
 

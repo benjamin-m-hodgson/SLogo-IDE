@@ -1,11 +1,10 @@
 package screen.panel;
-
-import interpreter.Controller;
+import interpreter.FileIO;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -17,6 +16,7 @@ import screen.UserScreen;
 /**
  * 
  * @author Benjamin Hodgson
+ * @author Andrew Arnold
  * 
  * Class to create a side panel to display information about a specific turtle
  */
@@ -24,17 +24,19 @@ public class TurtleInfoPanel extends SpecificPanel {
     // TODO: put in settings .properties file
     private final int MOVEMENT_MIN = 0;
     private final int MOVEMENT_MAX = Integer.MAX_VALUE;
-    private Parent PANEL;
-    private Controller PROGRAM_CONTROLLER;
-    private BorderPane USER_SCREEN;
+    private final FileIO FILE_READER;
+    private UserScreen USER_SCREEN;
     private String TURTLE_ID;
-    
-    public TurtleInfoPanel(Controller programController, BorderPane pane, String id) {
-	PROGRAM_CONTROLLER = programController;
-	USER_SCREEN = pane;
+    private BorderPane PANE;
+
+
+    public TurtleInfoPanel(BorderPane pane, UserScreen userScreen, String id, FileIO fileReader) {
+	FILE_READER = fileReader;
+	PANE = pane;
+	USER_SCREEN = userScreen;
 	TURTLE_ID = id;
     }
-    
+
     @Override
     public void makePanel() {
 	VBox turtleInfoPanel = new VBox();
@@ -42,24 +44,19 @@ public class TurtleInfoPanel extends SpecificPanel {
 	turtleInfoPanel.setId("infoPanel");
 	PANEL = turtleInfoPanel;
     }
-    
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
-	}
-	return PANEL;
-    }
-    
+
+  
+
     private void populateInfoBox(VBox turtleInfoPanel) {
-	Button backButton = makeBackButton(PROGRAM_CONTROLLER);
-	Button turtleIdButton = new Button(TURTLE_ID);
+	Button backButton = makeBackButton(FILE_READER);
+	Button turtleIdButton = new Button(FILE_READER.resourceDisplayText("TurtlePrompt")
+		+ " " + TURTLE_ID);
 	turtleIdButton.setId("commandButton");
 	turtleIdButton.setDisable(true);
 	VBox movementButtons = drawMovementButtons(turtleInfoPanel);
 	turtleInfoPanel.getChildren().addAll(turtleIdButton, movementButtons, backButton);
     }
-    
+
     /**
      * An area of the turtle info panel that allows the user to move the turtle directionally
      * around the screen
@@ -81,11 +78,12 @@ public class TurtleInfoPanel extends SpecificPanel {
 	rightButton.setId("rightButton");
 	rightButton.setOnMouseClicked((arg0) -> moveRight(movementField.getText()));
 	HBox movementRow = new HBox(leftButton, movementField, rightButton);
+	movementRow.setId("moveBox");
 	VBox movementButtons = new VBox(upButton, movementRow, downButton);
-	movementButtons.setAlignment(Pos.CENTER);
+	movementButtons.setId("moveBox");
 	return movementButtons;
     }
-    
+
     /**
      * Creates a text field that takes integer only input to set the movement amount for the 
      * turtle movement buttons
@@ -98,8 +96,9 @@ public class TurtleInfoPanel extends SpecificPanel {
     private TextField movementField(Parent root, int min, int max) {
 	TextField numberTextField = new TextField();
 	numberTextField.setId("numberTextField");
-	String promptText = PROGRAM_CONTROLLER.resourceDisplayText("MovePrompt");
+	String promptText = FILE_READER.resourceDisplayText("MovePrompt");
 	numberTextField.setPromptText(promptText);
+	numberTextField.setTooltip(new Tooltip(promptText));
 	// clear when the mouse clicks on the text field
 	numberTextField.setOnMouseClicked(new EventHandler<MouseEvent>() {
 	    @Override
@@ -118,12 +117,12 @@ public class TurtleInfoPanel extends SpecificPanel {
 			    numberTextField.setText(Integer.toString(sizeVal));
 			}
 			else {
-			    numberTextField.setText(numberTextField.getPromptText());
+			    numberTextField.clear();
 			}
 
 		    }
 		    catch(Exception e) {
-			numberTextField.setText(numberTextField.getPromptText());
+			numberTextField.clear();
 		    }
 		    root.requestFocus();
 		}
@@ -131,66 +130,58 @@ public class TurtleInfoPanel extends SpecificPanel {
 	});
 	return numberTextField;
     }
-    
+
     private void moveUp(String value) {
 	if (!value.isEmpty()) {
-	    try {
-		Integer.parseInt(value);
-	    }
-	    catch(Exception e) {
-		// do nothing, don't move the turtle
-	    }
+	    int amount = Integer.parseInt(value);
+	    String command = "Forward " + amount;
+	    sendCommandAddHistory(command,value);
 	}
     }
-    
+
     private void moveDown(String value) {
 	if (!value.isEmpty()) {
-	    try {
-		Integer.parseInt(value);
-	    }
-	    catch(Exception e) {
-		// do nothing, don't move the turtle
-	    }
+	    int amount = Integer.parseInt(value);
+	    String command = "Backward " + amount;
+	    sendCommandAddHistory(command,value);
 	}
     }
-    
+
     private void moveLeft(String value) {
 	if (!value.isEmpty()) {
-	    try {
-		Integer.parseInt(value);
-	    }
-	    catch(Exception e) {
-		// do nothing, don't move the turtle
-	    }
+	    int amount = Integer.parseInt(value);
+	    String command = "Left " + amount;
+	    sendCommandAddHistory(command,value);
 	}
     }
-    
+
     private void moveRight(String value) {
 	if (!value.isEmpty()) {
-	    try {
-		Integer.parseInt(value);
-	    }
-	    catch(Exception e) {
-		// do nothing, don't move the turtle
-	    }
+	    int amount = Integer.parseInt(value);
+	    String command = "Right " + amount;
+	    sendCommandAddHistory(command,value);
 	}
     }
 
-    @Override
-    protected BorderPane getPane() {
-	return USER_SCREEN;
+    private void sendCommandAddHistory(String command, String value) {
+	try {
+	    USER_SCREEN.sendCommandToParse(command);
+	    USER_SCREEN.addCommand(command, value);
+	}
+	catch(Exception e) {
+	    // do nothing, don't move the turtle
+	}
     }
 
-    @Override
-    protected Controller getController() {
-	// TODO Auto-generated method stub
-	return PROGRAM_CONTROLLER;
-    }
 
     @Override
     protected UserScreen getUserScreen() {
 	// TODO Auto-generated method stub
-	return null;
+	return USER_SCREEN;
     }
 
+    @Override
+    protected BorderPane getPane() {
+	return PANE;
+    }
 }

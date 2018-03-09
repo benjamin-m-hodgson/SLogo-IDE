@@ -3,8 +3,7 @@ package screen.panel;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
-import interpreter.Controller;
+import interpreter.FileIO;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -24,14 +23,14 @@ import screen.UserScreen;
  */
 public class HelpPanel extends SpecificPanel  {
 
-    private Parent PANEL;
-    private Controller PROGRAM_CONTROLLER;
-    private BorderPane PANE;
+    private final FileIO FILE_READER;
     private VBox HELP_BOX;
+    private BorderPane PANE;
+
     private UserScreen USER_SCREEN;
 
-    public HelpPanel(Controller programController, BorderPane pane, UserScreen userScreen) {
-	PROGRAM_CONTROLLER = programController;
+    public HelpPanel( BorderPane pane, UserScreen userScreen, FileIO fileReader) {
+	FILE_READER = fileReader;
 	PANE = pane;
 	USER_SCREEN = userScreen;
 
@@ -39,7 +38,7 @@ public class HelpPanel extends SpecificPanel  {
 
     @Override
     public void makePanel() {
-	Button backButton = makeBackButton(PROGRAM_CONTROLLER);
+	Button backButton = makeBackButton(FILE_READER);
 	ScrollPane helpPane = new ScrollPane();
 	helpPane.setId("settingsField");
 	HELP_BOX = new VBox();
@@ -52,24 +51,8 @@ public class HelpPanel extends SpecificPanel  {
 	PANEL = panelRoot;	
     }
 
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
-	}
-	return PANEL;
-    }
 
-    @Override
-    protected BorderPane getPane() {
-	return PANE;
-    }
-
-    @Override
-    protected Controller getController() {
-	return PROGRAM_CONTROLLER;
-    }
-
+ 
     @Override
     protected UserScreen getUserScreen() {
 	return USER_SCREEN;
@@ -83,7 +66,7 @@ public class HelpPanel extends SpecificPanel  {
 	String currentDir = System.getProperty("user.dir");
 	try {
 	    File file = new File(currentDir + File.separator + "reference" + File.separator 
-		    + PROGRAM_CONTROLLER.resourceDisplayText("Name"));
+		    + FILE_READER.resourceDisplayText("Name"));
 	    File[] helpFiles = file.listFiles();
 	    for (File helpFile : helpFiles) {
 		String commandName = helpFile.getName();
@@ -97,16 +80,15 @@ public class HelpPanel extends SpecificPanel  {
 			getPane()
 			.setRight(commandInformation(helpFile, command));
 		    } catch (FileNotFoundException e) {
-			PROGRAM_CONTROLLER.loadErrorScreen(PROGRAM_CONTROLLER
+			USER_SCREEN.throwErrorScreen(FILE_READER
 				.resourceErrorText("CommandFileError"));
 		    }
 		});
 		HELP_BOX.getChildren().add(commandButton);
-
 	    }
 	}
 	catch (Exception e) {
-	    PROGRAM_CONTROLLER.loadErrorScreen(PROGRAM_CONTROLLER
+	    USER_SCREEN.throwErrorScreen(FILE_READER
 		    .resourceErrorText("CommandFileError"));
 	}
     }
@@ -124,7 +106,7 @@ public class HelpPanel extends SpecificPanel  {
 	Button commandButton = new Button(command);
 	commandButton.setId("commandButton");
 	commandButton.setDisable(true);
-	Button backButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText("backButton"));
+	Button backButton = new Button(FILE_READER.resourceDisplayText("backButton"));
 	backButton.setId("backButton");
 	// override click event
 	backButton.setOnMouseClicked((arg0)-> getPane()
@@ -160,5 +142,9 @@ public class HelpPanel extends SpecificPanel  {
 	infoBox.setText(commandInfoBuilder.toString());
 	infoBox.setEditable(false);
 	in.close();
+    }
+    @Override
+    protected BorderPane getPane() {
+	return PANE;
     }
 }
