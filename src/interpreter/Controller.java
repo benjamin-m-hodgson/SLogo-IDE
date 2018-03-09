@@ -6,13 +6,11 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
-import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
@@ -40,6 +38,7 @@ import screen.UserScreen;
 public class Controller {
 
 	public static final String RESOURCE_ERROR = "Could not find resource bundle";
+	public static final String COLOR_ERROR = "ColorErrorPrompt";
 	public static final String FILE_ERROR_KEY = "FileErrorPrompt";
 	public static final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
 	public static final String SYNTAX_FILE_NAME = "Syntax.properties";
@@ -90,6 +89,8 @@ public class Controller {
 					USER_SCREEN.changeBackgroundColorHex(matchingHex);
 				} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
 					System.out.println("error locating that backgorund color"); // TODO make this more elaborate
+					USER_SCREEN.changeBackgroundColor(DEFAULT_COLOR);
+					loadErrorScreen(COLOR_ERROR);
 					e.printStackTrace();
 				}
 			}

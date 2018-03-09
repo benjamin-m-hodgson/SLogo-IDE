@@ -1,6 +1,5 @@
 package screen;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -105,8 +104,8 @@ public class UserScreen implements Screen {
 	    addCommand(command, commandVal.toString());
 	} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
 		| MissingInformationException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+		 e.printStackTrace();
+		displayErrorMessage(e.getMessage());
 	}
 	
     }

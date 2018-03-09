@@ -15,21 +15,28 @@ public class AskCommand extends Command {
 		myAllTurtles = allTurtles;
 		myBuilder = new CommandTreeBuilder(variables, userDefCommands, userDefCommandNumArgs);
 	}
-	
 	@Override
-	protected double execute() {
+	protected double execute() throws UnidentifiedCommandException{
 		String IDString = ((StringCommand) myIdCommand).getString();
 		String[] IDs = IDString.split(" ");
 		String actionString = ((StringCommand) myActionCommand).getString();
 		String[] actions = actionString.split(" ");
 		ArrayList<SingleTurtle> tempActiveTurtles = new ArrayList<>();
 		for(int k = 0; k<IDs.length; k+=1) {
+			if(!myAllTurtles.containsTurtleWithID(IDs[k])) {
+				throw new UnidentifiedCommandException("BadID");
+			}
 			tempActiveTurtles.add(myAllTurtles.getTurtleWithID(IDs[k]));
 		}
 		MultipleTurtles tempActive = new MultipleTurtles(tempActiveTurtles);
-		
-		double returnVal = myBuilder.buildAndExecute(myAllTurtles, tempActive, actions, true);
-		return returnVal;
+		double returnVal = -1;
+		try {
+		returnVal = myBuilder.buildAndExecute(myAllTurtles, tempActive, actions, true);
+		}
+		catch(Exception e) {
+			throw new UnidentifiedCommandException(e.getMessage());
+		}
+	    return returnVal;
 		
 	}
 

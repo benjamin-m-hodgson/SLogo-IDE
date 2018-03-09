@@ -40,6 +40,10 @@ public class MultipleTurtles extends Turtle{
 			throw new UnidentifiedCommandException("You entered any invalid ID");
 		}
 	}
+	protected Turtle replaceTurtles(List<SingleTurtle> newTurtles) {
+		myActiveTurtleHolder.replaceTurtleList(newTurtles);
+		return this;
+	}
 	protected int size() {
 		return myActiveTurtleHolder.getCopyTurtleList().size();
 	}
@@ -198,3 +202,4 @@ public class MultipleTurtles extends Turtle{
 	}
 
 }
+

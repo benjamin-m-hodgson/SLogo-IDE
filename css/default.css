@@ -675,6 +675,23 @@
 	-fx-font-weight: bold;
 } 
 /******************************************************************************************/
+/* The button that moves the turtle up */
+/******************************************************************************************/
+#upButton {
+	-fx-background-color: transparent;
+	-fx-background-image: url("/images/UpArrow.png");
+	-fx-background-size: 50px 50px;
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+	-fx-opacity: 0.6;
+	-fx-pref-width: 50px;
+	-fx-pref-height: 50px;
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+}
+#upButton:hover {
+} 
+/******************************************************************************************/
 /* The drop down choice box the user uses to pick a language to use in the program */
 /******************************************************************************************/
 #languageChooser {
@@ -1928,6 +1945,6 @@
 /******************************************************************************************/
 /* ImageView for the turtle */
 /******************************************************************************************/
-#turtleView {
-	
+#turtleView:hover {
+	-fx-cursor: hand;
 }

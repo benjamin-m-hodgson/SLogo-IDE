@@ -61,6 +61,7 @@ public class InfoPanel implements Panel {
 	}
 
 	private Button makeButton(String buttonId) {
+	    	System.out.println(buttonId);
 		Button button = new Button(PROGRAM_CONTROLLER.resourceDisplayText(buttonId));
 		button.setId(buttonId);
 		return button;

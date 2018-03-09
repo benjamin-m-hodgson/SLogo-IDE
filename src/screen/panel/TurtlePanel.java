@@ -36,10 +36,11 @@ public class TurtlePanel implements Panel {
     private String DEFAULT_COLOR_HEXCODE = "2d3436";
     private HBox ErrorHolder;
     private List<ImageView> TURTLE_LIST;
+    private int TURTLE_COUNT = 1;
 
-    public TurtlePanel(Controller programController, BorderPane userPane) {
+    public TurtlePanel(Controller programController, BorderPane pane) {
 	PROGRAM_CONTROLLER = programController;
-	USER_PANE = userPane;
+	USER_PANE = pane;
 	TURTLE_LIST = new ArrayList<ImageView>();
     }
 
@@ -74,7 +75,7 @@ public class TurtlePanel implements Panel {
 	    Image turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
 	    ImageView turtleView = new ImageView(turtleImage);
 	    TURTLE_LIST.add(turtleView);
-	    turtleView.setId("1");
+	    turtleView.setId("turtleView");
 	    turtleView.setFitHeight(DEFAULT_TURTLE_SIZE);
 	    turtleView.setFitWidth(DEFAULT_TURTLE_SIZE);
 	    // center the turtle on the screen
@@ -82,12 +83,17 @@ public class TurtlePanel implements Panel {
 	    turtleView.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
 	    turtleView.setX(-DEFAULT_TURTLE_SIZE/2);
 	    turtleView.setY(-DEFAULT_TURTLE_SIZE/2);
+	    // add button click event
+	    String turtleId = Integer.toString(TURTLE_COUNT);
+	    turtleView.setOnMousePressed((arg0)-> USER_PANE.setRight(
+		    new TurtleInfoPanel(PROGRAM_CONTROLLER, USER_PANE, turtleId).getPanel()));
 	    panel.getChildren().add(turtleView);
 	    Group penLines = new Group();
 	    penLines.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
 	    penLines.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
 	    panel.getChildren().add(penLines);
-	    PROGRAM_CONTROLLER.makeNewTurtleCommand("50", turtleView,DEFAULT_COLOR_HEXCODE , penLines);
+	    PROGRAM_CONTROLLER.makeNewTurtleCommand(turtleId, turtleView, DEFAULT_COLOR_HEXCODE , penLines);
+	    TURTLE_COUNT++;
 	}
 	catch (Exception e) {
 	    // TODO: make custom exception super class with sub classes for specifications
