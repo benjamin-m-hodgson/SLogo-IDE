@@ -33,15 +33,18 @@ class CommandNode {
 	
 
 	protected CommandNode(String info, int numArgs, List<CommandNode> children, Turtle turtles, Turtle activeTurtles, boolean isStringID) {	
-		myInfo = info; 
-		try {
-			Double.parseDouble(info);
-			isDouble = true; 
-		}
-		catch (NumberFormatException e) {
-			isDouble = false; 
-		}
+		myInfo = info;
 		isString = isStringID;
+		isDouble = false;
+		if(!isString) {
+			try {
+				Double.parseDouble(info);
+				isDouble = true; 
+			}
+			catch (NumberFormatException e) {
+				isDouble = false; 
+			}
+		}
 		myNumArgs = numArgs;
 		myChildren = new ArrayList<CommandNode>(); 
 		myChildren.addAll(children); 
