@@ -1,22 +1,8 @@
 package interpreter;
-
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
-import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
-
-import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
@@ -44,7 +30,6 @@ public class Controller {
     public static final String DEFAULT_COLOR = "Grey";
     public static final String DEFAULT_SETTINGS = "settings";
     public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
-    private final String DEFAULT_WORKSPACE_PREF = "default";
 
  
     private String DEFAULT_CSS = Controller.class.getClassLoader().
