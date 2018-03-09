@@ -86,6 +86,18 @@ public class Controller {
 	    }
 	});
     }
+    
+    /**
+     * Searches through the class path to find the appropriate settings resource file to use for 
+     * the program. If it can't locate the file, it displays an error screen to the user
+     * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
+     */
+    private void findSettings() {
+	FILE_READER.loadSettings();
+	PROGRAM_TITLE = FILE_READER.resourceSettingsText("Title");
+	DEFAULT_HEIGHT = Double.parseDouble(FILE_READER.resourceSettingsText("ScreenHeight"));
+	DEFAULT_WIDTH = Double.parseDouble(FILE_READER.resourceSettingsText("ScreenWidth"));
+    }
 
     /**
      * Loads the StartScreen where the user selects an initial language and launches the program.
@@ -182,10 +194,6 @@ public class Controller {
     }
 
 
-
-
-
-
     /**
      * Updates the color of lines to be drawn by the turtle
      * 
@@ -251,7 +259,6 @@ public class Controller {
     }
 
 
-
     public void changePenColorHex(int hex) {
 	try {
 	    parseInput("setpcbyhex " + hex);
@@ -264,21 +271,8 @@ public class Controller {
 
 
 
-    /**
-     * Searches through the class path to find the appropriate settings resource file to use for 
-     * the program. If it can't locate the file, it displays an error screen to the user
-     * with the default @param FILE_ERROR_PROMPT defined at the top of the Controller class
-     */
-    private void findSettings() {
-	FILE_READER.loadSettings();
-	PROGRAM_TITLE = FILE_READER.resourceSettingsText("Title");
-	DEFAULT_HEIGHT = Double.parseDouble(FILE_READER.resourceSettingsText("ScreenHeight"));
-	DEFAULT_WIDTH = Double.parseDouble(FILE_READER.resourceSettingsText("ScreenWidth"));
-
-    }
 
  
-
     /**
      * @return immutable list of immutable/temporary Turtles that have been made so far
      */
@@ -291,7 +285,6 @@ public class Controller {
     public List<SingleTurtle> getActiveTurtles(){
 	return myTextFieldParser.getActiveTurtles();
     }
-
 
 }
 
