@@ -93,6 +93,7 @@ public abstract class Turtle {
 	protected abstract MultipleTurtles addTurtle(SingleTurtle turtle);
 	protected abstract SingleTurtle getTurtleWithID(String id) throws UnidentifiedCommandException;
 	protected abstract Turtle replaceTurtles(List<SingleTurtle> newTurtles);
+	protected abstract List<SingleTurtle> getAllImmutableTurtles();
 }
 
 

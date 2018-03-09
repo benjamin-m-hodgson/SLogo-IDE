@@ -194,6 +194,9 @@ public class CommandFactory {
 		else if(commandName.equals("Ask")) {
 			return new AskCommand(commandArgs.get(0), commandArgs.get(1), turtles, myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
 		}
+		else if(commandName.equals("AskWith")) {
+			return new AskWithCommand(commandArgs.get(0), commandArgs.get(1), turtles, myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
+		}
 		else {
 			return new StringCommand(commandName);
 		}
