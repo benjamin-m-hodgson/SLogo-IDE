@@ -1,6 +1,7 @@
 package screen.panel;
 
 import interpreter.Controller;
+import interpreter.FileIO;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -25,13 +26,15 @@ public class TurtleInfoPanel extends SpecificPanel {
     private final int MOVEMENT_MIN = 0;
     private final int MOVEMENT_MAX = Integer.MAX_VALUE;
     private Parent PANEL;
+    private final FileIO FILE_READER;
+
     private Controller PROGRAM_CONTROLLER;
-    private BorderPane USER_SCREEN;
+    private BorderPane USER_PANE;
     private String TURTLE_ID;
     
-    public TurtleInfoPanel(Controller programController, BorderPane pane, String id) {
-	PROGRAM_CONTROLLER = programController;
-	USER_SCREEN = pane;
+    public TurtleInfoPanel(BorderPane pane, String id, FileIO fileReader) {
+	FILE_READER = fileReader;
+	USER_PANE = pane;
 	TURTLE_ID = id;
     }
     
@@ -52,7 +55,7 @@ public class TurtleInfoPanel extends SpecificPanel {
     }
     
     private void populateInfoBox(VBox turtleInfoPanel) {
-	Button backButton = makeBackButton(PROGRAM_CONTROLLER);
+	Button backButton = makeBackButton(FILE_READER);
 	Button turtleIdButton = new Button(TURTLE_ID);
 	turtleIdButton.setId("commandButton");
 	turtleIdButton.setDisable(true);
@@ -98,7 +101,7 @@ public class TurtleInfoPanel extends SpecificPanel {
     private TextField movementField(Parent root, int min, int max) {
 	TextField numberTextField = new TextField();
 	numberTextField.setId("numberTextField");
-	String promptText = PROGRAM_CONTROLLER.resourceDisplayText("MovePrompt");
+	String promptText = FILE_READER.resourceDisplayText("MovePrompt");
 	numberTextField.setPromptText(promptText);
 	// clear when the mouse clicks on the text field
 	numberTextField.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -178,14 +181,10 @@ public class TurtleInfoPanel extends SpecificPanel {
 
     @Override
     protected BorderPane getPane() {
-	return USER_SCREEN;
+	return USER_PANE;
     }
 
-    @Override
-    protected Controller getController() {
-	// TODO Auto-generated method stub
-	return PROGRAM_CONTROLLER;
-    }
+
 
     @Override
     protected UserScreen getUserScreen() {
