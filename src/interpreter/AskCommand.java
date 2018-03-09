@@ -15,6 +15,7 @@ public class AskCommand extends Command {
 		myAllTurtles = allTurtles;
 		myBuilder = new CommandTreeBuilder(variables, userDefCommands, userDefCommandNumArgs);
 	}
+	
 	@Override
 	protected double execute() {
 		String IDString = ((StringCommand) myIdCommand).getString();

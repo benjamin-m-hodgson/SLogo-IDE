@@ -19,7 +19,7 @@ class TellCommand extends Command{
 	    				myAllTurtles.addTurtle(newTurtle);
 	    				getActiveTurtles().addTurtle(newTurtle);
 	    			}
-	    			elseif(!getActiveTurtles().containsTurtleWithID(myIDs[k]){
+	    			else if(!getActiveTurtles().containsTurtleWithID(myIDs[k]){
 	    				//TODO: 
 	    			}
 	    		}
