@@ -41,14 +41,11 @@ public class TurtlePanel extends Panel {
     public void makePanel() {
 	BorderPane layoutPane = new BorderPane();
 	Pane panel = new Pane();
-
 	ScrollPane scroll = new ScrollPane(panel);
 	layoutPane.setCenter(scroll);
-
 	SCROLL_PANE = scroll;
 	scroll.setId("turtlePanel");
 	createTurtle(panel, scroll);
-
 	PANEL = layoutPane;
     }
 

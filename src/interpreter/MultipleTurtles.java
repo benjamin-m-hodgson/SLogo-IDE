@@ -49,6 +49,7 @@ public class MultipleTurtles extends Turtle{
 		myActiveTurtleHolder.replaceTurtleList(newTurtles);
 		return this;
 	}
+	@Override
 	protected int size() {
 		return myActiveTurtleHolder.getCopyTurtleList().size();
 	}
