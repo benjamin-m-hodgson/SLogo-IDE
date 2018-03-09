@@ -116,14 +116,6 @@ public class TurtlePanel  {
 	PANEL.setBottom(ErrorHolder);
     }
 
-    public void changeTurtlesImages(String selected) {
-  	Image turtleImage = getTurtleImage(selected);
-  	if(turtleImage != null) {
-  	    for(ImageView view :TURTLE_LIST) {
-  		view.setImage(turtleImage);
-  	    }
-  	}
-      }
     private Image getTurtleImage(String selected) {
   	String currentDir = System.getProperty("user.dir");
   	File turtleFile = new File(currentDir + File.separator + "turtleimages" 

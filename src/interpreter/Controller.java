@@ -223,7 +223,6 @@ public class Controller {
 	return myTextFieldParser.parseText(userTextInput);
     }
 
-
     /**
      * Used for changing pen color from settings panel through a command sent to parser
      * @param hexCodeUnParsed
