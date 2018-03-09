@@ -1,6 +1,6 @@
 package interpreter;
 
-import java.util.List;
+
 import java.util.Map;
 
 /**
@@ -37,6 +37,7 @@ class SetTowardsCommand extends Command{
     protected double execute() {
     double oldAngleRet = getActiveTurtles().toSingleTurtle().getAngle();
     	getActiveTurtles().executeSequentially(myTurtle -> {
+    		try {
     		double xTowards = getCommandValue(myXCommand, myVariables, myTurtle);
     		double yTowards = getCommandValue(myYCommand, myVariables, myTurtle);
     		double dist = myTurtle.toSingleTurtle().calcDistance(myTurtle.getX(), myTurtle.getY(), xTowards, yTowards);
@@ -64,6 +65,10 @@ class SetTowardsCommand extends Command{
     		    }
     		}
     		myTurtle.setAngle(heading);
+    		}
+    		catch(UnidentifiedCommandException e) {
+				throw new UnidentifiedCommandError("Improper # arguments");
+			}
     	});
 
 	return (getActiveTurtles().getAngle()-oldAngleRet);

@@ -24,13 +24,9 @@ import java.util.ResourceBundle;
 import java.util.List;
 
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
@@ -93,7 +89,6 @@ class CommandMaker {
 	}
 
 	private double parseValidTextArray(String turtleID, String[] userInput, String[] typesOfInput, String commandIdentifier) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		Turtle identifiedTurtle = null;
 		boolean turtleIdentified = myTurtles.containsTurtleWithID(turtleID);
 		String[] commandTypes = new String[userInput.length];
 		int startIdx = 0; 
@@ -179,10 +174,10 @@ class CommandMaker {
 		return myActiveTurtles.getAllImmutableTurtles();
 	}
 
-	protected void addNewTurtle(String ID, ImageView turtleImage, String penColor, Group penLines) {
+	protected void addNewTurtle(String id, ImageView turtleImage, String penColor, Group penLines) {
 		//System.out.println(name);
-		double id = Double.parseDouble(ID);
-		SingleTurtle newTurtle = new SingleTurtle(id, turtleImage, penLines, penColor);
+		double turtleId = Double.parseDouble(id);
+		SingleTurtle newTurtle = new SingleTurtle(turtleId, turtleImage, penLines, penColor);
 		myTurtles.addTurtle(newTurtle);
 		myActiveTurtles.addTurtle(newTurtle);
 	}

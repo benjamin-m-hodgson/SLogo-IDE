@@ -25,6 +25,7 @@
 package interpreter;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.ResourceBundle;
@@ -156,7 +157,7 @@ class TextFieldParser {
 		}
 		//		for (String s : userInputArray) System.out.println(s);
 		double finalReturnVal = myCommandMaker.parseValidTextArray(userInputArray[0], userInputArray, listOfTypes); // TODO consider special case in which turtle name is command name; 
-
+		
 		return finalReturnVal; 
 	}
 
@@ -189,7 +190,13 @@ class TextFieldParser {
 	protected BooleanProperty getBackColorChangeHeard()  {
 		return myBackColorChangeHeard;
 	}
-
+	
+	protected List<SingleTurtle>  getAllTurtles(){
+		return myCommandMaker.getAllTurtles();
+	}
+	protected List<SingleTurtle> getActiveTurtles(){
+		return myCommandMaker.getActiveTurtles();
+	}
 
 
 
@@ -198,8 +205,8 @@ class TextFieldParser {
 		myCommandMaker.changeLanguage(languageBundle);
 	}
 
-	protected void addNewTurtle(String name, ImageView turtleImage, String penColor, Group penLines) {
-		myCommandMaker.addNewTurtle(name, turtleImage, penColor, penLines);
+	protected void addNewTurtle(String id, ImageView turtleImage, String penColor, Group penLines) {
+		myCommandMaker.addNewTurtle(id, turtleImage, penColor, penLines);
 	}
 
 	protected static void main(String[] args) {

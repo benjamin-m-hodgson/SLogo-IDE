@@ -1,6 +1,6 @@
 package interpreter;
 
-import java.util.List;
+
 
 /**
  * Command class that retrieves and returns a boolean 0.0/1.0 indicating whether it is in/visible

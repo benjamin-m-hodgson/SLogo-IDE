@@ -22,12 +22,19 @@ public class SetPenColorCommand extends Command {
 	}
 
 	@Override
-	protected double execute() {
+	protected double execute() throws UnidentifiedCommandException {
 		double retVal = 0; 
 		String hexAsString = "";
 		
 		double commandInfo = getCommandValue(colorCodeCommand, myVariables, getActiveTurtles());
-		getActiveTurtles().executeSequentially(turtle -> getCommandValue(colorCodeCommand, myVariables, turtle));
+		getActiveTurtles().executeSequentially(turtle -> {
+			try {
+				getCommandValue(colorCodeCommand, myVariables, turtle);
+			}
+			catch(UnidentifiedCommandException e) {
+    			throw new UnidentifiedCommandError("Improper # arguments");
+    		}
+		});
 		if (myIdxSent) {
 			RegexMatcher rm = new RegexMatcher(DEFAULT_COLORPALETTE_FILE);
 			try {

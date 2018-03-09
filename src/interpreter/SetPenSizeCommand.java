@@ -15,9 +15,16 @@ class SetPenSizeCommand extends Command {
 	}
 	
 	@Override
-	double execute() {
+	double execute() throws UnidentifiedCommandException{
 		double returnVal = getCommandValue(myWidthCommand, myVars, getActiveTurtles().toSingleTurtle());
-		getActiveTurtles().executeSequentially(myTurtle -> getCommandValue(myWidthCommand, myVars, myTurtle));
+		getActiveTurtles().executeSequentially(myTurtle -> {
+			try {
+				getCommandValue(myWidthCommand, myVars, myTurtle);
+			}
+			catch(UnidentifiedCommandException e) {
+    				throw new UnidentifiedCommandError("Improper # arguments");
+    			}
+		});
 		getActiveTurtles().setPenWidth(returnVal);
 		return returnVal; 
 	}

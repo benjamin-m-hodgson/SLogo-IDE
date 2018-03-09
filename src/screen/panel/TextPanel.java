@@ -4,6 +4,7 @@ import interpreter.BadFormatException;
 import interpreter.Controller;
 import interpreter.MissingInformationException;
 import interpreter.TurtleNotFoundException;
+import interpreter.UnidentifiedCommandError;
 import interpreter.UnidentifiedCommandException;
 import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
@@ -76,7 +77,12 @@ public class TextPanel extends Panel {
 	    USER_SCREEN.displayErrorMessage(e.getMessage());
 
 	}
-	catch (Exception e) {
+	catch(UnidentifiedCommandError e) {
+		e.printStackTrace();
+	    clearInputArea();
+	    USER_SCREEN.displayErrorMessage(e.getMessage());
+	}
+	catch (Throwable e) {
 	    e.printStackTrace();
 	    clearInputArea();
 	    USER_SCREEN.displayErrorMessage(PROGRAM_CONTROLLER.resourceErrorText("GeneralError"));

@@ -1,6 +1,6 @@
 package interpreter;
 
-import java.util.List;
+
 import java.util.Map;
 
 /**
@@ -29,12 +29,17 @@ class SetHeadingCommand extends Command{
 	 * @see interpreter.Command#execute()
 	 */
 	@Override 
-	protected double execute(){
+	protected double execute() throws UnidentifiedCommandException {
 		double newAngleRet = getCommandValue(myDegreesCommand, myVariables, getActiveTurtles().toSingleTurtle());
 		double oldAngleRet = getActiveTurtles().toSingleTurtle().getAngle();
 		this.getActiveTurtles().executeSequentially(myTurtle -> {
+			try {
 			double newAngle = getCommandValue(myDegreesCommand, myVariables, myTurtle);
 			myTurtle.setAngle(newAngle);
+			}
+    		catch(UnidentifiedCommandException e) {
+    			throw new UnidentifiedCommandError("Improper # arguments");
+    		}
 		});	
 		return (newAngleRet-oldAngleRet);
 	}
