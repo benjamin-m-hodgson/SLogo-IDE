@@ -20,44 +20,36 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
 
-public class TurtlePanel implements Panel {
-    // TODO: put in setting.properties file
-    private final double DEFAULT_TURTLE_SIZE = 40;
-    private final String DEFAULT_TURTLE = "Green Turtle.png";
-    private BorderPane PANEL;
-    private ScrollPane SCROLL_PANE;
-    private Controller PROGRAM_CONTROLLER;
-    private String DEFAULT_COLOR_HEXCODE = "2d3436";
-    private HBox ErrorHolder;
-    private List<ImageView> TURTLE_LIST;
+public class TurtlePanel extends Panel {
+	// TODO: put in setting.properties file
+	private final double DEFAULT_TURTLE_SIZE = 35;
+	private final String DEFAULT_TURTLE = "Turtle.png";
+	private BorderPane PANEL;
+	private ScrollPane SCROLL_PANE;
+	private Controller PROGRAM_CONTROLLER;
+	private String DEFAULT_COLOR_HEXCODE = "2d3436";
+	private HBox ErrorHolder;
+	private List<ImageView> TURTLE_LIST;
 
-    public TurtlePanel(Controller programController) {
-	PROGRAM_CONTROLLER = programController;
-	TURTLE_LIST = new ArrayList<ImageView>();
-    }
-
-    @Override
-    public void makePanel() {
-	BorderPane layoutPane = new BorderPane();
-	Pane panel = new Pane();
-
-	ScrollPane scroll = new ScrollPane(panel);
-	layoutPane.setCenter(scroll);
-
-	SCROLL_PANE = scroll;
-	scroll.setId("turtlePanel");
-	createTurtle(panel, scroll);
-
-	PANEL = layoutPane;
-    }
-
-    @Override
-    public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
+	public TurtlePanel(Controller programController) {
+		PROGRAM_CONTROLLER = programController;
+		TURTLE_LIST = new ArrayList<ImageView>();
 	}
-	return PANEL;
-    }
+	  @Override
+	    public void makePanel() {
+		BorderPane layoutPane = new BorderPane();
+		Pane panel = new Pane();
+
+		ScrollPane scroll = new ScrollPane(panel);
+		layoutPane.setCenter(scroll);
+
+		SCROLL_PANE = scroll;
+		scroll.setId("turtlePanel");
+		createTurtle(panel, scroll);
+
+		PANEL = layoutPane;
+	    }
+
 
     private void createTurtle(Pane panel, ScrollPane scrollPane) {
 	String currentDir = System.getProperty("user.dir");
@@ -87,7 +79,6 @@ public class TurtlePanel implements Panel {
 	    //String specification = "%nFailed to find language files";
 	    System.out.println("FAILED TO LOAD TURTLE IMG");
 	}
-
     }
 
     public void displayErrorMessage(String error) {
@@ -138,6 +129,10 @@ public class TurtlePanel implements Panel {
 
     public void removeErrorButton() {
 	PANEL.getChildren().remove(ErrorHolder);
+    }
+    
+    public void drawTurtleInfoPanel(String id) {
+	
     }
 
 }

@@ -13,6 +13,7 @@ import java.util.Properties;
 class SetPaletteCommand extends Command {
 
 	public static final String DEFAULT_COLORPALETTE_FILE = "src/interpreter/ColorPalette.properties"; 
+	public static final String DEFAULT_COLORPALETTENAMES_FILE = "src/interpreter/ColorPaletteNames.properties"; 
 	private HashMap<String, Double> myVars;
 	private Command myIdx;
 	private Command myR;
@@ -41,15 +42,11 @@ class SetPaletteCommand extends Command {
 		try {
 			in = new FileInputStream(new File(DEFAULT_COLORPALETTE_FILE));
 		} catch (FileNotFoundException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
 		}
 		
 		try {
 			prop.load(in);
 		} catch (IOException e) {
-			System.out.println("Oops! There were a problem processing the color palette file.");
-			e.printStackTrace();
 		}
 		
 		int idxAsInt = (int) idx; 
@@ -61,14 +58,35 @@ class SetPaletteCommand extends Command {
 		try {
 			fileOut = new FileOutputStream(DEFAULT_COLORPALETTE_FILE);
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 		try {
 			prop.store(fileOut, null);
 		} catch (IOException e) {
-			System.out.println("Oops! There were a problem processing the color palette file.");
-			e.printStackTrace();
+		}
+		
+		
+		
+		// WRITING NAME OF NEW COLOR
+		try {
+			in = new FileInputStream(new File(DEFAULT_COLORPALETTENAMES_FILE));
+		} catch (FileNotFoundException e2) {
+		}
+		
+		try {
+			prop.load(in);
+		} catch (IOException e) {
+		}
+		
+		prop.setProperty(idxAsKey, "User "+idxAsKey);
+		
+		fileOut = null;
+		try {
+			fileOut = new FileOutputStream(DEFAULT_COLORPALETTENAMES_FILE);
+		} catch (FileNotFoundException e1) {
+		}
+		try {
+			prop.store(fileOut, null);
+		} catch (IOException e) {
 		}
 		
 		return idx; 
