@@ -571,7 +571,7 @@ class CommandTreeBuilder {
 	private int parseTell(Turtle turtles, Turtle activeTurtles, String[] userInput, int startIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		startIdx++;
 		int endIdx = searchForBracket(startIdx, userInput, DEFAULT_BRACKET_END_IDENTIFIER, 1);
-		String[] idStringArray = Arrays.copyOfRange(userInput, startIdx, endIdx);
+		String[] idStringArray = Arrays.copyOfRange(userInput, startIdx, endIdx-1);
 		String idString = String.join(" ", idStringArray);
 		CommandNode idNode = new CommandNode(idString, turtles, activeTurtles);
 		CommandNode tellNode = new CommandNode(DEFAULT_TELL_IDENTIFIER, 1, turtles, activeTurtles);
