@@ -1,13 +1,6 @@
 package interpreter;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -40,11 +33,12 @@ public class Controller {
 
     public static final String FILE_ERROR_KEY = "FileErrorPrompt";
     public static final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
+    public static final String COLOR_ERROR_KEY = "ColorErrorPrompt";
     public static final String DEFAULT_LANGUAGE = "English";
     public static final String DEFAULT_COLOR = "Grey";
     public static final String DEFAULT_SETTINGS = "settings";
     public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
-    private final String DEFAULT_WORKSPACE_PREF = "default";
+   
 
  
     private String DEFAULT_CSS = Controller.class.getClassLoader().
@@ -80,7 +74,7 @@ public class Controller {
 		    matchingHex = backColorRegex.findMatchingVal(myTextFieldParser.getBackColor().getValue().toString());
 		    USER_SCREEN.changeBackgroundColorHex(matchingHex);
 		} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
-		    System.out.println("error locating that backgorund color"); // TODO make this more elaborate
+		    loadErrorScreen(COLOR_ERROR_KEY);
 		    e.printStackTrace();
 		}
 	    }
@@ -267,12 +261,6 @@ public class Controller {
 	    USER_SCREEN.displayErrorMessage("Invalid Color Chosen");
 	}
     }
-
-
-
-
-
- 
     /**
      * @return immutable list of immutable/temporary Turtles that have been made so far
      */
