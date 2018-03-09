@@ -109,6 +109,7 @@
 			myAngle = DEFAULT_ANGLE; 
 			myImageIdx = 1; 
 		}	
+		@Override
 		public void executeSequentially(Consumer<Turtle> action){
 			action.accept(this);
 		}
@@ -131,9 +132,11 @@
 			}
 			return turtle;
 		}
+		@Override
 		protected boolean containsTurtleWithID(String ID) {
 			return(ID.equals(new String("" + myID)));
 		}
+		@Override
 		protected SingleTurtle getTurtleWithID(String ID) throws UnidentifiedCommandException{
 			if(containsTurtleWithID(ID)) {
 				return this;
@@ -142,6 +145,7 @@
 				throw new UnidentifiedCommandException("Invalid ID");
 			}
 		}
+		@Override
 		protected MultipleTurtles addTurtle(SingleTurtle turtle) {
 			ArrayList<SingleTurtle> singles = new ArrayList<>();
 			singles.add(this);
@@ -150,6 +154,7 @@
 		}
 
 		
+		@Override
 		public void setShape(String idxKey) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException {
 			RegexMatcher rm = new RegexMatcher(DEFAULT_TURTLESHAPES_FILE);
 			String matchingShape = "";
@@ -174,10 +179,12 @@
 		/**
 		 * @return double ID of the Turtle in question
 		 */
+		@Override
 		public double getID() {
 			return myID; 
 		}
 		
+		@Override
 		protected double getImageIdx() {
 			return myImageIdx;
 		}
@@ -186,6 +193,7 @@
 		/**
 		 * Returns the current x-position of the turtle
 		 */
+		@Override
 		public double getX() {
 			return myX;
 		}
@@ -193,6 +201,7 @@
 		/**
 		 * Returns the current y-position of the turtle
 		 */
+		@Override
 		public double getY() {
 			return myY;
 		}
@@ -200,6 +209,7 @@
 		/**
 		 * Returns the previous x-position of the turtle
 		 */
+		@Override
 		protected double getOldX() {
 			return myOldX;
 		}
@@ -207,22 +217,27 @@
 		/**
 		 * Returns the previous y-position of the turtle
 		 */
+		@Override
 		protected double getOldY() {
 			return myOldY;
 		}
 
+		@Override
 		protected double getAngle() {
 			return myAngle; 
 		}
 
+		@Override
 		protected boolean getTurtleVisibility() {
 			return myVisibility; 
 		}
 
+		@Override
 		protected boolean getPenVisibility() {
 			return myPen.getVisibility(); 
 		}
 		
+		@Override
 		protected SingleTurtle toSingleTurtle() {
 			return this;
 		}
@@ -232,11 +247,13 @@
 
 
 		// SETTERS
+		@Override
 		protected void hideTurtle() {
 			myVisibility = false; 
 			myImage.setVisible(false);
 		}
 
+		@Override
 		protected void showTurtle() {
 			myVisibility = true; 
 			myImage.setVisible(true);;
@@ -245,6 +262,7 @@
 		/**
 		 * Sets the x-position of the turtle
 		 */
+		@Override
 		protected void setX(double x) {
 			setXY(x, myY);
 		}
@@ -252,10 +270,12 @@
 		/**
 		 * Sets the y-position of the turtle
 		 */
+		@Override
 		protected void setY(double y) {
 			setXY(myX, y);
 		}
 
+		@Override
 		protected double setXY(double x, double y) {
 			myOldImageX = myImage.getX();
 			myOldImageY = myImage.getY();
@@ -277,6 +297,7 @@
 		 * @param y new y coordinate
 		 * @return distance traveled
 		 */
+		@Override
 		protected double calcDistance(double oldX, double oldY, double x, double y) {
 //			System.out.println("old x: " + oldX + " new x: "+ x);
 //			System.out.println("old y" + oldY + " new y: "+ y);
@@ -296,43 +317,52 @@
 		/**
 		 * Sets the visual image of the turtle to the image contained in filepath
 		 */
+		@Override
 		public void setImage(String filepath) {
 			Image newImg = new Image(filepath);
 			myImage.setImage(newImg);
 		}
 
+		@Override
 		protected void setPenColor(String colorCode) {
 			myPen.setColor(colorCode);
 		}
 		
+		@Override
 		protected void setPenWidth(double width) {
 			myPen.setWidth(width);
 		}
 		
+		@Override
 		protected void setAngle(double angle) {
 			myAngle = angle;
 			System.out.println("angle" + myAngle);
 			myImage.setRotate(angle);
 		}
 
+		@Override
 		protected void showPen() {
 			myPen.putPenDown();
 		}
 
+		@Override
 		protected void hidePen() {
 			myPen.putPenUp();
 		}
 
+		@Override
 		protected void clearPen() {
 			myPen.clear();
 		}
 		
+		@Override
 		protected String getPenColor() {
 			return myPen.getColor();
 		}
 		protected Group getPenLines() {
 			return myPen.getPenLines();
 		}
+		@Override
 		protected int size() {
 			return 1;
 		}
