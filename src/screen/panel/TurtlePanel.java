@@ -100,7 +100,6 @@ public class TurtlePanel implements Panel {
 	    //String specification = "%nFailed to find language files";
 	    System.out.println("FAILED TO LOAD TURTLE IMG");
 	}
-
     }
 
     public void displayErrorMessage(String error) {
@@ -143,7 +142,6 @@ public class TurtlePanel implements Panel {
 	}
 	return turtleImage;
     }
-
 
     public void changeBackgroundColor(String colorCode) {
 	SCROLL_PANE.setStyle("-fx-background-color:" + colorCode + ";");

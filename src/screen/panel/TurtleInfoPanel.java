@@ -57,7 +57,8 @@ public class TurtleInfoPanel extends SpecificPanel {
     
     private void populateInfoBox(VBox turtleInfoPanel) {
 	Button backButton = makeBackButton(PROGRAM_CONTROLLER);
-	Button turtleIdButton = new Button(TURTLE_ID);
+	Button turtleIdButton = new Button(PROGRAM_CONTROLLER.resourceDisplayText("TurtlePrompt")
+		+ " " + TURTLE_ID);
 	turtleIdButton.setId("commandButton");
 	turtleIdButton.setDisable(true);
 	VBox movementButtons = drawMovementButtons(turtleInfoPanel);

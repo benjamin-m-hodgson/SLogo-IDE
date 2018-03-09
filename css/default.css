@@ -2025,3 +2025,6 @@
 #turtleView:hover {
 	-fx-cursor: hand;
 }
+#turtleView:disabled {
+	-fx-opacity: 0.6;
+}
