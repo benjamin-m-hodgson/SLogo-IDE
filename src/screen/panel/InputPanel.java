@@ -1,6 +1,4 @@
 package screen.panel;
-
-import interpreter.Controller;
 import interpreter.FileIO;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;

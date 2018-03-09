@@ -32,9 +32,8 @@ public class CommandPanel extends SpecificPanel {
     private final double FRAMES_PER_SECOND = 2;
     private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-    private Parent PANEL;
-    private FileIO FILE_READER;
     private BorderPane PANE;
+    private FileIO FILE_READER;
     private VBox COMMAND_BOX;
     private UserScreen USER_SCREEN;
 
@@ -68,12 +67,7 @@ public class CommandPanel extends SpecificPanel {
 
    
 
-    @Override
-    protected BorderPane getPane() {
-	// TODO Auto-generated method stub
-	return PANE;
-    }
-
+    
  
 
     @Override
@@ -145,6 +139,11 @@ public class CommandPanel extends SpecificPanel {
 	panelRoot.setId("infoPanel");
 	VBox.setVgrow(commandInfoArea, Priority.ALWAYS);
 	return panelRoot;
+    }
+
+    @Override
+    protected BorderPane getPane() {
+	return PANE;
     }
 
 }

@@ -2,15 +2,15 @@ package screen.panel;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import interpreter.Controller;
 import interpreter.FileIO;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import screen.UserScreen;
+import javafx.scene.Parent;
+
+
 
 /**
  * A class which implements panel and is the default/navigation panel for the right side bar. This panel allows 

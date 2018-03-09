@@ -1,18 +1,11 @@
 package screen.panel;
 
 import java.util.Iterator;
-
-import interpreter.Controller;
 import interpreter.FileIO;
-import interpreter.MissingInformationException;
-import interpreter.TurtleNotFoundException;
-import interpreter.UnidentifiedCommandException;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -29,8 +22,8 @@ public class HistoryPanel extends SpecificPanel {
     private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private FileIO FILE_READER;
-    private BorderPane PANE;
     private VBox HISTORY_BOX; 
+    private BorderPane PANE;
     private UserScreen USER_SCREEN;
     
     public HistoryPanel( BorderPane pane, UserScreen userScreen, FileIO fileReader) {
@@ -60,15 +53,6 @@ public class HistoryPanel extends SpecificPanel {
 	PANEL = panelRoot;
     }
 
-
-
-    @Override
-    protected BorderPane getPane() {
-	// TODO Auto-generated method stub
-	return PANE;
-    }
-
-    
 
     @Override
     protected UserScreen getUserScreen() {
@@ -124,5 +108,9 @@ public class HistoryPanel extends SpecificPanel {
 	panelRoot.setId("infoPanel");
 	VBox.setVgrow(commandInfoArea, Priority.ALWAYS);
 	return panelRoot;
+    }
+    @Override
+    protected BorderPane getPane() {
+	return PANE;
     }
 }
