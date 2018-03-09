@@ -133,33 +133,53 @@ public class TurtleInfoPanel extends SpecificPanel {
 
     private void moveUp(String value) {
 	if (!value.isEmpty()) {
-	    int amount = Integer.parseInt(value);
-	    String command = "Forward " + amount;
-	    sendCommandAddHistory(command,value);
+	    try {
+		int amount = Integer.parseInt(value);
+		String command = "Forward " + amount;
+		sendCommandAddHistory(command,value);
+	    }
+	    catch (Exception e) {
+		// do nothing, don't move the turtle
+	    }
 	}
     }
 
     private void moveDown(String value) {
 	if (!value.isEmpty()) {
-	    int amount = Integer.parseInt(value);
-	    String command = "Backward " + amount;
-	    sendCommandAddHistory(command,value);
+	    try {
+		int amount = Integer.parseInt(value);
+		String command = "Backward " + amount;
+		sendCommandAddHistory(command,value);
+	    }
+	    catch (Exception e) {
+		// do nothing, don't move the turtle
+	    }
 	}
     }
 
     private void moveLeft(String value) {
 	if (!value.isEmpty()) {
-	    int amount = Integer.parseInt(value);
-	    String command = "Left " + amount;
-	    sendCommandAddHistory(command,value);
+	    try {
+		int amount = Integer.parseInt(value);
+	        String command = "Left " + amount;
+	        sendCommandAddHistory(command,value);
+	    }
+	    catch (Exception e) {
+		// do nothing, don't move the turtle
+	    }
 	}
     }
 
     private void moveRight(String value) {
 	if (!value.isEmpty()) {
-	    int amount = Integer.parseInt(value);
-	    String command = "Right " + amount;
-	    sendCommandAddHistory(command,value);
+	    try {
+		int amount = Integer.parseInt(value);
+		String command = "Right " + amount;
+		sendCommandAddHistory(command,value);
+	    }
+	    catch (Exception e) {
+		// do nothing, don't move the turtle
+	    }
 	}
     }
 

@@ -11,8 +11,6 @@ public class SetPenColorCommand extends Command {
 	public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
 	private Command colorCodeCommand;
 	private Map<String, Double> myVariables; 
-	private boolean myIdxSent;
-
 
 	protected SetPenColorCommand(Command codeIn, Turtle turtle,Map<String, Double> variables) {
 		colorCodeCommand = codeIn;
@@ -22,6 +20,7 @@ public class SetPenColorCommand extends Command {
 
 	@Override
 	protected double execute() throws UnidentifiedCommandException {
+	
 		double retVal = 0; 
 		String hexAsString = "";
 
@@ -46,6 +45,7 @@ public class SetPenColorCommand extends Command {
 		retVal = commandInfo; 
 
 		getActiveTurtles().setPenColor(hexAsString);
+				
 		return retVal;
 	}
 	
