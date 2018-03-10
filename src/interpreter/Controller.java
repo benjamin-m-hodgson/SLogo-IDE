@@ -16,17 +16,13 @@ import screen.UserScreen;
 /**
  * 
  * @author Ben Hodgson
+ * @author Sarah Bland
  * @author Susie Choi
  * 
  * The primary class for reading in data files and relaying information about these files 
  * to the front end. Also acts as a mediator and handles front end to back end communication,
  * notably the makeNewTurtle and parseInput methods.  
  * 
- */
-
-/**
- * @author Sarahbland
- *
  */
 
 public class Controller {
