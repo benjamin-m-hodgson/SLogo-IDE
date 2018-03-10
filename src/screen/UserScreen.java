@@ -31,7 +31,7 @@ import screen.panel.TurtlePanel;
 public class UserScreen implements Screen {
 
     private Parent ROOT;
-    public static final String DEFAULT_SHAPE_COMMAND = "SetShape";
+    public final String DEFAULT_SHAPE_COMMAND;
     private TurtlePanel TURTLE_PANEL;
     private Controller PROGRAM_CONTROLLER;
     private final FileIO FILE_READER;
@@ -46,6 +46,7 @@ public class UserScreen implements Screen {
 	INPUT_HISTORY = new ArrayList<String>();
 	OUTPUT_HISTORY = new ArrayList<String>();
 	currentState = setUpCurrentState();
+	DEFAULT_SHAPE_COMMAND = FILE_READER.resourceSettingsText("defaultShapeCommand");
     }
 
 
@@ -120,24 +121,10 @@ public class UserScreen implements Screen {
 	    addCommand(command, commandVal.toString());
 	} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
 		| MissingInformationException e) {
-	    e.printStackTrace();
 	    displayErrorMessage(e.getMessage());
 	}
 
     }
-
-    //    /**
-    //     * Changes the image displayed on the screen to represent the Turtle
-    //     * 
-    //     * @param selected: The selected image to change the turtle display to
-    //     * @throws MissingInformationException 
-    //     * @throws UnidentifiedCommandException 
-    //     * @throws BadFormatException 
-    //     * @throws TurtleNotFoundException 
-    //     */
-    //    public void changeTurtleImage(String selected)  {
-    //	TURTLE_PANEL.changeTurtlesImages(selected);
-    //    }
 
     @Override
     public void changeBackgroundColor(String color) {
