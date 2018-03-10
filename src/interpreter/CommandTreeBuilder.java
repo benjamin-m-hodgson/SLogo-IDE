@@ -81,9 +81,9 @@ class CommandTreeBuilder {
 	}
 
 	protected double buildAndExecute(Turtle turtles, Turtle activeTurtles, String[] userInput, boolean shouldExecute) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		System.out.println("BEGINNING OF SENT IN INPUT -------------------------");
-		for (String s : userInput) System.out.println(s);
-		System.out.println("END OF SENT IN INPUT -------------------------");
+//		System.out.println("BEGINNING OF SENT IN INPUT -------------------------");
+//		for (String s : userInput) System.out.println(s);
+//		System.out.println("END OF SENT IN INPUT -------------------------");
 
 		double finalReturnVal = -1; 
 		myCommandTrees.clear(); 
@@ -109,11 +109,11 @@ class CommandTreeBuilder {
 
 
 		//System.out.println("command tree number bigger: " + myCommandTrees.size());
-		System.out.println("PRINTING OUT COMM TREES ------------------------------------");
-		for (CommandNode n : myCommandTrees) {
-			System.out.println(n.toString());
-		}
-		System.out.println("DONE PRINTING OUT COMM TREES --------------------------------");
+//		System.out.println("PRINTING OUT COMM TREES ------------------------------------");
+//		for (CommandNode n : myCommandTrees) {
+//			System.out.println(n.toString());
+//		}
+//		System.out.println("DONE PRINTING OUT COMM TREES --------------------------------");
 
 		//	System.out.println("number of command trees" + myCommandTrees.size());
 		if(shouldExecute) {
@@ -125,13 +125,13 @@ class CommandTreeBuilder {
 	}
 
 	private CommandNode createCommandTree(Turtle turtles, Turtle activeTurtles, String[] userInput, int startIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		System.out.println("trying to make a command tree");
+		//System.out.println("trying to make a command tree");
 	
 		if (startIdx >= userInput.length||(userInput[startIdx].equals(DEFAULT_BRACKET_END_IDENTIFIER))) { // || commandTypes[startIdx] == null //TODO fix this so not so obvious
-			System.out.println("WARNING: CREATE COMMAND TREE RETURNING NULL");
+			//System.out.println("WARNING: CREATE COMMAND TREE RETURNING NULL");
 			return null; // TODO make this more detailed
 		}
-		System.out.println("currCommand: " + userInput[startIdx]);
+		//System.out.println("currCommand: " + userInput[startIdx]);
 		if(myVariables.containsKey(userInput[startIdx])) {
 			userInput[startIdx] = myVariables.get(userInput[startIdx]).toString();
 		}

@@ -37,7 +37,6 @@ class GreaterThanCommand extends Command{
     			throw new UnidentifiedCommandError("Improper # arguments");
     		}
     	});
-	
 	return (arg1Val > arg2Val) ? 1.0 : 0.0; 
     }
 

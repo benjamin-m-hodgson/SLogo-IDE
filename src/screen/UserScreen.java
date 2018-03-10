@@ -168,7 +168,7 @@ public class UserScreen implements Screen {
 	    if(containsElementWithID(id, allTurtles) == false) {
 		ImageView turtleImage = PROGRAM_CONTROLLER.getTurtleWithIDImageView(id);
 		Group penLines = PROGRAM_CONTROLLER.getTurtleWithIDPenLines(id);
-		TURTLE_PANEL.attachTurtleObjects(turtleImage, penLines);
+		TURTLE_PANEL.attachTurtleObjects(turtleImage, penLines, id);
 	    }
 	}
 	allTurtles = newTurtles;
@@ -206,3 +206,4 @@ public class UserScreen implements Screen {
 
 
 }
+

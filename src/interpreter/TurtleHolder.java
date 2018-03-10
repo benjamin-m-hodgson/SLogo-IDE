@@ -36,6 +36,7 @@ public class TurtleHolder {
 		resetTemporaryTurtles();
 	} 
 	public List<SingleTurtle> getCopyTurtleList(){
+		resetTemporaryTurtles();
 		return mySharedTurtles;
 	}
 	protected void replaceTurtleList(List<SingleTurtle> turtles) {
