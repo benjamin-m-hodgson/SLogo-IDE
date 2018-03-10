@@ -24,38 +24,40 @@ public class TurtlePanel  {
     // TODO: put in setting.properties file
     private final double DEFAULT_TURTLE_SIZE = 40;
     private final String DEFAULT_TURTLE = "Green Turtle.png";
+    private String DEFAULT_COLOR_HEXCODE = "2d3436";
     private BorderPane PANEL;
     private final BorderPane USER_PANE;
     private ScrollPane SCROLL_PANE;
     private final UserScreen USER_SCREEN;
-    private String DEFAULT_COLOR_HEXCODE = "000000";
-  //  private final String DEFAULT_SETSHAPE_COMMAND = "";
+    private  final Pane TURTLE_PANEL;
     private HBox ErrorHolder;
     private List<ImageView> TURTLE_LIST;
     private final FileIO FILE_READER;
     private int TURTLE_COUNT = 1;
+ 
+
 
     public TurtlePanel(BorderPane pane, UserScreen userScreen, FileIO fileReader) {
 	USER_PANE = pane;
 	FILE_READER = fileReader;
 	USER_SCREEN = userScreen;
 	TURTLE_LIST = new ArrayList<ImageView>();
+	TURTLE_PANEL = new Pane();
     }
 
     public void makePanel() {
 	BorderPane layoutPane = new BorderPane();
-	Pane panel = new Pane();
 
-	ScrollPane scroll = new ScrollPane(panel);
+	ScrollPane scroll = new ScrollPane(TURTLE_PANEL);
 	layoutPane.setCenter(scroll);
 
 	SCROLL_PANE = scroll;
 	scroll.setId("turtlePanel");
-	createTurtle(panel, scroll);
+	//createTurtle(TURTLE_PANEL, scroll);
 
 	PANEL = layoutPane;
     }
-    
+
     /**
      * If property PANEL is null, calls makePanel() to generate the root. 
      * 
@@ -93,7 +95,7 @@ public class TurtlePanel  {
 	    penLines.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
 	    penLines.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
 	    panel.getChildren().add(penLines);
-	    USER_SCREEN.makeNewTurtleCommand(Integer.toString(TURTLE_COUNT), turtleView,
+	    USER_SCREEN.makeNewTurtleCommand(turtleId, turtleView,
 		    DEFAULT_COLOR_HEXCODE , penLines);
 	    TURTLE_COUNT++;
 	}
@@ -102,7 +104,39 @@ public class TurtlePanel  {
 	    //String specification = "%nFailed to find language files";
 	    System.out.println("FAILED TO LOAD TURTLE IMG");
 	}
+    } 
 
+    private ImageView setUpImageView(ImageView turtleView, ScrollPane scrollPane, double ID){
+    	String currentDir = System.getProperty("user.dir");
+    	File turtleFile = new File(currentDir + File.separator + "turtleimages" 
+    		+ File.separator + DEFAULT_TURTLE);
+    	Image turtleImage;
+    	try {
+    	    turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
+    	    turtleView.setImage(turtleImage);
+    	    TURTLE_LIST.add(turtleView);
+    	    turtleView.setId("turtleView");
+    	    turtleView.setFitHeight(DEFAULT_TURTLE_SIZE);
+    	    turtleView.setFitWidth(DEFAULT_TURTLE_SIZE);
+    	    // center the turtle on the screen
+    	    turtleView.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
+    	    turtleView.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
+    	    turtleView.setOnMousePressed((arg0)-> USER_PANE.setRight(
+    		    new TurtleInfoPanel(USER_PANE, USER_SCREEN, Double.toString(ID), FILE_READER).getPanel()));
+    	    TURTLE_PANEL.getChildren().add(turtleView);
+    	    return turtleView;
+    	} catch (MalformedURLException e) {
+    	    // TODO Auto-generated catch block
+    	    System.out.println("FAILED TO LOAD TURTLE IMG");
+    	    return new ImageView();
+    		}
+      }
+
+    public void attachTurtleObjects(ImageView image, Group penLine, double ID) {
+    		setUpImageView(image, SCROLL_PANE,ID);
+    		penLine.translateXProperty().bind(Bindings.divide(SCROLL_PANE.widthProperty(), 2));
+    	    penLine.translateYProperty().bind(Bindings.divide(SCROLL_PANE.heightProperty(), 2));
+    		TURTLE_PANEL.getChildren().add(penLine);
     }
 
     public void displayErrorMessage(String error) {
@@ -115,6 +149,26 @@ public class TurtlePanel  {
 	errorButton.setMaxWidth(PANEL.widthProperty().get());
 	errorButton.setMinWidth(PANEL.widthProperty().get());
 	PANEL.setBottom(ErrorHolder);
+    }
+
+    private Image getTurtleImage(String selected) {
+	String currentDir = System.getProperty("user.dir");
+	File turtleFile = new File(currentDir + File.separator + "turtleimages" 
+		+ File.separator + selected + ".png");
+	Image turtleImage = null;
+	try {
+	    turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
+	} 
+	catch (MalformedURLException e) {
+	    turtleFile = new File(currentDir + File.separator + "turtleimages" + File.separator + DEFAULT_TURTLE);
+	    try {
+		turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
+	    } 
+	    catch (MalformedURLException e1) {
+		System.out.println("FAILED TO LOAD TURTLE IMG");
+	    }
+	}
+	return turtleImage;
     }
 
     public void changeBackgroundColor(String colorCode) {

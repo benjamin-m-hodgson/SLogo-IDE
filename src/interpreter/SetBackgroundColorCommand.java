@@ -2,6 +2,11 @@ package interpreter;
 
 import java.util.Map;
 
+/**
+ * Sets the background color of the Turtle area according to an index corresponding to a ColorPalette color
+ * @author susiechoi
+ *
+ */
 class SetBackgroundColorCommand extends Command {
 	
 	public static final String DEFAULT_COLORPALETTE_FILE = "src/interpreter/ColorPalette.properties";

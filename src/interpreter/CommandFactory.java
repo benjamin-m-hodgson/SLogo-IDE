@@ -2,27 +2,33 @@ package interpreter;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Factory class to make a command given a list of Command arguments and the String
+ * id of the command. Dependent on TextFieldParser to put the commands in their "proper"
+ * form (translated from what the user put in), on the Command class to execute proper, and
+ * on CommandTreeBuilder to build the tree correctly and thus give each command its proper 
+ * number of arguments.
+ * @author Sarahbland
+ *
+ */
 public class CommandFactory {
 	Map<String, Double> myVariables; 
 	Map<String, String> myUserDefCommands;
 	Map<String, Integer> myUserDefCommandsNumArgs;
 	
-	public CommandFactory(Map<String, Double> variables, Map<String, String> userDefCommands, Map<String, Integer> userDefCommandsNumArgs) {
+	protected CommandFactory(Map<String, Double> variables, Map<String, String> userDefCommands, Map<String, Integer> userDefCommandsNumArgs) {
 		myVariables = variables; 
 		myUserDefCommands = userDefCommands; 
 		myUserDefCommandsNumArgs = userDefCommandsNumArgs;
 	}
 
-//	public Command makeCommand() {
-//		return null;
-//	}
 
-	public Command makeDoubleCommand(String doubleString) {
+	protected Command makeDoubleCommand(String doubleString) {
 		double doubleArg = Double.parseDouble(doubleString);
 		return new DoubleCommand(doubleArg);
 	}
 
-	public Command makeCommand(String commandName, List<Command> commandArgs, Turtle turtles, Turtle activeTurtles) {
+	protected Command makeCommand(String commandName, List<Command> commandArgs, Turtle turtles, Turtle activeTurtles) {
 		if(commandName.equals("Forward")) {
 			return new MoveTurtleForwardCommand(commandArgs.get(0), activeTurtles, myVariables);
 		}
@@ -189,7 +195,7 @@ public class CommandFactory {
 			return makeDoubleCommand("" + turtles.size());
 		}
 		else if(commandName.equals("Tell")) {
-			return new TellCommand(commandArgs.get(0), activeTurtles, turtles);
+			return new TellCommand(commandArgs.get(0), activeTurtles, turtles, myVariables);
 		}
 		else if(commandName.equals("Ask")) {
 			return new AskCommand(commandArgs.get(0), commandArgs.get(1), turtles, myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
@@ -200,11 +206,5 @@ public class CommandFactory {
 		else {
 			return new StringCommand(commandName);
 		}
-		//elseif (commandName.equals("set") do variable map looping
-		//if unidentified
-		//loop through map of user commands
-		//make a new commandtree builder
-		//build and execute that tree
-		//make a double command with its return value
 	}
 }

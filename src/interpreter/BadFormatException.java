@@ -1,5 +1,9 @@
 package interpreter;
 
+/**
+ * Exception created in the event the user attempts to execute a command with unsupported syntax
+ *
+ */
 public class BadFormatException extends Exception {
 	/**
 	 * 

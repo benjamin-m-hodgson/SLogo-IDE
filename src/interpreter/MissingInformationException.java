@@ -1,5 +1,9 @@
 package interpreter;
 
+/**
+ * Exception thrown when a command requires information (like a file) that is not available
+ *
+ */
 public class MissingInformationException extends Exception {
 	/**
 	 * 

@@ -3,8 +3,8 @@
 	import java.io.File;
 	import java.net.MalformedURLException;
 	import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
+	import java.util.List;
+	import java.util.function.Consumer;
 
 	import javafx.scene.Group;
 	import javafx.scene.image.Image;
@@ -12,6 +12,9 @@ import java.util.function.Consumer;
 	import javafx.scene.shape.Line;
 
 	/**
+	 * Class of Turtles corresponding to a single Turtle object (as opposed to Multiple Turtles).
+	 * Responsible for changing properties of turtles (xcor, ycor, etc.) as well as
+	 * performing calculations about these for Commands.
 	 * @author Sarahbland - Pen inner class and adapting to extend abstract class
 	 * @author Susie Choi - Surrounding Turtle class (original single turtle implementation)
 	 *
@@ -26,7 +29,7 @@ import java.util.function.Consumer;
 
 	    	public static final double DEFAULT_TURTLE_SIZE = 40;
 		public static final double DEFAULT_ID = -1;
-		public static final String DEFAULT_PEN_COLORCODE = "#000000";
+		public static final String DEFAULT_PEN_COLORCODE = "000000";
 		public static final double DEFAULT_PEN_WIDTH = 1.0;
 		public static final double DEFAULT_X_POS = 0.0; 
 		public static final double DEFAULT_Y_POS = 0.0; 
@@ -90,7 +93,7 @@ import java.util.function.Consumer;
 					hideTurtle();
 				}
 				try {
-				setShape("" + oneTurtle.getImageIdx());
+				setShape(Double.toString(oneTurtle.getImageIdx()));
 				}
 				catch(UnidentifiedCommandException |MalformedURLException | MissingInformationException | BadFormatException e) {
 					throw new UnidentifiedCommandError(e.getMessage());
@@ -134,6 +137,22 @@ import java.util.function.Consumer;
 			singles.add(turtle);
 			return new MultipleTurtles(singles);
 		}
+		public void setShape(Image newImg, double idxKey) {
+			setImage(newImg);
+			setImageIdx(idxKey);
+		}
+		
+		private void setImageIdx(double idx) {
+			myImageIdx = idx;
+		}
+
+		/**
+		 * Sets the visual image of the turtle to the image contained in filepath
+		 */
+		public void setImage(Image newImg) {
+			myImage.setImage(newImg);
+		}
+
 
 		
 		public void setShape(String idxKey) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException {
@@ -206,7 +225,7 @@ import java.util.function.Consumer;
 		}
 		
 		public double getPenWidth() {
-		    return myPen.getWidth();
+		    return myPen.myWidth;
 		}
 		
 		protected SingleTurtle toSingleTurtle() {
@@ -260,8 +279,6 @@ import java.util.function.Consumer;
 		 * @return distance traveled
 		 */
 		protected double calcDistance(double oldX, double oldY, double x, double y) {
-			System.out.println("old x: " + oldX + " new x: "+ x);
-			System.out.println("old y" + oldY + " new y: "+ y);
 			double xSquared = Math.pow((oldX-x), 2);
 			double ySquared = Math.pow((oldY-y), 2);
 			return Math.sqrt(xSquared+ySquared);
@@ -394,14 +411,6 @@ import java.util.function.Consumer;
 				myIsDown = false;
 			}
 
-
-			/**
-			 * @return current width of pen lines
-			 */
-			private double getWidth() {
-				return myWidth;
-			}
-
 			/**
 			 * Sets width of pen to a new value
 			 * @param width is new width desired
@@ -442,7 +451,6 @@ import java.util.function.Consumer;
 					line.setStyle("-fx-stroke: #" + myColorCode + ";");
 					line.setStrokeWidth(myWidth);
 					myPenLines.getChildren().add(line);
-					System.out.println("number of lines" + myPenLines.getChildren().size());
 				}
 			}
 			/**
@@ -455,3 +463,4 @@ import java.util.function.Consumer;
 		}
 
 	}
+

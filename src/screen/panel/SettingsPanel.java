@@ -47,12 +47,12 @@ public class SettingsPanel extends SpecificPanel  {
     private final int DEFAULT_BUTTON_SPACING = 10;
     private final String[] DROPDOWN_IDS = {"languageSettingsChooser"};
     private final String[] BUTTON_IDS = {"newworkspaceButton", "turtlesButton", "preferencesButton"};
+    private final String[] CURRENTSTATE_KEYS = {"language", "backgroundColor"};
 
     public SettingsPanel(BorderPane pane, UserScreen userScreen, FileIO fileReaderIn) {
 	PANE = pane;
 	USER_SCREEN = userScreen;
 	fileReader = fileReaderIn;
-
     }
 
 
@@ -92,11 +92,12 @@ public class SettingsPanel extends SpecificPanel  {
 	    if (!selected.equals(selectionPrompt)) {
 		fileReader.bundleUpdateToNewLanguage(selected);
 		updatePrompt();
+		USER_SCREEN.updateCurrentState(CURRENTSTATE_KEYS[0], selected);
 	    }
 	});
 	return dropDownMenu;
     }
-
+    
     private Button makeNewWorkspaceButton(String itemId) {
 	Button workspaceButton = makeButton(itemId);
 	workspaceButton.setOnAction(click ->{Driver d = new Driver();try {
@@ -113,7 +114,8 @@ public class SettingsPanel extends SpecificPanel  {
 	Button preferenceButton = makeButton(itemId);
 	// override click event
 	preferenceButton.setOnMouseClicked((arg0)-> getPane()
-		.setRight(new PreferencePanel(PANE, USER_SCREEN, fileReader).getPanel()));
+		.setRight(new PreferencePanel(PANE, USER_SCREEN, fileReader,CURRENTSTATE_KEYS)
+			.getPanel()));
 	return preferenceButton;
     }
     

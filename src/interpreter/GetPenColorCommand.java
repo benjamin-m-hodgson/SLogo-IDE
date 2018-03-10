@@ -1,6 +1,11 @@
 package interpreter;
 
-import java.util.Map;
+
+/**
+ * Returns the pen color (index corresponding to ColorPalette) of the current turtle
+ * @author Susie Choi
+ *
+ */
 
 class GetPenColorCommand extends Command {
 	

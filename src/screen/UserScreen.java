@@ -1,7 +1,6 @@
 package screen;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +15,6 @@ import interpreter.TurtleNotFoundException;
 import interpreter.UnidentifiedCommandException;
 import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import screen.panel.InfoPanel;
@@ -33,17 +31,21 @@ import screen.panel.TurtlePanel;
 public class UserScreen implements Screen {
 
     private Parent ROOT;
+    public static final String DEFAULT_SHAPE_COMMAND = "SetShape";
     private TurtlePanel TURTLE_PANEL;
     private Controller PROGRAM_CONTROLLER;
     private final FileIO FILE_READER;
     private List<String> INPUT_HISTORY;
     private List<String> OUTPUT_HISTORY;
+    private List<SingleTurtle> allTurtles;
+    private Map<String, String> currentState;
 
     public UserScreen(Controller programController, FileIO fileReader) {
 	FILE_READER = fileReader;
 	PROGRAM_CONTROLLER = programController;
 	INPUT_HISTORY = new ArrayList<String>();
 	OUTPUT_HISTORY = new ArrayList<String>();
+	currentState = setUpCurrentState();
     }
 
 
@@ -55,7 +57,12 @@ public class UserScreen implements Screen {
 	rootPane.setRight(new InfoPanel( rootPane, this, FILE_READER).getPanel());
 	TURTLE_PANEL = new TurtlePanel(rootPane, this, FILE_READER);//, rootPane
 	rootPane.setCenter(TURTLE_PANEL.getPanel());
+	allTurtles = PROGRAM_CONTROLLER.getAllTurtles();
 	ROOT = rootPane;
+    }
+
+    public void updateCurrentState(String key, String newVal) {
+	currentState.put(key,newVal);
     }
 
     @Override
@@ -64,6 +71,9 @@ public class UserScreen implements Screen {
 	    makeRoot();
 	}
 	return ROOT;
+    }
+    public Map<String,String> getCurrentState() {
+	return currentState;
     }
 
     /**
@@ -103,31 +113,31 @@ public class UserScreen implements Screen {
     public void displayErrorMessage(String errorMessage) {
 	TURTLE_PANEL.displayErrorMessage(errorMessage);
     }
-    
+
     public void commandRunFromHistory(String command) {
 	try {
 	    Double commandVal = PROGRAM_CONTROLLER.parseInput(command);
 	    addCommand(command, commandVal.toString());
 	} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
 		| MissingInformationException e) {
-		 e.printStackTrace();
-		displayErrorMessage(e.getMessage());
+	    e.printStackTrace();
+	    displayErrorMessage(e.getMessage());
 	}
-	
+
     }
 
-//    /**
-//     * Changes the image displayed on the screen to represent the Turtle
-//     * 
-//     * @param selected: The selected image to change the turtle display to
-//     * @throws MissingInformationException 
-//     * @throws UnidentifiedCommandException 
-//     * @throws BadFormatException 
-//     * @throws TurtleNotFoundException 
-//     */
-//    public void changeTurtleImage(String selected)  {
-//	TURTLE_PANEL.changeTurtlesImages(selected);
-//    }
+    //    /**
+    //     * Changes the image displayed on the screen to represent the Turtle
+    //     * 
+    //     * @param selected: The selected image to change the turtle display to
+    //     * @throws MissingInformationException 
+    //     * @throws UnidentifiedCommandException 
+    //     * @throws BadFormatException 
+    //     * @throws TurtleNotFoundException 
+    //     */
+    //    public void changeTurtleImage(String selected)  {
+    //	TURTLE_PANEL.changeTurtlesImages(selected);
+    //    }
 
     @Override
     public void changeBackgroundColor(String color) {
@@ -155,19 +165,36 @@ public class UserScreen implements Screen {
     public void applyPreferences(String selected) {
 	Map<String, String> preferences = FILE_READER.getWorkspacePreferences(selected);
 	TURTLE_PANEL.changeBackgroundColor(preferences.get("backgroundColor"));
-	String penColor = preferences.get("penColor");
-	penColor = penColor.substring(1, penColor.length());
-	System.out.println(penColor);
-	PROGRAM_CONTROLLER.changePenColorHex(Integer.parseInt(penColor,16));
 	FILE_READER.bundleUpdateToNewLanguage(preferences.get("language"));
-
-
+	FILE_READER.parseSettingInput(DEFAULT_SHAPE_COMMAND+" "+preferences.get("turtleImage"));
     }
-    
+
+    public void checkForNewTurtle() {
+	List<SingleTurtle> newTurtles = PROGRAM_CONTROLLER.getAllTurtles();
+	for(SingleTurtle newT : newTurtles) {
+	    double id = newT.getID();
+	    if(containsElementWithID(id, allTurtles) == false) {
+		ImageView turtleImage = PROGRAM_CONTROLLER.getTurtleWithIDImageView(id);
+		Group penLines = PROGRAM_CONTROLLER.getTurtleWithIDPenLines(id);
+		TURTLE_PANEL.attachTurtleObjects(turtleImage, penLines, id);
+	    }
+	}
+	allTurtles = newTurtles;
+    }
+
+    private boolean containsElementWithID(double id, List<SingleTurtle> theList) {
+	for(SingleTurtle t : theList) {
+	    if (t.getID() == id) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     public Map<String, Double> getVariables(){
 	return PROGRAM_CONTROLLER.getVariables();
     }
-    
+
     public Map<String, String> getUserDefined(){
 	return PROGRAM_CONTROLLER.getUserDefined();
     }
@@ -179,18 +206,26 @@ public class UserScreen implements Screen {
     public List<SingleTurtle> getActiveTurtles() {
 	return PROGRAM_CONTROLLER.getActiveTurtles();
     }
-    
+
     public void throwErrorScreen(String message) {
 	PROGRAM_CONTROLLER.loadErrorScreen(message);
     }
-    
+
     public void makeNewTurtleCommand(String id, ImageView turtleImage, String penColor, Group penLines) {
 	PROGRAM_CONTROLLER.makeNewTurtleCommand(id, turtleImage, penColor, penLines);
     }
-    
+
     public double sendCommandToParse(String inputText) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
-	 return PROGRAM_CONTROLLER.parseInput(inputText);
+	return PROGRAM_CONTROLLER.parseInput(inputText);
+    }
+
+    private Map<String,String> setUpCurrentState() {
+	Map<String,String> currentState = FILE_READER.getWorkspacePreferences("default");
+	String lang  = FILE_READER.resourceDisplayText("Name");
+	currentState.put("language", lang);
+	return currentState;
     }
 
 
 }
+

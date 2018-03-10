@@ -3,6 +3,14 @@ package interpreter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Susie Choi
+ * minor modifications by Sarah Bland
+ * 
+ * Represents an element of a user-inputed command (e.g. Command name, argument). 
+ * Used in constructing a CommandTree to assess the completeness of commands in the parsing process. 
+ *
+ */
 class CommandNode {
 
 	public static final int DEFAULT_NUM_ARGS = 0; 
@@ -10,7 +18,6 @@ class CommandNode {
 	private String myInfo;
 	private boolean isDouble; 
 	private int myNumArgs; 
-	//private Command myCommand; 
 	private List<CommandNode> myChildren; 
 	private Turtle myTurtles;
 	private Turtle myActiveTurtles;
@@ -70,7 +77,7 @@ class CommandNode {
 	@Override
 	public String toString() {
 		String s = "CommandNode holding info "+myInfo;
-		if (myChildren.size() > 0) {
+		if (!myChildren.isEmpty()) {
 			s+= " has "+myChildren.size()+" children:\n";
 			for (int i = 0; i < myChildren.size(); i ++) {
 				s += "#"+(i+1)+". "+myChildren.get(i).toString()+"\n";

@@ -1,7 +1,14 @@
 package interpreter;
 
  
- class StringCommand extends Command{
+ /**
+  * Special type of Command that holds a String, rather than a double return value. Used
+  * in loops as well as variables to allow the tree to build with string elements and then
+  * trust the individual Command classes to parse the unidentified strings as necessary.
+ * @author Sarahbland
+ *
+ */
+class StringCommand extends Command{
 	public static final int DEFAULT_STRING_ID = Integer.MAX_VALUE;
 	private String myString;
 	protected StringCommand(String argument) {

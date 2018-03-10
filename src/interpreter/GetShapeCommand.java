@@ -1,5 +1,10 @@
 package interpreter;
 
+/**
+ * Returns the shape/imageview/appearance (index corresponding to Shapes file) of the turtle in question
+ * @author Susie Choi
+ *
+ */
 class GetShapeCommand extends Command {
 
 	public static final String DEFAULT_SHAPES_FILE = "interpreter/TurtleShapes";

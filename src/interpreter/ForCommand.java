@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Implements the "for" command, looping over a certain set of actions from a 
+ * specified start to end with a specified increment
+ * @author Sarahbland
+ *
+ */
 public class ForCommand extends Command{
 		private String myTempVar;
 		private Command myStartCommand;
@@ -38,9 +44,9 @@ public class ForCommand extends Command{
 			List<Integer> indices = getTempVarIndices(myTempVar, executeArray);
 			for(Double k = start; k<=ending; k+=increment) {
 				findAndReplace(indices, k, executeArray);
-				for(int i = 0; i<executeArray.length; i+=1) {
-					System.out.println("executing " + executeArray[i]);
-				}
+//				for(int i = 0; i<executeArray.length; i+=1) {
+//					System.out.println("executing " + executeArray[i]);
+//				}
 				try {
 					returnVal = myBuilder.buildAndExecute(myTurtle, getActiveTurtles(), executeArray, true);
 				}

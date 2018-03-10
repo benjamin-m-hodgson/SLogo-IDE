@@ -42,6 +42,7 @@ public class TurtleInfoPanel extends SpecificPanel {
     private String TURTLE_ID;
     private SingleTurtle TURTLE;
     private BorderPane PANE;
+    private final String[] CURRENTSTATE_KEYS = {"turtleImage", "backgroundColor"};
 
 
     public TurtleInfoPanel(BorderPane pane, UserScreen userScreen, String id, FileIO fileReader) {
@@ -116,11 +117,11 @@ public class TurtleInfoPanel extends SpecificPanel {
 	    if (!selected.equals(selectionPrompt)) {
 		String selectedShapeIdx = (selected.split(". "))[0];
 		FILE_READER.parseSettingInput(DEFAULT_SHAPE_COMMAND+" "+selectedShapeIdx);
-		// TODO: add to history
+		USER_SCREEN.updateCurrentState(CURRENTSTATE_KEYS[0], selectedShapeIdx);
 	    }
 	});
 	return dropDownMenu;
-    }  
+    }    
     
     /**
      * 

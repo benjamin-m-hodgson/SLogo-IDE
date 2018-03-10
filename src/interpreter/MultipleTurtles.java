@@ -5,8 +5,15 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Class with specific methods representing a Turtle that is actually a collection of 
+ * multiple turtles. Uses a TurtleHolder to protect the list of turtles. Returns the 
+ * @author Sarahbland
+ *
+ */
 public class MultipleTurtles extends Turtle{
 		TurtleHolder myActiveTurtleHolder;
 	public MultipleTurtles(List<SingleTurtle> turtles) {
@@ -17,10 +24,10 @@ public class MultipleTurtles extends Turtle{
 	/**
 	 * @return double ID of the last Turtle in question
 	 */
-	public double getID() {
+	protected double getID() {
 		return getLastTurtle().getID(); 
 	}
-	public void executeSequentially(Consumer<Turtle> action){
+	protected void executeSequentially(Consumer<Turtle> action){
 		myActiveTurtleHolder.applyToAllTurtles(action);
 		myActiveTurtleHolder.resetTemporaryTurtles();
 	}
@@ -150,10 +157,10 @@ public class MultipleTurtles extends Turtle{
 //		myActiveTurtleHolder.applyToAllTurtles(t->t.setImageIdx(shapeIdx));
 //	}
 	
-	public void setShape(String idxKey) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException{
+	public void setShape(Image image, double imageIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException{
 		myActiveTurtleHolder.applyToAllTurtles(t->{
 			try {
-				t.setShape(idxKey);
+				t.setShape(image, imageIdx);
 			} catch (MalformedURLException | BadFormatException | UnidentifiedCommandException
 					| MissingInformationException e) {
 				e.printStackTrace();
@@ -171,8 +178,8 @@ public class MultipleTurtles extends Turtle{
 	/**
 	 * Sets the visual image of the turtle to the image contained in filepath
 	 */
-	public void setImage(String filepath) {
-		myActiveTurtleHolder.applyToAllTurtles(t->t.setImage(filepath));
+	public void setImage(Image image) {
+		myActiveTurtleHolder.applyToAllTurtles(t->t.setImage(image));
 		myActiveTurtleHolder.resetTemporaryTurtles();
 	}
 

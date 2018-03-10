@@ -3,6 +3,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Implements DoTimes command, executing a loop a certain number of times and setting
+ * a variable to the current loop count each time
+ * @author Sarahbland
+ *
+ */
 class DoTimesCommand extends Command{
 	
 	private String toExecute;
@@ -28,13 +34,14 @@ class DoTimesCommand extends Command{
 		List<Integer> indices = getTempVarIndices(myTempVar, executeArray);
 		for(Double k = 1.0; k<=ending; k+=1) {
 			findAndReplace(indices, k, executeArray);
-			for(int i = 0; i<executeArray.length; i+=1) {
-				System.out.println("executing " + executeArray[i]);
-			}
+//			for(int i = 0; i<executeArray.length; i+=1) {
+//				System.out.println("executing " + executeArray[i]);
+//			}
 			try {
 			returnVal = myBuilder.buildAndExecute(myAllTurtles, getActiveTurtles(), executeArray, true);
 			}
 			catch(Exception e) {
+				e.printStackTrace();
 				throw new UnidentifiedCommandException("One or more commands has incorrect number of arguments");
 			}
 

@@ -33,7 +33,12 @@ import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 
 /** 
+ * 
  * @author Susie Choi
+ * Second stage in the command-parsing process: checks that all user input that is syntactically-identified
+ * as a Command in TextFieldParser is, in fact, a recognized Command. Assumes that TextFieldParser has 
+ * correctly populated a parallel array of "types of input" as an argument to the parseValidTextArray method. 
+ * Depends on RegexMatcher to check each token in the text array against a language file, e.g. English.properties.
  */
 
 class CommandMaker {
@@ -43,7 +48,7 @@ class CommandMaker {
 	public static final String DEFAULT_SAVEDVARIABLES = "src/interpreter/SavedVariables.properties" ;
 	public static final ResourceBundle DEFAULT_LANGUAGE = ResourceBundle.getBundle("interpreter/English");
 	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
-	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command"; //TODO allow this to be client-specified
+	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command";
 	protected static final String[] DEFAULT_CONTROLFLOW_IDENTIFIERS = {"Repeat", "DoTimes", "For"};
 	public static final String DEFAULT_VAR_IDENTIFIER = ":";
 	
@@ -121,38 +126,8 @@ class CommandMaker {
 				userInputArrayToPass[i] = commandTypesToPass[i];
 			}
 		}
- 		//		makeListForBuilder(myListForBuilder, userInput, commandTypes, 1, DEFAULT_CONTROLFLOW_IDENTIFIERS);
 		return myCommandTreeBuilder.buildAndExecute(myTurtles, myActiveTurtles, userInputArrayToPass, true); 
 	}
-
-	//	private void makeListForBuilder(ArrayList<String> currCommandList, String[] inputArray, String[] commandTypes, int numTimesToAdd, String[] controlFlowIdentifiers) {
-	//		for (int i = 0; i < inputArray.length; i++) {
-	//			if (Arrays.asList(controlFlowIdentifiers).contains(commandTypes[i])) {
-	//
-	//			}
-	//		}
-	//	}
-
-//	// TODO if node where children are if statement and if body?
-//	// shouldn't build body tree unless if statement evaluates to true 
-//	private ArrayList<String> parseIf(int ifIdx, Turtle turtle, String[] userInput, String[] commandTypes, String[] allTypes) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-//		ArrayList<String> ifExpression = new ArrayList<String>(); 
-//		int i = ifIdx+1; 
-//		while (! userInput[i].equals(DEFAULT_IFEXPR_END)) {
-//			ifExpression.add(userInput[i]);
-//			i++; 
-//		}
-//		// TODO COPY RANGE OF COMMANDTYPES, USERINPUTARRAY, TYPESARRAY
-//		String[] ifExprArray = ifExpression.toArray(new String[ifExpression.size()]);
-//		double ifExprEval = myCommandTreeBuilder.buildAndExecute(turtle, ifExprArray, commandTypes, allTypes);
-//		if (ifExprEval > 0) {
-//			ArrayList<String> ifExprBody = new ArrayList<String>(); 
-//			while (! userInput[i].equals(DEFAULT_IFBODY_END)) {
-//				ifExprBody.add(userInput[i]);
-//				i++;
-//			}
-//		}
-//	} 
 	
 	private String getCommandType(String text) throws BadFormatException, MissingInformationException, UnidentifiedCommandException {
 		RegexMatcher regexMatcher = new RegexMatcher(myLanguage);
@@ -188,6 +163,7 @@ class CommandMaker {
 		myTurtles.addTurtle(newTurtle);
 		myActiveTurtles.addTurtle(newTurtle);
 	}
+	
 	protected Map<String, String> getUserDefined() {
 		return myUserDefCommands;
 	}
@@ -200,13 +176,13 @@ class CommandMaker {
 		return myBackColorChangeHeard;
 	}
 
-	public void loadSavedUserDefined() {
+	protected void loadSavedUserDefined() {
 		PropertiesReader pr = new PropertiesReader(DEFAULT_SAVEDUSERCOMMANDS);
 		HashMap<String, String> loadedCommands = (HashMap<String, String>) pr.read();
 		myUserDefCommands.putAll(loadedCommands);
 	}
 
-	public void loadSavedVariables() {
+	protected void loadSavedVariables() {
 		PropertiesReader pr = new PropertiesReader(DEFAULT_SAVEDVARIABLES);
 		HashMap<String, String> loadedVars = (HashMap<String, String>) pr.read();
 		for (String key : loadedVars.keySet()) {
