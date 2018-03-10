@@ -23,7 +23,7 @@ For the second coding sprint, roles were divided as:
 - **Ben** Integrated the pallete of colors and images. Created the GUI for moving the turtle through the front end. Created the GUI for editing pen properties, clicking on turtles, toggling who was active and seeing current state of turtle. 
 
 ## Outside Resources
-We used StackOverflow (to learn about writing out to Properties files mid-program, etc.) as well as class resources for information about lambdas. TO DO ADD ANYTHING Y'ALL USED
+We used StackOverflow (to learn about writing out to Properties files mid-program, etc.) as well as class resources for information about lambdas.
 ## Files to start project
 Driver is the class used to start the project. Running the main from that class will launch the IDE.
 ## Testing 
