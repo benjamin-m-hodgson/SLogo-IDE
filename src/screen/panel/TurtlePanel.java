@@ -53,7 +53,7 @@ public class TurtlePanel  {
 
 	SCROLL_PANE = scroll;
 	scroll.setId("turtlePanel");
-	//createTurtle(TURTLE_PANEL, scroll);
+	createTurtle(TURTLE_PANEL, scroll);
 
 	PANEL = layoutPane;
     }
