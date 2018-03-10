@@ -2,6 +2,13 @@ package interpreter;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Command class that makes or reactivates specific Turtles. Relies on the TurtleHolders in Turtle
+ * classes to give copies when necessary and actual turtles when necessary (i.e. get turtle with
+ * id gives actual turtle, while getAllTurtles gives copy).
+ * @author Sarahbland
+ *
+ */
 class TellCommand extends Command{
 	private Command myIdCommand;
 	private Turtle myAllTurtles;
@@ -16,7 +23,6 @@ class TellCommand extends Command{
 	    protected double execute() throws UnidentifiedCommandException{
 	    		String myIDString = ((StringCommand) myIdCommand).getString();
 	    		String[] myIDs = myIDString.split(" ");
-	    		//TODO: clear turtles in a safe manner?????
 	    		ArrayList<SingleTurtle> newlyActivated = new ArrayList<>();
 	    		for(int k = 0; k<myIDs.length; k+=1) {
 	    			if(myVariables.containsKey(myIDs[k])){

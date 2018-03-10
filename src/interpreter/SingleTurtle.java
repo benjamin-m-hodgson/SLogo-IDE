@@ -12,7 +12,9 @@
 	import javafx.scene.shape.Line;
 
 	/**
-	 * Class of Turtles corresponding to a single Turtle object (
+	 * Class of Turtles corresponding to a single Turtle object (as opposed to Multiple Turtles).
+	 * Responsible for changing properties of turtles (xcor, ycor, etc.) as well as
+	 * performing calculations about these for Commands.
 	 * @author Sarahbland - Pen inner class and adapting to extend abstract class
 	 * @author Susie Choi - Surrounding Turtle class (original single turtle implementation)
 	 *
