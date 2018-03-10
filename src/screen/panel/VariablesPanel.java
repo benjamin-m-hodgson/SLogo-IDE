@@ -49,6 +49,10 @@ public class VariablesPanel extends SpecificPanel {
 	animation.play();
     }
 
+    /** 
+     * Makes actual Panel in the correct location
+     * @see screen.panel.Panel#makePanel()
+     */
     @Override
     public void makePanel() {
 	Button backButton = makeBackButton(FILE_READER);
