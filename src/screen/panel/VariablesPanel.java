@@ -3,15 +3,11 @@ package screen.panel;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import interpreter.Controller;
-import javafx.scene.Parent;
-
 import interpreter.FileIO;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;

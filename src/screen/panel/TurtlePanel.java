@@ -113,37 +113,21 @@ public class TurtlePanel  {
 	PANEL.setBottom(ErrorHolder);
     }
 
-    private Image getTurtleImage(String selected) {
-	String currentDir = System.getProperty("user.dir");
-	File turtleFile = new File(currentDir + File.separator + "turtleimages" 
-		+ File.separator + selected + ".png");
-	Image turtleImage = null;
-	try {
-	    turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
-	} 
-	catch (MalformedURLException e) {
-	    turtleFile = new File(currentDir + File.separator + "turtleimages" + File.separator + DEFAULT_TURTLE);
-	    try {
-		turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
-	    } 
-	    catch (MalformedURLException e1) {
-		System.out.println("FAILED TO LOAD TURTLE IMG");
-	    }
-	}
-	return turtleImage;
-    }
-
-
+    /**
+     * changes background color to the background color with given string colorcode
+     * @param colorCode is hex code of new background color
+     */
     public void changeBackgroundColor(String colorCode) {
 	SCROLL_PANE.setStyle("-fx-background-color:" + colorCode + ";");
     }
 
+    /**
+     * removes an error from the screen when a user clicks on it
+     */
     public void removeErrorButton() {
 	PANEL.getChildren().remove(ErrorHolder);
     }
 
-    public void drawTurtleInfoPanel(String id) {
-
-    }
+  
 
 }

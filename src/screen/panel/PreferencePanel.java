@@ -2,15 +2,11 @@ package screen.panel;
 
 import java.util.List;
 import java.util.Map;
-
-import java.util.Properties;
-import java.io.OutputStream;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
+
 
 
 import interpreter.FileIO;
