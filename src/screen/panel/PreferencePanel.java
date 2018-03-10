@@ -29,9 +29,9 @@ import screen.UserScreen;
  *
  */
 public class PreferencePanel extends SpecificPanel {
-    public static final String DEFAULT_BGCOLORCHANGE_COMMAND = "SetBackground";
-    public static final String PREFERENCES_FOLDER = "workspacePreferences";
-    private final int VISIBLE_ROW_COUNT = 5;
+    public  final String DEFAULT_BGCOLORCHANGE_COMMAND;
+    public  final String PREFERENCES_FOLDER;
+    private final int VISIBLE_ROW_COUNT;
     private final String[] DROPDOWN_IDS = {"backgroundColorChooser", "preferencesChooser"};
     private final String[] BUTTON_IDS = {"backButton", "saveprefButton"};
     private final String[] CURRENTSTATE_KEYS;
@@ -50,7 +50,9 @@ public class PreferencePanel extends SpecificPanel {
 	USER_SCREEN = userScreen;
 	fileReader = fileReaderIn;
 	CURRENTSTATE_KEYS = currentStateKeys;
-
+	DEFAULT_BGCOLORCHANGE_COMMAND = fileReader.resourceSettingsText("defaultBGColorChangeCommand");
+	PREFERENCES_FOLDER = fileReader.resourceSettingsText("preferencesFolder");
+	VISIBLE_ROW_COUNT = Integer.parseInt(fileReader.resourceSettingsText("preferencesPanelVisibleRowCount"));
     }
 
     @Override

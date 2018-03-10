@@ -28,10 +28,9 @@ import screen.UserScreen;
  *
  */
 public class TurtlePanel  {
-    // TODO: put in setting.properties file
-    private final double DEFAULT_TURTLE_SIZE = 40;
-    private final String DEFAULT_TURTLE = "Green Turtle.png";
-    private String DEFAULT_COLOR_HEXCODE = "2d3436";
+    private final double DEFAULT_TURTLE_SIZE;
+    private final String DEFAULT_TURTLE;
+    private final String DEFAULT_COLOR_HEXCODE;
     private BorderPane PANEL;
     private final BorderPane USER_PANE;
     private ScrollPane SCROLL_PANE;
@@ -56,6 +55,11 @@ public class TurtlePanel  {
 	USER_SCREEN = userScreen;
 	TURTLE_LIST = new ArrayList<ImageView>();
 	TURTLE_PANEL = new Pane();
+	DEFAULT_TURTLE_SIZE = Double.parseDouble(
+		FILE_READER.resourceSettingsText("defaultTurtleSize"));
+	DEFAULT_TURTLE = FILE_READER.resourceSettingsText("defaultTurtleImage");
+	DEFAULT_COLOR_HEXCODE = FILE_READER.resourceSettingsText("defaultColorHex");
+	
     }
     
   

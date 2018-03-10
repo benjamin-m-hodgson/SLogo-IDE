@@ -30,13 +30,13 @@ import screen.UserScreen;
  */
 public class TurtleInfoPanel extends SpecificPanel {
     // TODO: put in settings .properties file
-    private final int VISIBLE_ROW_COUNT = 5;
-    public static final String DEFAULT_SHAPE_COMMAND = "SetShape";
-    public static final String DEFAULT_PENCOLORCHANGE_COMMAND = "SetPenColor";
+    private final int VISIBLE_ROW_COUNT;
+    public  final String DEFAULT_SHAPE_COMMAND;
+    public  final String DEFAULT_PENCOLORCHANGE_COMMAND;
     private final int MOVEMENT_MIN = 0;
     private final int MOVEMENT_MAX = Integer.MAX_VALUE;
-    private final int WIDTH_MIN = 0;
-    private final int WIDTH_MAX = 10;
+    private final int WIDTH_MIN ;
+    private final int WIDTH_MAX;
     private final FileIO FILE_READER;
     private UserScreen USER_SCREEN;
     private String TURTLE_ID;
@@ -51,6 +51,11 @@ public class TurtleInfoPanel extends SpecificPanel {
 	USER_SCREEN = userScreen;
 	TURTLE_ID = id;
 	TURTLE = USER_SCREEN.getAllTurtles().get(Integer.parseInt(TURTLE_ID) - 1);
+	DEFAULT_SHAPE_COMMAND = FILE_READER.resourceSettingsText("defaultShapeCommand");
+	DEFAULT_PENCOLORCHANGE_COMMAND = FILE_READER.resourceSettingsText("defaultPenColorChangeCommand");
+	WIDTH_MIN = Integer.parseInt(FILE_READER.resourceSettingsText("turtleInfoPanelMinWidth"));
+	WIDTH_MAX = Integer.parseInt(FILE_READER.resourceSettingsText("turtleInfoPanelMaxWidth"));
+	VISIBLE_ROW_COUNT = Integer.parseInt(FILE_READER.resourceSettingsText("turtleInfoPanelVisibleRowCount"));
     }
 
     @Override

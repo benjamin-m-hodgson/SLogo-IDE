@@ -25,9 +25,9 @@ import screen.UserScreen;
  */
 
 public class HistoryPanel extends SpecificPanel {
-    private final double FRAMES_PER_SECOND = 2;
-    private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
-    private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    private final double FRAMES_PER_SECOND;
+    private final long MILLISECOND_DELAY;
+    private final double SECOND_DELAY;
     private FileIO FILE_READER;
     private VBox HISTORY_BOX; 
     private BorderPane PANE;
@@ -43,6 +43,9 @@ public class HistoryPanel extends SpecificPanel {
 	PANE = pane;
 	USER_SCREEN = userScreen;
 	FILE_READER = fileReader;
+	FRAMES_PER_SECOND = Double.parseDouble(FILE_READER.resourceSettingsText("framesPerSec"));
+	MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
+	SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	// attach "animation loop" to time line to play it
 	KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
 		e -> setHistory(SECOND_DELAY));

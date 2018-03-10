@@ -26,9 +26,9 @@ import StartUp.Driver;
  */
 public class SettingsPanel extends SpecificPanel  {
 
-    private final int VISIBLE_ROW_COUNT = 5;
-    public static final String PREFERENCES_FOLDER = "workspacePreferences";
-    public static final String DEFAULT_BGCOLORCHANGE_COMMAND = "SetBackground";
+    private final int VISIBLE_ROW_COUNT;
+    public  final String PREFERENCES_FOLDER;
+    public  final String DEFAULT_BGCOLORCHANGE_COMMAND;
     private  Button BACK;
     private BorderPane PANE;
     private Button NEW_WORKSPACE;
@@ -37,7 +37,7 @@ public class SettingsPanel extends SpecificPanel  {
     private ComboBox<Object> LANGUAGE_CHOOSER;
     private UserScreen USER_SCREEN;
     private final FileIO fileReader;
-    private final int DEFAULT_BUTTON_SPACING = 10;
+    private final int DEFAULT_BUTTON_SPACING;
     private final String[] DROPDOWN_IDS = {"languageSettingsChooser"};
     private final String[] BUTTON_IDS = {"newworkspaceButton", "turtlesButton", "preferencesButton"};
     private final String[] CURRENTSTATE_KEYS = {"language", "backgroundColor"};
@@ -46,6 +46,10 @@ public class SettingsPanel extends SpecificPanel  {
 	PANE = pane;
 	USER_SCREEN = userScreen;
 	fileReader = fileReaderIn;
+	VISIBLE_ROW_COUNT = Integer.parseInt(fileReader.resourceSettingsText("settingsPanelVisibleRowCount"));
+	PREFERENCES_FOLDER = fileReader.resourceSettingsText("preferencesFolder");
+	DEFAULT_BGCOLORCHANGE_COMMAND = fileReader.resourceSettingsText("defaultBGColorChangeCommand");
+	DEFAULT_BUTTON_SPACING = Integer.parseInt(fileReader.resourceSettingsText("settingsPanelDefualtButtonSpacing"));
     }
 
 
