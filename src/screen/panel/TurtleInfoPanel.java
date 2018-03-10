@@ -34,7 +34,7 @@ import screen.UserScreen;
  */
 public class TurtleInfoPanel extends SpecificPanel {
     // TODO: put in settings .properties file
-    private final double FRAMES_PER_SECOND = 2;
+    private final double FRAMES_PER_SECOND = 30;
     private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
     private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private final int VISIBLE_ROW_COUNT;
@@ -296,11 +296,13 @@ public class TurtleInfoPanel extends SpecificPanel {
     }
     
     private void checkChange(double elapsedTime) {
-	if (!X.getText().equals(Double.toString(TURTLE.getX()))
-		|| !Y.getText().equals(Double.toString(TURTLE.getY()))
-		|| !HEADING.getText().equals(Double.toString(TURTLE.getAngle()))){
-	    getPane().setRight(new TurtleInfoPanel(PANE, USER_SCREEN, 
-			TURTLE_ID, FILE_READER).getPanel());
+	SingleTurtle checkTurtle = USER_SCREEN.getAllTurtles().get(Integer.parseInt(TURTLE_ID) - 1);
+	if (!X.getText().equals(Double.toString(checkTurtle.getX()))
+		|| !Y.getText().equals(Double.toString(checkTurtle.getY()))
+		|| !HEADING.getText().equals(Double.toString(checkTurtle.getAngle()))){
+	    X.setText(Double.toString(checkTurtle.getX()));
+	    Y.setText(Double.toString(checkTurtle.getY()));
+	    HEADING.setText(Double.toString(checkTurtle.getAngle()));
 	}
     }
 
