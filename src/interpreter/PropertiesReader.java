@@ -14,6 +14,7 @@ class PropertiesReader {
 
 	private String myFilePath; 
 	private Properties myProps;
+	private Map<String, String> myReadInProperties; 
 
 	protected PropertiesReader(String filepath) {
 		myFilePath = filepath;
@@ -39,7 +40,31 @@ class PropertiesReader {
 //			System.out.println(key+" "+val);
 			readInProperties.put(key, val);
 		}
+		myReadInProperties = readInProperties;
 		return readInProperties; 
+	}
+	
+	protected String findVal(String target) {
+		read();
+		if (myReadInProperties.containsKey(target)) {
+			return myReadInProperties.get(target);
+		}
+		return ""; 
+	}
+	
+	protected String findKey(String targetVal) {
+		read();
+		for (String key : myReadInProperties.keySet()) {
+			if (myReadInProperties.get(key).equals(targetVal)) {
+				return key;
+			}
+		}
+		return ""; 
+	}
+	
+	protected boolean containsKey(String target) {
+		read();
+		return (myReadInProperties.containsKey(target));
 	}
 
 }

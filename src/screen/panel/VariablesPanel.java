@@ -65,7 +65,7 @@ public class VariablesPanel extends SpecificPanel {
 	panelRoot.setAlignment(Pos.BASELINE_CENTER);
 	VBox.setVgrow(scroll, Priority.ALWAYS);
 	PANEL = panelRoot;
-
+	populateVariableBox(SECOND_DELAY);
     }
 
 
@@ -106,6 +106,7 @@ public class VariablesPanel extends SpecificPanel {
 	Label nameLabel = new Label(varName);
 	nameLabel.setId("variableNameLabel");
 	TextArea valueDisplay = new TextArea();
+	valueDisplay.setId("inputField");
 	valueDisplay.setText(varValue);
 	valueDisplay.setEditable(true);
 	Button setVariable = new Button(FILE_READER.resourceDisplayText("saveVariableButton"));

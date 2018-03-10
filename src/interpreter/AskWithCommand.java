@@ -22,7 +22,10 @@ public class AskWithCommand extends Command {
 		String actionString = ((StringCommand) myActionCommand).getString();
 		String[] actions = actionString.split(" ");
 		ArrayList<Double> iDsToUse = new ArrayList<>();
-		for(Turtle turtle : myAllTurtles.getAllImmutableTurtles()) {
+		for(SingleTurtle turtleSingle : myAllTurtles.getAllImmutableTurtles()) {
+			ArrayList<SingleTurtle> singleTurtleList = new ArrayList<>();
+			singleTurtleList.add(turtleSingle);
+			MultipleTurtles turtle = new MultipleTurtles(singleTurtleList);
 			double result = 0;
 			try {
 				result = myBuilder.buildAndExecute(myAllTurtles, turtle, criteria, true);
@@ -40,10 +43,14 @@ public class AskWithCommand extends Command {
 		}
 		MultipleTurtles tempActive = new MultipleTurtles(tempTurtles);
 		double returnVal = -1;
+		if(iDsToUse.size()==0) {
+			return returnVal;
+		}
 		try {
 			returnVal =  myBuilder.buildAndExecute(myAllTurtles, tempActive, actions, true);
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			throw new UnidentifiedCommandException(e.getMessage());
 		}
 		return returnVal;

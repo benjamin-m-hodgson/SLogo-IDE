@@ -2,6 +2,9 @@ package interpreter;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  * Class to read the CommandNode tree created to deal with concatenated commands. Has the capacity to check if the tree
  * is valid (all commands have the correct number of arguments), then compress the entire tree into a single Command that
@@ -13,10 +16,13 @@ import java.util.Map;
  *
  */
 class CommandTreeReader {
-	CommandFactory myCommandFactory;
-	
+	public static final String DEFAULT_BACKCHANGE_IDENTIFIER = "SetBackground";
+	private CommandFactory myCommandFactory;
+	private SimpleIntegerProperty myBackColor;
+
 	protected CommandTreeReader(Map<String, Double> variables, Map<String, String> userDefCommands, Map<String, Integer> userDefCommandsNumArgs){
 		myCommandFactory = new CommandFactory(variables, userDefCommands, userDefCommandsNumArgs);
+		myBackColor = new SimpleIntegerProperty(0);
 	}
 	/**
 	 * Error checks to make sure that the tree that was constructed is complete (all commands, even concatenated commands,
@@ -27,9 +33,9 @@ class CommandTreeReader {
 	private boolean treeIsComplete(CommandNode root) throws UnidentifiedCommandException{
 		//System.out.println("reading a node");
 		//System.out.println("node" + root.getInfo());
-//		for(int k = 0; k<root.getNumChildren(); k+=1) {
-//			System.out.println("node children " + root.getChildren().get(k).getInfo());
-//		}
+		//		for(int k = 0; k<root.getNumChildren(); k+=1) {
+		//			System.out.println("node children " + root.getChildren().get(k).getInfo());
+		//		}
 		if(root.getIsDouble()||root.getIsString()) {
 			return true;
 		}
@@ -46,9 +52,9 @@ class CommandTreeReader {
 		else {
 			throw new UnidentifiedCommandException("The command: " + root.getInfo() + " does not have the proper number of arguemts.");
 		}
-		
+
 	}
-	
+
 	/**
 	 * Reads a CommandTree (passed in the form of its root node)
 	 * @param root
@@ -57,11 +63,17 @@ class CommandTreeReader {
 	protected double readAndExecute(CommandNode root) throws UnidentifiedCommandException{
 		if(treeIsComplete(root)) {
 			Command compressedCommand = compressTree(root);
+			if (root.getInfo().equals(DEFAULT_BACKCHANGE_IDENTIFIER)) {
+				double retVal = compressedCommand.execute();
+				if ((int) retVal != -1) {
+					myBackColor.set(Integer.parseInt(root.childrenToString().trim())); 
+				}
+			}
 			return compressedCommand.execute();	
 		}
 		return -1;
 	}
-	
+
 	/**
 	 * Compressed the CommandNodeTree into a single Command with Command arguments (which, in turn, may have Command
 	 * arguments, etc.) that can be executed as part of the Command Queue
@@ -79,24 +91,28 @@ class CommandTreeReader {
 			return myCommandFactory.makeCommand(root.getInfo(), args, root.getTurtles(), root.getActiveTurtles());
 		}
 		for(CommandNode k: root.getChildren()) {
-//			System.out.println("child info" + k.getInfo());
+			//			System.out.println("child info" + k.getInfo());
 			args.add(compressTree(k));
 		}
 		//System.out.println("Making a command");
 		return myCommandFactory.makeCommand(root.getInfo(), args,  root.getTurtles(), root.getActiveTurtles());
 	}
-	
-//	public static void main(String[] args) {
-//		Turtle turtle = new Turtle();
-//		CommandNode forty = new CommandNode("40", turtle);
-//		CommandNode forward = new CommandNode("Forward", 1, forty, turtle);
-//		CommandNode thirty = new CommandNode("30", turtle);
-//		ArrayList<CommandNode> testKids = new ArrayList<>();
-//		testKids.add(forward);
-//		testKids.add(thirty);
-//		CommandNode test = new CommandNode("SetPosition", 2, testKids, turtle);
-//		CommandTreeReader reader = new CommandTreeReader();
-//		double testVal = reader.readAndExecute(test);
-//		System.out.println(testVal);
-//	}
+
+	protected IntegerProperty getBackColor() {
+		return myBackColor;
+	}
+
+	//	public static void main(String[] args) {
+	//		Turtle turtle = new Turtle();
+	//		CommandNode forty = new CommandNode("40", turtle);
+	//		CommandNode forward = new CommandNode("Forward", 1, forty, turtle);
+	//		CommandNode thirty = new CommandNode("30", turtle);
+	//		ArrayList<CommandNode> testKids = new ArrayList<>();
+	//		testKids.add(forward);
+	//		testKids.add(thirty);
+	//		CommandNode test = new CommandNode("SetPosition", 2, testKids, turtle);
+	//		CommandTreeReader reader = new CommandTreeReader();
+	//		double testVal = reader.readAndExecute(test);
+	//		System.out.println(testVal);
+	//	}
 }

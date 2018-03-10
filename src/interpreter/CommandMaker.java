@@ -44,7 +44,7 @@ class CommandMaker {
 	public static final ResourceBundle DEFAULT_LANGUAGE = ResourceBundle.getBundle("interpreter/English");
 	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
 	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command"; //TODO allow this to be client-specified
-	public static final String[] DEFAULT_CONTROLFLOW_IDENTIFIERS = {"Repeat", "DoTimes", "For"};
+	protected static final String[] DEFAULT_CONTROLFLOW_IDENTIFIERS = {"Repeat", "DoTimes", "For"};
 	public static final String DEFAULT_VAR_IDENTIFIER = ":";
 	
 	private HashMap<String, Double> myVariables; 
@@ -71,13 +71,13 @@ class CommandMaker {
 		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, myVariables, myUserDefCommands, myUserCommandsNumArgs); 
 		myBackColor = new SimpleIntegerProperty(0);
 		myBackColorChangeHeard = new SimpleBooleanProperty(false);
-		setUpBackColorListener();
+		setUpBackColorChangeListener();
 	}
 
-	protected void setUpBackColorListener() {
-		myCommandTreeBuilder.getBackColor().addListener(new ChangeListener<Number>() {
+	private void setUpBackColorChangeListener() {
+		myCommandTreeBuilder.getBackColorChangeHeard().addListener(new ChangeListener<Boolean>() {
 			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number t1, Number t2) {
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean t1, Boolean t2) {
 				myBackColor = myCommandTreeBuilder.getBackColor();
 				myBackColorChangeHeard.set(!myBackColorChangeHeard.getValue());
 			}

@@ -23,7 +23,7 @@ class SetShapeCommand extends Command {
 		try {
 			getActiveTurtles().setShape(idxKey);
 		} catch (BadFormatException | MissingInformationException | MalformedURLException | UnidentifiedCommandException e) {
-			return -1.0;
+			throw new UnidentifiedCommandException("Can't set shape to "+idxKey);
 		} 
 		
 		return idxAsDouble;

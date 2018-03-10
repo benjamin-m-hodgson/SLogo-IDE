@@ -42,13 +42,14 @@ class SetPaletteCommand extends Command {
 		try {
 			in = new FileInputStream(new File(DEFAULT_COLORPALETTE_FILE));
 		} catch (FileNotFoundException e2) {
+			throw new UnidentifiedCommandException("Can't find colors");
 			
 		}
 		
 		try {
 			prop.load(in);
 		} catch (IOException e) {
-			
+			throw new UnidentifiedCommandException("Can't find colors");
 		}
 		
 		int idxAsInt = (int) idx; 
@@ -60,11 +61,12 @@ class SetPaletteCommand extends Command {
 		try {
 			fileOut = new FileOutputStream(DEFAULT_COLORPALETTE_FILE);
 		} catch (FileNotFoundException e1) {
+			throw new UnidentifiedCommandException("Can't save new color");
 		}
 		try {
 			prop.store(fileOut, null);
 		} catch (IOException e) {
-			
+			throw new UnidentifiedCommandException("Can't save new color");
 		}
 		
 		
@@ -73,13 +75,13 @@ class SetPaletteCommand extends Command {
 		try {
 			in = new FileInputStream(new File(DEFAULT_COLORPALETTENAMES_FILE));
 		} catch (FileNotFoundException e2) {
-			
+			throw new UnidentifiedCommandException("Can't save new color");
 		}
 		
 		try {
 			prop.load(in);
 		} catch (IOException e) {
-			
+			throw new UnidentifiedCommandException("Can't save new color");
 		}
 		
 		prop.setProperty(idxAsKey, "User "+idxAsKey);
@@ -88,12 +90,12 @@ class SetPaletteCommand extends Command {
 		try {
 			fileOut = new FileOutputStream(DEFAULT_COLORPALETTENAMES_FILE);
 		} catch (FileNotFoundException e1) {
-			
+			throw new UnidentifiedCommandException("Can't save new color");
 		}
 		try {
 			prop.store(fileOut, null);
 		} catch (IOException e) {
-			
+			throw new UnidentifiedCommandException("Can't save new color");
 		}
 		
 		return idx; 

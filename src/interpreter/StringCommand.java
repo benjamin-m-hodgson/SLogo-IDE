@@ -2,7 +2,7 @@ package interpreter;
 
  
  class StringCommand extends Command{
-	public static int DEFAULT_STRING_ID = Integer.MAX_VALUE;
+	public static final int DEFAULT_STRING_ID = Integer.MAX_VALUE;
 	private String myString;
 	protected StringCommand(String argument) {
 		myString = argument;

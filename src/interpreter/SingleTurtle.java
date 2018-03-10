@@ -12,8 +12,8 @@ import java.util.function.Consumer;
 	import javafx.scene.shape.Line;
 
 	/**
-	 * @author Sarahbland - Pen inner class
-	 * @author Susie Choi - Surrounding Turtle class
+	 * @author Sarahbland - Pen inner class and adapting to extend abstract class
+	 * @author Susie Choi - Surrounding Turtle class (original single turtle implementation)
 	 *
 	 */
 	public class SingleTurtle extends Turtle{
@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 
 	    	public static final double DEFAULT_TURTLE_SIZE = 40;
 		public static final double DEFAULT_ID = -1;
-		public static final String DEFAULT_PEN_COLORCODE = "#2d3436";
+		public static final String DEFAULT_PEN_COLORCODE = "#000000";
 		public static final double DEFAULT_PEN_WIDTH = 1.0;
 		public static final double DEFAULT_X_POS = 0.0; 
 		public static final double DEFAULT_Y_POS = 0.0; 
@@ -40,8 +40,6 @@ import java.util.function.Consumer;
 
 		private double myOldX;
 		private double myOldY;
-		private double myOldImageX;
-		private double myOldImageY;
 		private double myX;
 		private double myY; 
 		private double myAngle; 
@@ -241,15 +239,11 @@ import java.util.function.Consumer;
 		}
 
 		protected double setXY(double x, double y) {
-			myOldImageX = myImage.getX();
-			myOldImageY = myImage.getY();
 			setOld();
 			myX = x; 
 			myY = y; 
 			myImage.setX(myX - DEFAULT_TURTLE_SIZE/2);
 			myImage.setY(myY - DEFAULT_TURTLE_SIZE/2);
-			System.out.println(myImage.getX());
-			System.out.println(myImage.getY());
 			myPen.drawLine(myOldX, myOldY, myX, myY);
 			return calcDistance(myOldX, myOldY, myX, myY);
 		}
@@ -262,8 +256,8 @@ import java.util.function.Consumer;
 		 * @return distance traveled
 		 */
 		protected double calcDistance(double oldX, double oldY, double x, double y) {
-//			System.out.println("old x: " + oldX + " new x: "+ x);
-//			System.out.println("old y" + oldY + " new y: "+ y);
+			System.out.println("old x: " + oldX + " new x: "+ x);
+			System.out.println("old y" + oldY + " new y: "+ y);
 			double xSquared = Math.pow((oldX-x), 2);
 			double ySquared = Math.pow((oldY-y), 2);
 			return Math.sqrt(xSquared+ySquared);
@@ -295,7 +289,6 @@ import java.util.function.Consumer;
 		
 		protected void setAngle(double angle) {
 			myAngle = angle;
-			System.out.println("angle" + myAngle);
 			myImage.setRotate(angle);
 		}
 
