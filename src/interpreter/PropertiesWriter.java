@@ -23,7 +23,7 @@ class PropertiesWriter {
 	private Properties myProps;
 	private HashMap<String, String> myMap; 
 	private FileOutputStream myOutputStream; 
-
+	
 	protected PropertiesWriter(String filepath, Map<String, String> keysNVals) {
 		myFilePath = filepath;
 		myProps = new Properties(); 
@@ -55,5 +55,5 @@ class PropertiesWriter {
 		}
 
 	}
-
+	
 }
