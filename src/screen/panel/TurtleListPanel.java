@@ -72,7 +72,6 @@ public class TurtleListPanel extends SpecificPanel{
 	    try {
 		Button turtleButton = new Button(FILE_READER.resourceDisplayText("TurtlePrompt")
 			+ " " + Integer.toString((int) Math.rint(turtle.getID())));
-		turtleButton.setId("commandButton");
 		// handle click event
 		turtleButton.setOnMouseClicked((arg0)-> {
 		    getPane()
@@ -81,9 +80,11 @@ public class TurtleListPanel extends SpecificPanel{
 			    FILE_READER).getPanel());
 		});
 		if (TURTLES_ACTIVE.contains(turtle)) {
+		    turtleButton.setId("activeTurtle");
 		    activeTurtles.getChildren().add(turtleButton);
 		}
 		else {
+		    turtleButton.setId("inactiveTurtle");
 		    inactiveTurtles.getChildren().add(turtleButton);
 		}
 	    }
