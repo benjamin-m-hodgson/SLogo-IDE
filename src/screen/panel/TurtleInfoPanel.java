@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -98,16 +99,19 @@ public class TurtleInfoPanel extends SpecificPanel {
 	HEADING = new Label(Double.toString(TURTLE.getAngle()));
 	HEADING.setId("variableNameLabel");
 	HBox turtleHeading = new HBox(headingLabel, HEADING);
+	turtleHeading.setAlignment(Pos.CENTER);
 	Label xLabel = new Label(FILE_READER.resourceDisplayText("xLabel"));
 	xLabel.setId("variableNameLabel");
 	X = new Label(Double.toString(TURTLE.getX()));
 	X.setId("variableNameLabel");
 	HBox xPosition = new HBox(xLabel, X);
+	xPosition.setAlignment(Pos.CENTER);
 	Label yLabel = new Label(FILE_READER.resourceDisplayText("yLabel"));
 	yLabel.setId("variableNameLabel");
 	Y = new Label(Double.toString(TURTLE.getY()));
 	Y.setId("variableNameLabel");
 	HBox yPosition = new HBox(yLabel, Y);
+	yPosition.setAlignment(Pos.CENTER);
 	VBox turtleProperties = new VBox(turtleHeading, xPosition, yPosition);
 	return turtleProperties;
 
