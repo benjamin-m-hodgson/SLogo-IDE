@@ -34,8 +34,8 @@ public class PenInfoPanel extends SpecificPanel {
     private final int VISIBLE_ROW_COUNT = 5;
     public static final String DEFAULT_SHAPE_COMMAND = "SetShape";
     public static final String DEFAULT_PENCOLORCHANGE_COMMAND = "SetPenColor";
-    private final int WIDTH_MIN = 0;
-    private final int WIDTH_MAX = 10;
+    private int WIDTH_MIN = 0;
+    private int WIDTH_MAX = 10;
     private final FileIO FILE_READER;
     private UserScreen USER_SCREEN;
     private String TURTLE_ID;
@@ -50,6 +50,8 @@ public class PenInfoPanel extends SpecificPanel {
 	USER_SCREEN = userScreen;
 	TURTLE_ID = id;
 	TURTLE = USER_SCREEN.getAllTurtles().get(Integer.parseInt(TURTLE_ID) - 1);
+	WIDTH_MIN = Integer.parseInt(FILE_READER.resourceSettingsText("turtleInfoPanelMinWidth"));
+	WIDTH_MAX = Integer.parseInt(FILE_READER.resourceSettingsText("turtleInfoPanelMaxWidth"));
     }
 
     @Override
