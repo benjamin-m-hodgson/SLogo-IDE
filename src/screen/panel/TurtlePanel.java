@@ -29,13 +29,10 @@ public class TurtlePanel  {
     private ScrollPane SCROLL_PANE;
     private final UserScreen USER_SCREEN;
     private  final Pane TURTLE_PANEL;
-    private String DEFAULT_COLOR_HEXCODE = "2d3436";
-
-    //  private final String DEFAULT_SETSHAPE_COMMAND = "";
     private HBox ErrorHolder;
     private List<ImageView> TURTLE_LIST;
     private final FileIO FILE_READER;
-    private int TURTLE_COUNT = 1;
+ 
 
 
     public TurtlePanel(BorderPane pane, UserScreen userScreen, FileIO fileReader) {
@@ -54,7 +51,7 @@ public class TurtlePanel  {
 
 	SCROLL_PANE = scroll;
 	scroll.setId("turtlePanel");
-	createTurtle(TURTLE_PANEL, scroll);
+	//createTurtle(TURTLE_PANEL, scroll);
 
 	PANEL = layoutPane;
     }
@@ -71,48 +68,37 @@ public class TurtlePanel  {
 	return PANEL;
     } 
 
-    private void createTurtle(Pane panel, ScrollPane scrollPane) {	
-	    ImageView turtleView = new ImageView();
-	    setUpImageView(turtleView, scrollPane,TURTLE_COUNT);
-	    Group penLines = new Group();
-	    penLines.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
-	    penLines.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
-	    panel.getChildren().add(penLines);
-	    USER_SCREEN.makeNewTurtleCommand("50", turtleView,DEFAULT_COLOR_HEXCODE , penLines);
-	    TURTLE_COUNT++;
-    }
-
-    private void setUpImageView(ImageView turtleView, ScrollPane scrollPane, double ID){
-	String currentDir = System.getProperty("user.dir");
-	File turtleFile = new File(currentDir + File.separator + "turtleimages" 
-		+ File.separator + DEFAULT_TURTLE);
-	Image turtleImage;
-	try {
-	    turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
-	    turtleView.setImage(turtleImage);
-	    TURTLE_LIST.add(turtleView);
-	    turtleView.setId("turtleView");
-	    turtleView.setFitHeight(DEFAULT_TURTLE_SIZE);
-	    turtleView.setFitWidth(DEFAULT_TURTLE_SIZE);
-	    // center the turtle on the screen
-	    turtleView.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
-	    turtleView.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
-	    turtleView.setX(-DEFAULT_TURTLE_SIZE/2);
-	    turtleView.setY(-DEFAULT_TURTLE_SIZE/2);
-	    turtleView.setOnMousePressed((arg0)-> USER_PANE.setRight(
-		    new TurtleInfoPanel(USER_PANE, USER_SCREEN, Double.toString(ID), FILE_READER).getPanel()));
-	    TURTLE_PANEL.getChildren().add(turtleView);
-	} catch (MalformedURLException e) {
-	    // TODO Auto-generated catch block
-	    System.out.println("FAILED TO LOAD TURTLE IMG");
-	}
-    }
+    private ImageView setUpImageView(ImageView turtleView, ScrollPane scrollPane, double ID){
+    	String currentDir = System.getProperty("user.dir");
+    	File turtleFile = new File(currentDir + File.separator + "turtleimages" 
+    		+ File.separator + DEFAULT_TURTLE);
+    	Image turtleImage;
+    	try {
+    	    turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
+    	    turtleView.setImage(turtleImage);
+    	    TURTLE_LIST.add(turtleView);
+    	    turtleView.setId("turtleView");
+    	    turtleView.setFitHeight(DEFAULT_TURTLE_SIZE);
+    	    turtleView.setFitWidth(DEFAULT_TURTLE_SIZE);
+    	    // center the turtle on the screen
+    	    turtleView.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
+    	    turtleView.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
+    	    turtleView.setOnMousePressed((arg0)-> USER_PANE.setRight(
+    		    new TurtleInfoPanel(USER_PANE, USER_SCREEN, Double.toString(ID), FILE_READER).getPanel()));
+    	    TURTLE_PANEL.getChildren().add(turtleView);
+    	    return turtleView;
+    	} catch (MalformedURLException e) {
+    	    // TODO Auto-generated catch block
+    	    System.out.println("FAILED TO LOAD TURTLE IMG");
+    	    return new ImageView();
+    		}
+      }
 
     public void attachTurtleObjects(ImageView image, Group penLine, double ID) {
-	setUpImageView(image, SCROLL_PANE,ID);
-	penLine.translateXProperty().bind(Bindings.divide(SCROLL_PANE.widthProperty(), 2));
-	penLine.translateYProperty().bind(Bindings.divide(SCROLL_PANE.heightProperty(), 2));
-	TURTLE_PANEL.getChildren().add(penLine);
+    		setUpImageView(image, SCROLL_PANE,ID);
+    		penLine.translateXProperty().bind(Bindings.divide(SCROLL_PANE.widthProperty(), 2));
+    	    penLine.translateYProperty().bind(Bindings.divide(SCROLL_PANE.heightProperty(), 2));
+    		TURTLE_PANEL.getChildren().add(penLine);
     }
 
     public void displayErrorMessage(String error) {

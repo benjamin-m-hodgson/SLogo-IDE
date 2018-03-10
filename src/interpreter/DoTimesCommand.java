@@ -34,13 +34,14 @@ class DoTimesCommand extends Command{
 		List<Integer> indices = getTempVarIndices(myTempVar, executeArray);
 		for(Double k = 1.0; k<=ending; k+=1) {
 			findAndReplace(indices, k, executeArray);
-			for(int i = 0; i<executeArray.length; i+=1) {
-				System.out.println("executing " + executeArray[i]);
-			}
+//			for(int i = 0; i<executeArray.length; i+=1) {
+//				System.out.println("executing " + executeArray[i]);
+//			}
 			try {
 			returnVal = myBuilder.buildAndExecute(myAllTurtles, getActiveTurtles(), executeArray, true);
 			}
 			catch(Exception e) {
+				e.printStackTrace();
 				throw new UnidentifiedCommandException("One or more commands has incorrect number of arguments");
 			}
 
