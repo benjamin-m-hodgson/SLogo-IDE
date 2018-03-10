@@ -27,6 +27,7 @@ public class FileIO {
     public static final String DEFAULT_PROPSFILE_SUFFIX = ".properties";
     public static final String DEFAULT_SHAPES_FILE = "interpreter/TurtleShapes";
     public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
+    public static final String DEFAULT_PREFERENCES_FOLDER = "workspacePreferences";
     public static final String DEFAULT_COLORPALETTENAMES_FILE = "interpreter/ColorPaletteNames";
     public final String LANGUAGES_FOLDER = "languages";
     private ResourceBundle CURRENT_ERROR_DISPLAY;
@@ -57,6 +58,8 @@ public class FileIO {
 		Map<String, String> userDefinedMap = control.getUserDefined(); 
 		new PropertiesWriter(DEFAULT_SAVEDUSERCOMMANDS, userDefinedMap).write();
 	}
+	
+	
 
 	/**
 	 * Invokes back-end method to save user's defined commands 
@@ -132,6 +135,10 @@ public class FileIO {
 	 */
 	public String resourceDisplayText(String key) {
 		return resourceText(key, CURRENT_TEXT_DISPLAY);
+	}
+	
+	public String palleteColorText(String key) {
+	    return resourceText(key, getSpecificBundle(DEFAULT_COLORPALETTE_FILE,DEFAULT_COLORPALETTE_FILE));
 	}
 
 	/**
@@ -230,11 +237,11 @@ public class FileIO {
 	 */
 	//covers findColorFile fully
 	//should be private after penColorChangeIsFixed
-	public ResourceBundle getSpecificBundle(String bundleName, String defaultTarget) {
+	private ResourceBundle getSpecificBundle(String bundleName, String defaultTarget, String folderName) {
 		String currentDir = System.getProperty("user.dir");
 		ResourceBundle bundle;
 		try {
-			File file = new File(currentDir);
+			File file = new File(currentDir + File.separator + folderName);
 			URL[] urls = {file.toURI().toURL()};
 			ClassLoader loader = new URLClassLoader(urls);
 			try {
@@ -243,8 +250,8 @@ public class FileIO {
 				return bundle;
 
 			}
-			// if .properties file doesn't exist for specified language, default to English
 			catch (Exception e) {
+			    e.printStackTrace();
 				bundle = ResourceBundle.getBundle(defaultTarget, 
 						Locale.getDefault(), loader);
 				return bundle;
@@ -254,6 +261,10 @@ public class FileIO {
 			CONTROL.loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
 			return null; //if this is reached the return value will not matter
 		}
+	}
+	
+	public ResourceBundle getSpecificBundle(String bundleName, String defaultTarget) {
+	    return getSpecificBundle(bundleName, defaultTarget, "");
 	}
 
 	/**
@@ -268,15 +279,18 @@ public class FileIO {
 	}
 
 	public Map<String, String> getWorkspacePreferences(String fileName) {
-		ResourceBundle workspacePref = getSpecificBundle(fileName, DEFAULT_WORKSPACE_PREF);
+		ResourceBundle workspacePref = getSpecificBundle(fileName, DEFAULT_WORKSPACE_PREF,DEFAULT_PREFERENCES_FOLDER );
 		Map<String, String> preferences = new HashMap<String,String>();
 		preferences.put("backgroundColor", workspacePref.getString("backgroundColor"));
-		preferences.put("penColor", workspacePref.getString("penColor"));
 		preferences.put("language", workspacePref.getString("language"));
+		preferences.put("turtleImage", workspacePref.getString("turtleImage"));
 		return preferences;
 	}
+	
+	
+	
 
-	public void parseSettingInput(String settingInput) {
+	public String parseSettingInput(String settingInput) {
 		String[] settingCommandArray = settingInput.split("\\s+");
 		String commandName = settingCommandArray[0];
 		String commandArg = settingCommandArray[1];
@@ -293,9 +307,11 @@ public class FileIO {
 		}
 		try {
 			CONTROL.parseInput(appropriateLangCommand+" "+commandArg);
+			return commandArg;
 		} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
 				| MissingInformationException e) {
 			CONTROL.loadErrorScreen(e.getMessage());
+			return ""; //return is irrelevant as screen will be disappearing when error screen loads
 		}
 	}
 }

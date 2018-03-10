@@ -3,11 +3,22 @@ package screen.panel;
 import java.util.List;
 import java.util.Map;
 
+import java.util.Properties;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+
 import interpreter.FileIO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -27,18 +38,21 @@ public class PreferencePanel extends SpecificPanel {
     private final int VISIBLE_ROW_COUNT = 5;
     private final String[] DROPDOWN_IDS = {"backgroundColorChooser", "preferencesChooser"};
     private final String[] BUTTON_IDS = {"backButton", "saveprefButton"};
+    private final String[] CURRENTSTATE_KEYS;
     private  Button BACK;
     private Button SAVE_PREFERENCES;
     private ComboBox<Object> BACKGROUND_COLOR_CHOOSER;
     private ComboBox<Object> PREFERENCES_CHOOSER;
+    private TextArea PARAMETER_INPUT;
     private BorderPane PANE;
     private UserScreen USER_SCREEN;
     private final FileIO fileReader;
 
-    public PreferencePanel(BorderPane pane, UserScreen userScreen, FileIO fileReaderIn) {
+    public PreferencePanel(BorderPane pane, UserScreen userScreen, FileIO fileReaderIn, String[] currentStateKeys) {
 	PANE = pane;
 	USER_SCREEN = userScreen;
 	fileReader = fileReaderIn;
+	CURRENTSTATE_KEYS = currentStateKeys;
 
     }
 
@@ -58,10 +72,20 @@ public class PreferencePanel extends SpecificPanel {
 	BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[0]);
 	PREFERENCES_CHOOSER = makeWorkspacePrefDropDown(DROPDOWN_IDS[1]);
 	SAVE_PREFERENCES = makeSavePrefButton(BUTTON_IDS[1]);
+	PARAMETER_INPUT = makePrefNamer(SAVE_PREFERENCES);
 	VBox preferencePanel = new VBox(BACKGROUND_COLOR_CHOOSER,
-		PREFERENCES_CHOOSER, SAVE_PREFERENCES, BACK);
+		PREFERENCES_CHOOSER, PARAMETER_INPUT,SAVE_PREFERENCES, BACK);
 	preferencePanel.setId("infoPanel");
 	PANEL = preferencePanel;
+    }
+    
+    private TextArea makePrefNamer(Button button) {
+	TextArea parameterInput = new TextArea();
+	parameterInput.setId("parametersField"); 
+	parameterInput.setPromptText(fileReader.resourceDisplayText("fileNaming"));
+	parameterInput.setEditable(true);
+	parameterInput.setOnKeyTyped((arg0) -> button.setDisable(false));
+	return parameterInput;
     }
 
     /**
@@ -89,6 +113,9 @@ public class PreferencePanel extends SpecificPanel {
 	    if (!selected.equals(selectionPrompt)) {
 		String selectedColorIdx = (selected.split(". "))[0];
 		fileReader.parseSettingInput(DEFAULT_BGCOLORCHANGE_COMMAND+" "+selectedColorIdx);
+		String colorCode = fileReader.palleteColorText(selectedColorIdx);
+		USER_SCREEN.updateCurrentState(CURRENTSTATE_KEYS[2], colorCode);
+
 	    }
 	});
 	return dropDownMenu;
@@ -125,6 +152,34 @@ public class PreferencePanel extends SpecificPanel {
 
     private Button makeSavePrefButton(String itemId) {
 	Button saveButton = makeButton(itemId);
+	saveButton.setDisable(true);
+	saveButton.setOnMouseClicked((arg0)->{
+	    System.out.println("hit");
+	    Map<String, String> currentState = USER_SCREEN.getCurrentState();
+
+	    try {
+		String currentDir = System.getProperty("user.dir");
+
+		File dir = new File(currentDir + File.separator + "workspacePreferences");
+		if(!dir.exists()){
+		    dir.mkdir();}
+		File newPref=new File(dir,PARAMETER_INPUT.getText()+".properties");
+		if(!newPref.exists()){
+		    newPref.createNewFile();
+		}
+		FileWriter fw = new FileWriter(newPref);
+		BufferedWriter out = new BufferedWriter(fw);
+		for(String key: currentState.keySet()) {
+		    out.write(key + "=" + currentState.get(key));
+		    out.newLine();
+		}
+		out.flush();
+		out.close();
+		updatePrompt();
+	    } catch (IOException e) {
+		USER_SCREEN.displayErrorMessage("Failed to save Properties");
+	    }
+	});
 	return saveButton;
     }
 
@@ -165,8 +220,9 @@ public class PreferencePanel extends SpecificPanel {
 	BACKGROUND_COLOR_CHOOSER = makeBackgroundColorChooser(DROPDOWN_IDS[1]);
 	PREFERENCES_CHOOSER = makeWorkspacePrefDropDown(DROPDOWN_IDS[1]);
 	SAVE_PREFERENCES = makeSavePrefButton(BUTTON_IDS[1]);
+	PARAMETER_INPUT = makePrefNamer(SAVE_PREFERENCES);
 	((VBox)PANEL).getChildren().setAll(BACKGROUND_COLOR_CHOOSER, 
-		PREFERENCES_CHOOSER, SAVE_PREFERENCES, BACK);
+		PREFERENCES_CHOOSER, PARAMETER_INPUT,SAVE_PREFERENCES, BACK);
     }
 
 }
