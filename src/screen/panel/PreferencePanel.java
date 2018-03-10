@@ -3,6 +3,16 @@ package screen.panel;
 import java.util.List;
 import java.util.Map;
 
+import java.util.Properties;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+
 import interpreter.FileIO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +37,7 @@ public class PreferencePanel extends SpecificPanel {
     private final int VISIBLE_ROW_COUNT = 5;
     private final String[] DROPDOWN_IDS = {"backgroundColorChooser", "preferencesChooser"};
     private final String[] BUTTON_IDS = {"backButton", "saveprefButton"};
+    private final String[] CURRENTSTATE_KEYS;
     private  Button BACK;
     private Button SAVE_PREFERENCES;
     private ComboBox<Object> BACKGROUND_COLOR_CHOOSER;
@@ -35,10 +46,11 @@ public class PreferencePanel extends SpecificPanel {
     private UserScreen USER_SCREEN;
     private final FileIO fileReader;
 
-    public PreferencePanel(BorderPane pane, UserScreen userScreen, FileIO fileReaderIn) {
+    public PreferencePanel(BorderPane pane, UserScreen userScreen, FileIO fileReaderIn, String[] currentStateKeys) {
 	PANE = pane;
 	USER_SCREEN = userScreen;
 	fileReader = fileReaderIn;
+	CURRENTSTATE_KEYS = currentStateKeys;
 
     }
 
@@ -89,6 +101,8 @@ public class PreferencePanel extends SpecificPanel {
 	    if (!selected.equals(selectionPrompt)) {
 		String selectedColorIdx = (selected.split(". "))[0];
 		fileReader.parseSettingInput(DEFAULT_BGCOLORCHANGE_COMMAND+" "+selectedColorIdx);
+		//		USER_SCREEN.updateCurrentState(CURRENTSTATE_KEYS[2], );
+
 	    }
 	});
 	return dropDownMenu;
@@ -125,6 +139,32 @@ public class PreferencePanel extends SpecificPanel {
 
     private Button makeSavePrefButton(String itemId) {
 	Button saveButton = makeButton(itemId);
+	saveButton.setOnMouseClicked((arg0)->{
+	    System.out.println("hit");
+	    Map<String, String> currentState = USER_SCREEN.getCurrentState();
+
+	    try {
+		String currentDir = System.getProperty("user.dir");
+
+		File dir = new File(currentDir + File.separator + "workspacePreferences");
+		if(!dir.exists()){
+		    dir.mkdir();}
+		File newPref=new File(dir,"test"+".properties");
+		if(!newPref.exists()){
+		    newPref.createNewFile();
+		}
+		FileWriter fw = new FileWriter(newPref);
+		BufferedWriter out = new BufferedWriter(fw);
+		for(String key: currentState.keySet()) {
+		    out.write(key + "=" + currentState.get(key));
+		    out.newLine();
+		}
+		out.flush();
+		out.close();
+	    } catch (IOException e) {
+		USER_SCREEN.displayErrorMessage("Failed to save Properties");
+	    }
+	});
 	return saveButton;
     }
 

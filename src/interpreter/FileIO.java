@@ -270,12 +270,11 @@ public class FileIO {
 		ResourceBundle workspacePref = getSpecificBundle(fileName, DEFAULT_WORKSPACE_PREF);
 		Map<String, String> preferences = new HashMap<String,String>();
 		preferences.put("backgroundColor", workspacePref.getString("backgroundColor"));
-		preferences.put("penColor", workspacePref.getString("penColor"));
 		preferences.put("language", workspacePref.getString("language"));
 		return preferences;
 	}
 
-	public void parseSettingInput(String settingInput) {
+	public String parseSettingInput(String settingInput) {
 		String[] settingCommandArray = settingInput.split("\\s+");
 		String commandName = settingCommandArray[0];
 		String commandArg = settingCommandArray[1];
@@ -292,9 +291,11 @@ public class FileIO {
 		}
 		try {
 			CONTROL.parseInput(appropriateLangCommand+" "+commandArg);
+			return commandArg;
 		} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
 				| MissingInformationException e) {
 			CONTROL.loadErrorScreen(e.getMessage());
+			return ""; //return is irrelevant as screen will be disappearing when error screen loads
 		}
 	}
 }

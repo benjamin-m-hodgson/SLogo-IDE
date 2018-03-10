@@ -30,13 +30,13 @@ public class TurtlePanel  {
     private final UserScreen USER_SCREEN;
     private  final Pane TURTLE_PANEL;
     private String DEFAULT_COLOR_HEXCODE = "2d3436";
-    
-  //  private final String DEFAULT_SETSHAPE_COMMAND = "";
+
+    //  private final String DEFAULT_SETSHAPE_COMMAND = "";
     private HBox ErrorHolder;
     private List<ImageView> TURTLE_LIST;
     private final FileIO FILE_READER;
     private int TURTLE_COUNT = 1;
-    
+
 
     public TurtlePanel(BorderPane pane, UserScreen userScreen, FileIO fileReader) {
 	USER_PANE = pane;
@@ -58,26 +58,38 @@ public class TurtlePanel  {
 
 	PANEL = layoutPane;
     }
-    
+
     /**
      * If property PANEL is null, calls makePanel() to generate the root. 
      * 
      * @return PANEL: The Parent node to be used in the Scene object. 
      */
     public Parent getPanel() {
- 	if (PANEL == null) {
- 	    makePanel();
- 	}
- 	return PANEL;
-     } 
+	if (PANEL == null) {
+	    makePanel();
+	}
+	return PANEL;
+    } 
 
-    private void createTurtle(Pane panel, ScrollPane scrollPane) {
+    private void createTurtle(Pane panel, ScrollPane scrollPane) {	
+	    ImageView turtleView = new ImageView();
+	    setUpImageView(turtleView, scrollPane,TURTLE_COUNT);
+	    Group penLines = new Group();
+	    penLines.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
+	    penLines.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
+	    panel.getChildren().add(penLines);
+	    USER_SCREEN.makeNewTurtleCommand("50", turtleView,DEFAULT_COLOR_HEXCODE , penLines);
+	    TURTLE_COUNT++;
+    }
+
+    private void setUpImageView(ImageView turtleView, ScrollPane scrollPane, double ID){
 	String currentDir = System.getProperty("user.dir");
+	File turtleFile = new File(currentDir + File.separator + "turtleimages" 
+		+ File.separator + DEFAULT_TURTLE);
+	Image turtleImage;
 	try {
-	    File turtleFile = new File(currentDir + File.separator + "turtleimages" 
-		    + File.separator + DEFAULT_TURTLE);
-	    Image turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
-	    ImageView turtleView = new ImageView(turtleImage);
+	    turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
+	    turtleView.setImage(turtleImage);
 	    TURTLE_LIST.add(turtleView);
 	    turtleView.setId("turtleView");
 	    turtleView.setFitHeight(DEFAULT_TURTLE_SIZE);
@@ -87,28 +99,19 @@ public class TurtlePanel  {
 	    turtleView.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
 	    turtleView.setX(-DEFAULT_TURTLE_SIZE/2);
 	    turtleView.setY(-DEFAULT_TURTLE_SIZE/2);
-	    // add button click event
-	    String turtleId = Integer.toString(TURTLE_COUNT);
 	    turtleView.setOnMousePressed((arg0)-> USER_PANE.setRight(
-		    new TurtleInfoPanel(USER_PANE, USER_SCREEN, turtleId, FILE_READER).getPanel()));
-	    panel.getChildren().add(turtleView);
-	    Group penLines = new Group();
-	    penLines.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
-	    penLines.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
-	    panel.getChildren().add(penLines);
-	    USER_SCREEN.makeNewTurtleCommand("50", turtleView,DEFAULT_COLOR_HEXCODE , penLines);
-	    TURTLE_COUNT++;
-	}
-	catch (Exception e) {
-	    // TODO: make custom exception super class with sub classes for specifications
-	    //String specification = "%nFailed to find language files";
+		    new TurtleInfoPanel(USER_PANE, USER_SCREEN, Double.toString(ID), FILE_READER).getPanel()));
+	    TURTLE_PANEL.getChildren().add(turtleView);
+	} catch (MalformedURLException e) {
+	    // TODO Auto-generated catch block
 	    System.out.println("FAILED TO LOAD TURTLE IMG");
 	}
-
     }
-    
-    public void attachTurtleObjects(ImageView image, Group penLine) {
-	TURTLE_PANEL.getChildren().add(image);
+
+    public void attachTurtleObjects(ImageView image, Group penLine, double ID) {
+	setUpImageView(image, SCROLL_PANE,ID);
+	penLine.translateXProperty().bind(Bindings.divide(SCROLL_PANE.widthProperty(), 2));
+	penLine.translateYProperty().bind(Bindings.divide(SCROLL_PANE.heightProperty(), 2));
 	TURTLE_PANEL.getChildren().add(penLine);
     }
 
@@ -125,24 +128,24 @@ public class TurtlePanel  {
     }
 
     private Image getTurtleImage(String selected) {
-  	String currentDir = System.getProperty("user.dir");
-  	File turtleFile = new File(currentDir + File.separator + "turtleimages" 
-  		+ File.separator + selected + ".png");
-  	Image turtleImage = null;
-  	try {
-  	    turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
-  	} 
-  	catch (MalformedURLException e) {
-  	    turtleFile = new File(currentDir + File.separator + "turtleimages" + File.separator + DEFAULT_TURTLE);
-  	    try {
-  		turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
-  	    } 
-  	    catch (MalformedURLException e1) {
-  		System.out.println("FAILED TO LOAD TURTLE IMG");
-  	    }
-  	}
-  	return turtleImage;
-      }
+	String currentDir = System.getProperty("user.dir");
+	File turtleFile = new File(currentDir + File.separator + "turtleimages" 
+		+ File.separator + selected + ".png");
+	Image turtleImage = null;
+	try {
+	    turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
+	} 
+	catch (MalformedURLException e) {
+	    turtleFile = new File(currentDir + File.separator + "turtleimages" + File.separator + DEFAULT_TURTLE);
+	    try {
+		turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
+	    } 
+	    catch (MalformedURLException e1) {
+		System.out.println("FAILED TO LOAD TURTLE IMG");
+	    }
+	}
+	return turtleImage;
+    }
 
 
     public void changeBackgroundColor(String colorCode) {
