@@ -20,6 +20,13 @@ import javafx.scene.layout.Priority;
 import screen.UserScreen;
 
 
+/**
+ * Panel that manages actual block of space which turtle occupies. Dependent on UserScreen
+ * to relay information and FileReader to read in files (as well as the existence of certain
+ * files for turtle image, etc.)
+ * @author Ben Hodgson and Andrew Arnold
+ *
+ */
 public class TurtlePanel  {
     // TODO: put in setting.properties file
     private final double DEFAULT_TURTLE_SIZE = 40;
@@ -35,6 +42,12 @@ public class TurtlePanel  {
  
 
 
+    /**
+     * Makes new TurtlePanel
+     * @param pane is BorderPane that will display it
+     * @param userScreen is screen of current simulation
+     * @param fileReader is file-reading class that helps access information
+     */
     public TurtlePanel(BorderPane pane, UserScreen userScreen, FileIO fileReader) {
 	USER_PANE = pane;
 	FILE_READER = fileReader;
@@ -42,7 +55,11 @@ public class TurtlePanel  {
 	TURTLE_LIST = new ArrayList<ImageView>();
 	TURTLE_PANEL = new Pane();
     }
-
+    
+  
+    /**
+     * Makes the panel and attaches it to the screen
+     */
     public void makePanel() {
 	BorderPane layoutPane = new BorderPane();
 
@@ -94,6 +111,13 @@ public class TurtlePanel  {
     		}
       }
 
+    /**
+     * Attaches new turtle objects created by the backend during the last run (ImageView
+     * and a Group corresponding to the turtle's pen lines)
+     * @param image is imageView of new turtle
+     * @param penLine is Group of Lines corresponding to pen lines of turtle
+     * @param ID is ID of turtle
+     */
     public void attachTurtleObjects(ImageView image, Group penLine, double ID) {
     		setUpImageView(image, SCROLL_PANE,ID);
     		penLine.translateXProperty().bind(Bindings.divide(SCROLL_PANE.widthProperty(), 2));
