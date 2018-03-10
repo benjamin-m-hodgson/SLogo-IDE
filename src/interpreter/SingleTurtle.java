@@ -189,7 +189,7 @@
 			return myOldY;
 		}
 
-		protected double getAngle() {
+		public double getAngle() {
 			return myAngle; 
 		}
 

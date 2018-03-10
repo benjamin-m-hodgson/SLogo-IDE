@@ -3,10 +3,12 @@ import java.util.Map;
 
 import interpreter.FileIO;
 import interpreter.SingleTurtle;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -19,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import screen.UserScreen;
 
 /**
@@ -30,6 +33,9 @@ import screen.UserScreen;
  */
 public class TurtleInfoPanel extends SpecificPanel {
     // TODO: put in settings .properties file
+    private final double FRAMES_PER_SECOND = 2;
+    private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
+    private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private final int VISIBLE_ROW_COUNT;
     public  final String DEFAULT_SHAPE_COMMAND;
     public  final String DEFAULT_PENCOLORCHANGE_COMMAND;
@@ -40,6 +46,9 @@ public class TurtleInfoPanel extends SpecificPanel {
     private String TURTLE_ID;
     private SingleTurtle TURTLE;
     private BorderPane PANE;
+    private Label HEADING;
+    private Label X;
+    private Label Y;
     private final String[] CURRENTSTATE_KEYS = {"turtleImage", "backgroundColor"};
 
 
@@ -52,6 +61,13 @@ public class TurtleInfoPanel extends SpecificPanel {
 	DEFAULT_SHAPE_COMMAND = FILE_READER.resourceSettingsText("defaultShapeCommand");
 	DEFAULT_PENCOLORCHANGE_COMMAND = FILE_READER.resourceSettingsText("defaultPenColorChangeCommand");
 	VISIBLE_ROW_COUNT = Integer.parseInt(FILE_READER.resourceSettingsText("turtleInfoPanelVisibleRowCount"));
+	// attach "animation loop" to time line to play it
+	KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
+		e -> checkChange(SECOND_DELAY));
+	Timeline animation = new Timeline();
+	animation.setCycleCount(Animation.INDEFINITE);
+	animation.getKeyFrames().add(frame);
+	animation.play();
     }
 
     @Override
@@ -68,11 +84,33 @@ public class TurtleInfoPanel extends SpecificPanel {
 		+ " " + TURTLE_ID);
 	turtleIdButton.setId("commandButton");
 	turtleIdButton.setDisable(true);
+	VBox turtleProperties = makeTurtleProperties();
 	Button penOptions = makePenOptions();
 	ComboBox<Object> shapeChooser = makeTurtleImageChooser("turtleImageChooser");
 	VBox movementButtons = drawMovementButtons(turtleInfoPanel);
-	turtleInfoPanel.getChildren().addAll(turtleIdButton, shapeChooser, 
+	turtleInfoPanel.getChildren().addAll(turtleIdButton, turtleProperties, shapeChooser, 
 		penOptions, movementButtons, backButton);
+    }
+
+    private VBox makeTurtleProperties() {
+	Label headingLabel = new Label(FILE_READER.resourceDisplayText("headingLabel"));
+	headingLabel.setId("variableNameLabel");
+	HEADING = new Label(Double.toString(TURTLE.getAngle()));
+	HEADING.setId("variableNameLabel");
+	HBox turtleHeading = new HBox(headingLabel, HEADING);
+	Label xLabel = new Label(FILE_READER.resourceDisplayText("xLabel"));
+	xLabel.setId("variableNameLabel");
+	X = new Label(Double.toString(TURTLE.getX()));
+	X.setId("variableNameLabel");
+	HBox xPosition = new HBox(xLabel, X);
+	Label yLabel = new Label(FILE_READER.resourceDisplayText("yLabel"));
+	yLabel.setId("variableNameLabel");
+	Y = new Label(Double.toString(TURTLE.getY()));
+	Y.setId("variableNameLabel");
+	HBox yPosition = new HBox(yLabel, Y);
+	VBox turtleProperties = new VBox(turtleHeading, xPosition, yPosition);
+	return turtleProperties;
+
     }
 
     private Button makePenOptions() {
@@ -249,6 +287,15 @@ public class TurtleInfoPanel extends SpecificPanel {
 	    catch (Exception e) {
 		// do nothing, don't move the turtle
 	    }
+	}
+    }
+    
+    private void checkChange(double elapsedTime) {
+	if (!X.getText().equals(Double.toString(TURTLE.getX()))
+		|| !Y.getText().equals(Double.toString(TURTLE.getY()))
+		|| !HEADING.getText().equals(Double.toString(TURTLE.getAngle()))){
+	    getPane().setRight(new TurtleInfoPanel(PANE, USER_SCREEN, 
+			TURTLE_ID, FILE_READER).getPanel());
 	}
     }
 

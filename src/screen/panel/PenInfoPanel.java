@@ -52,6 +52,13 @@ public class PenInfoPanel extends SpecificPanel {
 	TURTLE = USER_SCREEN.getAllTurtles().get(Integer.parseInt(TURTLE_ID) - 1);
 	WIDTH_MIN = Integer.parseInt(FILE_READER.resourceSettingsText("turtleInfoPanelMinWidth"));
 	WIDTH_MAX = Integer.parseInt(FILE_READER.resourceSettingsText("turtleInfoPanelMaxWidth"));
+	// attach "animation loop" to time line to play it
+	KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
+		e -> checkChange(SECOND_DELAY));
+	Timeline animation = new Timeline();
+	animation.setCycleCount(Animation.INDEFINITE);
+	animation.getKeyFrames().add(frame);
+	animation.play();
     }
 
     @Override
@@ -197,5 +204,12 @@ public class PenInfoPanel extends SpecificPanel {
 	    }
 	});
 	return numberTextField;
+    }
+    
+    private void checkChange(double elapsedTime) {
+	if (!PEN_DOWN.getText().equals(Boolean.toString(TURTLE.getPenVisibility()))) {
+	    getPane().setRight(new PenInfoPanel(PANE, USER_SCREEN, 
+			TURTLE_ID, FILE_READER).getPanel());
+	}
     }
 }
