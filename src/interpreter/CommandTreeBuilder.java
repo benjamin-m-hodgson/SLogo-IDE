@@ -7,14 +7,18 @@ import java.util.List;
 import java.util.Map;
 
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+
 /** 
  * @author Susie Choi
+ * Third stage of the parsing process: building a tree in which each node represents an 
+ * element of a Command (e.g. command, argument). Use by calling buildAndExecute method to 
+ * build the command trees, which will build a tree for each individual command, and send 
+ * each tree into the CommandTreeReader for the next stage of the parsing process. 
  */
 
 class CommandTreeBuilder {

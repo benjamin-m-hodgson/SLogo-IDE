@@ -9,8 +9,15 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+/**
+ * @author susiechoi
+ * 
+ */
 public class RegexMatcher {
 
+	public static final String DEFAULT_SYNTAX_FILENAME = "interpreter/Syntax";
+	public static final String DEFAULT_LANGUAGE_FILENAME = "interpreter/English";
+	public static final String DEFAULT_NUMARGS_FILENAME = "interpreter/NumArgsFoCommands";
 	private String myFileName; 
 	private ResourceBundle myResources; 
 	private List<Entry<String, Pattern>> mySymbols;
@@ -80,5 +87,24 @@ public class RegexMatcher {
 	private boolean match(String text, Pattern regex) {
         return regex.matcher(text).matches();
     }
+	
+	
+	private class ExceptionFactory{
+		
+		protected ExceptionFactory() {
+		}
+		
+		protected void getException(String propertiesFile, String issue) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+			if (propertiesFile.equals(DEFAULT_SYNTAX_FILENAME)) {
+				throw new BadFormatException(issue);
+			}
+			else if (propertiesFile.equals(DEFAULT_LANGUAGE_FILENAME)) {
+				throw new UnidentifiedCommandException(issue);
+			}
+			else if (propertiesFile.equals(DEFAULT_NUMARGS_FILENAME)) {
+				throw new MissingInformationException(issue);
+			}
+		}
+	}
 	
 }

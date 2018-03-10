@@ -1,7 +1,6 @@
 package screen;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,6 @@ import interpreter.TurtleNotFoundException;
 import interpreter.UnidentifiedCommandException;
 import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import screen.panel.InfoPanel;
@@ -155,7 +153,7 @@ public class UserScreen implements Screen {
 	TURTLE_PANEL.changeBackgroundColor(preferences.get("backgroundColor"));
 	String penColor = preferences.get("penColor");
 	penColor = penColor.substring(1, penColor.length());
-	System.out.println(penColor);
+	System.out.println("PenColor is "+penColor);
 	PROGRAM_CONTROLLER.changePenColorHex(Integer.parseInt(penColor,16));
 	FILE_READER.bundleUpdateToNewLanguage(preferences.get("language"));
 

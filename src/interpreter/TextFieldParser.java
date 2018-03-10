@@ -31,10 +31,8 @@ import java.util.Queue;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -43,6 +41,11 @@ import javafx.scene.image.ImageView;
 
 /** 
  * @author Susie Choi
+ * First "stage" of the command-parsing process: ensuring valid syntax for all commands, 
+ * e.g. no command should have semicolons. Dependency on RegexMatcher and existence of 
+ * Syntax file to check user input against valid syntax. parseText is intended to be called (by Controller) 
+ * with the user's commands as a string. Dependency on CommandMaker to continue the parsing process. 
+ * 
  */
 
 class TextFieldParser {	
@@ -128,12 +131,6 @@ class TextFieldParser {
 		}
 
 		String[] tokenizedInputArray = tokenizedInput.toArray(new String[tokenizedInput.size()]);
-		//		for (String s : tokenizedInputArray) {
-		//			System.out.println(s);
-		//		}
-		//		for (String s : tokenizedInputArray) {
-		//			System.out.println(s);
-		//		}
 		return parseTextArray(tokenizedInputArray);
 	}
 
@@ -207,43 +204,11 @@ class TextFieldParser {
 		myCommandMaker.addNewTurtle(id, turtleImage, penColor, penLines);
 	}
 
-	protected static void main(String[] args) {
-		TextFieldParser testingParser = new TextFieldParser();
-		try {
-			//			testingParser.parseText("ifelse less? 5 5 [ fd 50 ] [ bk 30 ] rt 90");
-			//			testingParser.parseText("if less? 1 5 [ fd 50 ] rt 90");
-			//			testingParser.parseText("pd pd pd pd fd 50");
-			//			testingParser.parseText("fd fd fd pd"); // CHECK AGAIN
-
-			//			Double test = testingParser.parseText("for [ :k fd 0 fd 5 fd 1 ] [ fd 1 ]");
-			//			System.out.println("returns: ");
-			//			System.out.println(test.toString());
-			//			testingParser.parseText("fd 1 rt / sin 20 2");
-			//			testingParser.parseText("fd rt fd 50 bk 30");
-			//			testingParser.parseText("fd rt bk 50");
-			//testingParser.parseText("fd 50\n\n\nbk 50");
-			//			testingParser.parseText("fd rt 100");
-			//			testingParser.parseText("fd 100\n" + 
-			//					"rt 90\n" + 
-			//					"fd 100\n" + 
-			//					"rt 90\n" + 
-			//					"fd 100\n" + 
-			//					"rt 90\n" + 
-			//					"fd 100\n" + 
-			//					"rt 90");
-			//			testingParser.parseText("fd sum sum sum sum 10 20 30 5 5");
-			//						testingParser.parseText("fd sum 100 :a");
-			//			testingParser.parseText("to corner [ :length :width ] [ fd :length rt 90 bk :width ]");
-		} catch (Exception e) {
-			System.out.println("FAIL");
-		}
-	}
-
-	public void loadSavedUserDefined() {
+	protected void loadSavedUserDefined() {
 		myCommandMaker.loadSavedUserDefined(); 
 	}
 
-	public void loadSavedVariables() {
+	protected void loadSavedVariables() {
 		myCommandMaker.loadSavedVariables(); 
 	}
 
