@@ -10,10 +10,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * @author susiechoi
+ * Allows user to add a new color to the ColorPalette -- can then be selected as a Pen or Background color. 
+ * 4 args: idx of new color, r, g, b values. 
+ * Dependent on file in/out writers to add the new color to ColorPalette and ColorPaletteNames files. 
+ */
 class SetPaletteCommand extends Command {
 
 	public static final String DEFAULT_COLORPALETTE_FILE = "src/interpreter/ColorPalette.properties"; 
 	public static final String DEFAULT_COLORPALETTENAMES_FILE = "src/interpreter/ColorPaletteNames.properties"; 
+	public static final String DEFAULT_COLORNOTFOUND_MESSAGE = "Can't find colors";
+	public static final String DEFAULT_SAVINGISSUE_MESSAGE = "Can't save new color";
 	private HashMap<String, Double> myVars;
 	private Command myIdx;
 	private Command myR;
@@ -42,14 +50,14 @@ class SetPaletteCommand extends Command {
 		try {
 			in = new FileInputStream(new File(DEFAULT_COLORPALETTE_FILE));
 		} catch (FileNotFoundException e2) {
-			throw new UnidentifiedCommandException("Can't find colors");
+			throw new UnidentifiedCommandException(DEFAULT_COLORNOTFOUND_MESSAGE);
 			
 		}
 		
 		try {
 			prop.load(in);
 		} catch (IOException e) {
-			throw new UnidentifiedCommandException("Can't find colors");
+			throw new UnidentifiedCommandException(DEFAULT_COLORNOTFOUND_MESSAGE);
 		}
 		
 		int idxAsInt = (int) idx; 
@@ -61,12 +69,12 @@ class SetPaletteCommand extends Command {
 		try {
 			fileOut = new FileOutputStream(DEFAULT_COLORPALETTE_FILE);
 		} catch (FileNotFoundException e1) {
-			throw new UnidentifiedCommandException("Can't save new color");
+			throw new UnidentifiedCommandException(DEFAULT_SAVINGISSUE_MESSAGE);
 		}
 		try {
 			prop.store(fileOut, null);
 		} catch (IOException e) {
-			throw new UnidentifiedCommandException("Can't save new color");
+			throw new UnidentifiedCommandException(DEFAULT_SAVINGISSUE_MESSAGE);
 		}
 		
 		
@@ -75,27 +83,27 @@ class SetPaletteCommand extends Command {
 		try {
 			in = new FileInputStream(new File(DEFAULT_COLORPALETTENAMES_FILE));
 		} catch (FileNotFoundException e2) {
-			throw new UnidentifiedCommandException("Can't save new color");
+			throw new UnidentifiedCommandException(DEFAULT_SAVINGISSUE_MESSAGE);
 		}
 		
 		try {
 			prop.load(in);
 		} catch (IOException e) {
-			throw new UnidentifiedCommandException("Can't save new color");
+			throw new UnidentifiedCommandException(DEFAULT_SAVINGISSUE_MESSAGE);
 		}
 		
-		prop.setProperty(idxAsKey, "User "+idxAsKey);
+		prop.setProperty(idxAsKey, "User Color #"+idxAsKey);
 		
 		fileOut = null;
 		try {
 			fileOut = new FileOutputStream(DEFAULT_COLORPALETTENAMES_FILE);
 		} catch (FileNotFoundException e1) {
-			throw new UnidentifiedCommandException("Can't save new color");
+			throw new UnidentifiedCommandException(DEFAULT_SAVINGISSUE_MESSAGE);
 		}
 		try {
 			prop.store(fileOut, null);
 		} catch (IOException e) {
-			throw new UnidentifiedCommandException("Can't save new color");
+			throw new UnidentifiedCommandException(DEFAULT_SAVINGISSUE_MESSAGE);
 		}
 		
 		return idx; 

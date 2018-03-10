@@ -6,6 +6,9 @@ import java.util.List;
 /**
  * @author Susie Choi
  * minor modifications by Sarah Bland
+ * 
+ * Represents an element of a user-inputed command (e.g. Command name, argument). 
+ * Used in constructing a CommandTree to assess the completeness of commands in the parsing process. 
  *
  */
 class CommandNode {
@@ -15,7 +18,6 @@ class CommandNode {
 	private String myInfo;
 	private boolean isDouble; 
 	private int myNumArgs; 
-	//private Command myCommand; 
 	private List<CommandNode> myChildren; 
 	private Turtle myTurtles;
 	private Turtle myActiveTurtles;

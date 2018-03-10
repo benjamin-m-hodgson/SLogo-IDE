@@ -11,9 +11,12 @@ import java.util.regex.Pattern;
 
 /**
  * @author susiechoi
+ * Used for searching a File/ResourceBundle for a value matching a specific key (or vice versa). 
+ * Use by initializing with a ResourceBundle or fileName to the constructor, and 
+ * calling findMatchingKey, containsKey, or findMatchingVal, according to the needs of the calling program. 
  * 
  */
-public class RegexMatcher {
+class RegexMatcher {
 
 	public static final String DEFAULT_SYNTAX_FILENAME = "interpreter/Syntax";
 	public static final String DEFAULT_LANGUAGE_FILENAME = "interpreter/English";
@@ -24,14 +27,14 @@ public class RegexMatcher {
 	private ExceptionFactory myExceptionFactory; 
 //	private Exception myException; 
 	
-	public RegexMatcher(ResourceBundle resourceBundle) {
+	protected RegexMatcher(ResourceBundle resourceBundle) {
 		myResources = resourceBundle; 
 		mySymbols = new ArrayList<Entry<String, Pattern>>();
 		myExceptionFactory = new ExceptionFactory(); 
 		populateWithSymbols(mySymbols, myResources);
 	}
 	
-	public RegexMatcher(String fileName) {
+	protected RegexMatcher(String fileName) {
 		myFileName = fileName;
 		//System.out.println("file: " + fileName);
 		myResources = ResourceBundle.getBundle(fileName);
@@ -50,7 +53,7 @@ public class RegexMatcher {
         }
     }
 	
-	public String findMatchingKey(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	protected String findMatchingKey(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		for (Entry<String, Pattern> e : mySymbols) {
             if (match(text, e.getValue())) {
                 return e.getKey();
@@ -63,7 +66,7 @@ public class RegexMatcher {
 		return ""; 
 	}
 	
-	public boolean containsKey(String text) {
+	protected boolean containsKey(String text) {
 		for (Entry<String, Pattern> e : mySymbols) {
             if (text.equals(e.getKey())) {
             	return true;
@@ -72,7 +75,7 @@ public class RegexMatcher {
 		return false; 
 	}
 	
-	public String findMatchingVal(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	protected String findMatchingVal(String text) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		String val = ""; 
 		try {
 			val = myResources.getString(text);
