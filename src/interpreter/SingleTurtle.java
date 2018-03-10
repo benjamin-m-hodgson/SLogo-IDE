@@ -92,7 +92,7 @@ public class SingleTurtle extends Turtle{
 		turtle.setY(myY);
 		turtle.setOldXY(myOldX, myOldY);
 		turtle.setAngle(myAngle);
-		turtle.setShape(turtle.getImageView().getImage(), turtle.getImageIdx());
+		turtle.setShape(myImage.getImage(), myImageIdx);
 		if(myVisibility) {
 			turtle.showTurtle();
 		}
