@@ -28,7 +28,7 @@ public class TurtlePanel  {
     private final BorderPane USER_PANE;
     private ScrollPane SCROLL_PANE;
     private final UserScreen USER_SCREEN;
-    private String DEFAULT_COLOR_HEXCODE = "2d3436";
+    private String DEFAULT_COLOR_HEXCODE = "000000";
   //  private final String DEFAULT_SETSHAPE_COMMAND = "";
     private HBox ErrorHolder;
     private List<ImageView> TURTLE_LIST;
@@ -116,14 +116,6 @@ public class TurtlePanel  {
 	PANEL.setBottom(ErrorHolder);
     }
 
-    public void changeTurtlesImages(String selected) {
-  	Image turtleImage = getTurtleImage(selected);
-  	if(turtleImage != null) {
-  	    for(ImageView view :TURTLE_LIST) {
-  		view.setImage(turtleImage);
-  	    }
-  	}
-      }
     private Image getTurtleImage(String selected) {
   	String currentDir = System.getProperty("user.dir");
   	File turtleFile = new File(currentDir + File.separator + "turtleimages" 

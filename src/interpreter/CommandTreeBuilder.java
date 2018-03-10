@@ -5,11 +5,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
-
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 /** 
  * @author Susie Choi
  */
@@ -34,7 +35,6 @@ class CommandTreeBuilder {
 	public static final String DEFAULT_VAR_IDENTIFIER = ":";
 	public static final String DEFAULT_USERCOMMAND_IDENTIFIER = "MakeUserInstruction";
 	public static final String DEFAULT_USERCOMMAND_NAME = "UserInstruction";
-	public static final String DEFAULT_BACKCHANGE_IDENTIFIER = "SetBackground";
 	protected static final String[] DEFAULT_DOUBLE_SUBSTITUTES = {"PenDown","PenUp","ShowTurtle","HideTurtle","Home","ClearScreen",
 			"XCoordinate","YCoordinate","Heading","IsPenDown","IsShowing","Pi", "ID", "Turtles"};
 	//	private CommandTreeReader myCommandTreeReader; 
@@ -45,7 +45,8 @@ class CommandTreeBuilder {
 	private HashMap<String, String> myUserDefCommands; 
 	private HashMap<String, Integer> myUserDefCommandsNumArgs;
 	private Map<String, Double> myVariables;
-	private SimpleIntegerProperty myBackColor;
+	private IntegerProperty myBackColor; 
+	private BooleanProperty myBackColorChangeHeard; 
 
 	protected CommandTreeBuilder(Map<String, Double> variables, Map<String, String> userDefCommands, Map<String, Integer> userDefCommandsNumArgs) {
 		this(DEFAULT_NUM_ARGS_FNAME, variables, userDefCommands, userDefCommandsNumArgs);
@@ -60,6 +61,18 @@ class CommandTreeBuilder {
 		myUserDefCommandsNumArgs = (HashMap<String, Integer>)userDefCommandsNumArgs;
 		myVariables = variables;
 		myBackColor = new SimpleIntegerProperty(0);
+		myBackColorChangeHeard = new SimpleBooleanProperty(false);
+		setUpBackColorChangeListener();
+	}
+	
+	protected void setUpBackColorChangeListener() {
+		myCommandTreeReader.getBackColor().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number t1, Number t2) {
+				myBackColor = myCommandTreeReader.getBackColor();
+				myBackColorChangeHeard.set(!myBackColorChangeHeard.getValue());
+			}
+		});
 	}
 
 	protected double buildAndExecute(Turtle turtles, Turtle activeTurtles, String[] userInput, boolean shouldExecute) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
@@ -100,9 +113,6 @@ class CommandTreeBuilder {
 		//	System.out.println("number of command trees" + myCommandTrees.size());
 		if(shouldExecute) {
 			for (CommandNode commandTree : myCommandTrees) {
-				if (commandTree.getInfo().equals(DEFAULT_BACKCHANGE_IDENTIFIER)) {
-					myBackColor.set(Integer.parseInt(commandTree.childrenToString().trim())); 
-				}
 				finalReturnVal = myCommandTreeReader.readAndExecute(commandTree);
 			}
 		}
@@ -244,7 +254,7 @@ class CommandTreeBuilder {
 			//		}
 			for (String substitute : DEFAULT_DOUBLE_SUBSTITUTES) {
 				if (userInput[currIdx].equals(substitute)) {
-					CommandNode newChildNode = new CommandNode(userInput[currIdx], turtles, activeTurtles);
+					CommandNode newChildNode = new CommandNode(userInput[currIdx], 0, turtles, activeTurtles);
 					parent.addChild(newChildNode);
 					if (parent.getNumChildren() < parent.getNumArgs()) { 
 						createAndSetChildren(turtles, activeTurtles, parent, userInput, currIdx+1, addToTrees);
@@ -259,7 +269,7 @@ class CommandTreeBuilder {
 				}
 			}
 			if (String.valueOf(userInput[currIdx].charAt(0)).equals(DEFAULT_VAR_IDENTIFIER)) {
-				CommandNode newChildNode = new CommandNode(userInput[currIdx], turtles, activeTurtles);
+				CommandNode newChildNode = new CommandNode(userInput[currIdx], 0, turtles, activeTurtles);
 				parent.addChild(newChildNode);
 				if (parent.getNumChildren() < parent.getNumArgs()) { 
 					createAndSetChildren(turtles, activeTurtles, parent, userInput, currIdx+1, addToTrees);
@@ -664,7 +674,11 @@ class CommandTreeBuilder {
 		return currIdxCopy;
 	}
 
-	protected IntegerProperty getBackColor() {
+	public ObservableValue<Boolean> getBackColorChangeHeard() {
+		return myBackColorChangeHeard;
+	}
+
+	public IntegerProperty getBackColor() {
 		return myBackColor;
 	}
 

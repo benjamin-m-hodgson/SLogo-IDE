@@ -83,7 +83,6 @@ public class Controller {
 		    USER_SCREEN.changeBackgroundColorHex(matchingHex);
 		} catch (BadFormatException | UnidentifiedCommandException | MissingInformationException e) {
 		    loadErrorScreen(COLOR_ERROR_KEY);
-		    e.printStackTrace();
 		}
 	    }
 	});
@@ -240,9 +239,8 @@ public class Controller {
      * @throws TurtleNotFoundException 
      */
     public double parseInput(String userTextInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
-	return myTextFieldParser.parseText(userTextInput);
+    	return myTextFieldParser.parseText(userTextInput);
     }
-
 
     /**
      * Used for changing pen color from settings panel through a command sent to parser

@@ -72,13 +72,13 @@ class CommandMaker {
 		myCommandTreeBuilder = new CommandTreeBuilder(numArgsFileName, myVariables, myUserDefCommands, myUserCommandsNumArgs); 
 		myBackColor = new SimpleIntegerProperty(0);
 		myBackColorChangeHeard = new SimpleBooleanProperty(false);
-		setUpBackColorListener();
+		setUpBackColorChangeListener();
 	}
 
-	protected void setUpBackColorListener() {
-		myCommandTreeBuilder.getBackColor().addListener(new ChangeListener<Number>() {
+	private void setUpBackColorChangeListener() {
+		myCommandTreeBuilder.getBackColorChangeHeard().addListener(new ChangeListener<Boolean>() {
 			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number t1, Number t2) {
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean t1, Boolean t2) {
 				myBackColor = myCommandTreeBuilder.getBackColor();
 				myBackColorChangeHeard.set(!myBackColorChangeHeard.getValue());
 			}

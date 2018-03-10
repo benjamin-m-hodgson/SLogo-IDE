@@ -26,7 +26,6 @@ public class HelpPanel extends SpecificPanel  {
     private final FileIO FILE_READER;
     private VBox HELP_BOX;
     private BorderPane PANE;
-
     private UserScreen USER_SCREEN;
 
     public HelpPanel( BorderPane pane, UserScreen userScreen, FileIO fileReader) {
@@ -48,7 +47,7 @@ public class HelpPanel extends SpecificPanel  {
 	panelRoot.setAlignment(Pos.BASELINE_CENTER);
 	VBox.setVgrow(helpPane, Priority.ALWAYS);
 	populateHelp();
-	PANEL = panelRoot;	
+	PANEL = panelRoot;
     }
 
 
