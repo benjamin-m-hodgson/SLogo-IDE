@@ -22,7 +22,7 @@ import javafx.scene.layout.VBox;
  * before launching the program and creating the UserScreen.
  */
 public class StartScreen implements Screen {
-    private final int VISIBLE_ROW_COUNT = 5;
+    private final int VISIBLE_ROW_COUNT;
     private String SELECTION_PROMPT;
     private Parent ROOT;
     private Controller PROGRAM_CONTROLLER;
@@ -36,6 +36,7 @@ public class StartScreen implements Screen {
 	FILE_READER = fileReader;
 	PROGRAM_CONTROLLER = programController;
 	SELECTION_PROMPT = FILE_READER.resourceDisplayText("languageChooser");
+	VISIBLE_ROW_COUNT = Integer.parseInt(FILE_READER.resourceSettingsText("startScreenVisibleRowCount"));
     }
 
     @Override
