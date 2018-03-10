@@ -52,6 +52,7 @@ class CommandTreeBuilder {
 	private Map<String, Double> myVariables;
 	private IntegerProperty myBackColor; 
 	private BooleanProperty myBackColorChangeHeard; 
+	private ArrayList<String> myDefaultDoubleSubstitutes;
 
 	protected CommandTreeBuilder(Map<String, Double> variables, Map<String, String> userDefCommands, Map<String, Integer> userDefCommandsNumArgs) {
 		this(DEFAULT_NUM_ARGS_FNAME, variables, userDefCommands, userDefCommandsNumArgs);
@@ -68,6 +69,7 @@ class CommandTreeBuilder {
 		myBackColor = new SimpleIntegerProperty(0);
 		myBackColorChangeHeard = new SimpleBooleanProperty(false);
 		setUpBackColorChangeListener();
+		myDefaultDoubleSubstitutes = new ArrayList<String>(Arrays.asList(DEFAULT_DOUBLE_SUBSTITUTES));
 	}
 	
 	protected void setUpBackColorChangeListener() {
@@ -156,10 +158,8 @@ class CommandTreeBuilder {
 			}
 			if (myUserDefCommands.containsKey(currCommand)) {
 				parseUserCommand(turtles, activeTurtles, userInput, startIdx, myUserDefCommandsNumArgs.get(currCommand));
-				return null; // TODO FIX THIS 
-				//				return createCommandTree(turtle, userInput, startAfterUserCommand);
+				return null;
 			}
-			//System.out.println("currCommand: " + currCommand);
 			int numArgs = getNumArgs(currCommand);
 			CommandNode newParentNode = new CommandNode(currCommand, numArgs, turtles, activeTurtles);
 			while (newParentNode.getNumArgs() == 0 ) { // accounts for multiple 1-arg arguments before args that need child nodes 
@@ -211,7 +211,7 @@ class CommandTreeBuilder {
 			createCommandTree(turtles, activeTurtles, userInput, afterFor);
 			return;
 		}
-		if (userInput[currIdx-1].equals(DEFAULT_IF_IDENTIFIER)) { // TODO deal with if "if" is not first 
+		if (userInput[currIdx-1].equals(DEFAULT_IF_IDENTIFIER)) {  
 			int startAfterIf = parseIf(turtles, activeTurtles, userInput, currIdx); 
 			createCommandTree(turtles, activeTurtles,  userInput, startAfterIf);
 			return;
@@ -251,29 +251,7 @@ class CommandTreeBuilder {
 			return; 
 		} 
 		catch (NumberFormatException e) {
-			//		if (commandTypes[currIdx].equals("DEFAULT_IF_IDENTIFIER")) { 
-			//			// currIdx = 
-			//			parseIf(turtle, userInput, commandTypes, allInputTypes, currIdx);
-			//			System.out.println("returning");
-			//			return; 
-			//		}
-			for (String substitute : DEFAULT_DOUBLE_SUBSTITUTES) {
-				if (userInput[currIdx].equals(substitute)) {
-					CommandNode newChildNode = new CommandNode(userInput[currIdx], 0, turtles, activeTurtles);
-					parent.addChild(newChildNode);
-					if (parent.getNumChildren() < parent.getNumArgs()) { 
-						createAndSetChildren(turtles, activeTurtles, parent, userInput, currIdx+1, addToTrees);
-					} 
-					else {
-						if (addToTrees) {
-							myCommandTrees.add(parent);
-						}
-						createCommandTree(turtles, activeTurtles, userInput, currIdx+1);
-					}
-					return; 
-				}
-			}
-			if (String.valueOf(userInput[currIdx].charAt(0)).equals(DEFAULT_VAR_IDENTIFIER)) {
+			if (myDefaultDoubleSubstitutes.contains(userInput[currIdx]) || String.valueOf(userInput[currIdx].charAt(0)).equals(DEFAULT_VAR_IDENTIFIER)) {
 				CommandNode newChildNode = new CommandNode(userInput[currIdx], 0, turtles, activeTurtles);
 				parent.addChild(newChildNode);
 				if (parent.getNumChildren() < parent.getNumArgs()) { 
@@ -315,7 +293,7 @@ class CommandTreeBuilder {
 					return; 
 				} 
 				catch (NumberFormatException e1) {
-					if (String.valueOf(userInput[idx].charAt(0)).equals(DEFAULT_VAR_IDENTIFIER)) {
+					if (myDefaultDoubleSubstitutes.contains(userInput[idx]) || String.valueOf(userInput[idx].charAt(0)).equals(DEFAULT_VAR_IDENTIFIER)) {
 						CommandNode newChildNode = new CommandNode(userInput[idx], turtles, activeTurtles);
 						int numArgs = getNumArgs(userInput[idx-1]);
 						//						System.out.println("parent to string"+parent.toString());
@@ -351,6 +329,7 @@ class CommandTreeBuilder {
 			}
 		}
 	}
+	
 	private int parseAsks(Turtle turtles, Turtle activeTurtles, String[] userInput, int currIdx, boolean addToTrees, CommandNode parent) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		if (addToTrees) {
 			myCommandTrees.add(parent);
