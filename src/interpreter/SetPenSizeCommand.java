@@ -3,6 +3,11 @@ package interpreter;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Changes size of the pen associated with a turtle, where the new pen size is the only arg.
+ * @author Susie Choi 
+ *
+ */
 class SetPenSizeCommand extends Command {
 
 	Command myWidthCommand;

@@ -29,14 +29,11 @@ public class TurtlePanel  {
     private ScrollPane SCROLL_PANE;
     private final UserScreen USER_SCREEN;
     private  final Pane TURTLE_PANEL;
-    private String DEFAULT_COLOR_HEXCODE = "00000";
-    
-  //  private final String DEFAULT_SETSHAPE_COMMAND = "";
     private HBox ErrorHolder;
     private List<ImageView> TURTLE_LIST;
     private final FileIO FILE_READER;
-    private int TURTLE_COUNT = 1;
-    
+ 
+
 
     public TurtlePanel(BorderPane pane, UserScreen userScreen, FileIO fileReader) {
 	USER_PANE = pane;
@@ -58,29 +55,19 @@ public class TurtlePanel  {
 
 	PANEL = layoutPane;
     }
-    
+
     /**
      * If property PANEL is null, calls makePanel() to generate the root. 
      * 
      * @return PANEL: The Parent node to be used in the Scene object. 
      */
     public Parent getPanel() {
- 	if (PANEL == null) {
- 	    makePanel();
- 	}
- 	return PANEL;
-     } 
+	if (PANEL == null) {
+	    makePanel();
+	}
+	return PANEL;
+    } 
 
-//    private void createTurtle(Pane panel, ScrollPane scrollPane) {	
-//	    ImageView turtleView = new ImageView();
-//	    turtleView =  setUpImageView(turtleView, scrollPane,TURTLE_COUNT);
-//	    Group penLines = new Group();
-//	    penLines.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
-//	    penLines.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
-//	    panel.getChildren().add(penLines);
-//	    USER_SCREEN.makeNewTurtleCommand("50", turtleView,DEFAULT_COLOR_HEXCODE , penLines);
-//	    TURTLE_COUNT++;
-//    }
     private ImageView setUpImageView(ImageView turtleView, ScrollPane scrollPane, double ID){
     	String currentDir = System.getProperty("user.dir");
     	File turtleFile = new File(currentDir + File.separator + "turtleimages" 
@@ -127,24 +114,24 @@ public class TurtlePanel  {
     }
 
     private Image getTurtleImage(String selected) {
-  	String currentDir = System.getProperty("user.dir");
-  	File turtleFile = new File(currentDir + File.separator + "turtleimages" 
-  		+ File.separator + selected + ".png");
-  	Image turtleImage = null;
-  	try {
-  	    turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
-  	} 
-  	catch (MalformedURLException e) {
-  	    turtleFile = new File(currentDir + File.separator + "turtleimages" + File.separator + DEFAULT_TURTLE);
-  	    try {
-  		turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
-  	    } 
-  	    catch (MalformedURLException e1) {
-  		System.out.println("FAILED TO LOAD TURTLE IMG");
-  	    }
-  	}
-  	return turtleImage;
-      }
+	String currentDir = System.getProperty("user.dir");
+	File turtleFile = new File(currentDir + File.separator + "turtleimages" 
+		+ File.separator + selected + ".png");
+	Image turtleImage = null;
+	try {
+	    turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
+	} 
+	catch (MalformedURLException e) {
+	    turtleFile = new File(currentDir + File.separator + "turtleimages" + File.separator + DEFAULT_TURTLE);
+	    try {
+		turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
+	    } 
+	    catch (MalformedURLException e1) {
+		System.out.println("FAILED TO LOAD TURTLE IMG");
+	    }
+	}
+	return turtleImage;
+    }
 
 
     public void changeBackgroundColor(String colorCode) {

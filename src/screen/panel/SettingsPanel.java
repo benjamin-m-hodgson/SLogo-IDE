@@ -40,7 +40,6 @@ public class SettingsPanel extends SpecificPanel  {
     public static final String DEFAULT_SHAPE_COMMAND = "SetShape";
     private  Button BACK;
     private BorderPane PANE;
-
     private Button NEW_WORKSPACE;
     private Button PREFERENCES;
     private ComboBox<Object> LANGUAGE_CHOOSER;
@@ -50,13 +49,13 @@ public class SettingsPanel extends SpecificPanel  {
     private final FileIO fileReader;
     private final int DEFAULT_BUTTON_SPACING = 10;
     private final String[] DROPDOWN_IDS = {"languageSettingsChooser", "penColorChooser", "turtleImageChooser"};
+    private final String[] CURRENTSTATE_KEYS = {"language", "turtleImage", "backgroundColor"};
     private final String[] BUTTON_IDS = {"newworkspaceButton", "preferencesButton"};
 
     public SettingsPanel(BorderPane pane, UserScreen userScreen, FileIO fileReaderIn) {
 	PANE = pane;
 	USER_SCREEN = userScreen;
 	fileReader = fileReaderIn;
-
     }
 
 
@@ -127,6 +126,7 @@ public class SettingsPanel extends SpecificPanel  {
 	    if (!selected.equals(selectionPrompt)) {
 		fileReader.bundleUpdateToNewLanguage(selected);
 		updatePrompt();
+		USER_SCREEN.updateCurrentState(CURRENTSTATE_KEYS[0], selected);
 	    }
 	});
 	return dropDownMenu;
@@ -157,6 +157,7 @@ public class SettingsPanel extends SpecificPanel  {
 	    if (!selected.equals(selectionPrompt)) {
 		String selectedShapeIdx = (selected.split(". "))[0];
 		fileReader.parseSettingInput(DEFAULT_SHAPE_COMMAND+" "+selectedShapeIdx);
+		USER_SCREEN.updateCurrentState(CURRENTSTATE_KEYS[1], selectedShapeIdx);
 	    }
 	});
 	return dropDownMenu;
@@ -178,7 +179,7 @@ public class SettingsPanel extends SpecificPanel  {
 	Button preferenceButton = makeButton(itemId);
 	// override click event
 	preferenceButton.setOnMouseClicked((arg0)-> getPane()
-		.setRight(new PreferencePanel(PANE, USER_SCREEN, fileReader).getPanel()));
+		.setRight(new PreferencePanel(PANE, USER_SCREEN, fileReader,CURRENTSTATE_KEYS).getPanel()));
 	return preferenceButton;
     }
 

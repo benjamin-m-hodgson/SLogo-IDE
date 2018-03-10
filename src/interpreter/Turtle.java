@@ -5,6 +5,8 @@ package interpreter;
 import java.util.List;
 import java.util.function.Consumer;
 
+import javafx.scene.image.Image;
+
 import java.net.MalformedURLException;
 
 /**
@@ -96,6 +98,7 @@ public abstract class Turtle {
 	 */
 	protected abstract double setXY(double x, double y);
 
+
 	/**
 	 * Sets shape of turtle based
 	 * @param idxKey is index of the desired shape in the TurtleShapes properties file
@@ -104,12 +107,12 @@ public abstract class Turtle {
 	 * @throws MissingInformationException
 	 * @throws MalformedURLException
 	 */
-	protected abstract void setShape(String idxKey) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException;
+	protected abstract void setShape(Image img, double idxKey) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException;
 
 	/**
 	 * Sets the visual image of the turtle to the image contained in filepath
 	 */
-	protected abstract void setImage(String filepath);
+	protected abstract void setImage(Image newImg);
 
 
 	/**

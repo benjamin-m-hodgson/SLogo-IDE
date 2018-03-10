@@ -137,6 +137,22 @@
 			singles.add(turtle);
 			return new MultipleTurtles(singles);
 		}
+		public void setShape(Image newImg, double idxKey) {
+			setImage(newImg);
+			setImageIdx(idxKey);
+		}
+		
+		private void setImageIdx(double idx) {
+			myImageIdx = idx;
+		}
+
+		/**
+		 * Sets the visual image of the turtle to the image contained in filepath
+		 */
+		public void setImage(Image newImg) {
+			myImage.setImage(newImg);
+		}
+
 
 		
 		public void setShape(String idxKey) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException {
@@ -443,3 +459,4 @@
 		}
 
 	}
+

@@ -10,6 +10,13 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Properties;
 
+/**
+ * @author susiechoi
+ * Used for obtaining information about the keys and values in a Properties file. 
+ * Useful for obtaining ColorPalette or saved UserCommand/Variable information, which is manipulated throughout the course of the program. 
+ * Use by creating a PropertiesReader object with the filepath as a String argument. From there, can get a map of 
+ * keys->vals in the PropertiesFile, search for a given key/val in the file, etc. 
+ */
 class PropertiesReader {
 
 	private String myFilePath; 

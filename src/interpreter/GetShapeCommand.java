@@ -1,7 +1,7 @@
 package interpreter;
 
 /**
- * Returns the shape (index corresponding to Shapes file) of the turtle in question
+ * Returns the shape/imageview/appearance (index corresponding to Shapes file) of the turtle in question
  * @author Susie Choi
  *
  */
