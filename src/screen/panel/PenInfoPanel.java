@@ -34,6 +34,7 @@ public class PenInfoPanel extends SpecificPanel {
     private final int VISIBLE_ROW_COUNT = 5;
     public static final String DEFAULT_SHAPE_COMMAND = "SetShape";
     public static final String DEFAULT_PENCOLORCHANGE_COMMAND = "SetPenColor";
+    public static final String DEFAULT_PENSIZE_COMMAND = "SetPenSize";
     private int WIDTH_MIN = 0;
     private int WIDTH_MAX = 10;
     private final FileIO FILE_READER;
@@ -191,6 +192,7 @@ public class PenInfoPanel extends SpecificPanel {
 			int sizeVal = Integer.parseInt(numberTextField.getText());
 			if (sizeVal >= min && sizeVal <= max) {	
 			    numberTextField.setText(Integer.toString(sizeVal));
+			    FILE_READER.parseSettingInput(DEFAULT_PENSIZE_COMMAND+" "+Integer.toString(sizeVal));
 			}
 			else {
 			    numberTextField.setText(currentValue);
