@@ -46,7 +46,6 @@ class SetTowardsCommand extends Command{
     		}
     		double oldAngle = myTurtle.getAngle();
     		double heading = Math.toDegrees(Math.asin((xTowards-myTurtle.getX())/dist));
-    		System.out.println("absolute angle" + heading);
     		if(!upperHemisphere(xTowards, yTowards, myTurtle)) {
     		    if(heading>0) {
     			heading = heading + 90;

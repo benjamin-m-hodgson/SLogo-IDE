@@ -7,7 +7,7 @@ class ExceptionFactory {
 	public static final String DEFAULT_NUMARGS_FILENAME = "interpreter/NumArgsFoCommands";
 	
 	protected ExceptionFactory() {
-		
+
 	}
 	
 	protected void getException(String propertiesFile, String issue) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
