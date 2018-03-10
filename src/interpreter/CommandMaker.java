@@ -35,6 +35,10 @@ import javafx.scene.image.ImageView;
 /** 
  * 
  * @author Susie Choi
+ * Second stage in the command-parsing process: checks that all user input that is syntactically-identified
+ * as a Command in TextFieldParser is, in fact, a recognized Command. Assumes that TextFieldParser has 
+ * correctly populated a parallel array of "types of input" as an argument to the parseValidTextArray method. 
+ * Depends on RegexMatcher to check each token in the text array against a language file, e.g. English.properties.
  */
 
 class CommandMaker {
@@ -44,7 +48,7 @@ class CommandMaker {
 	public static final String DEFAULT_SAVEDVARIABLES = "src/interpreter/SavedVariables.properties" ;
 	public static final ResourceBundle DEFAULT_LANGUAGE = ResourceBundle.getBundle("interpreter/English");
 	public static final String DEFAULT_NUM_ARGS_FILE = "NumArgsForCommands";
-	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command"; //TODO allow this to be client-specified
+	public static final String DEFAULT_COMMAND_IDENTIFIER = "Command";
 	protected static final String[] DEFAULT_CONTROLFLOW_IDENTIFIERS = {"Repeat", "DoTimes", "For"};
 	public static final String DEFAULT_VAR_IDENTIFIER = ":";
 	
@@ -124,7 +128,7 @@ class CommandMaker {
 		}
 		return myCommandTreeBuilder.buildAndExecute(myTurtles, myActiveTurtles, userInputArrayToPass, true); 
 	}
-
+	
 	private String getCommandType(String text) throws BadFormatException, MissingInformationException, UnidentifiedCommandException {
 		RegexMatcher regexMatcher = new RegexMatcher(myLanguage);
 		String commandType = regexMatcher.findMatchingKey(text);
@@ -159,6 +163,7 @@ class CommandMaker {
 		myTurtles.addTurtle(newTurtle);
 		myActiveTurtles.addTurtle(newTurtle);
 	}
+	
 	protected Map<String, String> getUserDefined() {
 		return myUserDefCommands;
 	}

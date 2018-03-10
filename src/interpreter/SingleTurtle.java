@@ -1,10 +1,10 @@
-	package interpreter;
+package interpreter;
 
 	import java.io.File;
 	import java.net.MalformedURLException;
 	import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
+	import java.util.List;
+	import java.util.function.Consumer;
 
 	import javafx.scene.Group;
 	import javafx.scene.image.Image;
@@ -12,6 +12,9 @@ import java.util.function.Consumer;
 	import javafx.scene.shape.Line;
 
 	/**
+	 * Class of Turtles corresponding to a single Turtle object (as opposed to Multiple Turtles).
+	 * Responsible for changing properties of turtles (xcor, ycor, etc.) as well as
+	 * performing calculations about these for Commands.
 	 * @author Sarahbland - Pen inner class and adapting to extend abstract class
 	 * @author Susie Choi - Surrounding Turtle class (original single turtle implementation)
 	 *
@@ -256,8 +259,6 @@ import java.util.function.Consumer;
 		 * @return distance traveled
 		 */
 		protected double calcDistance(double oldX, double oldY, double x, double y) {
-			System.out.println("old x: " + oldX + " new x: "+ x);
-			System.out.println("old y" + oldY + " new y: "+ y);
 			double xSquared = Math.pow((oldX-x), 2);
 			double ySquared = Math.pow((oldY-y), 2);
 			return Math.sqrt(xSquared+ySquared);
@@ -430,7 +431,6 @@ import java.util.function.Consumer;
 					line.setStyle("-fx-stroke: #" + myColorCode + ";");
 					line.setStrokeWidth(myWidth);
 					myPenLines.getChildren().add(line);
-					System.out.println("number of lines" + myPenLines.getChildren().size());
 				}
 			}
 			/**

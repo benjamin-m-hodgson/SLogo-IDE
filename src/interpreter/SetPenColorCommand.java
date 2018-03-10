@@ -3,7 +3,9 @@ package interpreter;
 import java.util.Map;
 
 /**
- * changes color of pen
+ * Changes color of the pen associated with a turtle, where the new pen color is specified with an index into the ColorPalette.
+ * Depends on the PropertiesReader to retrieve the hex value associated with the color index. 
+ * @author Susie Choi 
  * @author andrewarnold
  *
  */

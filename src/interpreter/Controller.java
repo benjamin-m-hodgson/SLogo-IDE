@@ -1,7 +1,6 @@
 package interpreter;
 import java.util.List;
 import java.util.Map;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,23 +16,15 @@ import screen.UserScreen;
 /**
  * 
  * @author Ben Hodgson
+ * @author Sarah Bland
  * @author Susie Choi
  * 
- * The main class for reading in data files and relaying information about these files 
- * to the front end. Also acts as a mediator and handles front end to back end communication.
+ * The primary class for reading in data files and relaying information about these files 
+ * to the front end. Also acts as a mediator and handles front end to back end communication,
+ * notably the makeNewTurtle and parseInput methods.  
+ * 
  */
-/**
- * @author Sarahbland
- *
- */
-/**
- * @author Sarahbland
- *
- */
-/**
- * @author Sarahbland
- *
- */
+
 public class Controller {
 
     public static final String FILE_ERROR_KEY = "FileErrorPrompt";
@@ -47,8 +38,6 @@ public class Controller {
 
     private String DEFAULT_CSS = Controller.class.getClassLoader().
 	    getResource("default.css").toExternalForm(); 
-
-    private ResourceBundle CURRENT_PEN_COLOR;
 
     private Stage PROGRAM_STAGE;
     private UserScreen USER_SCREEN;
@@ -196,34 +185,6 @@ public class Controller {
 
 
     /**
-     * Updates the color of lines to be drawn by the turtle
-     * 
-     * @param color: the new color to be used for drawing lines
-     * @throws TurtleNotFoundException
-     * @throws BadFormatException
-     * @throws UnidentifiedCommandException
-     * @throws MissingInformationException
-     */
-    public void changePenColor(String color) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
-	CURRENT_PEN_COLOR = FILE_READER.getSpecificBundle(color,DEFAULT_COLOR);
-	try {
-	    String hexCodeUnParsed = CURRENT_PEN_COLOR.getString(color+"Code");
-	    parseHexCodeandPass(hexCodeUnParsed);
-	}
-	catch(MissingResourceException e){
-	    try {
-		CURRENT_PEN_COLOR = FILE_READER.getSpecificBundle(DEFAULT_COLOR,DEFAULT_COLOR);
-		String hexCodeUnParsed = CURRENT_PEN_COLOR.getString(color+"Code");
-		parseHexCodeandPass(hexCodeUnParsed);
-	    }
-	    catch(MissingResourceException e1) {
-		loadErrorScreen(FILE_READER.resourceErrorText(FILE_ERROR_KEY));
-	    }
-	}
-    }
-
-
-    /**
      * Changes the language for the back-end to use when parsing based on front-end input
      * @param languageBundle
      */
@@ -243,40 +204,6 @@ public class Controller {
     }
 
     /**
-     * Used for changing pen color from settings panel through a command sent to parser
-     * @param hexCodeUnParsed
-     * @throws TurtleNotFoundException
-     * @throws BadFormatException
-     * @throws UnidentifiedCommandException
-     * @throws MissingInformationException
-     */
-    private void parseHexCodeandPass(String hexCodeUnParsed) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
-	try {
-	    String hexCode = hexCodeUnParsed.substring(1, hexCodeUnParsed.length());
-	    int hexConvert = Integer.parseInt(hexCode,16);
-	    changePenColorHex(hexConvert);
-	}
-	catch (Exception e){
-	    loadErrorScreen(FILE_READER.resourceErrorText(FILE_ERROR_KEY) + System.lineSeparator()
-	    + FILE_READER.resourceErrorText("ColorErrorPrompt"));
-	}
-    }
-
-
-    /**
-     * Changes the pen color of a pen given a hex code for the pen color desired (by sending through the backend)
-     * @param hex is hex code for desired pen color
-     */
-    public void changePenColorHex(int hex) {
-	try {
-	    parseInput("setpcbyhex " + hex);
-	} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
-		| MissingInformationException e) {
-	    USER_SCREEN.displayErrorMessage("Invalid Color Chosen");
-	}
-    }
-
-    /**
      * @return immutable list of immutable/temporary Turtles that have been made so far
      */
     public List<SingleTurtle>  getAllTurtles(){
@@ -288,6 +215,7 @@ public class Controller {
     public List<SingleTurtle> getActiveTurtles(){
 	return myTextFieldParser.getActiveTurtles();
     }
+
     /**
      * Returns ImageView of a particular turtle so it may be attached to the scene
      * @param ID is ID of turtle whose ImageView is desired
@@ -304,7 +232,19 @@ public class Controller {
     public Group getTurtleWithIDPenLines(double ID) {
 	return myTextFieldParser.getTurtleWithIDPenLines(ID);
     }
-
+    
+    /**
+     * Changes the pen color of a pen given a hex code for the pen color desired (by sending through the backend)
+     * @param hex is hex code for desired pen color
+     */
+    public void changePenColorHex(int hex) {
+	try {
+	    parseInput("setpcbyhex " + hex);
+	} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
+		| MissingInformationException e) {
+	    USER_SCREEN.displayErrorMessage("Invalid Color Chosen");
+	}
+    }
 
 
 }
