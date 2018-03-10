@@ -85,18 +85,4 @@ class CommandTreeReader {
 		//System.out.println("Making a command");
 		return myCommandFactory.makeCommand(root.getInfo(), args,  root.getTurtles(), root.getActiveTurtles());
 	}
-	
-//	public static void main(String[] args) {
-//		Turtle turtle = new Turtle();
-//		CommandNode forty = new CommandNode("40", turtle);
-//		CommandNode forward = new CommandNode("Forward", 1, forty, turtle);
-//		CommandNode thirty = new CommandNode("30", turtle);
-//		ArrayList<CommandNode> testKids = new ArrayList<>();
-//		testKids.add(forward);
-//		testKids.add(thirty);
-//		CommandNode test = new CommandNode("SetPosition", 2, testKids, turtle);
-//		CommandTreeReader reader = new CommandTreeReader();
-//		double testVal = reader.readAndExecute(test);
-//		System.out.println(testVal);
-//	}
 }

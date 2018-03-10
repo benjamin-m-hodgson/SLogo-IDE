@@ -1,5 +1,10 @@
 package interpreter;
 
+/**
+ * Returns the pen color (index corresponding to ColorPalette) of the current turtle
+ * @author Susie Choi
+ *
+ */
 class GetPenColorCommand extends Command {
 	
 	public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";

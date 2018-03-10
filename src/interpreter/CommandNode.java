@@ -3,6 +3,11 @@ package interpreter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Susie Choi
+ * minor modifications by Sarah Bland
+ *
+ */
 class CommandNode {
 
 	public static final int DEFAULT_NUM_ARGS = 0; 

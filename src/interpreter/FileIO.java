@@ -30,7 +30,6 @@ public class FileIO {
     public final String LANGUAGES_FOLDER = "languages";
     private ResourceBundle CURRENT_ERROR_DISPLAY;
     private ResourceBundle CURRENT_BACKGROUND_COLOR;
-    private ResourceBundle CURRENT_PEN_COLOR;
     private ResourceBundle CURRENT_LANGUAGE;
     private ResourceBundle CURRENT_SETTINGS;
     public static final String RESOURCE_ERROR = "Could not find resource bundle";

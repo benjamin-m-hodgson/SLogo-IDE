@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Implements the "askwith" command, which tells turtles with a specific criteria (like
+ * "equal? xcor 20") to complete a task.
+ * @author Sarahbland
+ *
+ */
 public class AskWithCommand extends Command {
 	Command myCriteriaCommand;
 	Command myActionCommand;

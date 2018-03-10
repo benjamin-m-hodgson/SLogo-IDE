@@ -7,6 +7,12 @@ import java.util.function.Consumer;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 
+/**
+ * Class with specific methods representing a Turtle that is actually a collection of 
+ * multiple turtles. Uses a TurtleHolder to protect the list of turtles. Returns the 
+ * @author Sarahbland
+ *
+ */
 public class MultipleTurtles extends Turtle{
 		TurtleHolder myActiveTurtleHolder;
 	public MultipleTurtles(List<SingleTurtle> turtles) {
@@ -17,10 +23,10 @@ public class MultipleTurtles extends Turtle{
 	/**
 	 * @return double ID of the last Turtle in question
 	 */
-	public double getID() {
+	protected double getID() {
 		return getLastTurtle().getID(); 
 	}
-	public void executeSequentially(Consumer<Turtle> action){
+	protected void executeSequentially(Consumer<Turtle> action){
 		myActiveTurtleHolder.applyToAllTurtles(action);
 		myActiveTurtleHolder.resetTemporaryTurtles();
 	}
