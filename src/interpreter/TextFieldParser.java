@@ -41,6 +41,11 @@ import javafx.scene.image.ImageView;
 
 /** 
  * @author Susie Choi
+ * First "stage" of the command-parsing process: ensuring valid syntax for all commands, 
+ * e.g. no command should have semicolons. Dependency on RegexMatcher and existence of 
+ * Syntax file to check user input against valid syntax. parseText is intended to be called (by Controller) 
+ * with the user's commands as a string. Dependency on CommandMaker to continue the parsing process. 
+ * 
  */
 
 class TextFieldParser {	
@@ -126,12 +131,6 @@ class TextFieldParser {
 		}
 
 		String[] tokenizedInputArray = tokenizedInput.toArray(new String[tokenizedInput.size()]);
-		//		for (String s : tokenizedInputArray) {
-		//			System.out.println(s);
-		//		}
-		//		for (String s : tokenizedInputArray) {
-		//			System.out.println(s);
-		//		}
 		return parseTextArray(tokenizedInputArray);
 	}
 

@@ -27,6 +27,7 @@ public class FileIO {
     public static final String DEFAULT_PROPSFILE_SUFFIX = ".properties";
     public static final String DEFAULT_SHAPES_FILE = "interpreter/TurtleShapes";
     public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
+    public static final String DEFAULT_COLORPALETTENAMES_FILE = "interpreter/ColorPaletteNames";
     public final String LANGUAGES_FOLDER = "languages";
     private ResourceBundle CURRENT_ERROR_DISPLAY;
     private ResourceBundle CURRENT_BACKGROUND_COLOR;
@@ -71,7 +72,7 @@ public class FileIO {
 	}
 
 	public Map<String, String> getColors(){
-		return getMapFromProperties(DEFAULT_FILEPATH_PREFIX+DEFAULT_COLORPALETTE_FILE+DEFAULT_PROPSFILE_SUFFIX);
+		return getMapFromProperties(DEFAULT_FILEPATH_PREFIX+DEFAULT_COLORPALETTENAMES_FILE+DEFAULT_PROPSFILE_SUFFIX);
 	}
 
 	public Map<String, String> getShapes(){
