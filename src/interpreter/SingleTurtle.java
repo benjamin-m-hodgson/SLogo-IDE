@@ -446,5 +446,21 @@ package interpreter;
 
 
 
+		@Override
+		protected void setShape(Image img, double idxKey) throws BadFormatException,
+			UnidentifiedCommandException, MissingInformationException, MalformedURLException {
+		    // TODO Auto-generated method stub
+		    
+		}
+		@Override
+		protected void setImage(Image newImg) {
+		    // TODO Auto-generated method stub
+		    
+		}
+
+
+
+
+
 
 	}
