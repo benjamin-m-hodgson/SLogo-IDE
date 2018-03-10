@@ -20,34 +20,32 @@ import java.util.ResourceBundle;
  */
 public class FileIO {
 
-    private ResourceBundle CURRENT_TEXT_DISPLAY;
-    public static final String DEFAULT_SAVEDUSERCOMMANDS = "src/interpreter/SavedUserCommands.properties" ;
-    public static final String DEFAULT_SAVEDVARIABLES = "src/interpreter/SavedVariables.properties" ;
-    public static final String DEFAULT_FILEPATH_PREFIX = "src/";
-    public static final String DEFAULT_PROPSFILE_SUFFIX = ".properties";
-    public static final String DEFAULT_SHAPES_FILE = "interpreter/TurtleShapes";
-    public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
-    public static final String DEFAULT_PREFERENCES_FOLDER = "workspacePreferences";
-    public static final String DEFAULT_COLORPALETTENAMES_FILE = "interpreter/ColorPaletteNames";
+    public  final String DEFAULT_SAVEDUSERCOMMANDS = "src/interpreter/SavedUserCommands.properties" ;
+    public  final String DEFAULT_SAVEDVARIABLES = "src/interpreter/SavedVariables.properties" ;
+    public  final String DEFAULT_FILEPATH_PREFIX = "src/";
+    public  final String DEFAULT_PROPSFILE_SUFFIX = ".properties";
+    public  final String DEFAULT_SHAPES_FILE = "interpreter/TurtleShapes";
+    public  final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
+    public  final String DEFAULT_PREFERENCES_FOLDER = "workspacePreferences";
+    public  final String DEFAULT_COLORPALETTENAMES_FILE = "interpreter/ColorPaletteNames";
     public final String LANGUAGES_FOLDER = "languages";
-    private ResourceBundle CURRENT_ERROR_DISPLAY;
-    private ResourceBundle CURRENT_BACKGROUND_COLOR;
-    private ResourceBundle CURRENT_LANGUAGE;
-    private ResourceBundle CURRENT_SETTINGS;
-    public static final String RESOURCE_ERROR = "Could not find resource bundle";
-    public static final String FILE_ERROR_KEY = "FileErrorPrompt";
-    public static final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
-    public static final String SYNTAX_FILE_NAME = "Syntax.properties";
-    public static final String DEFAULT_LANGUAGE = "English";
-    public static final String DEFAULT_COLOR = "Grey";
-    public static final String DEFAULT_SETTINGS = "settings";
+    public final String RESOURCE_ERROR = "Could not find resource bundle";
+    public final String FILE_ERROR_KEY = "FileErrorPrompt";
+    public final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
+    public final String SYNTAX_FILE_NAME = "Syntax.properties";
+    public final String DEFAULT_LANGUAGE = "English";
+    public final String DEFAULT_COLOR = "Grey";
+    public final String DEFAULT_SETTINGS = "settings";
     private final String DEFAULT_WORKSPACE_PREF = "default";
     private final Controller CONTROL;
-
+    private ResourceBundle currentTextDisplay;
+    private ResourceBundle currentErrorDisplay;
+    private ResourceBundle currentBackgroundColor;
+    private ResourceBundle currentLanguage;
+    private ResourceBundle currentSettings;
 
 	public FileIO(Controller controlIn) {
 		CONTROL = controlIn;
-
 	}
 
 	/**
@@ -134,7 +132,7 @@ public class FileIO {
 	 * @return The string value @param key is assigned to in the .properties file
 	 */
 	public String resourceDisplayText(String key) {
-		return resourceText(key, CURRENT_TEXT_DISPLAY);
+		return resourceText(key, currentTextDisplay);
 	}
 	
 	public String palleteColorText(String key) {
@@ -149,7 +147,7 @@ public class FileIO {
 	 * @return The string value @param key is assigned to in the .properties file
 	 */
 	public String resourceErrorText(String key) {
-		return resourceText(key, CURRENT_ERROR_DISPLAY);
+		return resourceText(key, currentErrorDisplay);
 	}
 
 	/**
@@ -161,7 +159,7 @@ public class FileIO {
 	 */
 	//covers resourceSettingsText
 	public String resourceSettingsText(String key) {
-		return resourceText(key, CURRENT_SETTINGS);		
+		return resourceText(key, currentSettings);		
 	}
 
 
@@ -192,20 +190,20 @@ public class FileIO {
 			URL[] urls = {file.toURI().toURL()};
 			ClassLoader loader = new URLClassLoader(urls);
 			try {
-				CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(language + "Prompts", 
+				currentTextDisplay = ResourceBundle.getBundle(language + "Prompts", 
 						Locale.getDefault(), loader);
-				CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(language + "Errors", 
+				currentErrorDisplay = ResourceBundle.getBundle(language + "Errors", 
 						Locale.getDefault(), loader);
 			}
 			// if .properties file doesn't exist for specified language, default to English
 			catch (Exception e) {
-				CURRENT_TEXT_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Prompts", 
+				currentTextDisplay = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Prompts", 
 						Locale.getDefault(), loader);
-				CURRENT_ERROR_DISPLAY = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Errors", 
+				currentErrorDisplay = ResourceBundle.getBundle(DEFAULT_LANGUAGE + "Errors", 
 						Locale.getDefault(), loader);
 			}
-			CURRENT_LANGUAGE = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
-			CONTROL.changeParserLanguage(CURRENT_LANGUAGE);
+			currentLanguage = ResourceBundle.getBundle(language, Locale.getDefault(), loader);
+			CONTROL.changeParserLanguage(currentLanguage);
 		}
 		catch (MalformedURLException e) {
 			CONTROL.loadErrorScreen(resourceErrorText(FILE_ERROR_KEY));
@@ -224,8 +222,8 @@ public class FileIO {
 	 */
 	//covers changeBackgroundColor
 	public String getColorHexfromName(String color) {
-		CURRENT_BACKGROUND_COLOR = getSpecificBundle(color,DEFAULT_COLOR);
-		return CURRENT_BACKGROUND_COLOR.getString(color+"Code");
+		currentBackgroundColor = getSpecificBundle(color,DEFAULT_COLOR);
+		return currentBackgroundColor.getString(color+"Code");
 	}
 
 	/**
@@ -236,7 +234,6 @@ public class FileIO {
 	 * @param language: The language to define which .properties files to use in the Program
 	 */
 	//covers findColorFile fully
-	//should be private after penColorChangeIsFixed
 	private ResourceBundle getSpecificBundle(String bundleName, String defaultTarget, String folderName) {
 		String currentDir = System.getProperty("user.dir");
 		ResourceBundle bundle;
@@ -251,7 +248,6 @@ public class FileIO {
 
 			}
 			catch (Exception e) {
-			    e.printStackTrace();
 				bundle = ResourceBundle.getBundle(defaultTarget, 
 						Locale.getDefault(), loader);
 				return bundle;
@@ -263,6 +259,12 @@ public class FileIO {
 		}
 	}
 	
+	/**
+	 * wrapper for getspecifcbundle if the folder name doesn't need to be specified
+	 * @param bundleName
+	 * @param defaultTarget
+	 * @return
+	 */
 	public ResourceBundle getSpecificBundle(String bundleName, String defaultTarget) {
 	    return getSpecificBundle(bundleName, defaultTarget, "");
 	}
@@ -274,10 +276,16 @@ public class FileIO {
 	 */
 	//covers findSettings
 	public void loadSettings() {
-		CURRENT_SETTINGS = getSpecificBundle(DEFAULT_SETTINGS,DEFAULT_SETTINGS);
+		currentSettings = getSpecificBundle(DEFAULT_SETTINGS,DEFAULT_SETTINGS);
 		//only has default so there is no back up, if it fails an error should be thrown
 	}
 
+	
+	/**
+	 * a map of the preference values stored in the specific properties file
+	 * @param fileName	the properties file containing the preferences
+	 * @return	map of the preferences
+	 */
 	public Map<String, String> getWorkspacePreferences(String fileName) {
 		ResourceBundle workspacePref = getSpecificBundle(fileName, DEFAULT_WORKSPACE_PREF,DEFAULT_PREFERENCES_FOLDER );
 		Map<String, String> preferences = new HashMap<String,String>();
@@ -294,7 +302,7 @@ public class FileIO {
 		String[] settingCommandArray = settingInput.split("\\s+");
 		String commandName = settingCommandArray[0];
 		String commandArg = settingCommandArray[1];
-		RegexMatcher rm = new RegexMatcher(CURRENT_LANGUAGE);
+		RegexMatcher rm = new RegexMatcher(currentLanguage);
 		String appropriateLangCommand = "";
 		try {
 			appropriateLangCommand = rm.findMatchingVal(commandName);

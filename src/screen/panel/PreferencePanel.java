@@ -156,13 +156,9 @@ public class PreferencePanel extends SpecificPanel {
 	saveButton.setOnMouseClicked((arg0)->{
 	    System.out.println("hit");
 	    Map<String, String> currentState = USER_SCREEN.getCurrentState();
-
 	    try {
 		String currentDir = System.getProperty("user.dir");
-
 		File dir = new File(currentDir + File.separator + "workspacePreferences");
-		if(!dir.exists()){
-		    dir.mkdir();}
 		File newPref=new File(dir,PARAMETER_INPUT.getText()+".properties");
 		if(!newPref.exists()){
 		    newPref.createNewFile();
@@ -170,7 +166,7 @@ public class PreferencePanel extends SpecificPanel {
 		FileWriter fw = new FileWriter(newPref);
 		BufferedWriter out = new BufferedWriter(fw);
 		for(String key: currentState.keySet()) {
-		    out.write(key + "=" + currentState.get(key));
+		    out.write(key + " = " + currentState.get(key));
 		    out.newLine();
 		}
 		out.flush();
@@ -178,8 +174,7 @@ public class PreferencePanel extends SpecificPanel {
 		updatePrompt();
 	    } catch (IOException e) {
 		USER_SCREEN.displayErrorMessage("Failed to save Properties");
-	    }
-	});
+	    }});
 	return saveButton;
     }
 
