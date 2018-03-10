@@ -77,7 +77,8 @@ public class TurtleListPanel extends SpecificPanel{
 		turtleButton.setOnMouseClicked((arg0)-> {
 		    getPane()
 		    .setRight(new TurtleInfoPanel(PANE, USER_SCREEN, 
-			    Double.toString(turtle.getID()), FILE_READER).getPanel());
+			    Integer.toString((int) Math.rint(turtle.getID())), 
+			    FILE_READER).getPanel());
 		});
 		if (TURTLES_ACTIVE.contains(turtle)) {
 		    activeTurtles.getChildren().add(turtleButton);

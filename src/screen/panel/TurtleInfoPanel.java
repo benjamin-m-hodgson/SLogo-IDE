@@ -83,9 +83,10 @@ public class TurtleInfoPanel extends SpecificPanel {
 	penDown.setAlignment(Pos.CENTER);
 	Label penWidthLabel = new Label(FILE_READER.resourceDisplayText("penWidth"));
 	penWidthLabel.setId("variableNameLabel");
-	TextField penWidthField = movementField(PANE, WIDTH_MIN, WIDTH_MAX);
-	penWidthField.setPromptText("TODO");
+	TextField penWidthField = widthField(PANE, WIDTH_MIN, WIDTH_MAX, 
+		Double.toString(TURTLE.getPenWidth()));
 	HBox penWidth = new HBox(penWidthLabel, penWidthField);
+	penWidth.setAlignment(Pos.CENTER);
 	ComboBox<Object> penColorChooser = makePenColorChooser("penColorChooser");
 	VBox penOptions = new VBox(penDown, penWidth, penColorChooser);
 	penOptions.setId("moveBox");
@@ -231,6 +232,53 @@ public class TurtleInfoPanel extends SpecificPanel {
 		    }
 		    catch(Exception e) {
 			numberTextField.clear();
+		    }
+		    root.requestFocus();
+		}
+	    }
+	});
+	return numberTextField;
+    }
+    
+    /**
+     * Creates a text field that takes integer only input to set the width amount for the 
+     * turtle pen
+     * 
+     * @param min: the minimum allowable input value
+     * @param max: the maximum allowable input value
+     * @return movementField: a text field that allows the user to input an integer amount
+     * to specify the width of the pen
+     */
+    private TextField widthField(Parent root, int min, int max, String currentValue) {
+	TextField numberTextField = new TextField();
+	numberTextField.setId("widthField");
+	String promptText = FILE_READER.resourceDisplayText("penWidth");
+	numberTextField.setPromptText(promptText);
+	numberTextField.setText(currentValue);
+	numberTextField.setTooltip(new Tooltip(promptText));
+	// clear when the mouse clicks on the text field
+	numberTextField.setOnMouseClicked(new EventHandler<MouseEvent>() {
+	    @Override
+	    public void handle(MouseEvent arg0) {
+		numberTextField.clear();
+	    }
+	});
+	numberTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+	    @Override
+	    public void handle(KeyEvent key) {
+		if (key.getCode() == KeyCode.ENTER) {
+		    // check input to make sure the value is within bounds
+		    try {
+			int sizeVal = Integer.parseInt(numberTextField.getText());
+			if (sizeVal >= min && sizeVal <= max) {	
+			    numberTextField.setText(Integer.toString(sizeVal));
+			}
+			else {
+			    numberTextField.setText(currentValue);
+			}
+		    }
+		    catch(Exception e) {
+			numberTextField.setText(currentValue);
 		    }
 		    root.requestFocus();
 		}

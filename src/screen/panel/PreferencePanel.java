@@ -44,7 +44,8 @@ public class PreferencePanel extends SpecificPanel {
     private UserScreen USER_SCREEN;
     private final FileIO fileReader;
 
-    public PreferencePanel(BorderPane pane, UserScreen userScreen, FileIO fileReaderIn, String[] currentStateKeys) {
+    public PreferencePanel(BorderPane pane, UserScreen userScreen, FileIO fileReaderIn, 
+	    String[] currentStateKeys) {
 	PANE = pane;
 	USER_SCREEN = userScreen;
 	fileReader = fileReaderIn;
