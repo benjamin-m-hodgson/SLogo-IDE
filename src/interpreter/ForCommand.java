@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Implements the "for" command, looping over a certain set of actions from a 
+ * specified start to end with a specified increment
+ * @author Sarahbland
+ *
+ */
 public class ForCommand extends Command{
 		private String myTempVar;
 		private Command myStartCommand;

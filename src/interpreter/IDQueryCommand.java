@@ -1,7 +1,9 @@
 package interpreter;
-
-
-
+/**
+ * Returns the ID of the turtle in question
+ * @author Sarahbland
+ *
+ */
 class IDQueryCommand extends Command{
 		Turtle myTurtle;
 	protected IDQueryCommand(Turtle turtle) {
