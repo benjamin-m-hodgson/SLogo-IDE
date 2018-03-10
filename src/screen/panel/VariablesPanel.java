@@ -27,9 +27,9 @@ import screen.UserScreen;
  * about the currently available variables in the program.
  */
 public class VariablesPanel extends SpecificPanel {
-    private final double FRAMES_PER_SECOND = 2;
-    private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
-    private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    private final double FRAMES_PER_SECOND;
+    private final long MILLISECOND_DELAY;
+    private final double SECOND_DELAY;
     private BorderPane PANE;
     private final FileIO FILE_READER;
     private VBox VARIABLE_BOX;
@@ -40,6 +40,9 @@ public class VariablesPanel extends SpecificPanel {
 	PANE = pane;
 	USER_SCREEN = userScreen;
 	FILE_READER = fileReader;
+	FRAMES_PER_SECOND = Double.parseDouble(FILE_READER.resourceSettingsText("framesPerSec"));
+	MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
+	SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	// attach "animation loop" to time line to play it
 	KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
 		e -> populateVariableBox(SECOND_DELAY));

@@ -28,9 +28,9 @@ import screen.UserScreen;
  * program environment.
  */
 public class CommandPanel extends SpecificPanel {
-    private final double FRAMES_PER_SECOND = 2;
-    private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
-    private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    private final double FRAMES_PER_SECOND;
+    private final long MILLISECOND_DELAY;
+    private final double SECOND_DELAY;
     private BorderPane PANE;
     private FileIO FILE_READER;
     private VBox COMMAND_BOX;
@@ -41,6 +41,9 @@ public class CommandPanel extends SpecificPanel {
 	PANE = pane;
 	USER_SCREEN = userScreen;
 	FILE_READER = fileReader;
+	FRAMES_PER_SECOND = Integer.parseInt(FILE_READER.resourceSettingsText("framesPerSec"));
+	MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
+	SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	// attach "animation loop" to time line to play it
 	KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
 		e -> populateCommandBox(SECOND_DELAY));

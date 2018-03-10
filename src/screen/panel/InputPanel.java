@@ -13,9 +13,9 @@ import javafx.util.Duration;
 import screen.UserScreen;
 
 public class InputPanel extends Panel {
-    private final double FRAMES_PER_SECOND = 120;
-    private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
-    private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    private final double FRAMES_PER_SECOND;
+    private final long MILLISECOND_DELAY ;
+    private final double SECOND_DELAY;
     private TextPanel INPUT_AREA;
     private FileIO FILE_READER;
     private final UserScreen USER_SCREEN;
@@ -26,6 +26,9 @@ public class InputPanel extends Panel {
     public InputPanel(UserScreen userScreen, FileIO fileReader) {
 	FILE_READER = fileReader;
 	USER_SCREEN = userScreen;
+	FRAMES_PER_SECOND = Integer.parseInt(FILE_READER.resourceSettingsText("inputPanelFramesPerSec"));
+	MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
+	SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     }
 
     @Override
@@ -101,7 +104,7 @@ public class InputPanel extends Panel {
 	RUN.setText(FILE_READER.resourceDisplayText("RunPrompt"));
 	CLEAR.setText(FILE_READER.resourceDisplayText("ClearPrompt"));
     }
-    
+
 
 
 }
