@@ -165,9 +165,6 @@ public class UserScreen implements Screen {
     
     public void checkForNewTurtle() {
 	List<SingleTurtle> newTurtles = PROGRAM_CONTROLLER.getAllTurtles();
-	System.out.println("allTurtleSize: " + allTurtles.size());
-	System.out.println("newTurtleSize: " + newTurtles.size());
-
 	for(SingleTurtle newT : newTurtles) {
 	    double id = newT.getID();
 	    if(containsElementWithID(id, allTurtles) == false) {
@@ -207,10 +204,7 @@ public class UserScreen implements Screen {
     public double sendCommandToParse(String inputText) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
 	 return PROGRAM_CONTROLLER.parseInput(inputText);
     }
-    
-    public List<SingleTurtle> getAllTurtles() {
-	return allTurtles;
-    }
+  
 
 
 }
