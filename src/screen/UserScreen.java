@@ -32,6 +32,7 @@ import screen.panel.TurtlePanel;
 public class UserScreen implements Screen {
 
     private Parent ROOT;
+    public static final String DEFAULT_SHAPE_COMMAND = "SetShape";
     private TurtlePanel TURTLE_PANEL;
     private Controller PROGRAM_CONTROLLER;
     private final FileIO FILE_READER;
@@ -45,7 +46,7 @@ public class UserScreen implements Screen {
 	PROGRAM_CONTROLLER = programController;
 	INPUT_HISTORY = new ArrayList<String>();
 	OUTPUT_HISTORY = new ArrayList<String>();
-	currentState = new HashMap<String, String>();
+	currentState = setUpCurrentState();
     }
 
 
@@ -166,6 +167,7 @@ public class UserScreen implements Screen {
 	Map<String, String> preferences = FILE_READER.getWorkspacePreferences(selected);
 	TURTLE_PANEL.changeBackgroundColor(preferences.get("backgroundColor"));
 	FILE_READER.bundleUpdateToNewLanguage(preferences.get("language"));
+	FILE_READER.parseSettingInput(DEFAULT_SHAPE_COMMAND+" "+preferences.get("turtleImage"));
     }
 
     public void checkForNewTurtle() {
@@ -210,6 +212,12 @@ public class UserScreen implements Screen {
 	return PROGRAM_CONTROLLER.parseInput(inputText);
     }
 
+    private Map<String,String> setUpCurrentState() {
+	Map<String,String> currentState = FILE_READER.getWorkspacePreferences("default");
+	String lang  = FILE_READER.resourceDisplayText("Name");
+	currentState.put("language", lang);
+	return currentState;
+    }
 
 
 }
