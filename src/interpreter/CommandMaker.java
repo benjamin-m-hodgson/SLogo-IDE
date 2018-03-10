@@ -33,6 +33,7 @@ import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 
 /** 
+ * 
  * @author Susie Choi
  * Second stage in the command-parsing process: checks that all user input that is syntactically-identified
  * as a Command in TextFieldParser is, in fact, a recognized Command. Assumes that TextFieldParser has 
@@ -126,7 +127,7 @@ class CommandMaker {
 			}
 		}
 		return myCommandTreeBuilder.buildAndExecute(myTurtles, myActiveTurtles, userInputArrayToPass, true); 
-	} 
+	}
 	
 	private String getCommandType(String text) throws BadFormatException, MissingInformationException, UnidentifiedCommandException {
 		RegexMatcher regexMatcher = new RegexMatcher(myLanguage);

@@ -20,27 +20,28 @@ import java.util.ResourceBundle;
  */
 public class FileIO {
 
-	private ResourceBundle CURRENT_TEXT_DISPLAY;
-	public static final String DEFAULT_SAVEDUSERCOMMANDS = "src/interpreter/SavedUserCommands.properties" ;
-	public static final String DEFAULT_SAVEDVARIABLES = "src/interpreter/SavedVariables.properties" ;
-	public static final String DEFAULT_FILEPATH_PREFIX = "src/";
-	public static final String DEFAULT_PROPSFILE_SUFFIX = ".properties";
-	public static final String DEFAULT_SHAPES_FILE = "interpreter/TurtleShapes";
-	public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPaletteNames";
-	public final String LANGUAGES_FOLDER = "languages";
-	private ResourceBundle CURRENT_ERROR_DISPLAY;
-	private ResourceBundle CURRENT_BACKGROUND_COLOR;
-	private ResourceBundle CURRENT_LANGUAGE;
-	private ResourceBundle CURRENT_SETTINGS;
-	public static final String RESOURCE_ERROR = "Could not find resource bundle";
-	public static final String FILE_ERROR_KEY = "FileErrorPrompt";
-	public static final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
-	public static final String SYNTAX_FILE_NAME = "Syntax.properties";
-	public static final String DEFAULT_LANGUAGE = "English";
-	public static final String DEFAULT_COLOR = "Grey";
-	public static final String DEFAULT_SETTINGS = "settings";
-	private final String DEFAULT_WORKSPACE_PREF = "default";
-	private final Controller CONTROL;
+    private ResourceBundle CURRENT_TEXT_DISPLAY;
+    public static final String DEFAULT_SAVEDUSERCOMMANDS = "src/interpreter/SavedUserCommands.properties" ;
+    public static final String DEFAULT_SAVEDVARIABLES = "src/interpreter/SavedVariables.properties" ;
+    public static final String DEFAULT_FILEPATH_PREFIX = "src/";
+    public static final String DEFAULT_PROPSFILE_SUFFIX = ".properties";
+    public static final String DEFAULT_SHAPES_FILE = "interpreter/TurtleShapes";
+    public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
+    public static final String DEFAULT_COLORPALETTENAMES_FILE = "interpreter/ColorPaletteNames";
+    public final String LANGUAGES_FOLDER = "languages";
+    private ResourceBundle CURRENT_ERROR_DISPLAY;
+    private ResourceBundle CURRENT_BACKGROUND_COLOR;
+    private ResourceBundle CURRENT_LANGUAGE;
+    private ResourceBundle CURRENT_SETTINGS;
+    public static final String RESOURCE_ERROR = "Could not find resource bundle";
+    public static final String FILE_ERROR_KEY = "FileErrorPrompt";
+    public static final String SCREEN_ERROR_KEY = "ScreenErrorPrompt";
+    public static final String SYNTAX_FILE_NAME = "Syntax.properties";
+    public static final String DEFAULT_LANGUAGE = "English";
+    public static final String DEFAULT_COLOR = "Grey";
+    public static final String DEFAULT_SETTINGS = "settings";
+    private final String DEFAULT_WORKSPACE_PREF = "default";
+    private final Controller CONTROL;
 
 
 	public FileIO(Controller controlIn) {
@@ -71,7 +72,7 @@ public class FileIO {
 	}
 
 	public Map<String, String> getColors(){
-		return getMapFromProperties(DEFAULT_FILEPATH_PREFIX+DEFAULT_COLORPALETTE_FILE+DEFAULT_PROPSFILE_SUFFIX);
+		return getMapFromProperties(DEFAULT_FILEPATH_PREFIX+DEFAULT_COLORPALETTENAMES_FILE+DEFAULT_PROPSFILE_SUFFIX);
 	}
 
 	public Map<String, String> getShapes(){

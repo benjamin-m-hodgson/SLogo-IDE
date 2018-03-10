@@ -3,6 +3,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Implements DoTimes command, executing a loop a certain number of times and setting
+ * a variable to the current loop count each time
+ * @author Sarahbland
+ *
+ */
 class DoTimesCommand extends Command{
 	
 	private String toExecute;

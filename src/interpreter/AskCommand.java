@@ -3,6 +3,11 @@ package interpreter;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Executes "ask" command, having turtles with specific ids complete a task
+ * @author Sarahbland
+ *
+ */
 public class AskCommand extends Command {
 	Command myIdCommand;
 	Command myActionCommand;

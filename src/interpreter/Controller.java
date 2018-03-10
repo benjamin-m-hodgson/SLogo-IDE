@@ -24,6 +24,11 @@ import screen.UserScreen;
  * 
  */
 
+/**
+ * @author Sarahbland
+ *
+ */
+
 public class Controller {
 
     public static final String FILE_ERROR_KEY = "FileErrorPrompt";
@@ -34,7 +39,7 @@ public class Controller {
     public static final String DEFAULT_SETTINGS = "settings";
     public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
 
- 
+
     private String DEFAULT_CSS = Controller.class.getClassLoader().
 	    getResource("default.css").toExternalForm(); 
 
@@ -46,6 +51,10 @@ public class Controller {
     private TextFieldParser myTextFieldParser; 
     private final FileIO FILE_READER;
 
+    /**
+     * Sets up a new Controller object for this particular workspace
+     * @param primaryStage is Stage of the workspace in question
+     */
     public Controller(Stage primaryStage) {
 	FILE_READER = new FileIO(this);
 	PROGRAM_STAGE = primaryStage;
@@ -71,7 +80,7 @@ public class Controller {
 	    }
 	});
     }
-    
+
     /**
      * Searches through the class path to find the appropriate settings resource file to use for 
      * the program. If it can't locate the file, it displays an error screen to the user
@@ -147,7 +156,7 @@ public class Controller {
 
     /**
      * 
-     * @return
+     * @return Map of user-defined command keys to their values (string lists of commands)
      */
     public Map<String, String> getUserDefined() {
 	return myTextFieldParser.getUserDefined(); 
@@ -178,6 +187,11 @@ public class Controller {
 	myTextFieldParser.loadSavedVariables(); 
     }
 
+
+    /**
+     * Changes the language for the back-end to use when parsing based on front-end input
+     * @param languageBundle
+     */
     public void changeParserLanguage(ResourceBundle languageBundle) {
 	myTextFieldParser.changeLanguage(languageBundle);
     }
@@ -205,23 +219,24 @@ public class Controller {
     public List<SingleTurtle> getActiveTurtles(){
 	return myTextFieldParser.getActiveTurtles();
     }
-	/**
-	 * Returns ImageView of a particular turtle so it may be attached to the scene
-	 * @param ID is ID of turtle whose ImageView is desired
-	 * @return ImageView of turtle with corresponding ID
-	 */
-	public ImageView getTurtleWithIDImageView(double ID) {
-		return myTextFieldParser.getTurtleWithIDImageView(ID);
-	}
-	/**
-	 * Returns Group of a particular turtle so it may be attached to the scene
-	 * @param ID is ID of turtle whose Group is desired
-	 * @return Group of turtle with corresponding ID
-	 */
-	public Group getTurtleWithIDPenLines(double ID) {
-		return myTextFieldParser.getTurtleWithIDPenLines(ID);
-	}
-	
+
+    /**
+     * Returns ImageView of a particular turtle so it may be attached to the scene
+     * @param ID is ID of turtle whose ImageView is desired
+     * @return ImageView of turtle with corresponding ID
+     */
+    public ImageView getTurtleWithIDImageView(double ID) {
+	return myTextFieldParser.getTurtleWithIDImageView(ID);
+    }
+    /**
+     * Returns Group of a particular turtle so it may be attached to the scene
+     * @param ID is ID of turtle whose Group is desired
+     * @return Group of turtle with corresponding ID
+     */
+    public Group getTurtleWithIDPenLines(double ID) {
+	return myTextFieldParser.getTurtleWithIDPenLines(ID);
+    }
+    
     /**
      * Changes the pen color of a pen given a hex code for the pen color desired (by sending through the backend)
      * @param hex is hex code for desired pen color
