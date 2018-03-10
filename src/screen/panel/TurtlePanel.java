@@ -20,6 +20,13 @@ import javafx.scene.layout.Priority;
 import screen.UserScreen;
 
 
+/**
+ * Panel that manages actual block of space which turtle occupies. Dependent on UserScreen
+ * to relay information and FileReader to read in files (as well as the existence of certain
+ * files for turtle image, etc.)
+ * @author Ben Hodgson and Andrew Arnold
+ *
+ */
 public class TurtlePanel  {
     // TODO: put in setting.properties file
     private final double DEFAULT_TURTLE_SIZE = 40;
@@ -37,6 +44,12 @@ public class TurtlePanel  {
  
 
 
+    /**
+     * Makes new TurtlePanel
+     * @param pane is BorderPane that will display it
+     * @param userScreen is screen of current simulation
+     * @param fileReader is file-reading class that helps access information
+     */
     public TurtlePanel(BorderPane pane, UserScreen userScreen, FileIO fileReader) {
 	USER_PANE = pane;
 	FILE_READER = fileReader;
@@ -44,7 +57,11 @@ public class TurtlePanel  {
 	TURTLE_LIST = new ArrayList<ImageView>();
 	TURTLE_PANEL = new Pane();
     }
-
+    
+  
+    /**
+     * Makes the panel and attaches it to the screen
+     */
     public void makePanel() {
 	BorderPane layoutPane = new BorderPane();
 
@@ -132,6 +149,13 @@ public class TurtlePanel  {
     		}
       }
 
+    /**
+     * Attaches new turtle objects created by the backend during the last run (ImageView
+     * and a Group corresponding to the turtle's pen lines)
+     * @param image is imageView of new turtle
+     * @param penLine is Group of Lines corresponding to pen lines of turtle
+     * @param ID is ID of turtle
+     */
     public void attachTurtleObjects(ImageView image, Group penLine, double ID) {
     		setUpImageView(image, SCROLL_PANE,ID);
     		penLine.translateXProperty().bind(Bindings.divide(SCROLL_PANE.widthProperty(), 2));
@@ -151,36 +175,21 @@ public class TurtlePanel  {
 	PANEL.setBottom(ErrorHolder);
     }
 
-    private Image getTurtleImage(String selected) {
-	String currentDir = System.getProperty("user.dir");
-	File turtleFile = new File(currentDir + File.separator + "turtleimages" 
-		+ File.separator + selected + ".png");
-	Image turtleImage = null;
-	try {
-	    turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
-	} 
-	catch (MalformedURLException e) {
-	    turtleFile = new File(currentDir + File.separator + "turtleimages" + File.separator + DEFAULT_TURTLE);
-	    try {
-		turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
-	    } 
-	    catch (MalformedURLException e1) {
-		System.out.println("FAILED TO LOAD TURTLE IMG");
-	    }
-	}
-	return turtleImage;
-    }
-
+    /**
+     * changes background color to the background color with given string colorcode
+     * @param colorCode is hex code of new background color
+     */
     public void changeBackgroundColor(String colorCode) {
 	SCROLL_PANE.setStyle("-fx-background-color:" + colorCode + ";");
     }
 
+    /**
+     * removes an error from the screen when a user clicks on it
+     */
     public void removeErrorButton() {
 	PANEL.getChildren().remove(ErrorHolder);
     }
 
-    public void drawTurtleInfoPanel(String id) {
-
-    }
+  
 
 }

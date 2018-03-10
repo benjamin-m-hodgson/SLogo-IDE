@@ -11,6 +11,7 @@ import java.util.Map;
  * @author Andrew Arnold
  *
  */
+
 abstract class Command {
 	private Turtle myTurtle;
 	/**
@@ -40,6 +41,14 @@ abstract class Command {
 			return command.execute();
 		}
 	}
+	
+	/**
+	 * Retrieves the value of a variable or sends back the default value (0) if the variable
+	 * has not been set yet.
+	 * @param variable is string corresponding to potential variable
+	 * @param varsMap is map of previously made variables to their double counterparts
+	 * @return value of variable
+	 */
 	protected double getValueOfVar(String variable, Map<String, Double> varsMap) {
 		double varVal = 0; 
 		if (varsMap.containsKey(variable)) {
@@ -48,9 +57,17 @@ abstract class Command {
 		return varVal; 
 	}
 	
+	/**
+	 * Sets active turtles that this command will execute upon
+	 * @param turtle is Turtle containing turtle(s) desired
+	 */
 	protected void setActiveTurtles(Turtle turtle) {
 		myTurtle = turtle;
 		}
+	/**
+	 * Gets active turtles that this command will execute upon
+	 * @return Turtle containing turtle(s) desired
+	 */
 	protected Turtle getActiveTurtles() {
 		return myTurtle;
 	}

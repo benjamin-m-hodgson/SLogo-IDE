@@ -1,13 +1,11 @@
 package screen.panel;
 
 import interpreter.BadFormatException;
-import interpreter.Controller;
 import interpreter.FileIO;
 import interpreter.MissingInformationException;
 import interpreter.TurtleNotFoundException;
 import interpreter.UnidentifiedCommandError;
 import interpreter.UnidentifiedCommandException;
-import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;

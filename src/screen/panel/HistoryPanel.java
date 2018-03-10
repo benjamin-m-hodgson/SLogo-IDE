@@ -17,6 +17,13 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import screen.UserScreen;
 
+/**
+ * Class that takes care of displaying command history to users. Dependent on the file reader 
+ * to help it read files, and the UserScreen class to relay information.
+ * @author Andrew Arnold and Ben Hodgson
+ *
+ */
+
 public class HistoryPanel extends SpecificPanel {
     private final double FRAMES_PER_SECOND = 2;
     private final long MILLISECOND_DELAY = Math.round(1000 / FRAMES_PER_SECOND);
@@ -25,7 +32,13 @@ public class HistoryPanel extends SpecificPanel {
     private VBox HISTORY_BOX; 
     private BorderPane PANE;
     private UserScreen USER_SCREEN;
-
+    
+    /**
+     * Makes a new HistoryPanel
+     * @param pane is BorderPane housing the history
+     * @param userScreen is UserScreen that of this simulation
+     * @param fileReader is filereader class to aid in getting info from files
+     */
     public HistoryPanel( BorderPane pane, UserScreen userScreen, FileIO fileReader) {
 	PANE = pane;
 	USER_SCREEN = userScreen;
@@ -39,6 +52,10 @@ public class HistoryPanel extends SpecificPanel {
 	animation.play();
     }
 
+    /**
+     * Makes a new Panel specific to the History section of the screen
+     * @see screen.panel.Panel#makePanel()
+     */
     @Override
     public void makePanel() {
 	Button backButton = makeBackButton(FILE_READER);
