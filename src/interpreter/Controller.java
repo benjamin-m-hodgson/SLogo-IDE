@@ -44,7 +44,7 @@ public class Controller {
     public static final String DEFAULT_SETTINGS = "settings";
     public static final String DEFAULT_COLORPALETTE_FILE = "interpreter/ColorPalette";
 
- 
+
     private String DEFAULT_CSS = Controller.class.getClassLoader().
 	    getResource("default.css").toExternalForm(); 
 
@@ -87,7 +87,7 @@ public class Controller {
 	    }
 	});
     }
-    
+
     /**
      * Searches through the class path to find the appropriate settings resource file to use for 
      * the program. If it can't locate the file, it displays an error screen to the user
@@ -275,6 +275,7 @@ public class Controller {
 	    USER_SCREEN.displayErrorMessage("Invalid Color Chosen");
 	}
     }
+
     /**
      * @return immutable list of immutable/temporary Turtles that have been made so far
      */
@@ -287,22 +288,22 @@ public class Controller {
     public List<SingleTurtle> getActiveTurtles(){
 	return myTextFieldParser.getActiveTurtles();
     }
-	/**
-	 * Returns ImageView of a particular turtle so it may be attached to the scene
-	 * @param ID is ID of turtle whose ImageView is desired
-	 * @return ImageView of turtle with corresponding ID
-	 */
-	public ImageView getTurtleWithIDImageView(double ID) {
-		return myTextFieldParser.getTurtleWithIDImageView(ID);
-	}
-	/**
-	 * Returns Group of a particular turtle so it may be attached to the scene
-	 * @param ID is ID of turtle whose Group is desired
-	 * @return Group of turtle with corresponding ID
-	 */
-	public Group getTurtleWithIDPenLines(double ID) {
-		return myTextFieldParser.getTurtleWithIDPenLines(ID);
-	}
+    /**
+     * Returns ImageView of a particular turtle so it may be attached to the scene
+     * @param ID is ID of turtle whose ImageView is desired
+     * @return ImageView of turtle with corresponding ID
+     */
+    public ImageView getTurtleWithIDImageView(double ID) {
+	return myTextFieldParser.getTurtleWithIDImageView(ID);
+    }
+    /**
+     * Returns Group of a particular turtle so it may be attached to the scene
+     * @param ID is ID of turtle whose Group is desired
+     * @return Group of turtle with corresponding ID
+     */
+    public Group getTurtleWithIDPenLines(double ID) {
+	return myTextFieldParser.getTurtleWithIDPenLines(ID);
+    }
 
 
 

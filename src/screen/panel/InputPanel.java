@@ -65,6 +65,7 @@ public class InputPanel extends Panel {
 	    public void handle(MouseEvent arg0) {
 		USER_SCREEN.clearErrorDisplay();
 		INPUT_AREA.run();
+		USER_SCREEN.checkForNewTurtle();
 	    }
 	});
 	runButton.setId("runButton");
@@ -100,6 +101,7 @@ public class InputPanel extends Panel {
 	RUN.setText(FILE_READER.resourceDisplayText("RunPrompt"));
 	CLEAR.setText(FILE_READER.resourceDisplayText("ClearPrompt"));
     }
+    
 
 
 }

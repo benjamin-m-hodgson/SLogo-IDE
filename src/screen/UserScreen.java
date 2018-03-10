@@ -10,6 +10,7 @@ import interpreter.BadFormatException;
 import interpreter.Controller;
 import interpreter.FileIO;
 import interpreter.MissingInformationException;
+import interpreter.SingleTurtle;
 import interpreter.TurtleNotFoundException;
 import interpreter.UnidentifiedCommandException;
 import javafx.scene.Group;
@@ -36,12 +37,13 @@ public class UserScreen implements Screen {
     private final FileIO FILE_READER;
     private List<String> INPUT_HISTORY;
     private List<String> OUTPUT_HISTORY;
+    private List<SingleTurtle> allTurtles;
 
     public UserScreen(Controller programController, FileIO fileReader) {
 	FILE_READER = fileReader;
 	PROGRAM_CONTROLLER = programController;
 	INPUT_HISTORY = new ArrayList<String>();
-	OUTPUT_HISTORY = new ArrayList<String>();
+	OUTPUT_HISTORY = new ArrayList<String>();	
     }
 
 
@@ -53,6 +55,7 @@ public class UserScreen implements Screen {
 	rootPane.setRight(new InfoPanel( rootPane, this, FILE_READER).getPanel());
 	TURTLE_PANEL = new TurtlePanel(rootPane, this, FILE_READER);//, rootPane
 	rootPane.setCenter(TURTLE_PANEL.getPanel());
+	allTurtles = PROGRAM_CONTROLLER.getAllTurtles();
 	ROOT = rootPane;
     }
 
@@ -158,8 +161,31 @@ public class UserScreen implements Screen {
 	System.out.println(penColor);
 	PROGRAM_CONTROLLER.changePenColorHex(Integer.parseInt(penColor,16));
 	FILE_READER.bundleUpdateToNewLanguage(preferences.get("language"));
+    }
+    
+    public void checkForNewTurtle() {
+	List<SingleTurtle> newTurtles = PROGRAM_CONTROLLER.getAllTurtles();
+	System.out.println("allTurtleSize: " + allTurtles.size());
+	System.out.println("newTurtleSize: " + newTurtles.size());
 
-
+	for(SingleTurtle newT : newTurtles) {
+	    double id = newT.getID();
+	    if(containsElementWithID(id, allTurtles) == false) {
+		ImageView turtleImage = PROGRAM_CONTROLLER.getTurtleWithIDImageView(id);
+		Group penLines = PROGRAM_CONTROLLER.getTurtleWithIDPenLines(id);
+		TURTLE_PANEL.attachTurtleObjects(turtleImage, penLines);
+	    }
+	}
+	allTurtles = newTurtles;
+    }
+    
+    private boolean containsElementWithID(double id, List<SingleTurtle> theList) {
+	for(SingleTurtle t : theList) {
+	    if (t.getID() == id) {
+		return true;
+	    }
+	}
+	return false;
     }
     
     public Map<String, Double> getVariables(){
@@ -180,6 +206,10 @@ public class UserScreen implements Screen {
     
     public double sendCommandToParse(String inputText) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
 	 return PROGRAM_CONTROLLER.parseInput(inputText);
+    }
+    
+    public List<SingleTurtle> getAllTurtles() {
+	return allTurtles;
     }
 
 

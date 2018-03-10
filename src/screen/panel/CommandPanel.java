@@ -65,16 +65,16 @@ public class CommandPanel extends SpecificPanel {
 	PANEL = panelRoot;	
     }
 
-   
 
-    
- 
+
+
+
 
     @Override
     protected UserScreen getUserScreen() {
 	return USER_SCREEN;
     }
-    
+
     /**
      * Populates the child Nodes in VARIABLE_BOX to represent the variables available in the 
      * program and their associated values.
@@ -85,7 +85,7 @@ public class CommandPanel extends SpecificPanel {
 	COMMAND_BOX.getChildren().clear();
 	Map<String, String> programCommands = USER_SCREEN.getUserDefined();
 	for (Entry<String, String> command : programCommands.entrySet()) {
-	 //   System.out.println("anything?");
+	    //   System.out.println("anything?");
 	    String commandName = command.getKey();
 	    String commandValue = command.getValue();
 	    Label nameLabel = new Label(commandName);
@@ -93,13 +93,13 @@ public class CommandPanel extends SpecificPanel {
 	    Label valueLabel = new Label(commandValue);
 	    valueLabel.setId("commandLabel");
 	    valueLabel.setOnMouseClicked((arg0)-> getPane()
-			.setRight(commandInformation(commandName, commandValue)));
+		    .setRight(commandInformation(commandName, commandValue)));
 	    HBox infoRow = new HBox(nameLabel, valueLabel);
 	    infoRow.setAlignment(Pos.CENTER);
 	    COMMAND_BOX.getChildren().add(infoRow);
 	}
     }
-    
+
     /**
      * Takes a user defined command and its user defined value and displays this information
      * in a new panel that aims to enhance readability.  
@@ -131,10 +131,13 @@ public class CommandPanel extends SpecificPanel {
 	parameterInput.setPromptText(FILE_READER.resourceDisplayText("parameters"));
 	parameterInput.setEditable(true);
 	parameterInput.setOnKeyTyped((arg0) -> runFunction.setDisable(false));
-	runFunction.setOnMouseClicked((arg0) -> USER_SCREEN.commandRunFromHistory(commandName + " " + parameterInput.getText()));
+	runFunction.setOnMouseClicked((arg0) ->{ 
+	    USER_SCREEN.commandRunFromHistory(commandName + " " + parameterInput.getText());
+	    USER_SCREEN.checkForNewTurtle();
+	});
 
-	
-	
+
+
 	VBox panelRoot = new VBox(commandButton, commandInfoArea,parameterInput, runFunction,backButton);
 	panelRoot.setId("infoPanel");
 	VBox.setVgrow(commandInfoArea, Priority.ALWAYS);
