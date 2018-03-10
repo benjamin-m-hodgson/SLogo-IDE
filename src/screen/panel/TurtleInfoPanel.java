@@ -164,6 +164,7 @@ public class TurtleInfoPanel extends SpecificPanel {
 	return dropDownMenu;
     }
 
+    
     /**
      * An area of the turtle info panel that allows the user to move the turtle directionally
      * around the screen
