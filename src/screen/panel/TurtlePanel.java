@@ -20,10 +20,18 @@ import javafx.scene.layout.Priority;
 import screen.UserScreen;
 
 
+/**
+ * Panel that manages actual block of space which turtle occupies. Dependent on UserScreen
+ * to relay information and FileReader to read in files (as well as the existence of certain
+ * files for turtle image, etc.)
+ * @author Ben Hodgson and Andrew Arnold
+ *
+ */
 public class TurtlePanel  {
     // TODO: put in setting.properties file
     private final double DEFAULT_TURTLE_SIZE = 40;
     private final String DEFAULT_TURTLE = "Green Turtle.png";
+    private String DEFAULT_COLOR_HEXCODE = "2d3436";
     private BorderPane PANEL;
     private final BorderPane USER_PANE;
     private ScrollPane SCROLL_PANE;
@@ -32,9 +40,16 @@ public class TurtlePanel  {
     private HBox ErrorHolder;
     private List<ImageView> TURTLE_LIST;
     private final FileIO FILE_READER;
+    private int TURTLE_COUNT = 1;
  
 
 
+    /**
+     * Makes new TurtlePanel
+     * @param pane is BorderPane that will display it
+     * @param userScreen is screen of current simulation
+     * @param fileReader is file-reading class that helps access information
+     */
     public TurtlePanel(BorderPane pane, UserScreen userScreen, FileIO fileReader) {
 	USER_PANE = pane;
 	FILE_READER = fileReader;
@@ -42,7 +57,11 @@ public class TurtlePanel  {
 	TURTLE_LIST = new ArrayList<ImageView>();
 	TURTLE_PANEL = new Pane();
     }
-
+    
+  
+    /**
+     * Makes the panel and attaches it to the screen
+     */
     public void makePanel() {
 	BorderPane layoutPane = new BorderPane();
 
@@ -51,7 +70,7 @@ public class TurtlePanel  {
 
 	SCROLL_PANE = scroll;
 	scroll.setId("turtlePanel");
-	//createTurtle(TURTLE_PANEL, scroll);
+	createTurtle(TURTLE_PANEL, scroll);
 
 	PANEL = layoutPane;
     }
@@ -62,10 +81,46 @@ public class TurtlePanel  {
      * @return PANEL: The Parent node to be used in the Scene object. 
      */
     public Parent getPanel() {
-	if (PANEL == null) {
-	    makePanel();
+ 	if (PANEL == null) {
+ 	    makePanel();
+ 	}
+ 	return PANEL;
+     } 
+
+    private void createTurtle(Pane panel, ScrollPane scrollPane) {
+	String currentDir = System.getProperty("user.dir");
+	try {
+	    File turtleFile = new File(currentDir + File.separator + "turtleimages" 
+		    + File.separator + DEFAULT_TURTLE);
+	    Image turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
+	    ImageView turtleView = new ImageView(turtleImage);
+	    TURTLE_LIST.add(turtleView);
+	    turtleView.setId("turtleView");
+	    turtleView.setFitHeight(DEFAULT_TURTLE_SIZE);
+	    turtleView.setFitWidth(DEFAULT_TURTLE_SIZE);
+	    // center the turtle on the screen
+	    turtleView.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
+	    turtleView.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
+	    turtleView.setX(-DEFAULT_TURTLE_SIZE/2);
+	    turtleView.setY(-DEFAULT_TURTLE_SIZE/2);
+	    // add button click event
+	    String turtleId = Integer.toString(TURTLE_COUNT);
+	    turtleView.setOnMousePressed((arg0)-> USER_PANE.setRight(
+		    new TurtleInfoPanel(USER_PANE, USER_SCREEN, turtleId, FILE_READER).getPanel()));
+	    panel.getChildren().add(turtleView);
+	    Group penLines = new Group();
+	    penLines.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
+	    penLines.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
+	    panel.getChildren().add(penLines);
+	    USER_SCREEN.makeNewTurtleCommand(turtleId, turtleView,
+		    DEFAULT_COLOR_HEXCODE , penLines);
+	    TURTLE_COUNT++;
 	}
-	return PANEL;
+	catch (Exception e) {
+	    // TODO: make custom exception super class with sub classes for specifications
+	    //String specification = "%nFailed to find language files";
+	    System.out.println("FAILED TO LOAD TURTLE IMG");
+	}
     } 
 
     private ImageView setUpImageView(ImageView turtleView, ScrollPane scrollPane, double ID){
@@ -94,6 +149,13 @@ public class TurtlePanel  {
     		}
       }
 
+    /**
+     * Attaches new turtle objects created by the backend during the last run (ImageView
+     * and a Group corresponding to the turtle's pen lines)
+     * @param image is imageView of new turtle
+     * @param penLine is Group of Lines corresponding to pen lines of turtle
+     * @param ID is ID of turtle
+     */
     public void attachTurtleObjects(ImageView image, Group penLine, double ID) {
     		setUpImageView(image, SCROLL_PANE,ID);
     		penLine.translateXProperty().bind(Bindings.divide(SCROLL_PANE.widthProperty(), 2));

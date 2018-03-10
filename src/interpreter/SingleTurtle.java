@@ -220,8 +220,12 @@
 			return myVisibility; 
 		}
 
-		protected boolean getPenVisibility() {
+		public boolean getPenVisibility() {
 			return myPen.getVisibility(); 
+		}
+		
+		public double getPenWidth() {
+		    return myPen.myWidth;
 		}
 		
 		protected SingleTurtle toSingleTurtle() {

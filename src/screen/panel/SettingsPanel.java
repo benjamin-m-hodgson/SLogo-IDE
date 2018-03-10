@@ -29,21 +29,18 @@ public class SettingsPanel extends SpecificPanel  {
     private final int VISIBLE_ROW_COUNT = 5;
     public static final String PREFERENCES_FOLDER = "workspacePreferences";
     public static final String DEFAULT_BGCOLORCHANGE_COMMAND = "SetBackground";
-    public static final String DEFAULT_PENCOLORCHANGE_COMMAND = "SetPenColor";
-    public static final String DEFAULT_SHAPE_COMMAND = "SetShape";
     private  Button BACK;
     private BorderPane PANE;
     private Button NEW_WORKSPACE;
     private Button PREFERENCES;
+    private Button TURTLES;
     private ComboBox<Object> LANGUAGE_CHOOSER;
-    private ComboBox<Object> PEN_COLOR_CHOOSER;
-    private ComboBox<Object> TURTLE_IMAGE_CHOOSER;
     private UserScreen USER_SCREEN;
     private final FileIO fileReader;
     private final int DEFAULT_BUTTON_SPACING = 10;
-    private final String[] DROPDOWN_IDS = {"languageSettingsChooser", "penColorChooser", "turtleImageChooser"};
-    private final String[] CURRENTSTATE_KEYS = {"language", "turtleImage", "backgroundColor"};
-    private final String[] BUTTON_IDS = {"newworkspaceButton", "preferencesButton"};
+    private final String[] DROPDOWN_IDS = {"languageSettingsChooser"};
+    private final String[] BUTTON_IDS = {"newworkspaceButton", "turtlesButton", "preferencesButton"};
+    private final String[] CURRENTSTATE_KEYS = {"language", "backgroundColor"};
 
     public SettingsPanel(BorderPane pane, UserScreen userScreen, FileIO fileReaderIn) {
 	PANE = pane;
@@ -56,45 +53,14 @@ public class SettingsPanel extends SpecificPanel  {
     public void makePanel() {
 	BACK = makeBackButton(fileReader);
 	NEW_WORKSPACE =  makeNewWorkspaceButton(BUTTON_IDS[0]);
+	TURTLES = makeTurtlesButton(BUTTON_IDS[1]);
 	LANGUAGE_CHOOSER = makeLanguageChooser(DROPDOWN_IDS[0]);
-	PEN_COLOR_CHOOSER = makePenColorChooser(DROPDOWN_IDS[1]);
-	TURTLE_IMAGE_CHOOSER= makeTurtleImageChooser(DROPDOWN_IDS[2]);
-	PREFERENCES = makePreferenceButton(BUTTON_IDS[1]);
+	PREFERENCES = makePreferenceButton(BUTTON_IDS[2]);
 	VBox panelRoot = new VBox(DEFAULT_BUTTON_SPACING, LANGUAGE_CHOOSER, 
-		PEN_COLOR_CHOOSER, TURTLE_IMAGE_CHOOSER, PREFERENCES, NEW_WORKSPACE, BACK);
+		TURTLES, PREFERENCES, NEW_WORKSPACE, BACK);
 	panelRoot.setId("infoPanel");
 	panelRoot.setAlignment(Pos.BASELINE_CENTER);
 	PANEL = panelRoot;
-    }
-
-    /**
-     * 
-     * @return dropDownMenu: a drop down menu that lets the user choose the
-     * language for the simulation
-     */
-    private ComboBox<Object> makePenColorChooser(String itemID) {
-	String selectionPrompt = fileReader.resourceDisplayText(itemID);
-	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
-	Tooltip penTip = new Tooltip();
-	penTip.setText(selectionPrompt);
-	dropDownMenu.setTooltip(penTip);
-	ObservableList<Object> simulationChoices = 
-		FXCollections.observableArrayList(selectionPrompt);
-	Map<String, String> colorPaletteNames = fileReader.getColors();
-	for (String key : colorPaletteNames.keySet()) {
-	    simulationChoices.add(key+". "+colorPaletteNames.get(key));
-	}
-	dropDownMenu.setItems(simulationChoices);
-	dropDownMenu.setId(itemID);
-	dropDownMenu.getSelectionModel().selectedIndexProperty()
-	.addListener(( arg0, arg1, arg2) ->{
-	    String selected = (String) dropDownMenu.getItems().get((Integer) arg2);
-	    if (!selected.equals(selectionPrompt)) {
-		String selectedColorIdx = (selected.split(". "))[0];
-		fileReader.parseSettingInput(DEFAULT_PENCOLORCHANGE_COMMAND+" "+selectedColorIdx);
-	    }
-	});
-	return dropDownMenu;
     }
 
     /**
@@ -124,38 +90,7 @@ public class SettingsPanel extends SpecificPanel  {
 	});
 	return dropDownMenu;
     }
-
-    /**
-     * 
-     * @return dropDownMenu: a drop down menu that lets the user choose the
-     * language for the simulation
-     */
-    private ComboBox<Object> makeTurtleImageChooser(String itemID) {
-	String selectionPrompt = fileReader.resourceDisplayText(itemID);
-	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
-	Tooltip turtleTip = new Tooltip();
-	turtleTip.setText(selectionPrompt);
-	dropDownMenu.setTooltip(turtleTip);
-	ObservableList<Object> simulationChoices = 
-		FXCollections.observableArrayList(selectionPrompt);
-	Map<String, String> turtleShapesMap = fileReader.getShapes();
-	for (String idx : turtleShapesMap.keySet()) {
-	    simulationChoices.add(idx+". "+turtleShapesMap.get(idx));
-	}
-	dropDownMenu.setItems(simulationChoices);
-	dropDownMenu.setId(itemID);
-	dropDownMenu.getSelectionModel().selectedIndexProperty()
-	.addListener((arg0,arg1, arg2)-> {
-	    String selected = (String) simulationChoices.get((Integer) arg2);
-	    if (!selected.equals(selectionPrompt)) {
-		String selectedShapeIdx = (selected.split(". "))[0];
-		fileReader.parseSettingInput(DEFAULT_SHAPE_COMMAND+" "+selectedShapeIdx);
-		USER_SCREEN.updateCurrentState(CURRENTSTATE_KEYS[1], selectedShapeIdx);
-	    }
-	});
-	return dropDownMenu;
-    }  
-
+    
     private Button makeNewWorkspaceButton(String itemId) {
 	Button workspaceButton = makeButton(itemId);
 	workspaceButton.setOnAction(click ->{Driver d = new Driver();try {
@@ -172,8 +107,17 @@ public class SettingsPanel extends SpecificPanel  {
 	Button preferenceButton = makeButton(itemId);
 	// override click event
 	preferenceButton.setOnMouseClicked((arg0)-> getPane()
-		.setRight(new PreferencePanel(PANE, USER_SCREEN, fileReader,CURRENTSTATE_KEYS).getPanel()));
+		.setRight(new PreferencePanel(PANE, USER_SCREEN, fileReader,CURRENTSTATE_KEYS)
+			.getPanel()));
 	return preferenceButton;
+    }
+    
+    private Button makeTurtlesButton(String itemId) {
+	Button turtlesButton = makeButton(itemId);
+	// override click event
+	turtlesButton.setOnMouseClicked((arg0)-> getPane()
+		.setRight(new TurtleListPanel(PANE, USER_SCREEN, fileReader).getPanel()));
+	return turtlesButton;
     }
 
     private Button makeButton(String itemId) {
@@ -192,11 +136,10 @@ public class SettingsPanel extends SpecificPanel  {
 	BACK.setText(fileReader.resourceDisplayText("backButton"));
 	LANGUAGE_CHOOSER = makeLanguageChooser(DROPDOWN_IDS[0]);
 	NEW_WORKSPACE =  makeNewWorkspaceButton(BUTTON_IDS[0]);
-	PREFERENCES = makePreferenceButton(BUTTON_IDS[1]);
-	PEN_COLOR_CHOOSER = makePenColorChooser(DROPDOWN_IDS[1]);
-	TURTLE_IMAGE_CHOOSER= makeTurtleImageChooser(DROPDOWN_IDS[2]);
-	((VBox)PANEL).getChildren().setAll(LANGUAGE_CHOOSER, PEN_COLOR_CHOOSER, 
-		TURTLE_IMAGE_CHOOSER, PREFERENCES, NEW_WORKSPACE, BACK);
+	PREFERENCES = makePreferenceButton(BUTTON_IDS[2]);
+	TURTLES = makeTurtlesButton(BUTTON_IDS[1]);
+	((VBox)PANEL).getChildren().setAll(LANGUAGE_CHOOSER, 
+		TURTLES, PREFERENCES, NEW_WORKSPACE, BACK);
     }
 
     /**

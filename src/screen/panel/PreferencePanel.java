@@ -44,7 +44,8 @@ public class PreferencePanel extends SpecificPanel {
     private UserScreen USER_SCREEN;
     private final FileIO fileReader;
 
-    public PreferencePanel(BorderPane pane, UserScreen userScreen, FileIO fileReaderIn, String[] currentStateKeys) {
+    public PreferencePanel(BorderPane pane, UserScreen userScreen, FileIO fileReaderIn, 
+	    String[] currentStateKeys) {
 	PANE = pane;
 	USER_SCREEN = userScreen;
 	fileReader = fileReaderIn;
@@ -110,7 +111,7 @@ public class PreferencePanel extends SpecificPanel {
 		String selectedColorIdx = (selected.split(". "))[0];
 		fileReader.parseSettingInput(DEFAULT_BGCOLORCHANGE_COMMAND+" "+selectedColorIdx);
 		String colorCode = fileReader.palleteColorText(selectedColorIdx);
-		USER_SCREEN.updateCurrentState(CURRENTSTATE_KEYS[2], colorCode);
+		USER_SCREEN.updateCurrentState(CURRENTSTATE_KEYS[1], colorCode);
 
 	    }
 	});
