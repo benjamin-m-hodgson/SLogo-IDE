@@ -5,6 +5,8 @@ package interpreter;
 import java.util.List;
 import java.util.function.Consumer;
 
+import javafx.scene.image.Image;
+
 import java.net.MalformedURLException;
 
 public abstract class Turtle {
@@ -62,12 +64,12 @@ public abstract class Turtle {
 
 	protected abstract double setXY(double x, double y);
 
-	protected abstract void setShape(String idxKey) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException;
+	protected abstract void setShape(Image img, double idxKey) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException;
 
 	/**
 	 * Sets the visual image of the turtle to the image contained in filepath
 	 */
-	protected abstract void setImage(String filepath);
+	protected abstract void setImage(Image newImg);
 
 
 	protected abstract void setPenColor(String colorCode);

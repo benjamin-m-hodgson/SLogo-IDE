@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -156,10 +157,10 @@ public class MultipleTurtles extends Turtle{
 //		myActiveTurtleHolder.applyToAllTurtles(t->t.setImageIdx(shapeIdx));
 //	}
 	
-	public void setShape(String idxKey) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException{
+	public void setShape(Image image, double imageIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException{
 		myActiveTurtleHolder.applyToAllTurtles(t->{
 			try {
-				t.setShape(idxKey);
+				t.setShape(image, imageIdx);
 			} catch (MalformedURLException | BadFormatException | UnidentifiedCommandException
 					| MissingInformationException e) {
 				e.printStackTrace();
@@ -177,8 +178,8 @@ public class MultipleTurtles extends Turtle{
 	/**
 	 * Sets the visual image of the turtle to the image contained in filepath
 	 */
-	public void setImage(String filepath) {
-		myActiveTurtleHolder.applyToAllTurtles(t->t.setImage(filepath));
+	public void setImage(Image image) {
+		myActiveTurtleHolder.applyToAllTurtles(t->t.setImage(image));
 		myActiveTurtleHolder.resetTemporaryTurtles();
 	}
 
