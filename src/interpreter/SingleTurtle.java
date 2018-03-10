@@ -1,7 +1,5 @@
 	package interpreter;
 
-	import java.io.File;
-	import java.net.MalformedURLException;
 	import java.util.ArrayList;
 	import java.util.List;
 	import java.util.function.Consumer;
@@ -92,12 +90,7 @@
 				else {
 					hideTurtle();
 				}
-				try {
-				setShape(Double.toString(oneTurtle.getImageIdx()));
-				}
-				catch(UnidentifiedCommandException |MalformedURLException | MissingInformationException | BadFormatException e) {
-					throw new UnidentifiedCommandError(e.getMessage());
-				}
+				setShape(oneTurtle.getImageView().getImage(), oneTurtle.getImageIdx());
 			}
 			return this;
 		}
@@ -107,11 +100,7 @@
 			turtle.setY(myY);
 			turtle.setOldXY(myOldX, myOldY);
 			turtle.setAngle(myAngle);
-			try {
-				turtle.setShape(Integer.toString((int)myImageIdx));
-			} catch (Exception e) {
-				throw new UnidentifiedCommandError(e.getMessage());
-			} 
+			turtle.setShape(myImage.getImage(), myImageIdx);
 			if(myVisibility) {
 				turtle.showTurtle();
 			}
@@ -151,18 +140,6 @@
 		 */
 		public void setImage(Image newImg) {
 			myImage.setImage(newImg);
-		}
-
-
-		
-		public void setShape(String idxKey) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException {
-			RegexMatcher rm = new RegexMatcher(DEFAULT_TURTLESHAPES_FILE);
-			String matchingShape = "";
-			matchingShape = rm.findMatchingVal(idxKey);
-
-			File turtleFile = new File(DEFAULT_IMAGES_FOLDER  + matchingShape + DEFAULT_IMAGE_SUFFIX);
-			setImage(turtleFile.toURI().toURL().toExternalForm());
-			myImageIdx = Double.parseDouble(idxKey);
 		}
 		
 		protected void setOldXY(double oldX, double oldY) {
