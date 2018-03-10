@@ -325,7 +325,7 @@
 			myPen.clear();
 		}
 		
-		protected String getPenColor() {
+		public String getPenColor() {
 			return myPen.getColor();
 		}
 		protected Group getPenLines() {

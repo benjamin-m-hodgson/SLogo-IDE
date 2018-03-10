@@ -67,32 +67,22 @@ public class TurtleInfoPanel extends SpecificPanel {
 		+ " " + TURTLE_ID);
 	turtleIdButton.setId("commandButton");
 	turtleIdButton.setDisable(true);
-	VBox penOptions = makePenOptions();
+	Button penOptions = makePenOptions();
 	ComboBox<Object> shapeChooser = makeTurtleImageChooser("turtleImageChooser");
 	VBox movementButtons = drawMovementButtons(turtleInfoPanel);
 	turtleInfoPanel.getChildren().addAll(turtleIdButton, shapeChooser, 
 		penOptions, movementButtons, backButton);
     }
-    
-    private VBox makePenOptions() {
-	Label penDownLabel = new Label(FILE_READER.resourceDisplayText("penDown"));
-	penDownLabel.setId("variableNameLabel");
-	Label penDownValueLabel = new Label(Boolean.toString(TURTLE.getPenVisibility()));
-	penDownValueLabel.setId("variableNameLabel");
-	HBox penDown = new HBox(penDownLabel, penDownValueLabel);
-	penDown.setAlignment(Pos.CENTER);
-	Label penWidthLabel = new Label(FILE_READER.resourceDisplayText("penWidth"));
-	penWidthLabel.setId("variableNameLabel");
-	TextField penWidthField = widthField(PANE, WIDTH_MIN, WIDTH_MAX, 
-		Double.toString(TURTLE.getPenWidth()));
-	HBox penWidth = new HBox(penWidthLabel, penWidthField);
-	penWidth.setAlignment(Pos.CENTER);
-	ComboBox<Object> penColorChooser = makePenColorChooser("penColorChooser");
-	VBox penOptions = new VBox(penDown, penWidth, penColorChooser);
-	penOptions.setId("moveBox");
-	return penOptions;
+
+    private Button makePenOptions() {
+	Button penButton = new Button(FILE_READER.resourceDisplayText("penOptions"));
+	penButton.setId("penOptionsButton");
+	// override click event
+	penButton.setOnMouseClicked((arg0)-> getPane()
+		.setRight(new PenInfoPanel(PANE, USER_SCREEN, TURTLE_ID, FILE_READER).getPanel()));
+	return penButton;
     }
-    
+
     /**
      * 
      * @return dropDownMenu: a drop down menu that lets the user choose the
@@ -123,38 +113,7 @@ public class TurtleInfoPanel extends SpecificPanel {
 	});
 	return dropDownMenu;
     }    
-    
-    /**
-     * 
-     * @return dropDownMenu: a drop down menu that lets the user choose the
-     * language for the simulation
-     */
-    private ComboBox<Object> makePenColorChooser(String itemID) {
-	String selectionPrompt = FILE_READER.resourceDisplayText(itemID);
-	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
-	Tooltip penTip = new Tooltip();
-	penTip.setText(selectionPrompt);
-	dropDownMenu.setTooltip(penTip);
-	ObservableList<Object> simulationChoices = 
-		FXCollections.observableArrayList(selectionPrompt);
-	Map<String, String> colorPaletteNames = FILE_READER.getColors();
-	for (String key : colorPaletteNames.keySet()) {
-	    simulationChoices.add(key+". "+colorPaletteNames.get(key));
-	}
-	dropDownMenu.setItems(simulationChoices);
-	dropDownMenu.setId(itemID);
-	dropDownMenu.getSelectionModel().selectedIndexProperty()
-	.addListener(( arg0, arg1, arg2) -> {
-	    String selected = (String) dropDownMenu.getItems().get((Integer) arg2);
-	    if (!selected.equals(selectionPrompt)) {
-		String selectedColorIdx = (selected.split(". "))[0];
-		FILE_READER.parseSettingInput(DEFAULT_PENCOLORCHANGE_COMMAND+" "+selectedColorIdx);
-		// TODO: add to history
-	    }
-	});
-	return dropDownMenu;
-    }
-    
+
     /**
      * @param defaultChoice: String that represents the default value for this combo box
      * @return A ComboBox bearing the default choice
@@ -239,53 +198,6 @@ public class TurtleInfoPanel extends SpecificPanel {
 	});
 	return numberTextField;
     }
-    
-    /**
-     * Creates a text field that takes integer only input to set the width amount for the 
-     * turtle pen
-     * 
-     * @param min: the minimum allowable input value
-     * @param max: the maximum allowable input value
-     * @return movementField: a text field that allows the user to input an integer amount
-     * to specify the width of the pen
-     */
-    private TextField widthField(Parent root, int min, int max, String currentValue) {
-	TextField numberTextField = new TextField();
-	numberTextField.setId("widthField");
-	String promptText = FILE_READER.resourceDisplayText("penWidth");
-	numberTextField.setPromptText(promptText);
-	numberTextField.setText(currentValue);
-	numberTextField.setTooltip(new Tooltip(promptText));
-	// clear when the mouse clicks on the text field
-	numberTextField.setOnMouseClicked(new EventHandler<MouseEvent>() {
-	    @Override
-	    public void handle(MouseEvent arg0) {
-		numberTextField.clear();
-	    }
-	});
-	numberTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-	    @Override
-	    public void handle(KeyEvent key) {
-		if (key.getCode() == KeyCode.ENTER) {
-		    // check input to make sure the value is within bounds
-		    try {
-			int sizeVal = Integer.parseInt(numberTextField.getText());
-			if (sizeVal >= min && sizeVal <= max) {	
-			    numberTextField.setText(Integer.toString(sizeVal));
-			}
-			else {
-			    numberTextField.setText(currentValue);
-			}
-		    }
-		    catch(Exception e) {
-			numberTextField.setText(currentValue);
-		    }
-		    root.requestFocus();
-		}
-	    }
-	});
-	return numberTextField;
-    }
 
     private void moveUp(String value) {
 	if (!value.isEmpty()) {
@@ -317,8 +229,8 @@ public class TurtleInfoPanel extends SpecificPanel {
 	if (!value.isEmpty()) {
 	    try {
 		int amount = Integer.parseInt(value);
-	        String command = "Left " + amount;
-	        sendCommandAddHistory(command,value);
+		String command = "Left " + amount;
+		sendCommandAddHistory(command,value);
 	    }
 	    catch (Exception e) {
 		// do nothing, don't move the turtle
