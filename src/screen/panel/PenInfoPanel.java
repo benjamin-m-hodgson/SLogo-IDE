@@ -50,13 +50,6 @@ public class PenInfoPanel extends SpecificPanel {
 	USER_SCREEN = userScreen;
 	TURTLE_ID = id;
 	TURTLE = USER_SCREEN.getAllTurtles().get(Integer.parseInt(TURTLE_ID) - 1);
-	// attach "animation loop" to time line to play it
-	KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
-		e -> updateLabels(SECOND_DELAY));
-	Timeline animation = new Timeline();
-	animation.setCycleCount(Animation.INDEFINITE);
-	animation.getKeyFrames().add(frame);
-	animation.play();
     }
 
     @Override
@@ -139,6 +132,8 @@ public class PenInfoPanel extends SpecificPanel {
 		String selectedColorIdx = (selected.split(". "))[0];
 		FILE_READER.parseSettingInput(DEFAULT_PENCOLORCHANGE_COMMAND+" "+selectedColorIdx);
 		// TODO: add to history
+		getPane().setRight(new PenInfoPanel(PANE, USER_SCREEN, 
+			TURTLE_ID, FILE_READER).getPanel());
 	    }
 	});
 	return dropDownMenu;
@@ -201,12 +196,4 @@ public class PenInfoPanel extends SpecificPanel {
 	});
 	return numberTextField;
     }
-    
-    private void updateLabels(double elapsedTime) {
-	COLOR = new Label(TURTLE.getPenColor());
-	COLOR.setId("variableNameLabel");
-	PEN_DOWN = new Label(Boolean.toString(TURTLE.getPenVisibility()));
-	PEN_DOWN.setId("variableNameLabel");
-    }
-
 }

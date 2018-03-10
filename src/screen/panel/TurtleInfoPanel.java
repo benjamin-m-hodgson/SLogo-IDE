@@ -35,8 +35,6 @@ public class TurtleInfoPanel extends SpecificPanel {
     public static final String DEFAULT_PENCOLORCHANGE_COMMAND = "SetPenColor";
     private final int MOVEMENT_MIN = 0;
     private final int MOVEMENT_MAX = Integer.MAX_VALUE;
-    private final int WIDTH_MIN = 0;
-    private final int WIDTH_MAX = 10;
     private final FileIO FILE_READER;
     private UserScreen USER_SCREEN;
     private String TURTLE_ID;
