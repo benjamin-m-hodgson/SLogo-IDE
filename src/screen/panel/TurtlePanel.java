@@ -28,6 +28,7 @@ public class TurtlePanel  {
     private final BorderPane USER_PANE;
     private ScrollPane SCROLL_PANE;
     private final UserScreen USER_SCREEN;
+    private  Pane turtlePane;
     private String DEFAULT_COLOR_HEXCODE = "2d3436";
   //  private final String DEFAULT_SETSHAPE_COMMAND = "";
     private HBox ErrorHolder;
@@ -44,14 +45,14 @@ public class TurtlePanel  {
 
     public void makePanel() {
 	BorderPane layoutPane = new BorderPane();
-	Pane panel = new Pane();
+	turtlePane = new Pane();
 
-	ScrollPane scroll = new ScrollPane(panel);
+	ScrollPane scroll = new ScrollPane(turtlePane);
 	layoutPane.setCenter(scroll);
 
 	SCROLL_PANE = scroll;
 	scroll.setId("turtlePanel");
-	createTurtle(panel, scroll);
+	createTurtle(turtlePane, scroll);
 
 	PANEL = layoutPane;
     }
@@ -102,6 +103,11 @@ public class TurtlePanel  {
 	    System.out.println("FAILED TO LOAD TURTLE IMG");
 	}
 
+    }
+    
+    public void attachTurtleObjects(ImageView image, Group penLine) {
+	turtlePane.getChildren().add(image);
+	turtlePane.getChildren().add(penLine);
     }
 
     public void displayErrorMessage(String error) {

@@ -25,7 +25,7 @@ public class HistoryPanel extends SpecificPanel {
     private VBox HISTORY_BOX; 
     private BorderPane PANE;
     private UserScreen USER_SCREEN;
-    
+
     public HistoryPanel( BorderPane pane, UserScreen userScreen, FileIO fileReader) {
 	PANE = pane;
 	USER_SCREEN = userScreen;
@@ -58,7 +58,7 @@ public class HistoryPanel extends SpecificPanel {
     protected UserScreen getUserScreen() {
 	return USER_SCREEN;
     }
-    
+
     private void setHistory(double elapsedTime) {
 	HISTORY_BOX.getChildren().clear();
 	Iterator<String> commandHistory = USER_SCREEN.commandHistory();
@@ -86,7 +86,10 @@ public class HistoryPanel extends SpecificPanel {
     private VBox verboseCommand(String command, String commandNumberHeading, String output) {
 	Button commandButton = new Button(commandNumberHeading);
 	commandButton.setId("commandButton");
-	commandButton.setOnMouseClicked((arg0)-> USER_SCREEN.commandRunFromHistory(command));
+	commandButton.setOnMouseClicked((arg0)-> {   
+	    USER_SCREEN.commandRunFromHistory(command);
+	    USER_SCREEN.checkForNewTurtle();
+	});
 	Button backButton = new Button(FILE_READER.resourceDisplayText("backButton"));
 	backButton.setId("backButton");
 	// override click event
@@ -99,7 +102,7 @@ public class HistoryPanel extends SpecificPanel {
 	commandInfoArea.setId("historyField");
 	commandInfoArea.setText(command);
 	commandInfoArea.setEditable(false);
-	
+
 	TextArea consoleInfoArea = new TextArea();
 	consoleInfoArea.setId("historyField");
 	consoleInfoArea.setText(output);
