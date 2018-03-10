@@ -7,6 +7,7 @@ import java.util.Map;
 /**
  * Implements the "askwith" command, which tells turtles with a specific criteria (like
  * "equal? xcor 20") to complete a task.
+ * Assumes that user will only activate turtles that have previously been made
  * @author Sarahbland
  *
  */
@@ -36,6 +37,7 @@ public class AskWithCommand extends Command {
 		MultipleTurtles tempActive = new MultipleTurtles(tempTurtles);
 		double returnVal = -1;
 		if(iDsToUse.isEmpty()) {
+			System.out.println("IDS to use is empty");
 			return returnVal;
 		}
 		try {

@@ -44,9 +44,9 @@ public class ForCommand extends Command{
 			List<Integer> indices = getTempVarIndices(myTempVar, executeArray);
 			for(Double k = start; k<=ending; k+=increment) {
 				findAndReplace(indices, k, executeArray);
-				for(int i = 0; i<executeArray.length; i+=1) {
-					System.out.println("executing " + executeArray[i]);
-				}
+//				for(int i = 0; i<executeArray.length; i+=1) {
+//					System.out.println("executing " + executeArray[i]);
+//				}
 				try {
 					returnVal = myBuilder.buildAndExecute(myTurtle, getActiveTurtles(), executeArray, true);
 				}
