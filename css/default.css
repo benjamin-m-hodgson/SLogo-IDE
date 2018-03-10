@@ -507,7 +507,7 @@
 /******************************************************************************************/
 #widthField {
 	-fx-alignment: center;
-	-fx-pref-height: 47;
+	-fx-pref-height: 40;
 	-fx-pref-width: 75;
 	-fx-background-color: #ffffff;
 	-fx-highlight-fill: #fbcbd7;
