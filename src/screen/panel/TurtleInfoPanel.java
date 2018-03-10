@@ -1,8 +1,16 @@
 package screen.panel;
+import java.util.Map;
+
 import interpreter.FileIO;
+import interpreter.SingleTurtle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
@@ -22,11 +30,17 @@ import screen.UserScreen;
  */
 public class TurtleInfoPanel extends SpecificPanel {
     // TODO: put in settings .properties file
+    private final int VISIBLE_ROW_COUNT = 5;
+    public static final String DEFAULT_SHAPE_COMMAND = "SetShape";
+    public static final String DEFAULT_PENCOLORCHANGE_COMMAND = "SetPenColor";
     private final int MOVEMENT_MIN = 0;
     private final int MOVEMENT_MAX = Integer.MAX_VALUE;
+    private final int WIDTH_MIN = 0;
+    private final int WIDTH_MAX = 10;
     private final FileIO FILE_READER;
     private UserScreen USER_SCREEN;
     private String TURTLE_ID;
+    private SingleTurtle TURTLE;
     private BorderPane PANE;
 
 
@@ -35,6 +49,7 @@ public class TurtleInfoPanel extends SpecificPanel {
 	PANE = pane;
 	USER_SCREEN = userScreen;
 	TURTLE_ID = id;
+	TURTLE = USER_SCREEN.getAllTurtles().get(Integer.parseInt(TURTLE_ID) - 1);
     }
 
     @Override
@@ -43,9 +58,7 @@ public class TurtleInfoPanel extends SpecificPanel {
 	populateInfoBox(turtleInfoPanel);
 	turtleInfoPanel.setId("infoPanel");
 	PANEL = turtleInfoPanel;
-    }
-
-  
+    }  
 
     private void populateInfoBox(VBox turtleInfoPanel) {
 	Button backButton = makeBackButton(FILE_READER);
@@ -53,8 +66,102 @@ public class TurtleInfoPanel extends SpecificPanel {
 		+ " " + TURTLE_ID);
 	turtleIdButton.setId("commandButton");
 	turtleIdButton.setDisable(true);
+	VBox penOptions = makePenOptions();
+	ComboBox<Object> shapeChooser = makeTurtleImageChooser("turtleImageChooser");
 	VBox movementButtons = drawMovementButtons(turtleInfoPanel);
-	turtleInfoPanel.getChildren().addAll(turtleIdButton, movementButtons, backButton);
+	turtleInfoPanel.getChildren().addAll(turtleIdButton, shapeChooser, 
+		penOptions, movementButtons, backButton);
+    }
+    
+    private VBox makePenOptions() {
+	Label penDownLabel = new Label(FILE_READER.resourceDisplayText("penDown"));
+	penDownLabel.setId("variableNameLabel");
+	Label penDownValueLabel = new Label(Boolean.toString(TURTLE.getPenVisibility()));
+	penDownValueLabel.setId("variableNameLabel");
+	HBox penDown = new HBox(penDownLabel, penDownValueLabel);
+	penDown.setAlignment(Pos.CENTER);
+	Label penWidthLabel = new Label(FILE_READER.resourceDisplayText("penWidth"));
+	penWidthLabel.setId("variableNameLabel");
+	TextField penWidthField = movementField(PANE, WIDTH_MIN, WIDTH_MAX);
+	penWidthField.setPromptText("TODO");
+	HBox penWidth = new HBox(penWidthLabel, penWidthField);
+	ComboBox<Object> penColorChooser = makePenColorChooser("penColorChooser");
+	VBox penOptions = new VBox(penDown, penWidth, penColorChooser);
+	penOptions.setId("moveBox");
+	return penOptions;
+    }
+    
+    /**
+     * 
+     * @return dropDownMenu: a drop down menu that lets the user choose the
+     * language for the simulation
+     */
+    private ComboBox<Object> makeTurtleImageChooser(String itemID) {
+	String selectionPrompt = FILE_READER.resourceDisplayText(itemID);
+	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
+	Tooltip turtleTip = new Tooltip();
+	turtleTip.setText(selectionPrompt);
+	dropDownMenu.setTooltip(turtleTip);
+	ObservableList<Object> simulationChoices = 
+		FXCollections.observableArrayList(selectionPrompt);
+	Map<String, String> turtleShapesMap = FILE_READER.getShapes();
+	for (String idx : turtleShapesMap.keySet()) {
+	    simulationChoices.add(idx+". "+turtleShapesMap.get(idx));
+	}
+	dropDownMenu.setItems(simulationChoices);
+	dropDownMenu.setId(itemID);
+	dropDownMenu.getSelectionModel().selectedIndexProperty()
+	.addListener((arg0,arg1, arg2)-> {
+	    String selected = (String) simulationChoices.get((Integer) arg2);
+	    if (!selected.equals(selectionPrompt)) {
+		String selectedShapeIdx = (selected.split(". "))[0];
+		FILE_READER.parseSettingInput(DEFAULT_SHAPE_COMMAND+" "+selectedShapeIdx);
+		// TODO: add to history
+	    }
+	});
+	return dropDownMenu;
+    }  
+    
+    /**
+     * 
+     * @return dropDownMenu: a drop down menu that lets the user choose the
+     * language for the simulation
+     */
+    private ComboBox<Object> makePenColorChooser(String itemID) {
+	String selectionPrompt = FILE_READER.resourceDisplayText(itemID);
+	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
+	Tooltip penTip = new Tooltip();
+	penTip.setText(selectionPrompt);
+	dropDownMenu.setTooltip(penTip);
+	ObservableList<Object> simulationChoices = 
+		FXCollections.observableArrayList(selectionPrompt);
+	Map<String, String> colorPaletteNames = FILE_READER.getColors();
+	for (String key : colorPaletteNames.keySet()) {
+	    simulationChoices.add(key+". "+colorPaletteNames.get(key));
+	}
+	dropDownMenu.setItems(simulationChoices);
+	dropDownMenu.setId(itemID);
+	dropDownMenu.getSelectionModel().selectedIndexProperty()
+	.addListener(( arg0, arg1, arg2) -> {
+	    String selected = (String) dropDownMenu.getItems().get((Integer) arg2);
+	    if (!selected.equals(selectionPrompt)) {
+		String selectedColorIdx = (selected.split(". "))[0];
+		FILE_READER.parseSettingInput(DEFAULT_PENCOLORCHANGE_COMMAND+" "+selectedColorIdx);
+		// TODO: add to history
+	    }
+	});
+	return dropDownMenu;
+    }
+    
+    /**
+     * @param defaultChoice: String that represents the default value for this combo box
+     * @return A ComboBox bearing the default choice
+     */
+    private ComboBox<Object> makeComboBox(String defaultChoice) {
+	ComboBox<Object> dropDownMenu = new ComboBox<>();
+	dropDownMenu.setVisibleRowCount(VISIBLE_ROW_COUNT);
+	dropDownMenu.setValue(defaultChoice);
+	return dropDownMenu;
     }
 
     /**

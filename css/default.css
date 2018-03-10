@@ -1831,6 +1831,34 @@
 	-fx-font-weight: bold;
 }
 /******************************************************************************************/
+/* The button to open the turtles panel */
+/******************************************************************************************/
+#turtlesButton {
+	-fx-alignment: center;
+	-fx-pref-width: 150px;
+	-fx-max-width: 150px;
+	-fx-min-width: 150px;
+	-fx-pref-height: 40px;
+	-fx-max-height: 40px;
+	-fx-min-height: 40px;
+	-fx-background-radius: 6;
+	-fx-background-color: #3ea3f8;
+	-fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-border-color: #0c8bf6;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+    -fx-font: 12px Dekko;
+    -fx-font-weight: bold;
+    -fx-underline: false;
+}
+#turtlesButton:hover {
+	-fx-background-color: linear-gradient(#3ea3f8, #0c8bf6);
+	-fx-font: 14px Dekko;
+	-fx-font-weight: bold;
+}
+/******************************************************************************************/
 /* The help button to switch to the help panel */
 /******************************************************************************************/
 #helpButton {

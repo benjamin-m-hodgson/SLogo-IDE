@@ -10,6 +10,8 @@ import interpreter.BadFormatException;
 import interpreter.Controller;
 import interpreter.FileIO;
 import interpreter.MissingInformationException;
+import interpreter.SingleTurtle;
+import interpreter.Turtle;
 import interpreter.TurtleNotFoundException;
 import interpreter.UnidentifiedCommandException;
 import javafx.scene.Group;
@@ -168,6 +170,14 @@ public class UserScreen implements Screen {
     
     public Map<String, String> getUserDefined(){
 	return PROGRAM_CONTROLLER.getUserDefined();
+    }
+    
+    public List<SingleTurtle> getAllTurtles() {
+	return PROGRAM_CONTROLLER.getAllTurtles();
+    }
+    
+    public List<SingleTurtle> getActiveTurtles() {
+	return PROGRAM_CONTROLLER.getActiveTurtles();
     }
     
     public void throwErrorScreen(String message) {

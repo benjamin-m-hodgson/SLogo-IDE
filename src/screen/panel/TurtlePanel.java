@@ -93,7 +93,8 @@ public class TurtlePanel  {
 	    penLines.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
 	    penLines.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
 	    panel.getChildren().add(penLines);
-	    USER_SCREEN.makeNewTurtleCommand("50", turtleView,DEFAULT_COLOR_HEXCODE , penLines);
+	    USER_SCREEN.makeNewTurtleCommand(Integer.toString(TURTLE_COUNT), turtleView,
+		    DEFAULT_COLOR_HEXCODE , penLines);
 	    TURTLE_COUNT++;
 	}
 	catch (Exception e) {
@@ -115,27 +116,6 @@ public class TurtlePanel  {
 	errorButton.setMinWidth(PANEL.widthProperty().get());
 	PANEL.setBottom(ErrorHolder);
     }
-
-    private Image getTurtleImage(String selected) {
-  	String currentDir = System.getProperty("user.dir");
-  	File turtleFile = new File(currentDir + File.separator + "turtleimages" 
-  		+ File.separator + selected + ".png");
-  	Image turtleImage = null;
-  	try {
-  	    turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
-  	} 
-  	catch (MalformedURLException e) {
-  	    turtleFile = new File(currentDir + File.separator + "turtleimages" + File.separator + DEFAULT_TURTLE);
-  	    try {
-  		turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
-  	    } 
-  	    catch (MalformedURLException e1) {
-  		System.out.println("FAILED TO LOAD TURTLE IMG");
-  	    }
-  	}
-  	return turtleImage;
-      }
-
 
     public void changeBackgroundColor(String colorCode) {
 	SCROLL_PANE.setStyle("-fx-background-color:" + colorCode + ";");

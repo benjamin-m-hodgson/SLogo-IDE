@@ -201,8 +201,12 @@ import java.util.function.Consumer;
 			return myVisibility; 
 		}
 
-		protected boolean getPenVisibility() {
+		public boolean getPenVisibility() {
 			return myPen.getVisibility(); 
+		}
+		
+		public double getPenWidth() {
+		    return myPen.getWidth();
 		}
 		
 		protected SingleTurtle toSingleTurtle() {

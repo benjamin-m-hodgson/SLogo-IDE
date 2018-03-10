@@ -1,4 +1,5 @@
 package interpreter;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -255,13 +256,13 @@ public class Controller {
      * @return immutable list of immutable/temporary Turtles that have been made so far
      */
     public List<SingleTurtle>  getAllTurtles(){
-	return myTextFieldParser.getAllTurtles();
+	return Collections.unmodifiableList(myTextFieldParser.getAllTurtles());
     }
     /**
      * @return immutable list of immutable/temporary Turtles that have been made so far and are currently active
      */
     public List<SingleTurtle> getActiveTurtles(){
-	return myTextFieldParser.getActiveTurtles();
+	return Collections.unmodifiableList(myTextFieldParser.getActiveTurtles());
     }
 	/**
 	 * Returns ImageView of a particular turtle so it may be attached to the scene
