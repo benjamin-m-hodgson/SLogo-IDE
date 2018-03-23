@@ -1,12 +1,7 @@
 package interpreter;
-
-
-
 import java.util.List;
 import java.util.function.Consumer;
-
 import javafx.scene.image.Image;
-
 import java.net.MalformedURLException;
 
 /**
@@ -15,13 +10,7 @@ import java.net.MalformedURLException;
  * @author Sarahbland
  *
  */
-/**
- * @author Sarahbland
- *
- */
 public abstract class Turtle {
-
-	// GETTERS
 	/**
 	 * @return double ID of the Turtle in question
 	 */
@@ -130,7 +119,6 @@ public abstract class Turtle {
 	 * @param angle is angle of turtle desired
 	 */
 	protected abstract void setAngle(double angle);
-	
 	/**
 	 * shows pen
 	 */
@@ -204,5 +192,3 @@ public abstract class Turtle {
 	 */
 	protected abstract List<SingleTurtle> getAllImmutableTurtles();
 }
-
-
