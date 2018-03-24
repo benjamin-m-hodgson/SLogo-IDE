@@ -17,7 +17,7 @@ Besides this, our main specific design goals were to protect against direct acce
 	- add an if statement to the CommandFactory ( `else if commandName.equals("LogTen")) { return new LogTenCommand ( commandArgs.get(0), myVariables, activeTurtles);}`
 	- create a Command subclass that implements the given operation
 
-`
+```java
 class LogTenCommand extends Command		{
 private Command argCommand;
 private Map<String, Double> myVariables;
@@ -43,7 +43,7 @@ return Math.log10(ARGUMENT);
 }
 
 }
-`
+```
 
 - special cases of adding commands:
 	- if command takes no arguments, add to list of `DEFAULT_DOUBLE_SUBSTITUTES` in CommandTreeBuilder
