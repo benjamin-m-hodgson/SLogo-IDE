@@ -23,3 +23,15 @@
 
 ### Additions
 * void displayErrorMessage(String errorMessage) - Used to facilitate the back-to-front-end communication of parsing issues, and thereby trigger the display of error messages on a designated part of the user screen
+* In the added `FileIO.java` class:
+  * public void saveUserDefined(Controller control) - Used to save user defined commands
+  * public void saveVariables() - Used to save user defined variables
+  * public Map<String, String> getColors() - Used to determine colors and their indices from program files
+  * public Map<String, String> getShapes() - Used to determine turlte shapes from program files
+  * public Map<String, String> getMapFromProperties(String filePath) 
+  * public List<String> getLanguages()
+  * public List<String> getFileNames(String folderName)
+  * public String resourceDisplayText(String key) - Finds text to display to the user on the display from the language.properties files
+  * public String palleteColorText(String key) - Finds palette information to display to the user
+  * public String resourceErrorText(String key) - Decides which error messages to display
+  * public String resourceSettingsText(String key) - Used for setting default program settings
