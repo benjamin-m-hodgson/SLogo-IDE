@@ -116,7 +116,12 @@ public class PenInfoPanel extends SpecificPanel {
 	return penOptions;
     }
 
-    private ComboBox<Object> populateOptions() {
+    /**
+     * 
+     * @return dropDownMenu: a drop down menu that lets the user choose the
+     * language for the simulation
+     */
+    private ComboBox<Object> makePenColorChooser(String itemID) {
 	String selectionPrompt = FILE_READER.resourceDisplayText(itemID);
 	ComboBox<Object> dropDownMenu = makeComboBox(selectionPrompt);
 	Tooltip penTip = new Tooltip();
@@ -210,3 +215,4 @@ public class PenInfoPanel extends SpecificPanel {
 	}
     }
 }
+
