@@ -1,4 +1,59 @@
+/**
+ * 
+ * As an abstract class to be extended by all commands, Command encapsulates data and methods that are required for all commands.
+ * 
+ * The myTurtle instance variable is necessary for all commands because all commands need to be executed with reference to a Turtle, 
+ * 		or have arguments that need to be executed with reference to a Turtle. 
+ * 		This also necessitates the methods setMyTurtles and getActiveTurtles to coordinate which Turtle(s) to execute on. 
+ * The myVariables instance variable, getCommandValue method, and getVariableValue method are all integral components 
+ * 		for the decoding of argument values (whether they be variables or nested commands). 
+ * 
+ */
+
 package interpreter;
+
+//import java.util.Map;
+//
+//abstract class Command {
+//
+//	protected Turtle myTurtle; 
+//	protected Map<String, Double> myVariables; 
+//
+//	protected abstract double execute() throws BadFormatException, UnidentifiedCommandException, MissingInformationException;
+//
+//	protected void setMyTurtles(Turtle turtle) {
+//		myTurtle = turtle; 
+//	} 
+//
+//	protected Turtle getActiveTurtles() {
+//		return myTurtle; 
+//	}
+//
+//	/**
+//	 * Method used in the event that a Command takes another Command as an argument. 
+//	 * If the command in question is a StringCommand, will recognize that it must be a variable and return the corresponding double. 
+//	 * Otherwise, executes the command in question and returns the proper value. 
+//	 */
+//	protected double getCommandValue(Command command, Turtle turtle) throws UnidentifiedCommandException, BadFormatException, MissingInformationException {
+//		if(command instanceof StringCommand) {
+//			return getVariableValue(((StringCommand)command).toString());
+//		}
+//		else {
+//			command.setMyTurtles(turtle);
+//			return command.execute();
+//		}
+//	}
+//
+//	protected double getVariableValue(String variable) {
+//		double varVal = 0; 
+//		if (myVariables.containsKey(variable)) {
+//			varVal = myVariables.get(variable);
+//		} 
+//		return varVal; 
+//	}
+//
+//}
+
 
 import java.util.Map;
 
@@ -19,7 +74,7 @@ abstract class Command {
 	 * @return double corresponding to return value of this command in SLogo
 	 */
 	abstract double execute() throws UnidentifiedCommandException;
-	
+
 	/**
 	 * Method used in the event that a Command takes another Command as an argument. If
 	 * the command in question is a StringCommand, will recognize that it must be a variable
@@ -41,7 +96,7 @@ abstract class Command {
 			return command.execute();
 		}
 	}
-	
+
 	/**
 	 * Retrieves the value of a variable or sends back the default value (0) if the variable
 	 * has not been set yet.
@@ -56,14 +111,14 @@ abstract class Command {
 		} 
 		return varVal; 
 	}
-	
+
 	/**
 	 * Sets active turtles that this command will execute upon
 	 * @param turtle is Turtle containing turtle(s) desired
 	 */
 	protected void setActiveTurtles(Turtle turtle) {
 		myTurtle = turtle;
-		}
+	}
 	/**
 	 * Gets active turtles that this command will execute upon
 	 * @return Turtle containing turtle(s) desired
@@ -71,4 +126,4 @@ abstract class Command {
 	protected Turtle getActiveTurtles() {
 		return myTurtle;
 	}
-	}
+}

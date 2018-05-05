@@ -201,7 +201,10 @@ public class Controller {
      * @throws TurtleNotFoundException 
      */
     public double parseInput(String userTextInput) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
-    	return myTextFieldParser.parseText(userTextInput);
+    	FILE_READER.saveVariables();
+//    	FILE_READER.saveUserDefined(this);
+    	return 0; 
+    	//    	return myTextFieldParser.parseText(userTextInput);
     }
 
     /**

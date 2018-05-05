@@ -186,7 +186,7 @@ class CommandTreeBuilder {
 	}
 
 	// THIS IS THE RIGHT ONE
-	private void createAndSetChildren(Turtle turtles, Turtle activeTurtles, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
+	protected void createAndSetChildren(Turtle turtles, Turtle activeTurtles, CommandNode parent, String[] userInput, int currIdx, boolean addToTrees) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		//int currIdxNonRepeat = currIdx + 1; CHANGED THIS
 		if ((currIdx) >= userInput.length) { //base case if out of bounds
 			if (addToTrees) {
@@ -664,7 +664,7 @@ class CommandTreeBuilder {
 	public IntegerProperty getBackColor() {
 		return myBackColor;
 	}
-
+	
 }
 
 
