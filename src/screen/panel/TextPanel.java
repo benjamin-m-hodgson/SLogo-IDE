@@ -47,7 +47,6 @@ public class TextPanel extends Panel {
 	    }
 	    String inputText = INPUT_AREA.getText().replaceAll("\n", 
 		    System.getProperty("line.separator"));
-	    System.out.println(inputText);
 	    Double consoleVal = USER_SCREEN.sendCommandToParse(inputText);
 	    String outputText = consoleVal.toString();
 	    CONSOLE_AREA.setText(outputText);
