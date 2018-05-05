@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.net.MalformedURLException;
 
@@ -203,6 +204,18 @@ public abstract class Turtle {
 	 * @return immutable list of immutable Turtles contained in this Turtle
 	 */
 	protected abstract List<SingleTurtle> getAllImmutableTurtles();
+	
+	/**
+	 * @return imageView of this Turtle (imageview of last Turtle if MultipleTurtles)
+	 */
+	//protected abstract ImageView getImageView();
+	
+	protected abstract double stamp();
+	
+	protected abstract double removeStamps();
+	
+	protected abstract List<ImageView> getStamps();
+	
 }
 
 

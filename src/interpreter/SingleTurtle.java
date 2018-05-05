@@ -45,13 +45,16 @@
 		private double myY; 
 		private double myAngle; 
 		private double myImageIdx; 
-
+		private List<ImageView> myStamps;
 		
 		protected SingleTurtle() {
 			this(DEFAULT_ID, new ImageView(), new Group(), DEFAULT_PEN_COLORCODE);
 		}
 		protected SingleTurtle(double id) {
 			this(id, new ImageView(), new Group(), DEFAULT_PEN_COLORCODE);
+		}
+		protected SingleTurtle(ImageView image) {
+			this(DEFAULT_ID, image, new Group(), DEFAULT_PEN_COLORCODE);
 		}
 
 		protected SingleTurtle(double id, ImageView image, Group penGroup, String colorCode) {
@@ -437,6 +440,31 @@
 				myPenLines.getChildren().removeAll(myPenLines.getChildren());
 			}
 
+		}
+
+
+
+
+
+		@Override
+		protected double stamp() {
+		    myStamps.add(new ImageView(myImage.getImage()));
+		    return myImageIdx;
+		}
+		@Override
+		protected double removeStamps() {
+		   int size = myStamps.size();
+		   myStamps.clear();
+		   if(size>0) {
+		       return 1;
+		   }
+		   else {
+		       return size;
+		   }
+		}
+		@Override
+		protected List<ImageView> getStamps() {
+		    return myStamps;
 		}
 
 	}

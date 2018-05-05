@@ -246,6 +246,10 @@ public class Controller {
 	    USER_SCREEN.displayErrorMessage("Invalid Color Chosen");
 	}
     }
+    
+    public List<ImageView> getStamps() {
+	return myTextFieldParser.getStamps();
+    }
 
 
 }

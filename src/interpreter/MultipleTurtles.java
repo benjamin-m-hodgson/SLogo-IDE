@@ -216,6 +216,24 @@ public class MultipleTurtles extends Turtle{
 	protected String getPenColor() {
 		return getLastTurtle().getPenColor();
 	}
+	protected ImageView getImageView() {
+	    	return getLastTurtle().getImageView();
+	}
+
+	@Override
+	protected double stamp() {
+	   return myActiveTurtleHolder.stamp();
+	}
+
+	@Override
+	protected double removeStamps() {
+	    return myActiveTurtleHolder.removeStamps();
+	}
+
+	@Override
+	protected List<ImageView> getStamps() {
+	    return myActiveTurtleHolder.getNewStamps();
+	}
 
 }
 

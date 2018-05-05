@@ -203,6 +203,12 @@ public class CommandFactory {
 		else if(commandName.equals("AskWith")) {
 			return new AskWithCommand(commandArgs.get(0), commandArgs.get(1), turtles, myVariables, myUserDefCommands, myUserDefCommandsNumArgs);
 		}
+		else if(commandName.equals("Stamp")) {
+		    	return new StampCommand(activeTurtles, false);
+		}
+		else if(commandName.equals("ClearStamps")) {
+		    	return new StampCommand(activeTurtles, true);
+		}
 		else {
 			return new StringCommand(commandName);
 		}

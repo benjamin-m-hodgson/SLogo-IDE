@@ -25,12 +25,39 @@ import javafx.scene.image.ImageView;
 public class TurtleHolder {
 	private List<SingleTurtle> myCurrentTurtles;
 	private List<SingleTurtle> mySharedTurtles;
+	private List<ImageView> myStamps;
 	/**
 	 * @param turtles is List of SingleTurtles this TurtleHolder holds and protects
 	 */
 	public TurtleHolder(List<SingleTurtle> turtles) {
 		myCurrentTurtles = turtles;
 		mySharedTurtles = deepCopy(myCurrentTurtles);
+		myStamps = new ArrayList<ImageView>();
+	}
+	protected List<ImageView> getNewStamps() {
+	    	System.out.println("trying to get stamps and getting: " + myStamps.size());
+	    	return myStamps;
+	}
+	protected double stamp() {
+	    	resetTemporaryTurtles();
+	    	for(SingleTurtle turtle : mySharedTurtles) {
+	    	    myStamps.add(turtle.getImageView());
+	    	    System.out.println(turtle.getImageView().getImage().getUrl());
+	    	    System.out.println("adding a stamp");
+	    	}
+	    	double imageIdx = mySharedTurtles.get(mySharedTurtles.size()-1).getImageIdx();
+	    	resetTemporaryTurtles();
+	    	return imageIdx;
+	}
+	protected double removeStamps() {
+	    	double size = myStamps.size();
+	    	myStamps.clear();
+	    	if(size>0) {
+	    	    return 1;
+	    	}
+	    	else {
+	    	    return size;
+	    	}
 	}
 	/**
 	 * @param action is lambda that each turtle should do

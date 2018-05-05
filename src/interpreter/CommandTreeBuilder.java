@@ -41,7 +41,7 @@ class CommandTreeBuilder {
 	public static final String DEFAULT_USERCOMMAND_IDENTIFIER = "MakeUserInstruction";
 	public static final String DEFAULT_USERCOMMAND_NAME = "UserInstruction";
 	protected static final String[] DEFAULT_DOUBLE_SUBSTITUTES = {"PenDown","PenUp","ShowTurtle","HideTurtle","Home","ClearScreen",
-			"XCoordinate","YCoordinate","Heading","IsPenDown","IsShowing","Pi", "ID", "Turtles"};
+			"XCoordinate","YCoordinate","Heading","IsPenDown","IsShowing","Pi", "ID", "Turtles", "Stamp", "ClearStamps"};
 	//	private CommandTreeReader myCommandTreeReader; 
 	private String myNumArgsFileName; 
 	private String myNumBracketsFileName;
@@ -252,7 +252,7 @@ class CommandTreeBuilder {
 				CommandNode newChildNode = new CommandNode(userInput[currIdx], 0, turtles, activeTurtles);
 				parent.addChild(newChildNode);
 				if (parent.getNumChildren() < parent.getNumArgs()) { 
-					createAndSetChildren(turtles, activeTurtles, parent, userInput, currIdx+1, addToTrees);
+					createAndSetChildren(turtles, activeTurtles,parent, userInput, currIdx+1, addToTrees);
 				} 
 				else {
 					if (addToTrees) {

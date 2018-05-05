@@ -28,6 +28,7 @@ import screen.UserScreen;
  *
  */
 public class TurtlePanel  {
+    public static final Double DEFAULT_ID = 0.0;
     private final double DEFAULT_TURTLE_SIZE;
     private final String DEFAULT_TURTLE;
     private final String DEFAULT_COLOR_HEXCODE;
@@ -127,14 +128,16 @@ public class TurtlePanel  {
 	}
     } 
 
-    private ImageView setUpImageView(ImageView turtleView, ScrollPane scrollPane, double ID){
-    	String currentDir = System.getProperty("user.dir");
+    private ImageView setUpImageView(ImageView turtleView, ScrollPane scrollPane, double ID, boolean stamp){
+	String currentDir = System.getProperty("user.dir");
     	File turtleFile = new File(currentDir + File.separator + "turtleimages" 
     		+ File.separator + DEFAULT_TURTLE);
     	Image turtleImage;
     	try {
+    	    if(turtleView.getImage()==null) {
     	    turtleImage = new Image(turtleFile.toURI().toURL().toExternalForm());
     	    turtleView.setImage(turtleImage);
+    	    }
     	    TURTLE_LIST.add(turtleView);
     	    turtleView.setId("turtleView");
     	    turtleView.setFitHeight(DEFAULT_TURTLE_SIZE);
@@ -142,8 +145,9 @@ public class TurtlePanel  {
     	    // center the turtle on the screen
     	    turtleView.translateXProperty().bind(Bindings.divide(scrollPane.widthProperty(), 2));
     	    turtleView.translateYProperty().bind(Bindings.divide(scrollPane.heightProperty(), 2));
-    	    turtleView.setOnMousePressed((arg0)-> USER_PANE.setRight(
-    		    new TurtleInfoPanel(USER_PANE, USER_SCREEN, Double.toString(ID), FILE_READER).getPanel()));
+    	    if(!stamp) {
+    		setUpTurtleInfoOnClick(turtleView, ID);
+    	    }
     	    TURTLE_PANEL.getChildren().add(turtleView);
     	    return turtleView;
     	} catch (MalformedURLException e) {
@@ -151,6 +155,10 @@ public class TurtlePanel  {
     	    System.out.println("FAILED TO LOAD TURTLE IMG");
     	    return new ImageView();
     		}
+      }
+      private void setUpTurtleInfoOnClick(ImageView turtleView, Double ID) {
+  	    turtleView.setOnMousePressed((arg0)-> USER_PANE.setRight(
+    		    new TurtleInfoPanel(USER_PANE, USER_SCREEN, Double.toString(ID), FILE_READER).getPanel()));
       }
 
     /**
@@ -161,10 +169,27 @@ public class TurtlePanel  {
      * @param ID is ID of turtle
      */
     public void attachTurtleObjects(ImageView image, Group penLine, double ID) {
-    		setUpImageView(image, SCROLL_PANE,ID);
+    		setUpImageView(image, SCROLL_PANE,ID, false);
     		penLine.translateXProperty().bind(Bindings.divide(SCROLL_PANE.widthProperty(), 2));
     	    penLine.translateYProperty().bind(Bindings.divide(SCROLL_PANE.heightProperty(), 2));
     		TURTLE_PANEL.getChildren().add(penLine);
+    }
+    
+    public void removeStamps(List<ImageView> stamps) {
+	ArrayList<ImageView> stampsCopy = new ArrayList<>();
+	stampsCopy.addAll(stamps);
+	for(ImageView stamp: stampsCopy) {
+	    if(!TURTLE_PANEL.getChildren().contains(stamp)) {
+		stamps.remove(stamp);
+	    }
+	}
+	TURTLE_PANEL.getChildren().removeAll(stamps);
+    }
+    
+    public void addStamps(List<ImageView> stamps) {
+		for(ImageView stamp : stamps) {
+		    setUpImageView(stamp, SCROLL_PANE, DEFAULT_ID, true);
+		}
     }
 
     public void displayErrorMessage(String error) {

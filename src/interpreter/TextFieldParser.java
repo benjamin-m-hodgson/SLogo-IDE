@@ -186,6 +186,9 @@ class TextFieldParser {
 	protected List<SingleTurtle> getActiveTurtles(){
 		return myCommandMaker.getActiveTurtles();
 	}
+	protected List<ImageView> getStamps(){
+	    	return myCommandMaker.getStamps();
+	}
 	protected ImageView getTurtleWithIDImageView(double ID) {
 		return myCommandMaker.getTurtleWithIDImageView(ID);
 	}

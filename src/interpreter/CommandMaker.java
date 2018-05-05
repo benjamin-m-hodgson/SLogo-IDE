@@ -89,6 +89,9 @@ class CommandMaker {
 		});
 	}
 	
+	protected List<ImageView> getStamps() {
+	    	return myActiveTurtles.getStamps();
+	}
 	protected double parseValidTextArray(String turtleID, String[] userInput, String[] typesOfInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
 		return parseValidTextArray(turtleID, userInput, typesOfInput, DEFAULT_COMMAND_IDENTIFIER);
 	}

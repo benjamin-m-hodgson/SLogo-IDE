@@ -10,7 +10,6 @@ import interpreter.Controller;
 import interpreter.FileIO;
 import interpreter.MissingInformationException;
 import interpreter.SingleTurtle;
-import interpreter.Turtle;
 import interpreter.TurtleNotFoundException;
 import interpreter.UnidentifiedCommandException;
 import javafx.scene.Group;
@@ -39,6 +38,7 @@ public class UserScreen implements Screen {
     private List<String> OUTPUT_HISTORY;
     private List<SingleTurtle> allTurtles;
     private Map<String, String> currentState;
+    private List<ImageView> myCurrentStamps;
 
     public UserScreen(Controller programController, FileIO fileReader) {
 	FILE_READER = fileReader;
@@ -47,6 +47,7 @@ public class UserScreen implements Screen {
 	OUTPUT_HISTORY = new ArrayList<String>();
 	currentState = setUpCurrentState();
 	DEFAULT_SHAPE_COMMAND = FILE_READER.resourceSettingsText("defaultShapeCommand");
+	myCurrentStamps = new ArrayList<ImageView>();
     }
 
 
@@ -158,6 +159,9 @@ public class UserScreen implements Screen {
 
     public void checkForNewTurtle() {
 	List<SingleTurtle> newTurtles = PROGRAM_CONTROLLER.getAllTurtles();
+	resetStamps();
+	myCurrentStamps.addAll(PROGRAM_CONTROLLER.getStamps());
+	TURTLE_PANEL.addStamps(PROGRAM_CONTROLLER.getStamps());
 	for(SingleTurtle newT : newTurtles) {
 	    double id = newT.getID();
 	    if(containsElementWithID(id, allTurtles) == false) {
@@ -166,8 +170,13 @@ public class UserScreen implements Screen {
 		TURTLE_PANEL.attachTurtleObjects(turtleImage, penLines, id);
 	    }
 	}
+	
 	allTurtles = newTurtles;
     }
+    
+   private void resetStamps() {
+       TURTLE_PANEL.removeStamps(myCurrentStamps);
+   }
 
     private boolean containsElementWithID(double id, List<SingleTurtle> theList) {
 	for(SingleTurtle t : theList) {
