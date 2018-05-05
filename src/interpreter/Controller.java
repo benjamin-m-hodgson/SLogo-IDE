@@ -247,6 +247,10 @@ public class Controller {
 	}
     }
     
+    /**
+     * @return List of ImageViews corresponding to turtle stamps to be attached
+     * to screen
+     */
     public List<ImageView> getStamps() {
 	return myTextFieldParser.getStamps();
     }

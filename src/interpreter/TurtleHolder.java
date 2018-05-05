@@ -34,21 +34,30 @@ public class TurtleHolder {
 		mySharedTurtles = deepCopy(myCurrentTurtles);
 		myStamps = new ArrayList<ImageView>();
 	}
+	/**
+	 * @return list of ImageViews of current stamps on screen
+	 */
 	protected List<ImageView> getNewStamps() {
-	    	System.out.println("trying to get stamps and getting: " + myStamps.size());
 	    	return myStamps;
 	}
+	/**
+	 * Stamps all current active turtles (adds a static image copy of their
+	 * current image to the screen)
+	 * @return current image index of last turtle being stamped
+	 */
 	protected double stamp() {
 	    	resetTemporaryTurtles();
 	    	for(SingleTurtle turtle : mySharedTurtles) {
 	    	    myStamps.add(turtle.getImageView());
-	    	    System.out.println(turtle.getImageView().getImage().getUrl());
-	    	    System.out.println("adding a stamp");
 	    	}
 	    	double imageIdx = mySharedTurtles.get(mySharedTurtles.size()-1).getImageIdx();
 	    	resetTemporaryTurtles();
 	    	return imageIdx;
 	}
+	/**
+	 * Clears all stamps from active turtles
+	 * @return 0 if no stamps existed to clear, 1 if stamps were cleared
+	 */
 	protected double removeStamps() {
 	    	double size = myStamps.size();
 	    	myStamps.clear();

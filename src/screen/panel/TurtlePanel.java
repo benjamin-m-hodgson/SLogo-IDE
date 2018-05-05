@@ -175,6 +175,12 @@ public class TurtlePanel  {
     		TURTLE_PANEL.getChildren().add(penLine);
     }
     
+    /**
+     * Removes a list of stamps from the screen (and garbage collects stamps
+     * that have already been removed from the screen by removing them from
+     * the parameter list)
+     * @param stamps is list of stamps to be removed
+     */
     public void removeStamps(List<ImageView> stamps) {
 	ArrayList<ImageView> stampsCopy = new ArrayList<>();
 	stampsCopy.addAll(stamps);
@@ -186,6 +192,10 @@ public class TurtlePanel  {
 	TURTLE_PANEL.getChildren().removeAll(stamps);
     }
     
+    /**
+     * Adds a list of stamps to the screen (they will be unclickable)
+     * @param stamps is list of ImageViews containing stamps to be added to screen
+     */
     public void addStamps(List<ImageView> stamps) {
 		for(ImageView stamp : stamps) {
 		    setUpImageView(stamp, SCROLL_PANE, DEFAULT_ID, true);

@@ -16,10 +16,7 @@ import java.net.MalformedURLException;
  * @author Sarahbland
  *
  */
-/**
- * @author Sarahbland
- *
- */
+
 public abstract class Turtle {
 
 	// GETTERS
@@ -205,15 +202,25 @@ public abstract class Turtle {
 	 */
 	protected abstract List<SingleTurtle> getAllImmutableTurtles();
 	
-	/**
-	 * @return imageView of this Turtle (imageview of last Turtle if MultipleTurtles)
-	 */
-	//protected abstract ImageView getImageView();
+
 	
+	/**
+	 * Stamps all current turtles on the screen (adds a static ImageView
+	 * corresponding to their current image to the screen)
+	 * @return index of Turtle's image
+	 */
 	protected abstract double stamp();
 	
+	/**
+	 * Removes all stamps from Turtle's collection
+	 * @return 0 if no stamps existed to remove, 1 if stamps were removed
+	 */
 	protected abstract double removeStamps();
 	
+	/**
+	 * @return all ImageView stamps Turtle has made that are currently
+	 * on the screen
+	 */
 	protected abstract List<ImageView> getStamps();
 	
 }
