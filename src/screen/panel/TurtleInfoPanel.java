@@ -149,7 +149,6 @@ public class TurtleInfoPanel extends SpecificPanel {
 	.addListener((arg0,arg1, arg2)-> {
 	    String selected = (String) simulationChoices.get((Integer) arg2);
 	    if (!selected.equals(selectionPrompt)) {
-		System.out.println(selected);
 		String selectedShapeIdx = (selected.split(". "))[0];
 		FILE_READER.parseSettingInput(DEFAULT_SHAPE_COMMAND+" "+selectedShapeIdx);
 		USER_SCREEN.updateCurrentState(CURRENTSTATE_KEYS[0], selectedShapeIdx);
