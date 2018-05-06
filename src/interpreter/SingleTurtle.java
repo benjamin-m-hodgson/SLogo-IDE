@@ -208,7 +208,7 @@
 		protected SingleTurtle toSingleTurtle() {
 			return this;
 		}
-		protected ImageView getImageView() {
+		public ImageView getImageView() {
 			return myImage;
 		}
 

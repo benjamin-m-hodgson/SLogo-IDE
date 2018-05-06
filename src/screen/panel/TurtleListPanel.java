@@ -8,6 +8,7 @@ import interpreter.SingleTurtle;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -79,13 +80,23 @@ public class TurtleListPanel extends SpecificPanel{
 			    Integer.toString((int) Math.rint(turtle.getID())), 
 			    FILE_READER).getPanel());
 		});
+		Button turtleImage = new Button();
+		ImageView turtleView = turtle.getImageView();
+		turtleView.setFitHeight(150);
+		turtleView.setFitWidth(135);
+		turtleImage.setGraphic(turtleView);
+		turtleImage.setOnMouseClicked((arg1)-> {
+		    getPane()
+		    .setRight(new TurtleImagePanel(PANE, USER_SCREEN, FILE_READER, 
+			    turtle).getPanel());
+		});
 		if (TURTLES_ACTIVE.contains(turtle)) {
 		    turtleButton.setId("activeTurtle");
-		    activeTurtles.getChildren().add(turtleButton);
+		    activeTurtles.getChildren().addAll(turtleButton, turtleImage);
 		}
 		else {
 		    turtleButton.setId("inactiveTurtle");
-		    inactiveTurtles.getChildren().add(turtleButton);
+		    inactiveTurtles.getChildren().addAll(turtleButton, turtleImage);
 		}
 	    }
 	    catch (Exception e) {
