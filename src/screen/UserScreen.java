@@ -203,7 +203,7 @@ public class UserScreen implements Screen {
     }
 
     public double sendCommandToParse(String inputText) throws TurtleNotFoundException, BadFormatException, UnidentifiedCommandException, MissingInformationException {
-	return PROGRAM_CONTROLLER.parseInput(inputText);
+    	return PROGRAM_CONTROLLER.parseInput(inputText);
     }
 
     private Map<String,String> setUpCurrentState() {

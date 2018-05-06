@@ -62,7 +62,7 @@ public abstract class Turtle {
 	 * @return true if turtle's pen is down, false if not
 	 */
 	protected abstract boolean getPenVisibility();
-
+	
 	/**
 	 * @param ID is Id search for
 	 * @return true if this Turtle has within it a SingleTurtle with this id
@@ -203,6 +203,13 @@ public abstract class Turtle {
 	 * @return immutable list of immutable Turtles contained in this Turtle
 	 */
 	protected abstract List<SingleTurtle> getAllImmutableTurtles();
+	
+	protected abstract void stamp(); 
+	
+	protected abstract void clearStamps(); 
+	
+	protected abstract boolean hasBeenStamped(); 
+	
 }
 
 

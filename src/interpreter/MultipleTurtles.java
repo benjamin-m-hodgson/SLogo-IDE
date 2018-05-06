@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
  *
  */
 public class MultipleTurtles extends Turtle{
-		TurtleHolder myActiveTurtleHolder;
+	TurtleHolder myActiveTurtleHolder;
 	public MultipleTurtles(List<SingleTurtle> turtles) {
 		myActiveTurtleHolder = new TurtleHolder(turtles);
 	}
@@ -31,7 +31,7 @@ public class MultipleTurtles extends Turtle{
 		myActiveTurtleHolder.applyToAllTurtles(action);
 		myActiveTurtleHolder.resetTemporaryTurtles();
 	}
-	
+
 	protected boolean containsTurtleWithID(String ID) {
 		try {
 			Double id = Double.parseDouble(ID);
@@ -77,7 +77,7 @@ public class MultipleTurtles extends Turtle{
 	protected Group getTurtleWithIDPenLines(double ID) {
 		return myActiveTurtleHolder.getTurtleWithIDPenLines(ID);
 	}
-	
+
 	/**
 	 * Returns the current x-position of the last turtle
 	 */
@@ -94,7 +94,7 @@ public class MultipleTurtles extends Turtle{
 	public double getY() {
 		return getLastTurtle().getY();
 	}
-		
+
 
 	/**
 	 * Returns the previous x-position of the turtle
@@ -145,7 +145,7 @@ public class MultipleTurtles extends Turtle{
 		myActiveTurtleHolder.applyToAllTurtles(t->t.setX(x));
 		myActiveTurtleHolder.resetTemporaryTurtles();
 	}
-	
+
 	/**
 	 * Sets the y-position of the turtle
 	 */
@@ -153,10 +153,10 @@ public class MultipleTurtles extends Turtle{
 		myActiveTurtleHolder.applyToAllTurtles(t->t.setY(y));
 		myActiveTurtleHolder.resetTemporaryTurtles();
 	}
-//	protected void setImageIdx(double shapeIdx) {
-//		myActiveTurtleHolder.applyToAllTurtles(t->t.setImageIdx(shapeIdx));
-//	}
-	
+	//	protected void setImageIdx(double shapeIdx) {
+	//		myActiveTurtleHolder.applyToAllTurtles(t->t.setImageIdx(shapeIdx));
+	//	}
+
 	public void setShape(Image image, double imageIdx) throws BadFormatException, UnidentifiedCommandException, MissingInformationException, MalformedURLException{
 		myActiveTurtleHolder.applyToAllTurtles(t->{
 			try {
@@ -170,7 +170,6 @@ public class MultipleTurtles extends Turtle{
 	}
 	protected double setXY(double x, double y) {
 		myActiveTurtleHolder.applyToAllTurtles(t->t.setXY(x, y));
-		System.out.println("y coordinate before reset: " + getLastTurtle().getY());
 		myActiveTurtleHolder.resetTemporaryTurtles();
 		SingleTurtle last = getLastTurtle();
 		return last.calcDistance(last.getOldX(), last.getOldY(), last.getX(), last.getY());
@@ -187,12 +186,12 @@ public class MultipleTurtles extends Turtle{
 		myActiveTurtleHolder.applyToAllTurtles(t->t.setPenColor(colorCode));
 		myActiveTurtleHolder.resetTemporaryTurtles();
 	}
-	
+
 	protected void setPenWidth(double width) {
 		myActiveTurtleHolder.applyToAllTurtles(t->t.setPenWidth(width));
 		myActiveTurtleHolder.resetTemporaryTurtles();
 	}
-	
+
 	protected void setAngle(double angle) {
 		myActiveTurtleHolder.applyToAllTurtles(t->t.setAngle(angle));
 		myActiveTurtleHolder.resetTemporaryTurtles();
@@ -212,9 +211,21 @@ public class MultipleTurtles extends Turtle{
 		myActiveTurtleHolder.applyToAllTurtles(t->t.clearPen());
 		myActiveTurtleHolder.resetTemporaryTurtles();
 	}
-	
+
 	protected String getPenColor() {
 		return getLastTurtle().getPenColor();
+	}
+
+	protected void stamp() {
+		myActiveTurtleHolder.applyToAllTurtles(t->t.stamp()); 
+	}
+
+	protected void clearStamps() {
+		myActiveTurtleHolder.applyToAllTurtles(t->t.clearStamps());
+	}
+
+	protected boolean hasBeenStamped() {
+		return getLastTurtle().hasBeenStamped();
 	}
 
 }

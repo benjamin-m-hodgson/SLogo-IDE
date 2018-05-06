@@ -82,9 +82,7 @@ class CommandTreeBuilder {
 		});
 	}
 
-	protected double buildAndExecute(Turtle turtles, Turtle activeTurtles, String[] userInput, boolean shouldExecute) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		System.out.println("COMMAND TREE BUILDER GOT "+userInput[0]+" "+userInput[1]);
-		
+	protected double buildAndExecute(Turtle turtles, Turtle activeTurtles, String[] userInput, boolean shouldExecute) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {		
 		//		System.out.println("BEGINNING OF SENT IN INPUT -------------------------");
 //		for (String s : userInput) System.out.println(s);
 //		System.out.println("END OF SENT IN INPUT -------------------------");

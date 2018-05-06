@@ -131,7 +131,6 @@ class TextFieldParser {
 		}
 
 		String[] tokenizedInputArray = tokenizedInput.toArray(new String[tokenizedInput.size()]);
-		System.out.println(tokenizedInputArray[0] + " " + tokenizedInputArray[1] + " IS BEING PASSED ");
 		return parseTextArray(tokenizedInputArray);
 	}
 

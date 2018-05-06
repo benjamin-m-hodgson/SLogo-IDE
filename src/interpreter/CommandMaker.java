@@ -90,7 +90,6 @@ class CommandMaker {
 	}
 	
 	protected double parseValidTextArray(String turtleID, String[] userInput, String[] typesOfInput) throws BadFormatException, UnidentifiedCommandException, MissingInformationException {
-		System.out.println("COMMAND MAKER GOT "+userInput[0]+" "+userInput[1]);
 		return parseValidTextArray(turtleID, userInput, typesOfInput, DEFAULT_COMMAND_IDENTIFIER);
 	}
 
