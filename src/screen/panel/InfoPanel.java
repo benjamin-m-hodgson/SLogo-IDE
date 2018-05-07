@@ -23,7 +23,7 @@ public class InfoPanel extends Panel {
 	private UserScreen USER_SCREEN;
 	private final FileIO FILE_READER;
 
-	private final String[] BUTTON_IDS = {"settingsButton", "variablesButton", "historyButton", "commandsButton", "helpButton"};
+	private final String[] BUTTON_IDS = {"settingsButton", "variablesButton", "historyButton", "commandsButton", "helpButton", "turtleImagesButton"};
 
 	public InfoPanel(BorderPane pane, UserScreen userScreen, FileIO fileReader) {
 		PANE = pane;
@@ -57,6 +57,7 @@ public class InfoPanel extends Panel {
 		buttons.get(2).setOnMouseClicked((arg0) ->PANE.setRight(new HistoryPanel( PANE, USER_SCREEN,FILE_READER).getPanel()));
 		buttons.get(3).setOnMouseClicked((arg0) ->PANE.setRight(new CommandPanel( PANE, USER_SCREEN,FILE_READER).getPanel()));
 		buttons.get(4).setOnMouseClicked((arg0) ->PANE.setRight(new HelpPanel( PANE, USER_SCREEN,FILE_READER).getPanel()));
+		buttons.get(5).setOnMouseClicked(arg0 -> PANE.setRight(new TurtleImageSelectionPanel(PANE, USER_SCREEN, FILE_READER).getPanel()));
 	}
 
 	private Button makeButton(String buttonId) {

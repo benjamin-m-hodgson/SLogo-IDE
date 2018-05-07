@@ -1,8 +1,12 @@
 package screen.panel;
 import java.util.Map;
 
+import interpreter.BadFormatException;
 import interpreter.FileIO;
+import interpreter.MissingInformationException;
 import interpreter.SingleTurtle;
+import interpreter.TurtleNotFoundException;
+import interpreter.UnidentifiedCommandException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -150,7 +154,12 @@ public class TurtleInfoPanel extends SpecificPanel {
 	    String selected = (String) simulationChoices.get((Integer) arg2);
 	    if (!selected.equals(selectionPrompt)) {
 		String selectedShapeIdx = (selected.split(". "))[0];
-		FILE_READER.parseSettingInput(DEFAULT_SHAPE_COMMAND+" "+selectedShapeIdx);
+		try {
+		    USER_SCREEN.sendCommandToParse("ASK [ " + TURTLE_ID + " ] [ " + DEFAULT_SHAPE_COMMAND+" "+selectedShapeIdx + " ]");
+		} catch (TurtleNotFoundException | BadFormatException | UnidentifiedCommandException
+			| MissingInformationException e) {
+		    USER_SCREEN.displayErrorMessage(e.getMessage());
+		}
 		USER_SCREEN.updateCurrentState(CURRENTSTATE_KEYS[0], selectedShapeIdx);
 	    }
 	});
